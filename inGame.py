@@ -8,7 +8,8 @@ INGAME_WIDTH = 1000
 INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-DEFAULT_SNAKE_SPEED = 6
+DEFAULT_SNAKE_SPEED = 5
+DEFAULT_SNAKE_CHANGE_COLOR_SPEED = 2
 
 
 ###########  COLOR  ###########################################################
@@ -84,11 +85,11 @@ class SnakeBlock:
         self.y = y
         self.surfaceRect.topleft = (x, y)
         
-    def update(self, part):
+    def update(self, part, indexImg):
         ###### Clear old image #################################################################
         self.surface.fill((0, 0, 0, 0))
         ###### Add new image #################################################################
-        img = SNAKE[part][self.direction][0]
+        img = SNAKE[part][self.direction][indexImg]
         self.surface.blit(img, (0, 0))
     
     def draw(self, parentSurface):
@@ -109,6 +110,7 @@ class Snake:
         self.tail[0].draw(self.surface)
         
         self.speed = speed
+        self.changeColorSpeed = DEFAULT_SNAKE_CHANGE_COLOR_SPEED
         self.currentDirection = currentDirection
         self.countTicks = 0
     
@@ -130,19 +132,15 @@ class Snake:
         ###########  New Image of snakeBlocks  ##################################################################
            ########  Correct direction for snakeBlocks  #########################################
         self.head[0].direction = self.head[0].direction[1] + self.currentDirection[0]
-        
-        # if self.head[0].direction in ['LR', 'RL', 'DU', 'UD']:
-        #     self.head[0].direction = self.head[0].direction[1] + self.head[0].direction[1]
-        
         self.tail[0].direction = self.body[len(self.body) - 1].direction
         for index in range(len(self.body) - 1, 0, -1):
             self.body[index].coordinate = self.body[index-1].direction
         self.body[0].direction = self.head[0].direction
            #######  Update new image   #######################
-        self.head[0].update('HEAD')
+        self.head[0].update('HEAD', self.countTicks)
         for snakeBlock in self.body:
-            snakeBlock.update('BODY')
-        self.tail[0].update('TAIL')
+            snakeBlock.update('BODY', self.countTicks)
+        self.tail[0].update('TAIL', self.countTicks)
         
         ###########  New Coordinate of snakeBlocks  #############################################################
         self.tail[0].setCoordinate(self.body[len(self.body)-1].x, self.body[len(self.body)-1].y)
@@ -187,20 +185,25 @@ class FoodManager:
 
 ###########  CLASS INGAME  #############################################################
 class InGame:
-    def __init__(self, snake=Snake(), foodManager = FoodManager()):
+    def __init__(self, snake=Snake(), foodManager = FoodManager(), score=0):
         self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.topleft = (0, 0)
+        
         
         self.showingScreenStart = False
         self.running = False
         self.waiting = False
         self.showingScreenEnd = False
+        self.score = score
         
         self.grid = Grid(0, 0)
         self.snake = snake
         self.foodManager = foodManager
-        self.descriptionText = Button("Press SPACE to start", menu.TITLE_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*5//6)
+        self.descriptionText = Button("Press SPACE to start", menu.TITLE_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*9//12)
         self.descriptionText.isChosen = True
+        self.scoreText = Button(f"Score: {self.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
+        self.scoreText.isChosen = True
         
         
     def update(self):
@@ -212,8 +215,10 @@ class InGame:
             self.descriptionText.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
         elif self.running:
             self.snake.update()
-            self.snake.draw(self.surface)
+            self.scoreText.update(f"Score: {self.score}", menu.SMALL_FONT, 'R')
             self.grid.draw(self.surface)
+            self.scoreText.draw(self.surface)
+            self.snake.draw(self.surface)
         elif self.waiting:
             pass
         elif self.showingScreenEnd:

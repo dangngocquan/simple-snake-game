@@ -2,7 +2,7 @@ import pygame
 
 
 ###########  FPS  ############################################################################
-MENU_CHANGE_COLOR_SPEED = 10
+MENU_CHANGE_COLOR_SPEED = 5
 
 
 ###########  FONT  ############################################################################
@@ -10,6 +10,7 @@ pygame.font.init()
 SIMPLE_SNAKE_FONT = pygame.font.SysFont('algerian', 96)
 TITLE_FONT = pygame.font.SysFont('castellar', 48)
 TITLE_FONT2 = pygame.font.SysFont('chiller', 48)
+SMALL_FONT = pygame.font.SysFont('curlz', 28)
 
 
 ###########  COLOR  ###########################################################################

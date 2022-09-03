@@ -122,6 +122,9 @@ class Game:
                 if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                     self.inGame.update()
             elif self.inGame.running or self.inGame.waiting:
+                if self.countTicks % (FPS * 1000 // self.inGame.snake.changeColorSpeed) == 0:
+                    self.inGame.snake.countTicks += 1
+                    self.inGame.snake.countTicks %= 7
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.speed) == 0:
                     self.inGame.update()
         elif self.runningMainMenu:
