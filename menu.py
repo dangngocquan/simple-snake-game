@@ -9,6 +9,7 @@ MENU_CHANGE_COLOR_SPEED = 5
 pygame.font.init()
 SIMPLE_SNAKE_FONT = pygame.font.SysFont('algerian', 96)
 TITLE_FONT = pygame.font.SysFont('castellar', 48)
+TITLE_FONT_HORVED = pygame.font.SysFont('castellar', 56)
 TITLE_FONT2 = pygame.font.SysFont('chiller', 48)
 SMALL_FONT = pygame.font.SysFont('curlz', 28)
 
@@ -24,11 +25,16 @@ class Button:
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
         self.textRect.center = (x, y)
+        self.x = x
+        self.y = y
         self.isChosen = False
         self.value = 255
         self.valueStatus = 1
     
     def update(self, text, font, color='G'):
+        self.text = font.render(text, True, WHITE, None)
+        self.textRect = self.text.get_rect()
+        self.textRect.center = (self.x, self.y)
         if self.isChosen:
             if self.value == 255 or self.value == 55:
                 self.valueStatus *= -1
@@ -71,18 +77,18 @@ class MainMenu:
     def update(self):
         if self.cursor == 0:
             self.titlePlayGame.isChosen = True
-        else:
+            self.titleOptions.isChosen = False
+            self.titlePlayGame.update('PLAY GAME', TITLE_FONT_HORVED)
+            self.titleOptions.update('OPTIONS', TITLE_FONT)
+        elif self.cursor == 1:
             self.titlePlayGame.isChosen = False
-        if self.cursor == 1:
             self.titleOptions.isChosen = True
-        else:
-            self.titleOptions.isChosen = False    
-            
-        self.titlePlayGame.update('PLAY GAME', TITLE_FONT)
+            self.titlePlayGame.update('PLAY GAME', TITLE_FONT)
+            self.titleOptions.update('OPTIONS', TITLE_FONT_HORVED)
+        
+        self.surface.fill((0, 0, 0, 0))
+        self.titleSimpleSnake.draw(self.surface)
         self.titlePlayGame.draw(self.surface)
-        
-        
-        self.titleOptions.update('OPTIONS', TITLE_FONT)
         self.titleOptions.draw(self.surface)
         
     def draw(self, parentSurface):
@@ -111,24 +117,29 @@ class PlayGameMenu:
     def update(self):
         if self.cursor == 0:
             self.titleNewGame.isChosen = True
-        else:
-            self.titleNewGame.isChosen = False
-        if self.cursor == 1:
-            self.titleContinueGame.isChosen = True
-        else:
             self.titleContinueGame.isChosen = False
-        if self.cursor == 2:
+            self.titleBack.isChosen = False
+            self.titleNewGame.update('NEW GAME', TITLE_FONT_HORVED)
+            self.titleContinueGame.update('CONTINUE GAME', TITLE_FONT)
+            self.titleBack.update('BACK', TITLE_FONT)
+        elif self.cursor == 1:
+            self.titleNewGame.isChosen = False
+            self.titleContinueGame.isChosen = True
+            self.titleBack.isChosen = False
+            self.titleNewGame.update('NEW GAME', TITLE_FONT)
+            self.titleContinueGame.update('CONTINUE GAME', TITLE_FONT_HORVED)
+            self.titleBack.update('BACK', TITLE_FONT)
+        elif self.cursor == 2:
+            self.titleNewGame.isChosen = False
+            self.titleContinueGame.isChosen = False
             self.titleBack.isChosen = True
-        else:
-            self.titleBack.isChosen = False  
+            self.titleNewGame.update('NEW GAME', TITLE_FONT)
+            self.titleContinueGame.update('CONTINUE GAME', TITLE_FONT)
+            self.titleBack.update('BACK', TITLE_FONT_HORVED)
             
-        self.titleNewGame.update('NEW GAME', TITLE_FONT)
+        self.surface.fill((0, 0, 0, 0))
         self.titleNewGame.draw(self.surface)
-        
-        self.titleContinueGame.update('CONTINUE GAME', TITLE_FONT)
         self.titleContinueGame.draw(self.surface)
-        
-        self.titleBack.update('BACK', TITLE_FONT)
         self.titleBack.draw(self.surface)
         
     def draw(self, parentSurface):
