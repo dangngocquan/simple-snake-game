@@ -10,6 +10,7 @@ NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
 DEFAULT_SNAKE_SPEED = 5
 DEFAULT_SNAKE_CHANGE_COLOR_SPEED = 2
+DEFAULT_MAX_FOOD = 7
 
 
 ###########  COLOR  ###########################################################
@@ -173,14 +174,34 @@ class Snake:
 
 ###########  CLASS FOOD  #############################################################
 class Food:
-    def __init__(self):
+    def __init__(self, image, x, y):
+        self.surface = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.topleft = (x, y)
+        
+        self.surface.blit(image, (0, 0))
+        
+    def update(self):
         pass
+    
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
 
 
 ###########  CLASS FOOD MANAGER  #############################################################
 class FoodManager:
     def __init__(self):
+        self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.topleft = (0, 0)
+        self.listFood = []
+        self.maxFood = DEFAULT_MAX_FOOD
+    
+    def update(self):
         pass
+    
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)   
 
 
 ###########  CLASS INGAME  #############################################################
