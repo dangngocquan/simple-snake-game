@@ -111,7 +111,7 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, speed=DEFAULT_SNAKE_SPEED, currentDirection='UU'):
+    def __init__(self, speed=DEFAULT_SNAKE_SPEED, currentDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
         self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -131,6 +131,7 @@ class Snake:
         self.speed = speed
         self.changeColorSpeed = DEFAULT_SNAKE_CHANGE_COLOR_SPEED
         self.currentDirection = currentDirection
+        self.score = score
 
     ###########  Get all coordinate of Snake Blocks #########################################################
     def coordinateSnakeBlocks(self):
@@ -153,6 +154,7 @@ class Snake:
         for food in foodList:
             if self.head[0].coordinate() == food.coordinate():
                 foodList.remove(food)
+                self.score += self.speed
                 return True
         return False
     
@@ -323,7 +325,7 @@ class FoodManager:
 ###########  CLASS INGAME  ##################################################################################
 class InGame:
     ###########   Constructor   #############################################################################
-    def __init__(self, snake=Snake(), foodManager = FoodManager(), score=0):
+    def __init__(self, snake=Snake(), foodManager = FoodManager()):
         ###########   Create surface and coordinate   #######################################################
         self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -341,8 +343,7 @@ class InGame:
         self.foodManager = foodManager
         self.descriptionText = Button("Press SPACE to start", menu.TITLE_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*9//12)
         self.descriptionText.isChosen = True
-        self.score = score
-        self.scoreText = Button(f"Score: {self.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
+        self.scoreText = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
         self.scoreText.isChosen = True
         
     ###########   Update screen    ##########################################################################
@@ -358,7 +359,7 @@ class InGame:
         elif self.running:
             self.snake.update(self.foodManager.listFood)
             self.foodManager.update(self.snake.coordinateSnakeBlocks())
-            self.scoreText.update(f"Score: {self.score}", menu.SMALL_FONT, 'R')
+            self.scoreText.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
             self.grid.draw(self.surface)
             self.foodManager.draw(self.surface)
             self.scoreText.draw(self.surface)
