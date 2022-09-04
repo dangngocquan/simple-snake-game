@@ -76,7 +76,7 @@ class Grid:
 class SnakeBlock:
     ###########   Constructor   #############################################################################
     def __init__(self, image, x=NUMBER_COLUMNS//2 * CELL_SIZE, y=NUMBER_ROWS//2 * CELL_SIZE, 
-                 direction='UU'):
+                 direction='UU', indexFrame=0):
         self.surface = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (x, y)
@@ -84,6 +84,7 @@ class SnakeBlock:
         self.x = x
         self.y = y
         self.direction = direction
+        self.indexFrame = indexFrame
     
     ###########   Get coordinate of Snake Block with type List  #############################################
     def coordinate(self):
@@ -96,11 +97,11 @@ class SnakeBlock:
         self.surfaceRect.topleft = (x, y)
     
     ###########   Update new image for Snake Block   ########################################################
-    def update(self, part, indexImg):
+    def update(self, part):
         ###### Clear old image ##############################################################################
         self.surface.fill((0, 0, 0, 0))
         ###### Add new image ################################################################################
-        img = SNAKE[part][self.direction][indexImg]
+        img = SNAKE[part][self.direction][self.indexFrame]
         self.surface.blit(img, (0, 0))
 
     ###########   Draw SnakeBlock in another surface   ######################################################
@@ -117,9 +118,11 @@ class Snake:
         self.surfaceRect.topleft = (0, 0)
         
         ###########   Create first head, body anf tail for Snake   ##########################################
-        self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0])]
-        self.body = [SnakeBlock(SNAKE['BODY']['UU'][0], NUMBER_COLUMNS//2*CELL_SIZE, NUMBER_ROWS//2*CELL_SIZE + CELL_SIZE)]
-        self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][0], NUMBER_COLUMNS//2*CELL_SIZE, NUMBER_ROWS//2*CELL_SIZE + 2*CELL_SIZE)]
+        self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)]
+        self.body = [SnakeBlock(SNAKE['BODY']['UU'][0], NUMBER_COLUMNS//2*CELL_SIZE, 
+                                NUMBER_ROWS//2*CELL_SIZE + CELL_SIZE, indexFrame=1)]
+        self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][0], NUMBER_COLUMNS//2*CELL_SIZE, 
+                                NUMBER_ROWS//2*CELL_SIZE + 2*CELL_SIZE, indexFrame=2)]
         self.head[0].draw(self.surface)
         self.body[0].draw(self.surface)
         self.tail[0].draw(self.surface)
@@ -128,7 +131,6 @@ class Snake:
         self.speed = speed
         self.changeColorSpeed = DEFAULT_SNAKE_CHANGE_COLOR_SPEED
         self.currentDirection = currentDirection
-        self.countTicks = 0
 
     ###########  Get all coordinate of Snake Blocks #########################################################
     def coordinateSnakeBlocks(self):
@@ -166,11 +168,17 @@ class Snake:
             self.body[index].direction = self.body[index-1].direction
         self.body[0].direction = self.head[0].direction
         
+        #######  Update indexFrame for snakeBlocks  #########################################################
+        self.body[0].indexFrame = (self.head[0].indexFrame + 1) % 7
+        for index in range(1, len(self.body)):
+            self.body[index].indexFrame = (self.body[index-1].indexFrame + 1) % 7
+        self.tail[0].indexFrame = (self.body[len(self.body)-1].indexFrame + 1) % 7
+        
         #######  Update new image for head, body and tail  ##################################################
-        self.head[0].update('HEAD', self.countTicks)
+        self.head[0].update('HEAD')
         for snakeBlock in self.body:
-            snakeBlock.update('BODY', self.countTicks)
-        self.tail[0].update('TAIL', self.countTicks)
+            snakeBlock.update('BODY')
+        self.tail[0].update('TAIL')
         
         ########  New Coordinate of snakeBlocks  ############################################################
         self.tail[0].setCoordinate(self.body[len(self.body)-1].x, self.body[len(self.body)-1].y)
@@ -206,9 +214,11 @@ class Snake:
             self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
         
         #######  Update new image for head, body and tail  ##################################################
-        self.head[0].update('HEAD', self.countTicks)
-        newSnakeBlock = SnakeBlock(SNAKE['BODY'][newSnakeBlockDirection][self.countTicks], x=newSnakeBlockCoordinate[0],
-                                   y=newSnakeBlockCoordinate[1], direction=newSnakeBlockDirection)
+        newSnakeBlockIndexFrame = (self.head[0].indexFrame - 1) % 7
+        self.head[0].update('HEAD')
+        newSnakeBlock = SnakeBlock(SNAKE['BODY'][newSnakeBlockDirection][newSnakeBlockIndexFrame], x=newSnakeBlockCoordinate[0],
+                                   y=newSnakeBlockCoordinate[1], direction=newSnakeBlockDirection, 
+                                   indexFrame=self.head[0].indexFrame)
         self.body.insert(0, newSnakeBlock)
         
         
@@ -243,7 +253,7 @@ class Food:
         
         ###########  Default image food  ####################################################################
         self.surface.blit(FOOD[0], (0, 0))
-        self.countTicks = 0
+        self.indexFrame = 0
     
     ###########  Get coordinate of food  ####################################################################
     def coordinate(self):
@@ -251,11 +261,11 @@ class Food:
     
     ###########  Update image of food  ######################################################################
     def update(self):
-        self.countTicks = (self.countTicks + 1) % 4
+        self.indexFrame = (self.indexFrame + 1) % 4
         ###########  Remove old image food  #################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw new image food  ###################################################################
-        self.surface.blit(FOOD[self.countTicks], (0, 0))
+        self.surface.blit(FOOD[self.indexFrame], (0, 0))
     
     ###########  Draw Food on another surface  ##############################################################
     def draw(self, parentSurface):
