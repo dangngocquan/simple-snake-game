@@ -3,21 +3,21 @@ import pygame
 import menu
 from menu import Button
 
-###########  SETTING  ###########################################################
+###########  SETTING  #######################################################################################
 CELL_SIZE = 25
 INGAME_WIDTH = 1000
 INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-DEFAULT_SNAKE_SPEED = 5
+DEFAULT_SNAKE_SPEED = 4
 DEFAULT_SNAKE_CHANGE_COLOR_SPEED = 2
 DEFAULT_MAX_FOOD = 7
 
 
-###########  COLOR  ###########################################################
+###########  COLOR  #########################################################################################
 GRAY = (111, 111, 111)
 
-###########  IMAGE  #############################################################
+###########  IMAGE  #########################################################################################
 SNAKE = {
     'HEAD' : {},
     'BODY' : {},
@@ -26,22 +26,22 @@ SNAKE = {
 for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
     SNAKE['HEAD'][direction] = []
     for i in range(7):
-        img = pygame.image.load("./assets/images/snake/head/" + str(direction) 
-                                + "/head" + str(direction) + "" + str(i) + ".png")
+        img = pygame.image.load("./assets/images/snake/head/" + direction 
+                                + "/head" + direction + "" + str(i) + ".png")
         img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
         SNAKE['HEAD'][direction].append(img)
 for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
     SNAKE['BODY'][direction] = []
     for i in range(7):
-        img = pygame.image.load("./assets/images/snake/body/" + str(direction)
-                                + "/body" + str(direction) + "" + str(i) + ".png", )
+        img = pygame.image.load("./assets/images/snake/body/" + direction
+                                + "/body" + direction + "" + str(i) + ".png", )
         img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
         SNAKE['BODY'][direction].append(img)
 for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
     SNAKE['TAIL'][direction] = []
     for i in range(7):
-        img = pygame.image.load("./assets/images/snake/tail/" + str(direction)
-                                + "/tail" + str(direction) + "" + str(i) + ".png")
+        img = pygame.image.load("./assets/images/snake/tail/" + direction
+                                + "/tail" + direction + "" + str(i) + ".png")
         img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
         SNAKE['TAIL'][direction].append(img)
 FOOD = []
@@ -146,8 +146,16 @@ class Snake:
             return False
         return True
     
+    ###########   Check if snake is eating food   ##########################################################
+    def eatingFood(self, foodList):
+        for food in foodList:
+            if self.head[0].coordinate() == food.coordinate():
+                foodList.remove(food)
+                return True
+        return False
+    
     ##   Update Coordinate and Direction of head, body and tail when snake move with current direction   ####
-    def move(self):
+    def onlyMove(self):
         if self.currentDirection == None:
             return
         
@@ -155,7 +163,7 @@ class Snake:
         self.head[0].direction = self.head[0].direction[1] + self.currentDirection[0]
         self.tail[0].direction = self.body[len(self.body) - 1].direction
         for index in range(len(self.body) - 1, 0, -1):
-            self.body[index].coordinate = self.body[index-1].direction
+            self.body[index].direction = self.body[index-1].direction
         self.body[0].direction = self.head[0].direction
         
         #######  Update new image for head, body and tail  ##################################################
@@ -169,21 +177,53 @@ class Snake:
         for index in range(len(self.body) - 1, 0, -1):
             self.body[index].setCoordinate(self.body[index-1].x, self.body[index-1].y)
         self.body[0].setCoordinate(self.head[0].x, self.head[0].y)
-        if self.currentDirection[0] == 'U':
+        if self.currentDirection == 'UU':
             self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % INGAME_HEIGHT)
-        elif self.currentDirection[0] == 'D':
+        elif self.currentDirection == 'DD':
             self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % INGAME_HEIGHT)
-        elif self.currentDirection[0] == 'R':
+        elif self.currentDirection == 'RR':
             self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
-        elif self.currentDirection[0] == 'L':
+        elif self.currentDirection == 'LL':
             self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
             
+    def moveAndGrowUp(self):
+        if self.currentDirection == None:
+            return
+        
+        ########  Correct direction for head, body and tail  ################################################
+        self.head[0].direction = self.head[0].direction[1] + self.currentDirection[0]
+        newSnakeBlockDirection = self.head[0].direction
+        
+        ########  New Coordinate of snakeBlocks  ############################################################
+        newSnakeBlockCoordinate = [self.head[0].x, self.head[0].y]
+        if self.currentDirection == 'UU':
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % INGAME_HEIGHT)
+        elif self.currentDirection == 'DD':
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % INGAME_HEIGHT)
+        elif self.currentDirection == 'RR':
+            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
+        elif self.currentDirection == 'LL':
+            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
+        
+        #######  Update new image for head, body and tail  ##################################################
+        self.head[0].update('HEAD', self.countTicks)
+        newSnakeBlock = SnakeBlock(SNAKE['BODY'][newSnakeBlockDirection][self.countTicks], x=newSnakeBlockCoordinate[0],
+                                   y=newSnakeBlockCoordinate[1], direction=newSnakeBlockDirection)
+        self.body.insert(0, newSnakeBlock)
+        
+        
     ###########   Update status of snake   ##################################################################
-    def update(self):
-        self.move()
+    def update(self, foodList):
+        if self.eatingFood(foodList):
+            self.moveAndGrowUp()
+        else:
+            self.onlyMove()
+        
         self.surface.fill((0, 0, 0, 0))
-        for snakeBlock in (self.tail + self.body + self.head):
-            snakeBlock.draw(self.surface)
+        self.tail[0].draw(self.surface)
+        for index in range(len(self.body) - 1, -1, -1):
+            self.body[index].draw(self.surface)
+        self.head[0].draw(self.surface)
     
     ###########   Draw snake on another surface   ###########################################################
     def draw(self, parentSurface):
@@ -239,21 +279,25 @@ class FoodManager:
         return [food.coordinate() for food in self.listFood]
     
     ###########  Create a random Food  ######################################################################
-    def createRandomValidFood(self, coordinateSnakeBlocks=[]):
-        if len(self.listFood) + len(coordinateSnakeBlocks) >= NUMBER_ROWS * NUMBER_COLUMNS:
+    def createRandomValidFood(self, coordinateSnakeBlockss=[]):
+        if len(self.listFood) + len(coordinateSnakeBlockss) >= NUMBER_ROWS * NUMBER_COLUMNS:
             return None
         randomX = random.randint(0, NUMBER_COLUMNS-1) * CELL_SIZE
         randomY = random.randint(0, NUMBER_ROWS-1) * CELL_SIZE
-        while ([randomX, randomY] in (self.coordinateFoods() + coordinateSnakeBlocks)):
+        while ([randomX, randomY] in (self.coordinateFoods() + coordinateSnakeBlockss)):
             randomX = random.randint(0, NUMBER_COLUMNS-1) * CELL_SIZE
             randomY = random.randint(0, NUMBER_ROWS-1) * CELL_SIZE
         return Food(randomX, randomY)
     
     ###########  Update status food man #####################################################################
-    def update(self, coordinateSnakeBlocks):
+    def update(self, coordinateSnakeBlockss):
         ###########  Supplement the Food Manager  ###########################################################
         while len(self.listFood) < self.maxFood:
-            self.listFood.append(self.createRandomValidFood(coordinateSnakeBlocks))
+            randomValidFood = self.createRandomValidFood(coordinateSnakeBlockss)
+            if randomValidFood == None:
+                break
+            else:
+                self.listFood.append(randomValidFood)
         ###########  Remove old image foods  ################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw all new image foods  ##############################################################
@@ -302,7 +346,7 @@ class InGame:
             self.descriptionText.draw(self.surface)
             self.descriptionText.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
         elif self.running:
-            self.snake.update()
+            self.snake.update(self.foodManager.listFood)
             self.foodManager.update(self.snake.coordinateSnakeBlocks())
             self.scoreText.update(f"Score: {self.score}", menu.SMALL_FONT, 'R')
             self.grid.draw(self.surface)

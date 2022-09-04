@@ -1,11 +1,11 @@
 import pygame
 
 
-###########  FPS  ############################################################################
+###########  FPS  ###########################################################################################
 MENU_CHANGE_COLOR_SPEED = 5
 
 
-###########  FONT  ############################################################################
+###########  FONT  ##########################################################################################
 pygame.font.init()
 SIMPLE_SNAKE_FONT = pygame.font.SysFont('algerian', 96)
 TITLE_FONT = pygame.font.SysFont('castellar', 48)
@@ -14,14 +14,14 @@ TITLE_FONT2 = pygame.font.SysFont('chiller', 48)
 SMALL_FONT = pygame.font.SysFont('curlz', 28)
 
 
-###########  COLOR  ###########################################################################
+###########  COLOR  #########################################################################################
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 
-###########  CLASS BUTTON  ####################################################################
+###########  CLASS BUTTON  ##################################################################################
 class Button:
-    ###########  Constructor  ################################################################
+    ###########  Constructor  ###############################################################################
     def __init__(self, text, font, x, y):
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
@@ -32,13 +32,13 @@ class Button:
         self.value = 255
         self.valueStatus = 1
     
-    ###########  Update text, font, coordinate and color of Button  ##########################
+    ###########  Update text, font, coordinate and color of Button  #########################################
     def update(self, text, font, color='G'):
-        ###########  Update text, font, coordinate   #########################################
+        ###########  Update text, font, coordinate   ########################################################
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
         self.textRect.center = (self.x, self.y)
-        ###########  Update color   ##########################################################
+        ###########  Update color   #########################################################################
         if self.isChosen:
             if self.value == 255 or self.value == 55:
                 self.valueStatus *= -1
@@ -54,30 +54,30 @@ class Button:
             self.valueStatus = 1
             self.text = font.render(text, True, (self.value, 255, self.value), None)
             
-    ###########  Draw button in another surface  ##############################################
+    ###########  Draw button in another surface  ############################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.text, self.textRect)
   
         
-###########  CLASS MAIN MENU  #################################################################
+###########  CLASS MAIN MENU  ###############################################################################
 class MainMenu:
-    ###########  Constructor  ################################################################
+    ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
-        ###########  Surface, cursor   #######################################################
+        ###########  Surface, cursor   ######################################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = MENU_CHANGE_COLOR_SPEED
         self.cursor = 0
         
-        ########### Buttons   ####################################################################
+        ########### Buttons   ###############################################################################
         self.titleSimpleSnake = Button("SIMPLE SNAKE", SIMPLE_SNAKE_FONT, width//2, height//6)
         self.titlePlayGame = Button("PLAY GAME", TITLE_FONT, width//2, height*5//12)
         self.titleOptions = Button("OPTIONS", TITLE_FONT, width//2, height*7//12)
         
-    ###########  Update cursor and button status in Main Menu #####################################  
+    ###########  Update cursor and button status in Main Menu ###############################################
     def update(self):
-        ###########  Update cursor and button of main menu  #####################################
+        ###########  Update cursor and button of main menu  #################################################
         if self.cursor == 0:
             self.titlePlayGame.isChosen = True
             self.titleOptions.isChosen = False
@@ -89,30 +89,30 @@ class MainMenu:
             self.titlePlayGame.update('PLAY GAME', TITLE_FONT)
             self.titleOptions.update('OPTIONS', TITLE_FONT_HORVED)
         
-        ###########  Remove old button display  #########################################################
+        ###########  Remove old button display  #############################################################
         self.surface.fill((0, 0, 0, 0))
-        ###########  Draw new button   #########################################################
+        ###########  Draw new button   ######################################################################
         self.titleSimpleSnake.draw(self.surface)
         self.titlePlayGame.draw(self.surface)
         self.titleOptions.draw(self.surface)
     
-    ###########  Draw Main Menu in another surface  ##############################################
+    ###########  Draw Main Menu in another surface  #########################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
         
 
-###########  CLASS PLAY GAME MENU  ############################################################
+###########  CLASS PLAY GAME MENU  ##########################################################################
 class PlayGameMenu:
-    ###########  Constructor  ################################################################
+    ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
-        ###########  Surface, cursor and coordinate center  #######################################################
+        ###########  Surface, cursor and coordinate center  #################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = MENU_CHANGE_COLOR_SPEED
         self.cursor = 0
         
-        ########### Buttons   ####################################################################
+        ########### Buttons in Play Game Menu  ##############################################################
         self.titleNewGame = Button("NEW GAME", TITLE_FONT, width//2, height*4//12)
         self.titleContinueGame = Button("CONTINUE GAME", TITLE_FONT, width//2, height*6//12)
         self.titleBack = Button("BACK", TITLE_FONT, width//2, height*8//12)
@@ -149,7 +149,7 @@ class PlayGameMenu:
         self.titleContinueGame.draw(self.surface)
         self.titleBack.draw(self.surface)
     
-    ###########  Draw PlayGame Menu in another surface  ##############################################
+    ###########  Draw PlayGame Menu in another surface  #####################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
         
