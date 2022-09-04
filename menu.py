@@ -21,6 +21,7 @@ BLACK = (0, 0, 0)
 
 ###########  CLASS BUTTON  ####################################################################
 class Button:
+    ###########  Constructor  ################################################################
     def __init__(self, text, font, x, y):
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
@@ -31,10 +32,13 @@ class Button:
         self.value = 255
         self.valueStatus = 1
     
+    ###########  Update text, font, coordinate and color of Button  ##########################
     def update(self, text, font, color='G'):
+        ###########  Update text, font, coordinate   #########################################
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
         self.textRect.center = (self.x, self.y)
+        ###########  Update color   ##########################################################
         if self.isChosen:
             if self.value == 255 or self.value == 55:
                 self.valueStatus *= -1
@@ -50,31 +54,30 @@ class Button:
             self.valueStatus = 1
             self.text = font.render(text, True, (self.value, 255, self.value), None)
             
-    
+    ###########  Draw button in another surface  ##############################################
     def draw(self, parentSurface):
         parentSurface.blit(self.text, self.textRect)
   
         
 ###########  CLASS MAIN MENU  #################################################################
 class MainMenu:
+    ###########  Constructor  ################################################################
     def __init__(self, x, y, width, height):
+        ###########  Surface, cursor   #######################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = MENU_CHANGE_COLOR_SPEED
         self.cursor = 0
         
+        ########### Buttons   ####################################################################
         self.titleSimpleSnake = Button("SIMPLE SNAKE", SIMPLE_SNAKE_FONT, width//2, height//6)
-        self.titleSimpleSnake.draw(self.surface)
-        
         self.titlePlayGame = Button("PLAY GAME", TITLE_FONT, width//2, height*5//12)
-        self.titlePlayGame.draw(self.surface)
-        
         self.titleOptions = Button("OPTIONS", TITLE_FONT, width//2, height*7//12)
-        self.titleOptions.draw(self.surface)
         
-        
+    ###########  Update cursor and button status in Main Menu #####################################  
     def update(self):
+        ###########  Update cursor and button of main menu  #####################################
         if self.cursor == 0:
             self.titlePlayGame.isChosen = True
             self.titleOptions.isChosen = False
@@ -86,35 +89,37 @@ class MainMenu:
             self.titlePlayGame.update('PLAY GAME', TITLE_FONT)
             self.titleOptions.update('OPTIONS', TITLE_FONT_HORVED)
         
+        ###########  Remove old button display  #########################################################
         self.surface.fill((0, 0, 0, 0))
+        ###########  Draw new button   #########################################################
         self.titleSimpleSnake.draw(self.surface)
         self.titlePlayGame.draw(self.surface)
         self.titleOptions.draw(self.surface)
-        
+    
+    ###########  Draw Main Menu in another surface  ##############################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
         
 
 ###########  CLASS PLAY GAME MENU  ############################################################
 class PlayGameMenu:
+    ###########  Constructor  ################################################################
     def __init__(self, x, y, width, height):
+        ###########  Surface, cursor and coordinate center  #######################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = MENU_CHANGE_COLOR_SPEED
         self.cursor = 0
         
+        ########### Buttons   ####################################################################
         self.titleNewGame = Button("NEW GAME", TITLE_FONT, width//2, height*4//12)
-        self.titleNewGame.draw(self.surface)
-        
         self.titleContinueGame = Button("CONTINUE GAME", TITLE_FONT, width//2, height*6//12)
-        self.titleContinueGame.draw(self.surface)
-        
         self.titleBack = Button("BACK", TITLE_FONT, width//2, height*8//12)
-        self.titleBack.draw(self.surface)
         
-    
+    ###########   Update cursor and buttons status in Play Game Menu   ######################################
     def update(self):
+        ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleNewGame.isChosen = True
             self.titleContinueGame.isChosen = False
@@ -136,12 +141,15 @@ class PlayGameMenu:
             self.titleNewGame.update('NEW GAME', TITLE_FONT)
             self.titleContinueGame.update('CONTINUE GAME', TITLE_FONT)
             self.titleBack.update('BACK', TITLE_FONT_HORVED)
-            
+        
+        ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
         self.titleNewGame.draw(self.surface)
         self.titleContinueGame.draw(self.surface)
         self.titleBack.draw(self.surface)
-        
+    
+    ###########  Draw PlayGame Menu in another surface  ##############################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
         
