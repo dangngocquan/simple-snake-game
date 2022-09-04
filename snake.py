@@ -7,7 +7,7 @@ INGAME_WIDTH = 1000
 INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-DEFAULT_SNAKE_SPEED = 4
+DEFAULT_SNAKE_SPEED = 15
 DEFAULT_SNAKE_FRAME_TRANSITON_SPEED = 2
 
 ###########  COLOR  #########################################################################################
@@ -82,6 +82,8 @@ class SnakeBlock:
     ###########   Draw SnakeBlock in another surface   ######################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
+      
+      
         
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
@@ -192,7 +194,11 @@ class Snake:
                                    y=newSnakeBlockCoordinate[1], direction=newSnakeBlockDirection, 
                                    indexFrame=self.head[0].indexFrame)
         self.body.insert(0, newSnakeBlock)
-        
+    
+    
+    def died(self):
+        return self.head[0].coordinate() in [snakeBlock.coordinate() for snakeBlock in (self.body + self.tail)]
+    
         
     ###########   Update snake displacement  ################################################################
     def updateDisplacement(self, foodList):

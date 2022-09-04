@@ -8,11 +8,9 @@ INGAME_WIDTH = 1000
 INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-DEFAULT_SNAKE_SPEED = 4
-DEFAULT_SNAKE_FRAME_TRANSITON_SPEED = 2
 DEFAULT_MAX_FOOD = 7
 
-###########  IMAGE  #########################################################################################
+###########  IMAGES  ########################################################################################
 FOOD = []
 for i in range(4):
     img = pygame.image.load("./assets/images/food/food" + str(i) + ".png")
@@ -79,7 +77,7 @@ class FoodManager:
         return Food(randomX, randomY)
     
     ###########  Update status food man #####################################################################
-    def update(self, coordinateSnakeBlockss):
+    def supplementFood(self, coordinateSnakeBlockss):
         ###########  Supplement the Food Manager  ###########################################################
         while len(self.listFood) < self.maxFood:
             randomValidFood = self.createRandomValidFood(coordinateSnakeBlockss)

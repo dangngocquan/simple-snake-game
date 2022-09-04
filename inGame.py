@@ -39,10 +39,14 @@ class InGame:
         self.grid = Grid(0, 0)
         self.snake = snake
         self.foodManager = foodManager
-        self.descriptionText = Button("Press SPACE to start", menu.TITLE_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*9//12)
-        self.descriptionText.isChosen = True
-        self.scoreText = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
-        self.scoreText.isChosen = True
+        self.descriptionTextScreenStart = Button("Press SPACE to start", menu.TITLE_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*11//12)
+        self.descriptionTextScreenStart.isChosen = True
+        self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
+        self.scoreTextScreenRunning.isChosen = True
+        self.gameOverTextScreenEnd = Button("GAME OVER", menu.SIMPLE_SNAKE_FONT, INGAME_WIDTH//2, INGAME_HEIGHT*2//12)
+        self.gameOverTextScreenEnd.isChosen = False
+        self.scoreTextScreenEnd = Button(f"Your score: {self.snake.score}", menu.MEDIUM_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*4//12)
+        self.scoreTextScreenEnd.isChosen = False
         
     ###########   Update screen    ##########################################################################
     def update(self):
@@ -52,22 +56,27 @@ class InGame:
         if self.showingScreenStart:
             self.grid.draw(self.surface)
             self.snake.draw(self.surface)
-            self.descriptionText.draw(self.surface)
-            self.descriptionText.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
+            self.descriptionTextScreenStart.draw(self.surface)
+            self.descriptionTextScreenStart.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
         elif self.running:
             self.snake.updateDisplacement(self.foodManager.listFood)
-            self.foodManager.update(self.snake.coordinateSnakeBlocks())
-            self.scoreText.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
+            self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
+            self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
             self.grid.draw(self.surface)
             self.foodManager.draw(self.surface)
-            self.scoreText.draw(self.surface)
+            self.scoreTextScreenRunning.draw(self.surface)
             self.snake.draw(self.surface)
+            if self.snake.died():
+                self.running = False
+                self.showingScreenEnd = True
         elif self.waiting:
             pass
         elif self.showingScreenEnd:
-            self.grid.draw(self.surface)
-            self.foodManager.draw(self.surface)
+            self.snake.updateFrame()
             self.snake.draw(self.surface)
+            self.gameOverTextScreenEnd.draw(self.surface)
+            self.scoreTextScreenEnd.update(f"Your score: {self.snake.score}", menu.MEDIUM_FONT2)
+            self.scoreTextScreenEnd.draw(self.surface)
             
     def updateOnlySnakeFrame(self):
         ###########   Remove old screen   ###################################################################
@@ -79,7 +88,7 @@ class InGame:
             self.snake.updateFrame()
             self.grid.draw(self.surface)
             self.foodManager.draw(self.surface)
-            self.scoreText.draw(self.surface)
+            self.scoreTextScreenRunning.draw(self.surface)
             self.snake.draw(self.surface)
         elif self.waiting:
             pass

@@ -11,7 +11,9 @@ SIMPLE_SNAKE_FONT = pygame.font.SysFont('algerian', 96)
 TITLE_FONT = pygame.font.SysFont('castellar', 48)
 TITLE_FONT_HORVED = pygame.font.SysFont('castellar', 56)
 TITLE_FONT2 = pygame.font.SysFont('chiller', 48)
-SMALL_FONT = pygame.font.SysFont('curlz', 28)
+MEDIUM_FONT = pygame.font.SysFont('castellar', 36)
+MEDIUM_FONT2 = pygame.font.SysFont('chiller', 36)
+SMALL_FONT = pygame.font.SysFont('castellar', 22)
 
 
 ###########  COLOR  #########################################################################################
