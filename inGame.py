@@ -10,7 +10,7 @@ INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
 DEFAULT_SNAKE_SPEED = 4
-DEFAULT_SNAKE_CHANGE_COLOR_SPEED = 2
+DEFAULT_SNAKE_CHANGE_FRAME_SPEED = 2
 DEFAULT_MAX_FOOD = 7
 
 
@@ -129,7 +129,7 @@ class Snake:
         
         ###########   Speed, Direction of Snake #############################################################
         self.speed = speed
-        self.changeColorSpeed = DEFAULT_SNAKE_CHANGE_COLOR_SPEED
+        self.changeFrameSpeed = DEFAULT_SNAKE_CHANGE_FRAME_SPEED
         self.currentDirection = currentDirection
         self.score = score
 
@@ -169,12 +169,6 @@ class Snake:
         for index in range(len(self.body) - 1, 0, -1):
             self.body[index].direction = self.body[index-1].direction
         self.body[0].direction = self.head[0].direction
-        
-        #######  Update indexFrame for snakeBlocks  #########################################################
-        self.body[0].indexFrame = (self.head[0].indexFrame + 1) % 7
-        for index in range(1, len(self.body)):
-            self.body[index].indexFrame = (self.body[index-1].indexFrame + 1) % 7
-        self.tail[0].indexFrame = (self.body[len(self.body)-1].indexFrame + 1) % 7
         
         #######  Update new image for head, body and tail  ##################################################
         self.head[0].update('HEAD')
@@ -216,7 +210,8 @@ class Snake:
             self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
         
         #######  Update new image for head, body and tail  ##################################################
-        newSnakeBlockIndexFrame = (self.head[0].indexFrame - 1) % 7
+        newSnakeBlockIndexFrame = self.head[0].indexFrame
+        self.head[0].indexFrame = (self.head[0].indexFrame -1) % 7
         self.head[0].update('HEAD')
         newSnakeBlock = SnakeBlock(SNAKE['BODY'][newSnakeBlockDirection][newSnakeBlockIndexFrame], x=newSnakeBlockCoordinate[0],
                                    y=newSnakeBlockCoordinate[1], direction=newSnakeBlockDirection, 
@@ -224,12 +219,28 @@ class Snake:
         self.body.insert(0, newSnakeBlock)
         
         
-    ###########   Update status of snake   ##################################################################
-    def update(self, foodList):
+    ###########   Update snake displacement  ################################################################
+    def updateDisplacement(self, foodList):
         if self.eatingFood(foodList):
             self.moveAndGrowUp()
         else:
             self.onlyMove()
+        
+        self.surface.fill((0, 0, 0, 0))
+        self.tail[0].draw(self.surface)
+        for index in range(len(self.body) - 1, -1, -1):
+            self.body[index].draw(self.surface)
+        self.head[0].draw(self.surface)
+        
+    
+    def updateFrame(self):
+        self.head[0].indexFrame = (self.head[0].indexFrame - 1) % 7
+        self.head[0].update('HEAD')
+        for snakeBlock in self.body :
+            snakeBlock.indexFrame = (snakeBlock.indexFrame - 1) % 7
+            snakeBlock.update('BODY')
+        self.tail[0].indexFrame = (self.tail[0].indexFrame - 1) % 7
+        self.tail[0].update('TAIL')
         
         self.surface.fill((0, 0, 0, 0))
         self.tail[0].draw(self.surface)
@@ -263,7 +274,7 @@ class Food:
     
     ###########  Update image of food  ######################################################################
     def update(self):
-        self.indexFrame = (self.indexFrame + 1) % 4
+        # self.indexFrame = (self.indexFrame + 1) % 4
         ###########  Remove old image food  #################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw new image food  ###################################################################
@@ -352,14 +363,33 @@ class InGame:
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new screen with current status   #################################################
         if self.showingScreenStart:
-            self.snake.draw(self.surface)
             self.grid.draw(self.surface)
+            self.snake.draw(self.surface)
             self.descriptionText.draw(self.surface)
             self.descriptionText.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
         elif self.running:
-            self.snake.update(self.foodManager.listFood)
+            self.snake.updateDisplacement(self.foodManager.listFood)
             self.foodManager.update(self.snake.coordinateSnakeBlocks())
             self.scoreText.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
+            self.grid.draw(self.surface)
+            self.foodManager.draw(self.surface)
+            self.scoreText.draw(self.surface)
+            self.snake.draw(self.surface)
+        elif self.waiting:
+            pass
+        elif self.showingScreenEnd:
+            self.grid.draw(self.surface)
+            self.foodManager.draw(self.surface)
+            self.snake.draw(self.surface)
+            
+    def updateOnlySnakeFrame(self):
+        ###########   Remove old screen   ###################################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new screen with current status   #################################################
+        if self.showingScreenStart:
+            pass
+        elif self.running:
+            self.snake.updateFrame()
             self.grid.draw(self.surface)
             self.foodManager.draw(self.surface)
             self.scoreText.draw(self.surface)
