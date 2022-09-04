@@ -1,3 +1,4 @@
+import random
 import pygame
 import menu
 from menu import Button
@@ -129,6 +130,10 @@ class Snake:
         self.currentDirection = currentDirection
         self.countTicks = 0
 
+    ###########  Get all coordinate of Snake Blocks #########################################################
+    def coordinateSnakeBlocks(self):
+        return [snakeBlock.coordinate() for snakeBlock in (self.head + self.body + self.tail)]
+    
     ###########   Check if snake can move or not with next direction   ######################################
     def checkSnakeCanMove(self, aDirection):
         if aDirection == 'UU' and (self.head[0].y - CELL_SIZE) == self.body[0].y:
@@ -187,32 +192,76 @@ class Snake:
 
 ###########  CLASS FOOD  ####################################################################################
 class Food:
-    def __init__(self, image, x, y):
+    ########### Constructor  ################################################################################
+    def __init__(self, x, y):
+        ###########  Create surface   #######################################################################
         self.surface = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (x, y)
+        self.x = x
+        self.y = y
         
-        self.surface.blit(image, (0, 0))
-        
-    def update(self):
-        pass
+        ###########  Default image food  ####################################################################
+        self.surface.blit(FOOD[0], (0, 0))
+        self.countTicks = 0
     
+    ###########  Get coordinate of food  ####################################################################
+    def coordinate(self):
+        return [self.x, self.y]
+    
+    ###########  Update image of food  ######################################################################
+    def update(self):
+        self.countTicks = (self.countTicks + 1) % 4
+        ###########  Remove old image food  #################################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########  Draw new image food  ###################################################################
+        self.surface.blit(FOOD[self.countTicks], (0, 0))
+    
+    ###########  Draw Food on another surface  ##############################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
 
 
 ###########  CLASS FOOD MANAGER  ############################################################################
 class FoodManager:
+    ###########  Constructor  ###############################################################################
     def __init__(self):
+        ###########  Surface and coordinate #################################################################
         self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
+        ###########  List food anf  number of foods  ########################################################
         self.listFood = []
         self.maxFood = DEFAULT_MAX_FOOD
     
-    def update(self):
-        pass
+    ###########  Get coordinate of all foods ################################################################
+    def coordinateFoods(self):
+        return [food.coordinate() for food in self.listFood]
     
+    ###########  Create a random Food  ######################################################################
+    def createRandomValidFood(self, coordinateSnakeBlocks=[]):
+        if len(self.listFood) + len(coordinateSnakeBlocks) >= NUMBER_ROWS * NUMBER_COLUMNS:
+            return None
+        randomX = random.randint(0, NUMBER_COLUMNS-1) * CELL_SIZE
+        randomY = random.randint(0, NUMBER_ROWS-1) * CELL_SIZE
+        while ([randomX, randomY] in (self.coordinateFoods() + coordinateSnakeBlocks)):
+            randomX = random.randint(0, NUMBER_COLUMNS-1) * CELL_SIZE
+            randomY = random.randint(0, NUMBER_ROWS-1) * CELL_SIZE
+        return Food(randomX, randomY)
+    
+    ###########  Update status food man #####################################################################
+    def update(self, coordinateSnakeBlocks):
+        ###########  Supplement the Food Manager  ###########################################################
+        while len(self.listFood) < self.maxFood:
+            self.listFood.append(self.createRandomValidFood(coordinateSnakeBlocks))
+        ###########  Remove old image foods  ################################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########  Draw all new image foods  ##############################################################
+        for food in self.listFood:
+            food.update()
+            food.draw(self.surface)
+        
+    ###########  Draw all foods on another surface  #########################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)   
 
@@ -254,8 +303,10 @@ class InGame:
             self.descriptionText.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
         elif self.running:
             self.snake.update()
+            self.foodManager.update(self.snake.coordinateSnakeBlocks())
             self.scoreText.update(f"Score: {self.score}", menu.SMALL_FONT, 'R')
             self.grid.draw(self.surface)
+            self.foodManager.draw(self.surface)
             self.scoreText.draw(self.surface)
             self.snake.draw(self.surface)
         elif self.waiting:

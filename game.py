@@ -5,13 +5,13 @@ import pygame
 from menu import MainMenu, PlayGameMenu
 from inGame import InGame
 
-###########  SCREEN SETTING  ####################################################
+###########  SCREEN SETTING  ################################################################################
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 SCREEN_CAPTION = "Simple Snake Gameeee"
 FPS = 60
 
-###########  COLOR  #############################################################
+###########  COLOR  #########################################################################################
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
@@ -19,7 +19,7 @@ BLACK = (0, 0, 0)
 class Game:
     ###########   Constructor   #############################################################################
     def __init__(self):
-        ###########   Create window game, caption, clock   #######################################################
+        ###########   Create window game, caption, clock   ##################################################
         pygame.init()
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption(SCREEN_CAPTION)
@@ -56,7 +56,7 @@ class Game:
                 self.running =False
                 pygame.quit()
                 sys.exit()
-            ###########   Get events when current screen is Main Menu   #########################################
+            ###########   Get events when current screen is Main Menu   #####################################
             if self.runningMainMenu:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
@@ -127,7 +127,7 @@ class Game:
             elif self.runningContinueGameMenu:
                 pass
                         
-    ###########   Update status in game   ###################################################################         
+    ###########   Update screen with current status   #######################################################       
     def update(self):
         if self.runningInGame:
             if self.inGame.showingScreenStart or self.inGame.showingScreenEnd:
@@ -146,7 +146,7 @@ class Game:
             if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                 self.playGameMenu.update()
         
-    ###########   Draw new screen and show it   #############################################################
+    ###########   Draw screen with current status and show it   #############################################
     def display(self):
         self.screen.fill(BLACK)
         if self.runningInGame:
