@@ -1,5 +1,7 @@
 import pygame
 
+from snake import Snake
+
 
 ###########  FPS  ###########################################################################################
 MENU_CHANGE_COLOR_SPEED = 5
@@ -156,6 +158,51 @@ class PlayGameMenu:
         parentSurface.blit(self.surface, self.surfaceRect)
         
         
+###########  CLASS GAME OVER MENU  ##########################################################################
+class GameOverMenu:
+    ###########  Constructor  ###############################################################################
+    def __init__(self, x, y, width, height, score):
+        ###########  Surface, cursor and coordinate center  #################################################
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.center = (x, y)
+        self.FPS = MENU_CHANGE_COLOR_SPEED
+        self.cursor = 0
+        self.score = score
+        
+        ########### Buttons in Play Game Menu  ##############################################################
+        self.titleGameOver = Button("GAME OVER", SIMPLE_SNAKE_FONT, width//2, height*3//12)
+        self.titleScore = Button(f"Your score: {self.score}", MEDIUM_FONT2, width//2, height*5//12)
+        self.titlePlayAgain = Button("PLAY AGAIN", TITLE_FONT, width//2, height*7//12)
+        self.titleBackMainMenu = Button("MAIN MENU", TITLE_FONT, width//2, height*9//12)
+        
+    
+    ###########   Update cursor and buttons status in Game Over Menu   ######################################
+    def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        if self.cursor == 0:
+            self.titlePlayAgain.isChosen = True
+            self.titleBackMainMenu.isChosen = False
+            self.titlePlayAgain.update("PLAY AGAIN", TITLE_FONT_HORVED)
+            self.titleBackMainMenu.update("MAIN MENU", TITLE_FONT)
+        elif self.cursor == 1:
+            self.titlePlayAgain.isChosen = False
+            self.titleBackMainMenu.isChosen = True
+            self.titlePlayAgain.update("PLAY AGAIN", TITLE_FONT)
+            self.titleBackMainMenu.update('MAIN MENU', TITLE_FONT_HORVED)
+        
+        ###########   Remove old button display   ###########################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
+        self.titleScore.update(f"Your score: {self.score}", MEDIUM_FONT2)
+        self.titleGameOver.draw(self.surface)
+        self.titleScore.draw(self.surface)
+        self.titlePlayAgain.draw(self.surface)
+        self.titleBackMainMenu.draw(self.surface)
+        
+    ###########  Draw PlayGame Menu in another surface  #####################################################
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
         
         
         

@@ -8,7 +8,7 @@ INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
 DEFAULT_SNAKE_SPEED = 15
-DEFAULT_SNAKE_FRAME_TRANSITON_SPEED = 2
+DEFAULT_SNAKE_FRAME_TRANSITION_SPEED = 2
 
 ###########  COLOR  #########################################################################################
 GRAY = (111, 111, 111)
@@ -106,7 +106,7 @@ class Snake:
         
         ###########   Speed, Direction of Snake #############################################################
         self.speed = speed
-        self.changeFrameSpeed = DEFAULT_SNAKE_FRAME_TRANSITON_SPEED
+        self.frameTransitionSpeed = DEFAULT_SNAKE_FRAME_TRANSITION_SPEED
         self.currentDirection = currentDirection
         self.score = score
 

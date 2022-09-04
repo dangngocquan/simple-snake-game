@@ -9,6 +9,7 @@ INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
 DEFAULT_MAX_FOOD = 7
+DEFAULT_FOOD_TRANSITION_SPEED = 6
 
 ###########  IMAGES  ########################################################################################
 FOOD = []
@@ -60,6 +61,7 @@ class FoodManager:
         ###########  List food anf  number of foods  ########################################################
         self.listFood = []
         self.maxFood = DEFAULT_MAX_FOOD
+        self.frameTransitionSpeed = DEFAULT_FOOD_TRANSITION_SPEED
     
     ###########  Get coordinate of all foods ################################################################
     def coordinateFoods(self):
@@ -92,6 +94,14 @@ class FoodManager:
             food.update()
             food.draw(self.surface)
         
+    
+    def updateFrameFoods(self):
+        self.surface.fill((0, 0, 0, 0))
+        for food in self.listFood:
+            food.indexFrame = (food.indexFrame + 1) % 4
+            food.update()
+            food.draw(self.surface)
+    
     ###########  Draw all foods on another surface  #########################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect) 
