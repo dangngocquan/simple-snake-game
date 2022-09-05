@@ -142,6 +142,7 @@ class Game:
                             self.runningMainMenu = True
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
+                        self.inGame.showingScreenStart = True
                         self.runningGameOverMenu = False
                         
                 
@@ -165,18 +166,22 @@ class Game:
                 self.runningGameOverMenu = True
                 self.gameOverMenu = GameOverMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT, self.inGame.snake)
             if self.inGame.showingScreenStart:
+                if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
+                    self.inGame.update(type='UpdateSnakeFrame')
                 if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                     self.inGame.update()
             elif self.inGame.running:
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
-                    self.inGame.updateOnlySnakeFrame()
+                    self.inGame.update(type='UpdateSnakeFrame')
                 if self.countTicks % (FPS * 1000 // self.inGame.foodManager.frameTransitionSpeed) == 0:
-                    self.inGame.updateOnlyFoodFrame()
+                    self.inGame.update(type='UpdateFoodFrame')
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.speed) == 0:
                     self.inGame.update()
             elif self.inGame.waiting:
                 pass
         elif self.runningGameOverMenu:
+            if self.countTicks % (FPS * 1000 // self.inGame.snake.dropSpeed) == 0:
+                    self.gameOverMenu.update(type='UpdateSnakeFrameDrop')
             if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
             

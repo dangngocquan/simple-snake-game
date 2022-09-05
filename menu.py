@@ -178,27 +178,41 @@ class GameOverMenu:
         
     
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
-    def update(self):
-        ###########   Update cursor and buttons   ###########################################################
-        if self.cursor == 0:
-            self.titlePlayAgain.isChosen = True
-            self.titleBackMainMenu.isChosen = False
-            self.titlePlayAgain.update("PLAY AGAIN", TITLE_FONT_HORVED)
-            self.titleBackMainMenu.update("MAIN MENU", TITLE_FONT)
-        elif self.cursor == 1:
-            self.titlePlayAgain.isChosen = False
-            self.titleBackMainMenu.isChosen = True
-            self.titlePlayAgain.update("PLAY AGAIN", TITLE_FONT)
-            self.titleBackMainMenu.update('MAIN MENU', TITLE_FONT_HORVED)
-        
-        ###########   Remove old button display   ###########################################################
-        self.surface.fill((0, 0, 0, 0))
-        ###########   Draw new buttons   ####################################################################
-        self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT2)
-        self.titleGameOver.draw(self.surface)
-        self.titleScore.draw(self.surface)
-        self.titlePlayAgain.draw(self.surface)
-        self.titleBackMainMenu.draw(self.surface)
+    def update(self, type='UpdateTextFrame'):
+        if type == 'UpdateTextFrame':
+            
+            ###########   Update cursor and buttons   ###########################################################
+            if self.cursor == 0:
+                self.titlePlayAgain.isChosen = True
+                self.titleBackMainMenu.isChosen = False
+                self.titlePlayAgain.update("PLAY AGAIN", TITLE_FONT_HORVED)
+                self.titleBackMainMenu.update("MAIN MENU", TITLE_FONT)
+            elif self.cursor == 1:
+                self.titlePlayAgain.isChosen = False
+                self.titleBackMainMenu.isChosen = True
+                self.titlePlayAgain.update("PLAY AGAIN", TITLE_FONT)
+                self.titleBackMainMenu.update('MAIN MENU', TITLE_FONT_HORVED)
+            
+            ###########   Remove old button display   ###########################################################
+            self.surface.fill((0, 0, 0, 0))
+            ###########   Draw new buttons   ####################################################################
+            self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT2)
+            self.snake.draw(self.surface)
+            self.titleGameOver.draw(self.surface)
+            self.titleScore.draw(self.surface)
+            self.titlePlayAgain.draw(self.surface)
+            self.titleBackMainMenu.draw(self.surface)
+        elif type == 'UpdateSnakeFrameDrop':
+            ###########   Remove old button display   ###########################################################
+            self.surface.fill((0, 0, 0, 0))
+            ###########   Draw new buttons   ####################################################################
+            self.snake.drop()
+            self.snake.updateFrame()
+            self.snake.draw(self.surface)
+            self.titleGameOver.draw(self.surface)
+            self.titleScore.draw(self.surface)
+            self.titlePlayAgain.draw(self.surface)
+            self.titleBackMainMenu.draw(self.surface)
         
     ###########  Draw PlayGame Menu in another surface  #####################################################
     def draw(self, parentSurface):

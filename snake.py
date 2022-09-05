@@ -8,6 +8,7 @@ INGAME_HEIGHT = 600
 NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
 NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
 DEFAULT_SNAKE_SPEED = 15
+DEFAULT_SNAKE_DROP_SPEED = 10
 DEFAULT_SNAKE_FRAME_TRANSITION_SPEED = 2
 
 ###########  COLOR  #########################################################################################
@@ -106,6 +107,7 @@ class Snake:
         
         ###########   Speed, Direction of Snake #############################################################
         self.speed = speed
+        self.dropSpeed = DEFAULT_SNAKE_DROP_SPEED
         self.frameTransitionSpeed = DEFAULT_SNAKE_FRAME_TRANSITION_SPEED
         self.currentDirection = currentDirection
         self.score = score
@@ -222,6 +224,18 @@ class Snake:
             snakeBlock.update('BODY')
         self.tail[0].indexFrame = (self.tail[0].indexFrame - 1) % 7
         self.tail[0].update('TAIL')
+        
+        self.surface.fill((0, 0, 0, 0))
+        self.tail[0].draw(self.surface)
+        for index in range(len(self.body) - 1, -1, -1):
+            self.body[index].draw(self.surface)
+        self.head[0].draw(self.surface)
+    
+    def drop(self):
+        for snakeBlock in (self.head + self.body + self.tail):
+            if [snakeBlock.x, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
+                if snakeBlock.y + CELL_SIZE < INGAME_HEIGHT:
+                    snakeBlock.setCoordinate(snakeBlock.x, snakeBlock.y + CELL_SIZE)
         
         self.surface.fill((0, 0, 0, 0))
         self.tail[0].draw(self.surface)

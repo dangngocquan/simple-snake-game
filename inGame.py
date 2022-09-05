@@ -46,56 +46,53 @@ class InGame:
         # self.gameOverMenu = GameOverMenu(INGAME_WIDTH//2, INGAME_HEIGHT//2, INGAME_WIDTH, INGAME_HEIGHT, self.snake.score)
         
     ###########   Update screen    ##########################################################################
-    def update(self):
+    def update(self, type='ProvideFoodsAndUpdateSnakeMove'):
         ###########   Remove old screen   ###################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new screen with current status   #################################################
-        if self.showingScreenStart:
-            self.grid.draw(self.surface)
-            self.snake.draw(self.surface)
-            self.descriptionTextScreenStart.draw(self.surface)
-            self.descriptionTextScreenStart.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
-        elif self.running:
-            self.score = self.snake.score
-            self.snake.updateDisplacement(self.foodManager.listFood)
-            self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
-            self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
-            self.grid.draw(self.surface)
-            self.foodManager.draw(self.surface)
-            self.scoreTextScreenRunning.draw(self.surface)
-            self.snake.draw(self.surface)
-        elif self.waiting:
-            pass
+        if type == 'ProvideFoodsAndUpdateSnakeMove':
+            if self.showingScreenStart:
+                self.grid.draw(self.surface)
+                self.snake.draw(self.surface)
+                self.descriptionTextScreenStart.draw(self.surface)
+                self.descriptionTextScreenStart.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
+            elif self.running:
+                self.score = self.snake.score
+                self.snake.updateDisplacement(self.foodManager.listFood)
+                self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
+                self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
+                self.grid.draw(self.surface)
+                self.foodManager.draw(self.surface)
+                self.scoreTextScreenRunning.draw(self.surface)
+                self.snake.draw(self.surface)
+            elif self.waiting:
+                pass
+        elif type == 'UpdateSnakeFrame':
+            if self.showingScreenStart:
+                self.grid.draw(self.surface)
+                self.snake.updateFrame()
+                self.snake.draw(self.surface)
+                self.descriptionTextScreenStart.draw(self.surface)
+            elif self.running:
+                self.snake.updateFrame()
+                self.grid.draw(self.surface)
+                self.foodManager.draw(self.surface)
+                self.scoreTextScreenRunning.draw(self.surface)
+                self.snake.draw(self.surface)
+            elif self.waiting:
+                pass
+        elif type == 'UpdateFoodFrame':
+            if self.showingScreenStart:
+                pass
+            elif self.running:
+                self.foodManager.updateFrameFoods()
+                self.grid.draw(self.surface)
+                self.foodManager.draw(self.surface)
+                self.scoreTextScreenRunning.draw(self.surface)
+                self.snake.draw(self.surface)
+            elif self.waiting:
+                pass
             
-    def updateOnlySnakeFrame(self):
-        ###########   Remove old screen   ###################################################################
-        self.surface.fill((0, 0, 0, 0))
-        ###########   Draw new screen with current status   #################################################
-        if self.showingScreenStart:
-            pass
-        elif self.running:
-            self.snake.updateFrame()
-            self.grid.draw(self.surface)
-            self.foodManager.draw(self.surface)
-            self.scoreTextScreenRunning.draw(self.surface)
-            self.snake.draw(self.surface)
-        elif self.waiting:
-            pass
-        
-    def updateOnlyFoodFrame(self):
-        ###########   Remove old screen   ###################################################################
-        self.surface.fill((0, 0, 0, 0))
-        ###########   Draw new screen with current status   #################################################
-        if self.showingScreenStart:
-            pass
-        elif self.running:
-            self.foodManager.updateFrameFoods()
-            self.grid.draw(self.surface)
-            self.foodManager.draw(self.surface)
-            self.scoreTextScreenRunning.draw(self.surface)
-            self.snake.draw(self.surface)
-        elif self.waiting:
-            pass
 
     ###########   Draw current screen on anthor surface  ####################################################
     def draw(self, parentSurface):
