@@ -135,8 +135,12 @@ class Game:
                 ###########   Get events when snake moving   ################################################
                 elif self.inGame.running:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_SPACE or event.key == pygame.K_ESCAPE:
-                            pass
+                        if event.key == pygame.K_SPACE:
+                            if self.inGame.snake.currentDirection != None:
+                                self.inGame.snake.previousDirection = self.inGame.snake.currentDirection
+                                self.inGame.snake.currentDirection = None
+                            else:
+                                self.inGame.snake.currentDirection = self.inGame.snake.previousDirection
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
                             if self.inGame.snake.currentDirection != 'DD' and self.inGame.snake.checkSnakeCanMove('UU'):
                                 self.inGame.snake.currentDirection = 'UU'

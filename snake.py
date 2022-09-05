@@ -45,7 +45,7 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, speed=DEFAULT_SNAKE_SPEED, currentDirection='UU', score=0):
+    def __init__(self, speed=DEFAULT_SNAKE_SPEED, currentDirection='UU', previousDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
         self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -66,6 +66,7 @@ class Snake:
         self.dropSpeed = DEFAULT_SNAKE_DROP_SPEED
         self.frameTransitionSpeed = DEFAULT_SNAKE_FRAME_TRANSITION_SPEED
         self.currentDirection = currentDirection
+        self.previousDirection = previousDirection
         self.score = score
 
     ###########  Get all coordinate of Snake Blocks #########################################################
