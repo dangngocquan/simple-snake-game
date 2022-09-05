@@ -161,18 +161,18 @@ class PlayGameMenu:
 ###########  CLASS GAME OVER MENU  ##########################################################################
 class GameOverMenu:
     ###########  Constructor  ###############################################################################
-    def __init__(self, x, y, width, height, score):
+    def __init__(self, x, y, width, height, snake=Snake()):
         ###########  Surface, cursor and coordinate center  #################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = MENU_CHANGE_COLOR_SPEED
         self.cursor = 0
-        self.score = score
+        self.snake = snake
         
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("GAME OVER", SIMPLE_SNAKE_FONT, width//2, height*3//12)
-        self.titleScore = Button(f"Your score: {self.score}", MEDIUM_FONT2, width//2, height*5//12)
+        self.titleScore = Button(f"Your score: {self.snake.score}", MEDIUM_FONT2, width//2, height*5//12)
         self.titlePlayAgain = Button("PLAY AGAIN", TITLE_FONT, width//2, height*7//12)
         self.titleBackMainMenu = Button("MAIN MENU", TITLE_FONT, width//2, height*9//12)
         
@@ -194,7 +194,7 @@ class GameOverMenu:
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
-        self.titleScore.update(f"Your score: {self.score}", MEDIUM_FONT2)
+        self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT2)
         self.titleGameOver.draw(self.surface)
         self.titleScore.draw(self.surface)
         self.titlePlayAgain.draw(self.surface)

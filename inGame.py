@@ -33,7 +33,7 @@ class InGame:
         self.showingScreenStart = False
         self.running = False
         self.waiting = False
-        self.showingScreenEnd = False
+        # self.showingScreenEnd = False
         
         ###########   Object in game    #####################################################################
         self.grid = Grid(0, 0)
@@ -56,6 +56,7 @@ class InGame:
             self.descriptionTextScreenStart.draw(self.surface)
             self.descriptionTextScreenStart.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
         elif self.running:
+            self.score = self.snake.score
             self.snake.updateDisplacement(self.foodManager.listFood)
             self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
             self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
@@ -65,15 +66,6 @@ class InGame:
             self.snake.draw(self.surface)
         elif self.waiting:
             pass
-        elif self.showingScreenEnd:
-            pass
-            # self.gameOverMenu.update()
-            # self.gameOverMenu.draw(self.surface)
-        if self.snake.died():
-                self.snake = Snake()
-                self.foodManager = FoodManager()
-                self.running = False
-                self.showingScreenStart = True
             
     def updateOnlySnakeFrame(self):
         ###########   Remove old screen   ###################################################################
@@ -89,8 +81,6 @@ class InGame:
             self.snake.draw(self.surface)
         elif self.waiting:
             pass
-        elif self.showingScreenEnd:
-            pass
         
     def updateOnlyFoodFrame(self):
         ###########   Remove old screen   ###################################################################
@@ -105,8 +95,6 @@ class InGame:
             self.scoreTextScreenRunning.draw(self.surface)
             self.snake.draw(self.surface)
         elif self.waiting:
-            pass
-        elif self.showingScreenEnd:
             pass
 
     ###########   Draw current screen on anthor surface  ####################################################
