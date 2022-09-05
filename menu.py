@@ -59,6 +59,7 @@ class MainMenu:
         self.titleSimpleSnake = Button("SIMPLE SNAKE", SIMPLE_SNAKE_FONT, width//2, height//6)
         self.titlePlayGame = Button("PLAY GAME", TITLE_FONT, width//2, height*5//12)
         self.titleOptions = Button("OPTIONS", TITLE_FONT, width//2, height*7//12)
+        self.titleQuitGame = Button("QUIT GAME", TITLE_FONT, width//2, height*9//12)
         
     ###########  Update cursor and button status in Main Menu ###############################################
     def update(self):
@@ -66,13 +67,24 @@ class MainMenu:
         if self.cursor == 0:
             self.titlePlayGame.isChosen = True
             self.titleOptions.isChosen = False
+            self.titleQuitGame.isChosen = False
             self.titlePlayGame.update('PLAY GAME', TITLE_FONT_HORVED)
             self.titleOptions.update('OPTIONS', TITLE_FONT)
+            self.titleQuitGame.update('QUIT GAME', TITLE_FONT)
         elif self.cursor == 1:
             self.titlePlayGame.isChosen = False
             self.titleOptions.isChosen = True
+            self.titleQuitGame.isChosen = False
             self.titlePlayGame.update('PLAY GAME', TITLE_FONT)
             self.titleOptions.update('OPTIONS', TITLE_FONT_HORVED)
+            self.titleQuitGame.update('QUIT GAME', TITLE_FONT)
+        elif self.cursor == 2:
+            self.titlePlayGame.isChosen = False
+            self.titleOptions.isChosen = False
+            self.titleQuitGame.isChosen = True
+            self.titlePlayGame.update('PLAY GAME', TITLE_FONT)
+            self.titleOptions.update('OPTIONS', TITLE_FONT)
+            self.titleQuitGame.update('QUIT GAME', TITLE_FONT_HORVED)
         
         ###########  Remove old button display  #############################################################
         self.surface.fill((0, 0, 0, 0))
@@ -80,6 +92,7 @@ class MainMenu:
         self.titleSimpleSnake.draw(self.surface)
         self.titlePlayGame.draw(self.surface)
         self.titleOptions.draw(self.surface)
+        self.titleQuitGame.draw(self.surface)
     
     ###########  Draw Main Menu in another surface  #########################################################
     def draw(self, parentSurface):
@@ -132,6 +145,69 @@ class PlayGameMenu:
         ###########   Draw new buttons   ####################################################################
         self.titleNewGame.draw(self.surface)
         self.titleContinueGame.draw(self.surface)
+        self.titleBack.draw(self.surface)
+    
+    ###########  Draw PlayGame Menu in another surface  #####################################################
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
+       
+
+###########  CLASS CONTINUE GAME MENU  ##########################################################################
+class ContinueGameMenu:
+    ###########  Constructor  ###############################################################################
+    def __init__(self, x, y, width, height):
+        ###########  Surface, cursor and coordinate center  #################################################
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.center = (x, y)
+        self.FPS = MENU_CHANGE_COLOR_SPEED
+        self.cursor = 0
+        
+        ########### Buttons in Continue Game Menu  ##############################################################
+        self.titleBack = Button("BACK", TITLE_FONT, width//2, height*8//12)
+        
+    ###########   Update cursor and buttons status in Continue Game Menu   ######################################
+    def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        if self.cursor == 0:
+            self.titleBack.isChosen = True
+            self.titleBack.update('BACK', TITLE_FONT_HORVED)
+        
+        ###########   Remove old button display   ###########################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
+        self.titleBack.draw(self.surface)
+    
+    ###########  Draw PlayGame Menu in another surface  #####################################################
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
+
+ 
+        
+###########  CLASS OPTIONS MENU  ##########################################################################
+class OptionsMenu:
+    ###########  Constructor  ###############################################################################
+    def __init__(self, x, y, width, height):
+        ###########  Surface, cursor and coordinate center  #################################################
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.center = (x, y)
+        self.FPS = MENU_CHANGE_COLOR_SPEED
+        self.cursor = 0
+        
+        ########### Buttons in Options Menu  ##############################################################
+        self.titleBack = Button("BACK", TITLE_FONT, width//2, height*8//12)
+        
+    ###########   Update cursor and buttons status in Options Menu   ######################################
+    def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        if self.cursor == 0:
+            self.titleBack.isChosen = True
+            self.titleBack.update('BACK', TITLE_FONT_HORVED)
+        
+        ###########   Remove old button display   ###########################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
         self.titleBack.draw(self.surface)
     
     ###########  Draw PlayGame Menu in another surface  #####################################################
@@ -206,6 +282,9 @@ class GameOverMenu:
     ###########  Draw PlayGame Menu in another surface  #####################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
+        
+        
+    
         
         
         

@@ -1,7 +1,7 @@
 import sys
 import pygame
 from food import FoodManager
-from menu import MainMenu, PlayGameMenu, GameOverMenu
+from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, ContinueGameMenu
 from inGame import InGame
 from snake import Snake
 from setting import *
@@ -30,8 +30,11 @@ class Game:
         ###########   Screens in game   #####################################################################
         self.mainMenu = MainMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
         self.playGameMenu = PlayGameMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.continueGameMenu = ContinueGameMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
         self.inGame = InGame()
         self.gameOverMenu = GameOverMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT, self.inGame.snake)
+        self.optionsMenu = OptionsMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
+        
     
     ###########   Main loop in game   #######################################################################
     def run(self):
@@ -55,17 +58,22 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         self.mainMenu.cursor += 1
-                        self.mainMenu.cursor %= 2
+                        self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         self.mainMenu.cursor -= 1
-                        self.mainMenu.cursor %= 2
+                        self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_RETURN:
+                        self.runningMainMenu = False
                         if self.mainMenu.cursor == 0:
                             self.runningPlayGameMenu = True
                             self.playGameMenu.cursor = 0
                         elif self.mainMenu.cursor == 1:
                             self.runningOptionsMenu = True
-                        self.runningMainMenu = False
+                        elif self.mainMenu.cursor == 2:
+                            self.running = False
+                            pygame.quit()
+                            sys.exit()
+                        
             ###########   Get events when current screen is Play Game Menu  #################################
             elif self.runningPlayGameMenu:
                 if event.type == pygame.KEYDOWN:
@@ -85,9 +93,37 @@ class Game:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         self.runningPlayGameMenu = False
+
+            ###########   Get events when current screen is Continue Game Menu   ############################
+            elif self.runningContinueGameMenu:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        self.continueGameMenu.cursor += 1
+                        self.continueGameMenu.cursor %= 1
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        self.continueGameMenu.cursor -= 1
+                        self.continueGameMenu.cursor %= 1
+                    if event.key == pygame.K_RETURN:
+                        self.runningOptionsMenu = False
+                        if self.continueGameMenu.cursor == 0:
+                            self.runningPlayGameMenu = True
+                            self.playGameMenu.cursor = 0
+            
             ###########   Get events when current screen is Options Menu   ##################################
             elif self.runningOptionsMenu:
-                pass
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        self.optionsMenu.cursor += 1
+                        self.optionsMenu.cursor %= 1
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        self.optionsMenu.cursor -= 1
+                        self.optionsMenu.cursor %= 1
+                    if event.key == pygame.K_RETURN:
+                        self.runningOptionsMenu = False
+                        if self.optionsMenu.cursor == 0:
+                            self.runningMainMenu = True
+                            self.mainMenu.cursor = 0
+                        
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
                 ###########   Get events when current screen is Start InGame   ##############################
@@ -137,9 +173,6 @@ class Game:
                         
                 
                     
-            ###########   Get events when current screen is Continue Game Menu   ############################
-            elif self.runningContinueGameMenu:
-                pass
                         
     ###########   Update screen with current status   #######################################################       
     def update(self):
@@ -147,8 +180,11 @@ class Game:
             if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                 self.mainMenu.update()
         elif self.runningPlayGameMenu:
-            if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
+            if self.countTicks % (FPS * 1000 // self.playGameMenu.FPS) == 0:
                 self.playGameMenu.update()
+        elif self.runningContinueGameMenu:
+            if self.countTicks % (FPS * 1000 // self.continueGameMenu.FPS) == 0:
+                self.continueGameMenu.update()        
         elif self.runningInGame:
             if self.inGame.snake.died():
                 self.inGame.running = False
@@ -176,6 +212,9 @@ class Game:
                 self.gameOverMenu.update(type='UpdateSnakeFrame')
             if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
+        elif self.runningOptionsMenu:
+            if self.countTicks % (FPS * 1000 // self.optionsMenu.FPS) == 0:
+                self.optionsMenu.update()
             
         
     ###########   Draw screen with current status and show it   #############################################
@@ -187,6 +226,10 @@ class Game:
             self.mainMenu.draw(self.screen)
         elif self.runningPlayGameMenu:
             self.playGameMenu.draw(self.screen)
+        elif self.runningContinueGameMenu:
+            self.continueGameMenu.draw(self.screen)
         elif self.runningGameOverMenu:
             self.gameOverMenu.draw(self.screen)
+        elif self.runningOptionsMenu:
+            self.optionsMenu.draw(self.screen)
         pygame.display.flip()
