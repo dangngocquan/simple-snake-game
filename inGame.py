@@ -7,17 +7,7 @@ import food
 from food import Food, FoodManager
 import grid
 from grid import Grid
-
-###########  SETTING  #######################################################################################
-CELL_SIZE = 25
-INGAME_WIDTH = 1000
-INGAME_HEIGHT = 600
-NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
-NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-
-
-###########  COLOR  #########################################################################################
-GRAY = (111, 111, 111)
+from setting import *
 
 
 ###########  CLASS INGAME  ##################################################################################

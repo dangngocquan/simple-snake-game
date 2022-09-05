@@ -1,51 +1,7 @@
 import pygame
+from setting import *
 
 
-###########  SETTING  #######################################################################################
-CELL_SIZE = 25
-INGAME_WIDTH = 1000
-INGAME_HEIGHT = 600
-NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
-NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-DEFAULT_SNAKE_SPEED = 15
-DEFAULT_SNAKE_DROP_SPEED = 10
-DEFAULT_SNAKE_FRAME_TRANSITION_SPEED = 2
-
-###########  COLOR  #########################################################################################
-GRAY = (111, 111, 111)
-
-###########  IMAGE  #########################################################################################
-SNAKE = {
-    'HEAD' : {},
-    'BODY' : {},
-    'TAIL' : {}
-}
-for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
-    SNAKE['HEAD'][direction] = []
-    for i in range(7):
-        img = pygame.image.load("./assets/images/snake/head/" + direction 
-                                + "/head" + direction + "" + str(i) + ".png")
-        img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
-        SNAKE['HEAD'][direction].append(img)
-for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
-    SNAKE['BODY'][direction] = []
-    for i in range(7):
-        img = pygame.image.load("./assets/images/snake/body/" + direction
-                                + "/body" + direction + "" + str(i) + ".png", )
-        img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
-        SNAKE['BODY'][direction].append(img)
-for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
-    SNAKE['TAIL'][direction] = []
-    for i in range(7):
-        img = pygame.image.load("./assets/images/snake/tail/" + direction
-                                + "/tail" + direction + "" + str(i) + ".png")
-        img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
-        SNAKE['TAIL'][direction].append(img)
-FOOD = []
-for i in range(4):
-    img = pygame.image.load("./assets/images/food/food" + str(i) + ".png")
-    img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
-    FOOD.append(img)
 
 
 ###########  CLASS SNAKE BLOCK  #############################################################################

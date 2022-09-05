@@ -1,26 +1,7 @@
 import pygame
-
 from snake import Snake
+from setting import *
 
-
-###########  FPS  ###########################################################################################
-MENU_CHANGE_COLOR_SPEED = 5
-
-
-###########  FONT  ##########################################################################################
-pygame.font.init()
-SIMPLE_SNAKE_FONT = pygame.font.SysFont('algerian', 96)
-TITLE_FONT = pygame.font.SysFont('castellar', 48)
-TITLE_FONT_HORVED = pygame.font.SysFont('castellar', 56)
-TITLE_FONT2 = pygame.font.SysFont('chiller', 48)
-MEDIUM_FONT = pygame.font.SysFont('castellar', 36)
-MEDIUM_FONT2 = pygame.font.SysFont('chiller', 36)
-SMALL_FONT = pygame.font.SysFont('castellar', 22)
-
-
-###########  COLOR  #########################################################################################
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 
 
 ###########  CLASS BUTTON  ##################################################################################
@@ -180,7 +161,6 @@ class GameOverMenu:
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextFrame'):
         if type == 'UpdateTextFrame':
-            
             ###########   Update cursor and buttons   ###########################################################
             if self.cursor == 0:
                 self.titlePlayAgain.isChosen = True
@@ -202,11 +182,20 @@ class GameOverMenu:
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
-        elif type == 'UpdateSnakeFrameDrop':
+        elif type == 'UpdateSnakeDrop':
             ###########   Remove old button display   ###########################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ####################################################################
             self.snake.drop()
+            self.snake.draw(self.surface)
+            self.titleGameOver.draw(self.surface)
+            self.titleScore.draw(self.surface)
+            self.titlePlayAgain.draw(self.surface)
+            self.titleBackMainMenu.draw(self.surface)
+        elif type == 'UpdateSnakeFrame':
+            ###########   Remove old button display   ###########################################################
+            self.surface.fill((0, 0, 0, 0))
+            ###########   Draw new buttons   ####################################################################
             self.snake.updateFrame()
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)

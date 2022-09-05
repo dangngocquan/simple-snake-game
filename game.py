@@ -1,21 +1,11 @@
-from codecs import ignore_errors
 import sys
 import pygame
 from food import FoodManager
-
 from menu import MainMenu, PlayGameMenu, GameOverMenu
 from inGame import InGame
 from snake import Snake
+from setting import *
 
-###########  SCREEN SETTING  ################################################################################
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
-SCREEN_CAPTION = "Simple Snake Gameeee"
-FPS = 60
-
-###########  COLOR  #########################################################################################
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
 
 ###########   CLASS GAME   ##################################################################################
 class Game:
@@ -181,7 +171,9 @@ class Game:
                 pass
         elif self.runningGameOverMenu:
             if self.countTicks % (FPS * 1000 // self.inGame.snake.dropSpeed) == 0:
-                    self.gameOverMenu.update(type='UpdateSnakeFrameDrop')
+                self.gameOverMenu.update(type='UpdateSnakeDrop')
+            if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
+                self.gameOverMenu.update(type='UpdateSnakeFrame')
             if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
             

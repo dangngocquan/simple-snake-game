@@ -1,22 +1,8 @@
 import pygame
 import random
+from setting import *
 
 
-###########  SETTING  #######################################################################################
-CELL_SIZE = 25
-INGAME_WIDTH = 1000
-INGAME_HEIGHT = 600
-NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
-NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-DEFAULT_MAX_FOOD = 7
-DEFAULT_FOOD_TRANSITION_SPEED = 6
-
-###########  IMAGES  ########################################################################################
-FOOD = []
-for i in range(4):
-    img = pygame.image.load("./assets/images/food/food" + str(i) + ".png")
-    img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
-    FOOD.append(img)
 
 ###########  CLASS FOOD  ####################################################################################
 class Food:
