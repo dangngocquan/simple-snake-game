@@ -1,0 +1,8 @@
+{
+    "SNAKE": {
+        "HEAD": 1,
+        "BODY": 2,
+        "TAIL": 3
+    },
+    "FOOD": 2
+}

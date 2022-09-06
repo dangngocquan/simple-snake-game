@@ -1,31 +1,41 @@
 import pygame
 
+###########  SETTING CAN BE CHANGED BY PLAYER  ##############################################################
+SETTING1 = {
+    'MENU' : {
+        'ANIMATION_SPEED' : 5
+    },
+    'GRID' : 'ON',
+    'FOOD' : {
+        'MAX_FOOD' : 5,
+        'ANIMATION_SPEED' : 6
+    },
+    'SNAKE' : {
+        'MOVE_SPEED' : 30,
+        'ANIMATION_SPEED' : 3,
+        'DROP_SPEED' : 12
+    }
+}
 
-###########  SIZE, CAPTION, FPS SCREEN  #####################################################################
+
+
+
+
+###########  RESOURCE  ######################################################################################
+###########  SIZE  ##########################################################################################
 CELL_SIZE = 25
-INGAME_WIDTH = 1000
-INGAME_HEIGHT = 600
-NUMBER_ROWS = INGAME_HEIGHT // CELL_SIZE
-NUMBER_COLUMNS = INGAME_WIDTH // CELL_SIZE
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
-SCREEN_CAPTION = "Simple Snake Gameeee"
-FPS = 60
-
 
 ###########  MENU  ##########################################################################################
-MENU_CHANGE_COLOR_SPEED = 5
 pygame.font.init()
-SIMPLE_SNAKE_FONT = pygame.font.SysFont('algerian', 96)
-TITLE_FONT = pygame.font.SysFont('castellar', 48)
-TITLE_FONT_HORVED = pygame.font.SysFont('castellar', 56)
-TITLE_FONT2 = pygame.font.SysFont('chiller', 48)
-MEDIUM_FONT = pygame.font.SysFont('castellar', 36)
-MEDIUM_FONT2 = pygame.font.SysFont('chiller', 36)
-SMALL_FONT = pygame.font.SysFont('castellar', 22)
+BIG_FONT = pygame.font.SysFont('algerian', 96)
+MEDIUM_FONT = pygame.font.SysFont('castellar', 48)
+MEDIUM_FONT_HORVED = pygame.font.SysFont('castellar', 56)
+MEDIUM_FONT_2 = pygame.font.SysFont('chiller', 48)
+SMALL_FONT = pygame.font.SysFont('chiller', 36)
+DESCRIPTION_FONT = pygame.font.SysFont('castellar', 22)
 
 ###########  FOOD SETTING  ##################################################################################
-DEFAULT_MAX_FOOD = 7
+DEFAULT_MAX_FOOD = 5
 DEFAULT_FOOD_TRANSITION_SPEED = 6
 FOOD = []
 for i in range(4):
@@ -35,9 +45,6 @@ for i in range(4):
     
 
 ###########  SNAKE  #########################################################################################
-DEFAULT_SNAKE_SPEED = 60
-DEFAULT_SNAKE_DROP_SPEED = 12
-DEFAULT_SNAKE_FRAME_TRANSITION_SPEED = 3
 SNAKE = {
     'HEAD' : {},
     'BODY' : {},
@@ -70,3 +77,32 @@ GRAY = (111, 111, 111)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
+
+
+###########  SETTING CAN'T BE CHANGED BY PLAYER  ############################################################
+SETTING2 = {
+    'SCREEN' : {
+        'CELL_SIZE' : CELL_SIZE,
+        'WIDTH' : 1000,
+        'HEIGHT' : 600,
+        'NUMBER_ROWS' : 24,
+        'NUMBER_COLUMNS' : 40,
+        'CAPTION' : 'Simple Snake Game',
+        'FPS' : 60
+    },
+    'MENU' : {
+        'BIG_FONT' : BIG_FONT,
+        'MEDIUM_FONT' : MEDIUM_FONT,
+        'MEDIUM_FONT_HORVED' : MEDIUM_FONT_HORVED,
+        'MEDIUM_FONT_2' : MEDIUM_FONT_2,
+        'SMALL_FONT' : SMALL_FONT,
+        'DESCRIPTION_FONT' : DESCRIPTION_FONT
+    },
+    'COLOR' : {
+        'BLACK' : BLACK,
+        'WHITE' : WHITE,
+        'GRAY' : GRAY
+    },
+    'SNAKE' : SNAKE,
+    'FOOD' : FOOD
+}

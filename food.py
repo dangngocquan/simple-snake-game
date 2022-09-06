@@ -2,7 +2,14 @@ import pygame
 import random
 from setting import *
 
-
+WIDTH = SETTING2['SCREEN']['WIDTH']
+HEIGHT = SETTING2['SCREEN']['HEIGHT']
+NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
+NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
+CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
+FOOD = SETTING2['FOOD']
+MAX_FOOD = SETTING1['FOOD']['MAX_FOOD']
+ANIMATION_SPEED = SETTING1['FOOD']['ANIMATION_SPEED']
 
 ###########  CLASS FOOD  ####################################################################################
 class Food:
@@ -41,13 +48,13 @@ class FoodManager:
     ###########  Constructor  ###############################################################################
     def __init__(self):
         ###########  Surface and coordinate #################################################################
-        self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
+        self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
         ###########  List food anf  number of foods  ########################################################
         self.listFood = []
-        self.maxFood = DEFAULT_MAX_FOOD
-        self.frameTransitionSpeed = DEFAULT_FOOD_TRANSITION_SPEED
+        self.maxFood = MAX_FOOD
+        self.animationSpeed = ANIMATION_SPEED
     
     ###########  Get coordinate of all foods ################################################################
     def coordinateFoods(self):

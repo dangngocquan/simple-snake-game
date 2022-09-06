@@ -10,12 +10,18 @@ from grid import Grid
 from setting import *
 
 
+WIDTH = SETTING2['SCREEN']['WIDTH']
+HEIGHT = SETTING2['SCREEN']['HEIGHT']
+NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
+NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
+CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
+
 ###########  CLASS INGAME  ##################################################################################
 class InGame:
     ###########   Constructor   #############################################################################
     def __init__(self, snake=Snake(), foodManager = FoodManager()):
         ###########   Create surface and coordinate   #######################################################
-        self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
+        self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
         
@@ -29,11 +35,11 @@ class InGame:
         self.grid = Grid(0, 0)
         self.snake = snake
         self.foodManager = foodManager
-        self.descriptionTextScreenStart = Button("Press SPACE to start", menu.TITLE_FONT2, INGAME_WIDTH//2, INGAME_HEIGHT*11//12)
+        self.descriptionTextScreenStart = Button("Press SPACE to start", menu.SMALL_FONT, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
         self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
         self.scoreTextScreenRunning.isChosen = True
-        # self.gameOverMenu = GameOverMenu(INGAME_WIDTH//2, INGAME_HEIGHT//2, INGAME_WIDTH, INGAME_HEIGHT, self.snake.score)
+        # self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.snake.score)
         
     ###########   Update screen    ##########################################################################
     def update(self, type='ProvideFoodsAndUpdateSnakeMove'):
@@ -45,7 +51,7 @@ class InGame:
                 self.grid.draw(self.surface)
                 self.snake.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
-                self.descriptionTextScreenStart.update("Press SPACE to start", menu.TITLE_FONT2, 'R')
+                self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
             elif self.running:
                 self.score = self.snake.score
                 self.snake.updateDisplacement(self.foodManager.listFood)

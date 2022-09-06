@@ -1,7 +1,15 @@
 import pygame
 from setting import *
 
-
+WIDTH = SETTING2['SCREEN']['WIDTH']
+HEIGHT = SETTING2['SCREEN']['HEIGHT']
+NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
+NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
+CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
+SNAKE = SETTING2['SNAKE']
+MOVE_SPEED = SETTING1['SNAKE']['MOVE_SPEED']
+DROP_SPEED = SETTING1['SNAKE']['DROP_SPEED']
+ANIMATION_SPEED = SETTING1['SNAKE']['ANIMATION_SPEED']
 
 
 ###########  CLASS SNAKE BLOCK  #############################################################################
@@ -45,9 +53,9 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, speed=DEFAULT_SNAKE_SPEED, currentDirection='UU', previousDirection='UU', score=0):
+    def __init__(self, speed=MOVE_SPEED, currentDirection='UU', previousDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
-        self.surface = pygame.Surface((INGAME_WIDTH, INGAME_HEIGHT), pygame.SRCALPHA)
+        self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
         
@@ -63,8 +71,8 @@ class Snake:
         
         ###########   Speed, Direction of Snake #############################################################
         self.speed = speed
-        self.dropSpeed = DEFAULT_SNAKE_DROP_SPEED
-        self.frameTransitionSpeed = DEFAULT_SNAKE_FRAME_TRANSITION_SPEED
+        self.dropSpeed = DROP_SPEED
+        self.frameTransitionSpeed = ANIMATION_SPEED
         self.currentDirection = currentDirection
         self.previousDirection = previousDirection
         self.score = score
@@ -118,13 +126,13 @@ class Snake:
             self.body[index].setCoordinate(self.body[index-1].x, self.body[index-1].y)
         self.body[0].setCoordinate(self.head[0].x, self.head[0].y)
         if self.currentDirection == 'UU':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % INGAME_HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % HEIGHT)
         elif self.currentDirection == 'DD':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % INGAME_HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % HEIGHT)
         elif self.currentDirection == 'RR':
-            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % WIDTH, self.head[0].y)
         elif self.currentDirection == 'LL':
-            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % WIDTH, self.head[0].y)
             
     def moveAndGrowUp(self):
         if self.currentDirection == None:
@@ -137,13 +145,13 @@ class Snake:
         ########  New Coordinate of snakeBlocks  ############################################################
         newSnakeBlockCoordinate = [self.head[0].x, self.head[0].y]
         if self.currentDirection == 'UU':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % INGAME_HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % HEIGHT)
         elif self.currentDirection == 'DD':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % INGAME_HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % HEIGHT)
         elif self.currentDirection == 'RR':
-            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % WIDTH, self.head[0].y)
         elif self.currentDirection == 'LL':
-            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % INGAME_WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % WIDTH, self.head[0].y)
         
         #######  Update new image for head, body and tail  ##################################################
         newSnakeBlockIndexFrame = self.head[0].indexFrame
@@ -191,8 +199,24 @@ class Snake:
     def drop(self):
         for snakeBlock in (self.head + self.body + self.tail):
             if [snakeBlock.x, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
-                if snakeBlock.y + CELL_SIZE < INGAME_HEIGHT:
+                if snakeBlock.y + CELL_SIZE < HEIGHT:
                     snakeBlock.setCoordinate(snakeBlock.x, snakeBlock.y + CELL_SIZE)
+            else:
+                if snakeBlock.x < WIDTH//2:
+                    if [snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + CELL_SIZE < HEIGHT:
+                            snakeBlock.setCoordinate(snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE)
+                    elif [snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + CELL_SIZE < HEIGHT and snakeBlock.x - CELL_SIZE >= 0:
+                            snakeBlock.setCoordinate(snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE)
+                else:
+                    if [snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + CELL_SIZE < HEIGHT and snakeBlock.x - CELL_SIZE >= 0:
+                            snakeBlock.setCoordinate(snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE)
+                    elif [snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + CELL_SIZE < HEIGHT:
+                            snakeBlock.setCoordinate(snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE)
+                    
         
         self.surface.fill((0, 0, 0, 0))
         self.tail[0].draw(self.surface)

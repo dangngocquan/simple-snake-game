@@ -7,14 +7,20 @@ from snake import Snake
 from setting import *
 
 
+WIDTH = SETTING2['SCREEN']['WIDTH']
+HEIGHT = SETTING2['SCREEN']['HEIGHT']
+CAPTION = SETTING2['SCREEN']['CAPTION']
+FPS = SETTING2['SCREEN']['FPS']
+BLACK = SETTING2['COLOR']['BLACK']
+
 ###########   CLASS GAME   ##################################################################################
 class Game:
     ###########   Constructor   #############################################################################
     def __init__(self):
         ###########   Create window game, caption, clock   ##################################################
         pygame.init()
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption(SCREEN_CAPTION)
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
         self.countTicks = 0
         
@@ -28,12 +34,12 @@ class Game:
         self.runningGameOverMenu = False
         
         ###########   Screens in game   #####################################################################
-        self.mainMenu = MainMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.playGameMenu = PlayGameMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.continueGameMenu = ContinueGameMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.mainMenu = MainMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.playGameMenu = PlayGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.continueGameMenu = ContinueGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.inGame = InGame()
-        self.gameOverMenu = GameOverMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT, self.inGame.snake)
-        self.optionsMenu = OptionsMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT)
+        self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
+        self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         
     
     ###########   Main loop in game   #######################################################################
@@ -172,6 +178,7 @@ class Game:
                             self.runningMainMenu = True
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
+                        self.inGame.update()
                         self.inGame.showingScreenStart = True
                         self.runningGameOverMenu = False
                         
@@ -194,7 +201,7 @@ class Game:
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True
-                self.gameOverMenu = GameOverMenu(SCREEN_WIDTH//2, SCREEN_HEIGHT//2, SCREEN_WIDTH, SCREEN_HEIGHT, self.inGame.snake)
+                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
             if self.inGame.showingScreenStart:
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeFrame')
@@ -203,7 +210,7 @@ class Game:
             elif self.inGame.running:
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeFrame')
-                if self.countTicks % (FPS * 1000 // self.inGame.foodManager.frameTransitionSpeed) == 0:
+                if self.countTicks % (FPS * 1000 // self.inGame.foodManager.animationSpeed) == 0:
                     self.inGame.update(type='UpdateFoodFrame')
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.speed) == 0:
                     self.inGame.update()
