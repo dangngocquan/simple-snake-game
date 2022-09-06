@@ -17,10 +17,16 @@ WHITE = SETTING2['COLOR']['WHITE']
 ###########  CLASS BUTTON  ##################################################################################
 class Button:
     ###########  Constructor  ###############################################################################
-    def __init__(self, text, font, x, y):
+    def __init__(self, text, font, x, y, typeLocation='center'):
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
-        self.textRect.center = (x, y)
+        self.typeLocation = typeLocation
+        # self.textRect.center = None
+        # self.textRect.topLeft = None
+        if self.typeLocation == 'center':
+            self.textRect.center = (x, y)
+        elif self.typeLocation == 'topLeft':
+            self.textRect.topleft = (x, y)
         self.x = x
         self.y = y
         self.isChosen = False
@@ -32,7 +38,10 @@ class Button:
         ###########  Update text, font, coordinate   ########################################################
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
-        self.textRect.center = (self.x, self.y)
+        if self.typeLocation == 'center':
+            self.textRect.center = (self.x, self.y)
+        elif self.typeLocation == 'topLeft':
+            self.textRect.topleft = (self.x, self.y)
         ###########  Update color   #########################################################################
         if self.isChosen:
             if self.value == 255 or self.value == 55:
@@ -206,7 +215,22 @@ class OptionsMenu:
         self.cursor = 0
         
         ########### Buttons in Options Menu  ##############################################################
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*8//12)
+        self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*1//15)
+        self.titleGrid= Button("Show grid", SMALL_FONT, width//6, height*2//15, 'topLeft')
+        self.titleGridOptions= Button(f"{SETTING1['GRID']}", SMALL_FONT, width//6*5, height*2//15, 'topLeft')
+        self.titleSnakeSetting= Button("SNAKE SETTING", SMALL_FONT, width//2, height*4//15)
+        self.titleSnakeMoveSpeed = Button("Move Speed", SMALL_FONT, width//6, height*5//15, 'topLeft')
+        self.titleSnakeMoveSpeedOptions = Button(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, width//6*5, height*5//15, 'topLeft')
+        self.titleSnakeDropSpeed = Button("Drop Speed (when snake died)", SMALL_FONT, width//6, height*6//15, 'topLeft')
+        self.titleSnakeDropSpeedOptions = Button(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, width//6*5, height*6//15, 'topLeft')
+        self.titleSnakeAnimationSpeed = Button("Animation Speed", SMALL_FONT, width//6, height*7//15, 'topLeft')
+        self.titleSnakeAnimationSpeedOptions = Button(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, width//6*5, height*7//15, 'topLeft')
+        self.titleFoodSetting = Button("FOOD SETTING", SMALL_FONT, width//2, height*9//15)
+        self.titleFoodMax = Button("Max Food", SMALL_FONT, width//6, height*10//15, 'topLeft')
+        self.titleFoodMaxOptions = Button(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, width//6*5, height*10//15, 'topLeft')
+        self.titleFoodAnimationSpeed = Button("Animation Speed", SMALL_FONT, width//6, height*11//15, 'topLeft')
+        self.titleFoodAnimationSpeedOptions = Button(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, width//6*5, height*11//15, 'topLeft')
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*13//15)
         
     ###########   Update cursor and buttons status in Options Menu   ######################################
     def update(self):
@@ -218,6 +242,22 @@ class OptionsMenu:
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
+        self.titleGridSetting.draw(self.surface)
+        self.titleGrid.draw(self.surface)
+        self.titleGridOptions.draw(self.surface)
+        self.titleSnakeSetting.draw(self.surface)
+        self.titleSnakeMoveSpeed.draw(self.surface)
+        self.titleSnakeMoveSpeedOptions.draw(self.surface)
+        self.titleSnakeDropSpeed.draw(self.surface)
+        self.titleSnakeDropSpeedOptions.draw(self.surface)
+        self.titleSnakeAnimationSpeed.draw(self.surface)
+        self.titleSnakeAnimationSpeedOptions.draw(self.surface)
+        self.titleFoodSetting.draw(self.surface)
+        self.titleFoodMax.draw(self.surface)
+        self.titleFoodMaxOptions.draw(self.surface)
+        self.titleFoodAnimationSpeed.draw(self.surface)
+        self.titleFoodAnimationSpeedOptions.draw(self.surface)
+        
         self.titleBack.draw(self.surface)
     
     ###########  Draw PlayGame Menu in another surface  #####################################################
