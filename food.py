@@ -1,6 +1,8 @@
 import pygame
 import random
 from setting import *
+import setting
+
 
 WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']

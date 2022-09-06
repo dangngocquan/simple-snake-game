@@ -8,6 +8,8 @@ from food import Food, FoodManager
 import grid
 from grid import Grid
 from setting import *
+import setting
+
 
 
 WIDTH = SETTING2['SCREEN']['WIDTH']

@@ -1,25 +1,22 @@
+import json
 import pygame
 
 ###########  SETTING CAN BE CHANGED BY PLAYER  ##############################################################
-SETTING1 = {
-    'MENU' : {
-        'ANIMATION_SPEED' : 5
-    },
-    'GRID' : 'ON',
-    'FOOD' : {
-        'MAX_FOOD' : 5,
-        'ANIMATION_SPEED' : 6
-    },
-    'SNAKE' : {
-        'MOVE_SPEED' : 30,
-        'ANIMATION_SPEED' : 3,
-        'DROP_SPEED' : 12
-    }
-}
+SETTING1 = {}
 
+def loadSetting(path):
+    global SETTING1
+    with open(path, 'r') as file:
+        SETTING1 = json.load(file)
+    file.close()
 
+def saveSetting(path):
+    global SETTING1
+    with open('./data/setting/setting.json', 'w') as file:
+        json.dump(SETTING1, file, indent=4)
+    file.close()
 
-
+loadSetting('./data/setting/setting.json')
 
 ###########  RESOURCE  ######################################################################################
 ###########  SIZE  ##########################################################################################

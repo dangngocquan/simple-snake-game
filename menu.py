@@ -1,6 +1,8 @@
 import pygame
 from snake import Snake
 from setting import *
+import setting
+
 
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
 BIG_FONT = SETTING2['MENU']['BIG_FONT']

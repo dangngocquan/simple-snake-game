@@ -5,6 +5,8 @@ from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, ContinueGame
 from inGame import InGame
 from snake import Snake
 from setting import *
+import setting
+
 
 
 WIDTH = SETTING2['SCREEN']['WIDTH']
@@ -57,6 +59,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running =False
+                # setting.saveSetting('./data/setting/setting.json')
                 pygame.quit()
                 sys.exit()
             ###########   Get events when current screen is Main Menu   #####################################
@@ -77,6 +80,7 @@ class Game:
                             self.runningOptionsMenu = True
                         elif self.mainMenu.cursor == 2:
                             self.running = False
+                            # setting.saveSetting('./data/setting/setting.json')
                             pygame.quit()
                             sys.exit()
                         
