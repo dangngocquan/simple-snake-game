@@ -122,15 +122,22 @@ class Game:
             ###########   Get events when current screen is Options Menu   ##################################
             elif self.runningOptionsMenu:
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        self.optionsMenu.cursor += 1
-                        self.optionsMenu.cursor %= 1
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        self.optionsMenu.cursor -= 1
-                        self.optionsMenu.cursor %= 1
+                    if self.optionsMenu.cursor % 2 == 0:
+                        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            if self.optionsMenu.cursor == 12:
+                                self.optionsMenu.cursor += 1
+                            else:
+                                self.optionsMenu.cursor += 2
+                            self.optionsMenu.cursor %= 13
+                        elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                            if self.optionsMenu.cursor == 0:
+                                self.optionsMenu.cursor -= 1
+                            else:
+                                self.optionsMenu.cursor -= 2
+                            self.optionsMenu.cursor %= 13
                     if event.key == pygame.K_RETURN:
                         self.runningOptionsMenu = False
-                        if self.optionsMenu.cursor == 0:
+                        if self.optionsMenu.cursor == 12:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         

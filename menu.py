@@ -212,7 +212,7 @@ class OptionsMenu:
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
-        self.cursor = 0
+        self.cursor = 12
         
         ########### Buttons in Options Menu  ##############################################################
         self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*1//15)
@@ -236,8 +236,72 @@ class OptionsMenu:
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
+            self.titleGrid.isChosen = True
+        else:
+            self.titleGrid.isChosen = False
+        if self.cursor == 1:
+            self.titleGridOptions.isChosen = True
+        else:
+            self.titleGridOptions.isChosen = False
+        if self.cursor == 2:
+            self.titleSnakeMoveSpeed.isChosen = True
+        else:
+            self.titleSnakeMoveSpeed.isChosen = False
+        if self.cursor == 3:
+            self.titleSnakeMoveSpeedOptions.isChosen = True
+        else:
+            self.titleSnakeMoveSpeedOptions.isChosen = False
+        if self.cursor == 4:
+            self.titleSnakeDropSpeed.isChosen = True
+        else:
+            self.titleSnakeDropSpeed.isChosen = False
+        if self.cursor == 5:
+            self.titleSnakeDropSpeedOptions.isChosen = True
+        else:
+            self.titleSnakeDropSpeedOptions.isChosen = False
+        if self.cursor == 6:
+            self.titleSnakeAnimationSpeed.isChosen = True
+        else:
+            self.titleSnakeAnimationSpeed.isChosen = False
+        if self.cursor == 7:
+            self.titleSnakeAnimationSpeedOptions.isChosen = True
+        else:
+            self.titleSnakeAnimationSpeedOptions.isChosen = False
+        if self.cursor == 8:
+            self.titleFoodMax.isChosen = True
+        else:
+            self.titleFoodMax.isChosen = False
+        if self.cursor == 9:
+            self.titleFoodMaxOptions.isChosen = True
+        else:
+            self.titleFoodMaxOptions.isChosen = False
+        if self.cursor == 10:
+            self.titleFoodAnimationSpeed.isChosen = True
+        else:
+            self.titleFoodAnimationSpeed.isChosen = False
+        if self.cursor == 11:
+            self.titleFoodAnimationSpeedOptions.isChosen = True
+        else:
+            self.titleFoodAnimationSpeedOptions.isChosen = False
+        if self.cursor == 12:
             self.titleBack.isChosen = True
             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+        else:
+            self.titleBack.isChosen = False
+            self.titleBack.update('BACK', MEDIUM_FONT)
+            
+        self.titleGrid.update('Show grid', SMALL_FONT, 'B')
+        self.titleGridOptions.update(f"{SETTING1['GRID']}", SMALL_FONT, 'B')
+        self.titleSnakeMoveSpeed.update("Move speed", SMALL_FONT, 'B')
+        self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, 'B')
+        self.titleSnakeDropSpeed.update("Drop speed", SMALL_FONT, 'B')
+        self.titleSnakeDropSpeedOptions.update(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, 'B')
+        self.titleSnakeAnimationSpeed.update('Animation speed', SMALL_FONT, 'B')
+        self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, 'B')
+        self.titleFoodMax.update('Max food', SMALL_FONT, 'B')
+        self.titleFoodMaxOptions.update(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, 'B')
+        self.titleFoodAnimationSpeed.update('Animation speed', SMALL_FONT, 'B')
+        self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, 'B')
         
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
