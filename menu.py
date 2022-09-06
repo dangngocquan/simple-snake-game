@@ -243,8 +243,8 @@ class GameOverMenu:
         
     
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
-    def update(self, type='UpdateTextFrame'):
-        if type == 'UpdateTextFrame':
+    def update(self, type='UpdateTextAnimation'):
+        if type == 'UpdateTextAnimation':
             ###########   Update cursor and buttons   ###########################################################
             if self.cursor == 0:
                 self.titlePlayAgain.isChosen = True
@@ -276,11 +276,11 @@ class GameOverMenu:
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
-        elif type == 'UpdateSnakeFrame':
+        elif type == 'UpdateSnakeAnimation':
             ###########   Remove old button display   ###########################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ####################################################################
-            self.snake.updateFrame()
+            self.snake.updateAnimation()
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)

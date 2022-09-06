@@ -70,9 +70,9 @@ class Snake:
         self.tail[0].draw(self.surface)
         
         ###########   Speed, Direction of Snake #############################################################
-        self.speed = speed
+        self.moveSpeed = speed
         self.dropSpeed = DROP_SPEED
-        self.frameTransitionSpeed = ANIMATION_SPEED
+        self.animationSpeed = ANIMATION_SPEED
         self.currentDirection = currentDirection
         self.previousDirection = previousDirection
         self.score = score
@@ -98,7 +98,7 @@ class Snake:
         for food in foodList:
             if self.head[0].coordinate() == food.coordinate():
                 foodList.remove(food)
-                self.score += self.speed
+                self.score += self.moveSpeed
                 return True
         return False
     
@@ -168,7 +168,7 @@ class Snake:
     
         
     ###########   Update snake displacement  ################################################################
-    def updateDisplacement(self, foodList):
+    def updateLocation(self, foodList):
         if self.eatingFood(foodList):
             self.moveAndGrowUp()
         else:
@@ -181,7 +181,7 @@ class Snake:
         self.head[0].draw(self.surface)
         
     
-    def updateFrame(self):
+    def updateAnimation(self):
         self.head[0].indexFrame = (self.head[0].indexFrame - 1) % 7
         self.head[0].update('HEAD')
         for snakeBlock in self.body :

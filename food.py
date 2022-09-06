@@ -88,7 +88,7 @@ class FoodManager:
             food.draw(self.surface)
         
     
-    def updateFrameFoods(self):
+    def updateAnimation(self):
         self.surface.fill((0, 0, 0, 0))
         for food in self.listFood:
             food.indexFrame = (food.indexFrame + 1) % 4

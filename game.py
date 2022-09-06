@@ -141,7 +141,13 @@ class Game:
                 ###########   Get events when snake moving   ################################################
                 elif self.inGame.running:
                     if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_SPACE:
+                        if event.key == pygame.K_k:
+                            if self.inGame.snake.currentDirection == None:
+                                self.inGame.running = False
+                                self.runningInGame = False
+                                self.runningGameOverMenu = True
+                                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
+                        elif event.key == pygame.K_SPACE:
                             if self.inGame.snake.currentDirection != None:
                                 self.inGame.snake.previousDirection = self.inGame.snake.currentDirection
                                 self.inGame.snake.currentDirection = None
@@ -203,24 +209,24 @@ class Game:
                 self.runningGameOverMenu = True
                 self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
             if self.inGame.showingScreenStart:
-                if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
-                    self.inGame.update(type='UpdateSnakeFrame')
+                if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
+                    self.inGame.update(type='UpdateSnakeAnimation')
                 if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                     self.inGame.update()
             elif self.inGame.running:
-                if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
-                    self.inGame.update(type='UpdateSnakeFrame')
+                if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
+                    self.inGame.update(type='UpdateSnakeAnimation')
                 if self.countTicks % (FPS * 1000 // self.inGame.foodManager.animationSpeed) == 0:
-                    self.inGame.update(type='UpdateFoodFrame')
-                if self.countTicks % (FPS * 1000 // self.inGame.snake.speed) == 0:
+                    self.inGame.update(type='UpdateFoodAnimation')
+                if self.countTicks % (FPS * 1000 // self.inGame.snake.moveSpeed) == 0:
                     self.inGame.update()
             elif self.inGame.waiting:
                 pass
         elif self.runningGameOverMenu:
             if self.countTicks % (FPS * 1000 // self.inGame.snake.dropSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeDrop')
-            if self.countTicks % (FPS * 1000 // self.inGame.snake.frameTransitionSpeed) == 0:
-                self.gameOverMenu.update(type='UpdateSnakeFrame')
+            if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
+                self.gameOverMenu.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
         elif self.runningOptionsMenu:

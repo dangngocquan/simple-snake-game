@@ -54,7 +54,7 @@ class InGame:
                 self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
             elif self.running:
                 self.score = self.snake.score
-                self.snake.updateDisplacement(self.foodManager.listFood)
+                self.snake.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
                 self.grid.draw(self.surface)
@@ -63,25 +63,25 @@ class InGame:
                 self.snake.draw(self.surface)
             elif self.waiting:
                 pass
-        elif type == 'UpdateSnakeFrame':
+        elif type == 'UpdateSnakeAnimation':
             if self.showingScreenStart:
                 self.grid.draw(self.surface)
-                self.snake.updateFrame()
+                self.snake.updateAnimation()
                 self.snake.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
             elif self.running:
-                self.snake.updateFrame()
+                self.snake.updateAnimation()
                 self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 self.snake.draw(self.surface)
             elif self.waiting:
                 pass
-        elif type == 'UpdateFoodFrame':
+        elif type == 'UpdateFoodAnimation':
             if self.showingScreenStart:
                 pass
             elif self.running:
-                self.foodManager.updateFrameFoods()
+                self.foodManager.updateAnimation()
                 self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
