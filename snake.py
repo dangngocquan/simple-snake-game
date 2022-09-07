@@ -8,19 +8,16 @@ WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
 NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
-CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
+SETTING2['SCREEN']['CELL_SIZE'] = SETTING2['SCREEN']['CELL_SIZE']
 SNAKE = SETTING2['SNAKE']
-MOVE_SPEED = SETTING1['SNAKE']['MOVE_SPEED']
-DROP_SPEED = SETTING1['SNAKE']['DROP_SPEED']
-ANIMATION_SPEED = SETTING1['SNAKE']['ANIMATION_SPEED']
 
 
 ###########  CLASS SNAKE BLOCK  #############################################################################
 class SnakeBlock:
     ###########   Constructor   #############################################################################
-    def __init__(self, image, x=NUMBER_COLUMNS//2 * CELL_SIZE, y=NUMBER_ROWS//2 * CELL_SIZE, 
+    def __init__(self, image, x=NUMBER_COLUMNS//2 * SETTING2['SCREEN']['CELL_SIZE'], y=NUMBER_ROWS//2 * SETTING2['SCREEN']['CELL_SIZE'], 
                  direction='UU', indexFrame=0):
-        self.surface = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
+        self.surface = pygame.Surface((SETTING2['SCREEN']['CELL_SIZE'], SETTING2['SCREEN']['CELL_SIZE']), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (x, y)
         self.surface.blit(image, (0, 0))
@@ -56,7 +53,7 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, speed=MOVE_SPEED, currentDirection='UU', previousDirection='UU', score=0):
+    def __init__(self, speed=SETTING1['SNAKE']['MOVE_SPEED'], currentDirection='UU', previousDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -64,18 +61,18 @@ class Snake:
         
         ###########   Create first head, body anf tail for Snake   ##########################################
         self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)]
-        self.body = [SnakeBlock(SNAKE['BODY']['UU'][0], NUMBER_COLUMNS//2*CELL_SIZE, 
-                                NUMBER_ROWS//2*CELL_SIZE + CELL_SIZE, indexFrame=1)]
-        self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][0], NUMBER_COLUMNS//2*CELL_SIZE, 
-                                NUMBER_ROWS//2*CELL_SIZE + 2*CELL_SIZE, indexFrame=2)]
+        self.body = [SnakeBlock(SNAKE['BODY']['UU'][0], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
+                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'], indexFrame=1)]
+        self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][0], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
+                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'], indexFrame=2)]
         self.head[0].draw(self.surface)
         self.body[0].draw(self.surface)
         self.tail[0].draw(self.surface)
         
         ###########   Speed, Direction of Snake #############################################################
         self.moveSpeed = speed
-        self.dropSpeed = DROP_SPEED
-        self.animationSpeed = ANIMATION_SPEED
+        self.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+        self.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
         self.currentDirection = currentDirection
         self.previousDirection = previousDirection
         self.score = score
@@ -86,13 +83,13 @@ class Snake:
     
     ###########   Check if snake can move or not with next direction   ######################################
     def checkSnakeCanMove(self, aDirection):
-        if aDirection == 'UU' and (self.head[0].y - CELL_SIZE) == self.body[0].y:
+        if aDirection == 'UU' and (self.head[0].y - SETTING2['SCREEN']['CELL_SIZE']) == self.body[0].y:
             return False
-        elif aDirection == 'DD' and (self.head[0].y + CELL_SIZE) == self.body[0].y:
+        elif aDirection == 'DD' and (self.head[0].y + SETTING2['SCREEN']['CELL_SIZE']) == self.body[0].y:
             return False
-        elif aDirection == 'RR' and (self.head[0].x + CELL_SIZE) == self.body[0].x:
+        elif aDirection == 'RR' and (self.head[0].x + SETTING2['SCREEN']['CELL_SIZE']) == self.body[0].x:
             return False
-        elif aDirection == 'LL' and (self.head[0].x - CELL_SIZE) == self.body[0].x:
+        elif aDirection == 'LL' and (self.head[0].x - SETTING2['SCREEN']['CELL_SIZE']) == self.body[0].x:
             return False
         return True
     
@@ -129,13 +126,13 @@ class Snake:
             self.body[index].setCoordinate(self.body[index-1].x, self.body[index-1].y)
         self.body[0].setCoordinate(self.head[0].x, self.head[0].y)
         if self.currentDirection == 'UU':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - SETTING2['SCREEN']['CELL_SIZE']) % HEIGHT)
         elif self.currentDirection == 'DD':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + SETTING2['SCREEN']['CELL_SIZE']) % HEIGHT)
         elif self.currentDirection == 'RR':
-            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x + SETTING2['SCREEN']['CELL_SIZE']) % WIDTH, self.head[0].y)
         elif self.currentDirection == 'LL':
-            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x - SETTING2['SCREEN']['CELL_SIZE']) % WIDTH, self.head[0].y)
             
     def moveAndGrowUp(self):
         if self.currentDirection == None:
@@ -148,13 +145,13 @@ class Snake:
         ########  New Coordinate of snakeBlocks  ############################################################
         newSnakeBlockCoordinate = [self.head[0].x, self.head[0].y]
         if self.currentDirection == 'UU':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - CELL_SIZE) % HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y - SETTING2['SCREEN']['CELL_SIZE']) % HEIGHT)
         elif self.currentDirection == 'DD':
-            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + CELL_SIZE) % HEIGHT)
+            self.head[0].setCoordinate(self.head[0].x, (self.head[0].y + SETTING2['SCREEN']['CELL_SIZE']) % HEIGHT)
         elif self.currentDirection == 'RR':
-            self.head[0].setCoordinate((self.head[0].x + CELL_SIZE) % WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x + SETTING2['SCREEN']['CELL_SIZE']) % WIDTH, self.head[0].y)
         elif self.currentDirection == 'LL':
-            self.head[0].setCoordinate((self.head[0].x - CELL_SIZE) % WIDTH, self.head[0].y)
+            self.head[0].setCoordinate((self.head[0].x - SETTING2['SCREEN']['CELL_SIZE']) % WIDTH, self.head[0].y)
         
         #######  Update new image for head, body and tail  ##################################################
         newSnakeBlockIndexFrame = self.head[0].indexFrame
@@ -201,24 +198,24 @@ class Snake:
     
     def drop(self):
         for snakeBlock in (self.head + self.body + self.tail):
-            if [snakeBlock.x, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
-                if snakeBlock.y + CELL_SIZE < HEIGHT:
-                    snakeBlock.setCoordinate(snakeBlock.x, snakeBlock.y + CELL_SIZE)
+            if [snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
+                if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
+                    snakeBlock.setCoordinate(snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
             else:
                 if snakeBlock.x < WIDTH//2:
-                    if [snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + CELL_SIZE < HEIGHT:
-                            snakeBlock.setCoordinate(snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE)
-                    elif [snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + CELL_SIZE < HEIGHT and snakeBlock.x - CELL_SIZE >= 0:
-                            snakeBlock.setCoordinate(snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE)
+                    if [snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
+                            snakeBlock.setCoordinate(snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                    elif [snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT and snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'] >= 0:
+                            snakeBlock.setCoordinate(snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
                 else:
-                    if [snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + CELL_SIZE < HEIGHT and snakeBlock.x - CELL_SIZE >= 0:
-                            snakeBlock.setCoordinate(snakeBlock.x - CELL_SIZE, snakeBlock.y + CELL_SIZE)
-                    elif [snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + CELL_SIZE < HEIGHT:
-                            snakeBlock.setCoordinate(snakeBlock.x + CELL_SIZE, snakeBlock.y + CELL_SIZE)
+                    if [snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT and snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'] >= 0:
+                            snakeBlock.setCoordinate(snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                    elif [snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
+                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
+                            snakeBlock.setCoordinate(snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
                     
         
         self.surface.fill((0, 0, 0, 0))

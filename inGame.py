@@ -16,7 +16,7 @@ WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
 NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
-CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
+SETTING2['SCREEN']['CELL_SIZE'] = SETTING2['SCREEN']['CELL_SIZE']
 
 ###########  CLASS INGAME  ##################################################################################
 class InGame:
@@ -39,18 +39,24 @@ class InGame:
         self.foodManager = foodManager
         self.descriptionTextScreenStart = Button("Press SPACE to start", menu.SMALL_FONT, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
-        self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*CELL_SIZE, CELL_SIZE)
+        self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*SETTING2['SCREEN']['CELL_SIZE'], SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning.isChosen = True
         # self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.snake.score)
         
     ###########   Update screen    ##########################################################################
     def update(self, type='ProvideFoodsAndUpdateSnakeMove'):
+        self.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+        self.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+        self.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+        self.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
+        self.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
         ###########   Remove old screen   ###################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new screen with current status   #################################################
         if type == 'ProvideFoodsAndUpdateSnakeMove':
             if self.showingScreenStart:
-                self.grid.draw(self.surface)
+                if SETTING1['GRID'] == 'ON':
+                    self.grid.draw(self.surface)
                 self.snake.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
@@ -59,7 +65,8 @@ class InGame:
                 self.snake.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
-                self.grid.draw(self.surface)
+                if SETTING1['GRID'] == 'ON':
+                    self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 self.snake.draw(self.surface)
@@ -67,13 +74,15 @@ class InGame:
                 pass
         elif type == 'UpdateSnakeAnimation':
             if self.showingScreenStart:
-                self.grid.draw(self.surface)
+                if SETTING1['GRID'] == 'ON':
+                    self.grid.draw(self.surface)
                 self.snake.updateAnimation()
                 self.snake.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
             elif self.running:
                 self.snake.updateAnimation()
-                self.grid.draw(self.surface)
+                if SETTING1['GRID'] == 'ON':
+                    self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 self.snake.draw(self.surface)
@@ -84,7 +93,8 @@ class InGame:
                 pass
             elif self.running:
                 self.foodManager.updateAnimation()
-                self.grid.draw(self.surface)
+                if SETTING1['GRID'] == 'ON':
+                    self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 self.snake.draw(self.surface)

@@ -10,8 +10,6 @@ NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
 NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
 CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
 FOOD = SETTING2['FOOD']
-MAX_FOOD = SETTING1['FOOD']['MAX_FOOD']
-ANIMATION_SPEED = SETTING1['FOOD']['ANIMATION_SPEED']
 
 ###########  CLASS FOOD  ####################################################################################
 class Food:
@@ -55,8 +53,8 @@ class FoodManager:
         self.surfaceRect.topleft = (0, 0)
         ###########  List food anf  number of foods  ########################################################
         self.listFood = []
-        self.maxFood = MAX_FOOD
-        self.animationSpeed = ANIMATION_SPEED
+        self.maxFood = SETTING1['FOOD']['MAX_FOOD']
+        self.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
     
     ###########  Get coordinate of all foods ################################################################
     def coordinateFoods(self):

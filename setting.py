@@ -16,6 +16,15 @@ def saveSetting(path):
         json.dump(SETTING1, file, indent=4)
     file.close()
 
+def replaceData(key1=None, key2=None, newData=''):
+    global SETTING1
+    if key1 == None:
+        return
+    if key2 == None:
+        SETTING1[key1] = newData
+    else:
+        SETTING1[key1][key2] = newData
+
 loadSetting('./data/setting/setting.json')
 
 ###########  RESOURCE  ######################################################################################
