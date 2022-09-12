@@ -172,34 +172,34 @@ class PlayGameMenu:
        
 
 ###########  CLASS CONTINUE GAME MENU  ##########################################################################
-class ContinueGameMenu:
-    ###########  Constructor  ###############################################################################
-    def __init__(self, x, y, width, height):
-        ###########  Surface, cursor and coordinate center  #################################################
-        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
-        self.surfaceRect = self.surface.get_rect()
-        self.surfaceRect.center = (x, y)
-        self.FPS = ANIMATION_SPEED
-        self.cursor = 0
+# class ContinueGameMenu:
+#     ###########  Constructor  ###############################################################################
+#     def __init__(self, x, y, width, height):
+#         ###########  Surface, cursor and coordinate center  #################################################
+#         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+#         self.surfaceRect = self.surface.get_rect()
+#         self.surfaceRect.center = (x, y)
+#         self.FPS = ANIMATION_SPEED
+#         self.cursor = 0
         
-        ########### Buttons in Continue Game Menu  ##############################################################
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*8//12)
+#         ########### Buttons in Continue Game Menu  ##############################################################
+#         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*8//12)
         
-    ###########   Update cursor and buttons status in Continue Game Menu   ######################################
-    def update(self):
-        ###########   Update cursor and buttons   ###########################################################
-        if self.cursor == 0:
-            self.titleBack.isChosen = True
-            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+#     ###########   Update cursor and buttons status in Continue Game Menu   ######################################
+#     def update(self):
+#         ###########   Update cursor and buttons   ###########################################################
+#         if self.cursor == 0:
+#             self.titleBack.isChosen = True
+#             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
         
-        ###########   Remove old button display   ###########################################################
-        self.surface.fill((0, 0, 0, 0))
-        ###########   Draw new buttons   ####################################################################
-        self.titleBack.draw(self.surface)
+#         ###########   Remove old button display   ###########################################################
+#         self.surface.fill((0, 0, 0, 0))
+#         ###########   Draw new buttons   ####################################################################
+#         self.titleBack.draw(self.surface)
     
-    ###########  Draw PlayGame Menu in another surface  #####################################################
-    def draw(self, parentSurface):
-        parentSurface.blit(self.surface, self.surfaceRect)
+#     ###########  Draw PlayGame Menu in another surface  #####################################################
+#     def draw(self, parentSurface):
+#         parentSurface.blit(self.surface, self.surfaceRect)
 
  
         

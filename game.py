@@ -1,9 +1,10 @@
 import sys
 import pygame
 from food import FoodManager
-from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, ContinueGameMenu
+from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu
 from inGame import InGame
 from snake import Snake
+import snake
 from setting import *
 import setting
 
@@ -30,14 +31,14 @@ class Game:
         self.runningMainMenu = True
         self.runningPlayGameMenu = False
         self.runningInGame = False
-        self.runningContinueGameMenu = False
+        # self.runningContinueGameMenu = False
         self.runningOptionsMenu = False
         self.runningGameOverMenu = False
         
         ###########   Screens in game   #####################################################################
         self.mainMenu = MainMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.playGameMenu = PlayGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
-        self.continueGameMenu = ContinueGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        # self.continueGameMenu = ContinueGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.inGame = InGame()
         self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
@@ -58,7 +59,10 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running =False
-                # setting.saveSetting('./data/setting/setting.json')
+                if self.runningInGame:
+                    snake.saveSnake(self.inGame.snake)
+                elif self.runningGameOverMenu:
+                    snake.saveSnake(Snake())
                 pygame.quit()
                 sys.exit()
             ###########   Get events when current screen is Main Menu   #####################################
@@ -95,28 +99,17 @@ class Game:
                     if event.key == pygame.K_RETURN:
                         if self.playGameMenu.cursor == 0:
                             self.runningInGame = True
+                            self.inGame.snake = Snake()
                             self.inGame.showingScreenStart = True
                         elif self.playGameMenu.cursor == 1:
-                            self.runningContinueGameMenu = True
+                            # self.runningContinueGameMenu = True
+                            self.runningInGame = True
+                            self.inGame.snake = snake.loadPreviousSnake()
+                            self.inGame.showingScreenStart = True
                         elif self.playGameMenu.cursor == 2:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         self.runningPlayGameMenu = False
-
-            ###########   Get events when current screen is Continue Game Menu   ############################
-            elif self.runningContinueGameMenu:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        self.continueGameMenu.cursor += 1
-                        self.continueGameMenu.cursor %= 1
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        self.continueGameMenu.cursor -= 1
-                        self.continueGameMenu.cursor %= 1
-                    if event.key == pygame.K_RETURN:
-                        self.runningOptionsMenu = False
-                        if self.continueGameMenu.cursor == 0:
-                            self.runningPlayGameMenu = True
-                            self.playGameMenu.cursor = 0
             
             ###########   Get events when current screen is Options Menu   ##################################
             elif self.runningOptionsMenu:
@@ -144,66 +137,67 @@ class Game:
                                 self.optionsMenu.cursor += 1
                     elif self.optionsMenu.cursor % 2 != 0:
                         if self.optionsMenu.cursor == 1:
-                            if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_DOWN, pygame.K_s, 
+                                             pygame.K_a, pygame.K_d, pygame.K_RIGHT, pygame.K_LEFT]:
                                 if SETTING1['GRID'] == 'ON':
                                     setting.replaceData(key1='GRID', newData='OFF')
                                 elif SETTING1['GRID'] == 'OFF':
                                     setting.replaceData(key1='GRID', newData='ON')
                         elif self.optionsMenu.cursor == 3:
-                            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED'] + 1
                                 self.inGame.snake.moveSpeed %= 61
                                 if self.inGame.snake.moveSpeed == 0:
                                     self.inGame.snake.moveSpeed = 1
-                            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED'] - 1
                                 self.inGame.snake.moveSpeed %= 61
                                 if self.inGame.snake.moveSpeed == 0:
                                     self.inGame.snake.moveSpeed = 60
                             setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', newData=self.inGame.snake.moveSpeed)
                         elif self.optionsMenu.cursor == 5:
-                            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED'] + 1
                                 self.inGame.snake.dropSpeed %= 61
                                 if self.inGame.snake.dropSpeed == 0:
                                     self.inGame.snake.dropSpeed = 1
-                            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED'] - 1
                                 self.inGame.snake.dropSpeed %= 61
                                 if self.inGame.snake.dropSpeed == 0:
                                     self.inGame.snake.dropSpeed = 60
                             setting.replaceData(key1='SNAKE', key2='DROP_SPEED', newData=self.inGame.snake.dropSpeed)
                         elif self.optionsMenu.cursor == 7:
-                            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED'] + 1
                                 self.inGame.snake.animationSpeed %= 61
                                 if self.inGame.snake.animationSpeed == 0:
                                     self.inGame.snake.animationSpeed = 1
-                            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED'] - 1
                                 self.inGame.snake.animationSpeed %= 61
                                 if self.inGame.snake.animationSpeed == 0:
                                     self.inGame.snake.animationSpeed = 60
                             setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', newData=self.inGame.snake.animationSpeed)
                         elif self.optionsMenu.cursor == 9:
-                            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD'] + 1
                                 self.inGame.foodManager.maxFood %= 105
                                 if self.inGame.foodManager.maxFood == 0:
                                     self.inGame.foodManager.maxFood = 1
-                            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD'] - 1
                                 self.inGame.foodManager.maxFood %= 105
                                 if self.inGame.foodManager.maxFood == 0:
                                     self.inGame.foodManager.maxFood = 104
                             setting.replaceData(key1='FOOD', key2='MAX_FOOD', newData=self.inGame.foodManager.maxFood)
                         elif self.optionsMenu.cursor == 11:
-                            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] + 1
                                 self.inGame.foodManager.animationSpeed %= 61
                                 if self.inGame.foodManager.animationSpeed == 0:
                                     self.inGame.foodManager.animationSpeed = 1
-                            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] - 1
                                 self.inGame.foodManager.animationSpeed %= 61
                                 if self.inGame.foodManager.animationSpeed == 0:
@@ -265,6 +259,7 @@ class Game:
                             self.inGame.showingScreenStart = True
                         elif self.gameOverMenu.cursor == 1:
                             self.runningMainMenu = True
+                            snake.saveSnake(Snake())
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
                         self.inGame.update()
@@ -282,9 +277,9 @@ class Game:
         elif self.runningPlayGameMenu:
             if self.countTicks % (FPS * 1000 // self.playGameMenu.FPS) == 0:
                 self.playGameMenu.update()
-        elif self.runningContinueGameMenu:
-            if self.countTicks % (FPS * 1000 // self.continueGameMenu.FPS) == 0:
-                self.continueGameMenu.update()        
+        # elif self.runningContinueGameMenu:
+        #     if self.countTicks % (FPS * 1000 // self.continueGameMenu.FPS) == 0:
+        #         self.continueGameMenu.update()        
         elif self.runningInGame:
             if self.inGame.snake.died():
                 self.inGame.running = False
@@ -326,8 +321,8 @@ class Game:
             self.mainMenu.draw(self.screen)
         elif self.runningPlayGameMenu:
             self.playGameMenu.draw(self.screen)
-        elif self.runningContinueGameMenu:
-            self.continueGameMenu.draw(self.screen)
+        # elif self.runningContinueGameMenu:
+        #     self.continueGameMenu.draw(self.screen)
         elif self.runningGameOverMenu:
             self.gameOverMenu.draw(self.screen)
         elif self.runningOptionsMenu:

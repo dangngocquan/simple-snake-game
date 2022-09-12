@@ -5,11 +5,11 @@
     "GRID": "ON",
     "FOOD": {
         "MAX_FOOD": 10,
-        "ANIMATION_SPEED": 4
+        "ANIMATION_SPEED": 6
     },
     "SNAKE": {
         "MOVE_SPEED": 15,
-        "ANIMATION_SPEED": 4,
+        "ANIMATION_SPEED": 5,
         "DROP_SPEED": 15,
         "MAX_FOOD": 4
     }

@@ -12,6 +12,72 @@ SETTING2['SCREEN']['CELL_SIZE'] = SETTING2['SCREEN']['CELL_SIZE']
 SNAKE = SETTING2['SNAKE']
 
 
+def loadPreviousSnake():
+    dict = None
+    with open('./data/player/snake.json', 'r') as file:
+        dict = json.load(file)
+    file.close()
+    head = []
+    for snakeBlock in dict['HEAD']:
+        head.append(SnakeBlock(SNAKE['HEAD'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                               x=snakeBlock['x'], y=snakeBlock['y'], 
+                               direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+    body = []
+    for snakeBlock in dict['BODY']:
+        body.append(SnakeBlock(SNAKE['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                               x=snakeBlock['x'], y=snakeBlock['y'], 
+                               direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+    tail = []
+    for snakeBlock in dict['TAIL']:
+        tail.append(SnakeBlock(SNAKE['TAIL'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                               x=snakeBlock['x'], y=snakeBlock['y'], 
+                               direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+    score = dict["score"]
+    currentDirection = dict["previousDirection"]
+    previousDirection = dict["previousDirection"]
+    
+    return Snake(head=head, body=body, tail=tail, score=score, 
+                 currentDirection=currentDirection, previousDirection=previousDirection)
+
+def saveSnake(snake):
+    data = {
+        "HEAD" : [],
+        "BODY" : [],
+        "TAIL" : [],
+        "score" : snake.score,
+        "currentDirection" : snake.currentDirection,
+        "previousDirection" : snake.previousDirection
+    }
+    for snakeBlock in snake.head:
+        dictSnakeBlock = {
+            "direction" : snakeBlock.direction,
+            "indexFrame" : snakeBlock.indexFrame,
+            "x" : snakeBlock.x,
+            "y" : snakeBlock.y
+        }
+        data['HEAD'].append(dictSnakeBlock)
+    for snakeBlock in snake.body:
+        dictSnakeBlock = {
+            "direction" : snakeBlock.direction,
+            "indexFrame" : snakeBlock.indexFrame,
+            "x" : snakeBlock.x,
+            "y" : snakeBlock.y
+        }
+        data['BODY'].append(dictSnakeBlock)
+    for snakeBlock in snake.tail:
+        dictSnakeBlock = {
+            "direction" : snakeBlock.direction,
+            "indexFrame" : snakeBlock.indexFrame,
+            "x" : snakeBlock.x,
+            "y" : snakeBlock.y
+        }
+        data['TAIL'].append(dictSnakeBlock)
+    with open('./data/player/snake.json', 'w') as file:
+        json.dump(data, file, indent=4)
+    file.close()
+    
+
+
 ###########  CLASS SNAKE BLOCK  #############################################################################
 class SnakeBlock:
     ###########   Constructor   #############################################################################
@@ -53,24 +119,29 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, speed=SETTING1['SNAKE']['MOVE_SPEED'], currentDirection='UU', previousDirection='UU', score=0):
+    def __init__(self, head=[SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)],
+                 body=[SnakeBlock(SNAKE['BODY']['UU'][1], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
+                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'],
+                                indexFrame=1)],
+                 tail=[SnakeBlock(SNAKE['TAIL']['UU'][2], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
+                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'],
+                                indexFrame=2)],
+                 currentDirection='UU', previousDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
         
         ###########   Create first head, body anf tail for Snake   ##########################################
-        self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)]
-        self.body = [SnakeBlock(SNAKE['BODY']['UU'][0], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
-                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'], indexFrame=1)]
-        self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][0], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
-                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'], indexFrame=2)]
+        self.head = head
+        self.body = body
+        self.tail = tail
         self.head[0].draw(self.surface)
         self.body[0].draw(self.surface)
         self.tail[0].draw(self.surface)
         
         ###########   Speed, Direction of Snake #############################################################
-        self.moveSpeed = speed
+        self.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
         self.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
         self.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
         self.currentDirection = currentDirection
