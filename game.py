@@ -8,7 +8,7 @@ import snake
 from setting import *
 import setting
 
-
+###########   VARIABLE   ####################################################################################
 WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 CAPTION = SETTING2['SCREEN']['CAPTION']
@@ -25,7 +25,6 @@ class Game:
         pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
         self.countTicks = 0
-        
         ###########   Status in game   ######################################################################
         self.running = True
         self.runningMainMenu = True
@@ -33,7 +32,6 @@ class Game:
         self.runningInGame = False
         self.runningOptionsMenu = False
         self.runningGameOverMenu = False
-        
         ###########   Screens in game   #####################################################################
         self.mainMenu = MainMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.playGameMenu = PlayGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
@@ -55,12 +53,15 @@ class Game:
     ###########   Get events in current screen   ############################################################    
     def getEvents(self):
         for event in pygame.event.get():
+            ###########   Quit game   #######################################################################
             if event.type == pygame.QUIT:
-                self.running = False
+                ###########   Save data before quit game   ##################################################
                 if self.runningInGame:
                     snake.saveSnake(self.inGame.snake)
                 elif self.runningGameOverMenu:
                     snake.saveSnake(Snake())
+                ###########   Quit   ########################################################################
+                self.running = False
                 pygame.quit()
                 sys.exit()
             ###########   Get events when current screen is Main Menu   #####################################
@@ -82,8 +83,7 @@ class Game:
                         elif self.mainMenu.cursor == 2:
                             self.running = False
                             pygame.quit()
-                            sys.exit()
-                        
+                            sys.exit()            
             ###########   Get events when current screen is Play Game Menu  #################################
             elif self.runningPlayGameMenu:
                 if event.type == pygame.KEYDOWN:
@@ -106,7 +106,6 @@ class Game:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         self.runningPlayGameMenu = False
-            
             ###########   Get events when current screen is Options Menu   ##################################
             elif self.runningOptionsMenu:
                 if event.type == pygame.KEYDOWN:
@@ -150,7 +149,8 @@ class Game:
                                 self.inGame.snake.moveSpeed %= 61
                                 if self.inGame.snake.moveSpeed == 0:
                                     self.inGame.snake.moveSpeed = 60
-                            setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', newData=self.inGame.snake.moveSpeed)
+                            setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
+                                                newData=self.inGame.snake.moveSpeed)
                         elif self.optionsMenu.cursor == 5:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED'] + 1
@@ -162,7 +162,8 @@ class Game:
                                 self.inGame.snake.dropSpeed %= 61
                                 if self.inGame.snake.dropSpeed == 0:
                                     self.inGame.snake.dropSpeed = 60
-                            setting.replaceData(key1='SNAKE', key2='DROP_SPEED', newData=self.inGame.snake.dropSpeed)
+                            setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
+                                                newData=self.inGame.snake.dropSpeed)
                         elif self.optionsMenu.cursor == 7:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED'] + 1
@@ -174,7 +175,8 @@ class Game:
                                 self.inGame.snake.animationSpeed %= 61
                                 if self.inGame.snake.animationSpeed == 0:
                                     self.inGame.snake.animationSpeed = 60
-                            setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', newData=self.inGame.snake.animationSpeed)
+                            setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
+                                                newData=self.inGame.snake.animationSpeed)
                         elif self.optionsMenu.cursor == 9:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD'] + 1
@@ -186,7 +188,8 @@ class Game:
                                 self.inGame.foodManager.maxFood %= 105
                                 if self.inGame.foodManager.maxFood == 0:
                                     self.inGame.foodManager.maxFood = 104
-                            setting.replaceData(key1='FOOD', key2='MAX_FOOD', newData=self.inGame.foodManager.maxFood)
+                            setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
+                                                newData=self.inGame.foodManager.maxFood)
                         elif self.optionsMenu.cursor == 11:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] + 1
@@ -198,11 +201,11 @@ class Game:
                                 self.inGame.foodManager.animationSpeed %= 61
                                 if self.inGame.foodManager.animationSpeed == 0:
                                     self.inGame.foodManager.animationSpeed = 60
-                            setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', newData=self.inGame.foodManager.animationSpeed)
+                            setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
+                                                newData=self.inGame.foodManager.animationSpeed)
                         if event.key == pygame.K_RETURN:
                             self.optionsMenu.cursor -= 1
-                setting.saveSetting('./data/setting/setting.json')
-                        
+                setting.saveSetting('./data/setting/setting.json')          
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
                 ###########   Get events when current screen is Start InGame   ##############################
@@ -219,7 +222,8 @@ class Game:
                                 self.inGame.running = False
                                 self.runningInGame = False
                                 self.runningGameOverMenu = True
-                                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
+                                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                                 self.inGame.snake)
                         elif event.key == pygame.K_SPACE:
                             if self.inGame.snake.currentDirection != None:
                                 self.inGame.snake.previousDirection = self.inGame.snake.currentDirection
@@ -241,6 +245,7 @@ class Game:
                 ###########   Get events when game pause   ##################################################
                 elif self.inGame.waiting:
                     pass
+            ###########   Get event when current screen is Game Over Menu   #################################
             elif self.runningGameOverMenu:
                  if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
@@ -261,28 +266,30 @@ class Game:
                         self.inGame.update()
                         self.runningGameOverMenu = False
                         
-                
-                    
-                        
+                                  
     ###########   Update screen with current status   #######################################################       
     def update(self):
+        ###########   Update screen Main Menu   #############################################################
         if self.runningMainMenu:
             if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                 self.mainMenu.update()
+        ###########   Update screen Play Game Menu   ########################################################
         elif self.runningPlayGameMenu:
             if self.countTicks % (FPS * 1000 // self.playGameMenu.FPS) == 0:
-                self.playGameMenu.update()       
-        elif self.runningInGame:
+                self.playGameMenu.update()
+        ###########   Update screen when player controlling snake   #########################################
+            ###########   Check game over   #################################################################
             if self.inGame.snake.died():
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True
                 self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
-            if self.inGame.showingScreenStart:
+            ###########   Update screen when showing screen start in Ingame   ###############################
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeAnimation')
                 if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
                     self.inGame.update()
+            ###########   Update screen when player is playing   ############################################
             elif self.inGame.running:
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeAnimation')
@@ -290,8 +297,10 @@ class Game:
                     self.inGame.update(type='UpdateFoodAnimation')
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.moveSpeed) == 0:
                     self.inGame.update()
+            ###########   Update screen when pause game   ###################################################
             elif self.inGame.waiting:
                 pass
+        ###########   Update screen when Game Over   ########################################################
         elif self.runningGameOverMenu:
             if self.countTicks % (FPS * 1000 // self.inGame.snake.dropSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeDrop')
@@ -299,6 +308,7 @@ class Game:
                 self.gameOverMenu.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
+        ###########   Update screen when showing Options Menu   #############################################
         elif self.runningOptionsMenu:
             if self.countTicks % (FPS * 1000 // self.optionsMenu.FPS) == 0:
                 self.optionsMenu.update()
@@ -306,7 +316,9 @@ class Game:
         
     ###########   Draw screen with current status and show it   #############################################
     def display(self):
+        ###########   Clear old images   ####################################################################
         self.screen.fill(BLACK)
+        ###########   Draw new images   #####################################################################
         if self.runningInGame:
             self.inGame.draw(self.screen)
         elif self.runningMainMenu:
