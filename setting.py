@@ -4,18 +4,20 @@ import pygame
 ###########  SETTING CAN BE CHANGED BY PLAYER  ##############################################################
 SETTING1 = {}
 
+###########   Function load setting for game from json file   ###############################################
 def loadSetting(path):
     global SETTING1
     with open(path, 'r') as file:
         SETTING1 = json.load(file)
     file.close()
 
-def saveSetting(path):
+###########   Function save current setting of game to json file   ##########################################
     global SETTING1
     with open('./data/setting/setting.json', 'w') as file:
         json.dump(SETTING1, file, indent=4)
     file.close()
 
+###########   Function change data of setting file   ########################################################
 def replaceData(key1=None, key2=None, newData=''):
     global SETTING1
     if key1 == None:
@@ -25,6 +27,7 @@ def replaceData(key1=None, key2=None, newData=''):
     else:
         SETTING1[key1][key2] = newData
 
+###########   Load file setting   ###########################################################################
 loadSetting('./data/setting/setting.json')
 
 ###########  RESOURCE  ######################################################################################
