@@ -3,7 +3,7 @@ import random
 from setting import *
 import setting
 
-
+###########   VARIABLE   ####################################################################################
 WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
@@ -21,7 +21,6 @@ class Food:
         self.surfaceRect.topleft = (x, y)
         self.x = x
         self.y = y
-        
         ###########  Default image food  ####################################################################
         self.surface.blit(FOOD[0], (0, 0))
         self.indexFrame = 0
@@ -32,7 +31,6 @@ class Food:
     
     ###########  Update image of food  ######################################################################
     def update(self):
-        # self.indexFrame = (self.indexFrame + 1) % 4
         ###########  Remove old image food  #################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw new image food  ###################################################################
@@ -87,9 +85,11 @@ class FoodManager:
             food.update()
             food.draw(self.surface)
         
-    
+    ###########   Update animation of foods   ###############################################################
     def updateAnimation(self):
+        ###########   Remove old images   ###################################################################
         self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new images   #####################################################################
         for food in self.listFood:
             food.indexFrame = (food.indexFrame + 1) % 4
             food.update()
