@@ -2,7 +2,7 @@ import pygame
 from setting import *
 import setting
 
-
+###########   VARIABLE   ####################################################################################
 WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
