@@ -1,29 +1,29 @@
 {
     "HEAD": [
         {
-            "direction": "UU",
-            "indexFrame": 0,
-            "x": 500,
-            "y": 300
+            "direction": "DD",
+            "indexFrame": 2,
+            "x": 350,
+            "y": 375
         }
     ],
     "BODY": [
         {
-            "direction": "UU",
-            "indexFrame": 1,
-            "x": 500,
-            "y": 325
+            "direction": "DD",
+            "indexFrame": 3,
+            "x": 350,
+            "y": 350
         }
     ],
     "TAIL": [
         {
-            "direction": "UU",
-            "indexFrame": 2,
-            "x": 500,
-            "y": 350
+            "direction": "DD",
+            "indexFrame": 4,
+            "x": 350,
+            "y": 325
         }
     ],
     "score": 0,
-    "currentDirection": "LL",
+    "currentDirection": "DD",
     "previousDirection": "UU"
 }

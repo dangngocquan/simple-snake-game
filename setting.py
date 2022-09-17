@@ -12,7 +12,7 @@ def loadSetting(path):
     file.close()
 
 ###########   Function save current setting of game to json file   ##########################################
-def saveSetting():
+def saveSetting(path):
     global SETTING1
     with open('./data/setting/setting.json', 'w') as file:
         json.dump(SETTING1, file, indent=4)

@@ -298,6 +298,7 @@ class Game:
             if self.countTicks % (FPS * 1000 // self.playGameMenu.FPS) == 0:
                 self.playGameMenu.update()
         ###########   Update screen when player controlling snake   #########################################
+        elif self.runningInGame:
             ###########   Check game over   #################################################################
             if self.inGame.snake.died():
                 self.inGame.running = False
@@ -305,6 +306,7 @@ class Game:
                 self.runningGameOverMenu = True
                 self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
             ###########   Update screen when showing screen start in Ingame   ###############################
+            if self.inGame.showingScreenStart:
                 if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeAnimation')
                 if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
