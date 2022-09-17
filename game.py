@@ -87,21 +87,26 @@ class Game:
             ###########   Get events when current screen is Play Game Menu  #################################
             elif self.runningPlayGameMenu:
                 if event.type == pygame.KEYDOWN:
+                    ###########   Move the cursor   #########################################################
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         self.playGameMenu.cursor += 1
                         self.playGameMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         self.playGameMenu.cursor -= 1
                         self.playGameMenu.cursor %= 3
+                    ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
+                        ###########   The cursor is pointing at "New Game"   ################################
                         if self.playGameMenu.cursor == 0:
                             self.runningInGame = True
                             self.inGame.snake = Snake()
                             self.inGame.showingScreenStart = True
+                        ###########   The cursor is pointing at "Continue Game"   ###########################
                         elif self.playGameMenu.cursor == 1:
                             self.runningInGame = True
                             self.inGame.snake = snake.loadPreviousSnake()
                             self.inGame.showingScreenStart = True
+                        ###########   The cursor is poiting at "Back"   #####################################
                         elif self.playGameMenu.cursor == 2:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
@@ -109,7 +114,11 @@ class Game:
             ###########   Get events when current screen is Options Menu   ##################################
             elif self.runningOptionsMenu:
                 if event.type == pygame.KEYDOWN:
+                    ###########   Move the cursor   #########################################################
+                    ###########   If the cursor is pointing at "Show grid", "Move speed", "Drop speed",   ###
+                    ###########   "Animation speed", "Max food"  ############################################
                     if self.optionsMenu.cursor % 2 == 0:
+                        ###########   Move the cursor   #####################################################
                         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                             if self.optionsMenu.cursor == 12:
                                 self.optionsMenu.cursor += 1
@@ -122,6 +131,7 @@ class Game:
                             else:
                                 self.optionsMenu.cursor -= 2
                             self.optionsMenu.cursor %= 13
+                        ###########   Select the content that cursor poiting at   ###########################
                         elif event.key == pygame.K_RETURN:
                             if self.optionsMenu.cursor == 12:
                                 self.runningOptionsMenu = False
@@ -130,7 +140,10 @@ class Game:
                                 self.mainMenu.cursor = 0
                             else:
                                 self.optionsMenu.cursor += 1
+                    ###########   If the cursor is not pointing at main content ("Show grid", "Move speed", #
+                    ###########   "Drop speed", "Animation speed", "Max food")   ############################
                     elif self.optionsMenu.cursor % 2 != 0:
+                        ###########   The cursor is poiting at sub options of "Show grid"   #################
                         if self.optionsMenu.cursor == 1:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_DOWN, pygame.K_s, 
                                              pygame.K_a, pygame.K_d, pygame.K_RIGHT, pygame.K_LEFT]:
@@ -138,6 +151,7 @@ class Game:
                                     setting.replaceData(key1='GRID', newData='OFF')
                                 elif SETTING1['GRID'] == 'OFF':
                                     setting.replaceData(key1='GRID', newData='ON')
+                        ###   The cursor is pointing at sub options of "Move speed" (of "Snake Setting")   ##
                         elif self.optionsMenu.cursor == 3:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED'] + 1
@@ -151,6 +165,7 @@ class Game:
                                     self.inGame.snake.moveSpeed = 60
                             setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
                                                 newData=self.inGame.snake.moveSpeed)
+                        ###   The cursor is pointing at sub options of "Drop speed" (of "Snake setting")   ###
                         elif self.optionsMenu.cursor == 5:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED'] + 1
@@ -164,6 +179,7 @@ class Game:
                                     self.inGame.snake.dropSpeed = 60
                             setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
                                                 newData=self.inGame.snake.dropSpeed)
+                        ### The cursor is pointing at sub options of "Animation speed" (of "Snake setting") #
                         elif self.optionsMenu.cursor == 7:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED'] + 1
@@ -177,6 +193,7 @@ class Game:
                                     self.inGame.snake.animationSpeed = 60
                             setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
                                                 newData=self.inGame.snake.animationSpeed)
+                        ###   The cursor is pointing at sub options of "Max food" (of "Food setting")   #####
                         elif self.optionsMenu.cursor == 9:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD'] + 1
@@ -190,6 +207,7 @@ class Game:
                                     self.inGame.foodManager.maxFood = 104
                             setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
                                                 newData=self.inGame.foodManager.maxFood)
+                        ### The cursor is pointing at sub options of "Animation food" (of "Food setting") ###
                         elif self.optionsMenu.cursor == 11:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] + 1
@@ -203,8 +221,10 @@ class Game:
                                     self.inGame.foodManager.animationSpeed = 60
                             setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
                                                 newData=self.inGame.foodManager.animationSpeed)
+                        ###   Return to the main options if player press ENTER   ############################
                         if event.key == pygame.K_RETURN:
                             self.optionsMenu.cursor -= 1
+                ###########   Save current setting to json file   ###########################################
                 setting.saveSetting('./data/setting/setting.json')          
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
