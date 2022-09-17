@@ -3,7 +3,7 @@ from snake import Snake
 from setting import *
 import setting
 
-
+###########   VARIABLE   ####################################################################################
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
 BIG_FONT = SETTING2['MENU']['BIG_FONT']
 MEDIUM_FONT = SETTING2['MENU']['MEDIUM_FONT']
@@ -11,7 +11,6 @@ MEDIUM_FONT_HORVED = SETTING2['MENU']['MEDIUM_FONT_HORVED']
 MEDIUM_FONT_2 = SETTING2['MENU']['MEDIUM_FONT_2']
 SMALL_FONT = SETTING2['MENU']['SMALL_FONT']
 DESCRIPTION_FONT = SETTING2['MENU']['DESCRIPTION_FONT']
-
 WHITE = SETTING2['COLOR']['WHITE']
 
 ###########  CLASS BUTTON  ##################################################################################
@@ -21,8 +20,6 @@ class Button:
         self.text = font.render(text, True, WHITE, None)
         self.textRect = self.text.get_rect()
         self.typeLocation = typeLocation
-        # self.textRect.center = None
-        # self.textRect.topLeft = None
         if self.typeLocation == 'center':
             self.textRect.center = (x, y)
         elif self.typeLocation == 'topLeft':
@@ -73,7 +70,6 @@ class MainMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
-        
         ########### Buttons   ###############################################################################
         self.titleSimpleSnake = Button("SIMPLE SNAKE", BIG_FONT, width//2, height//6)
         self.titlePlayGame = Button("PLAY GAME", MEDIUM_FONT, width//2, height*5//12)
@@ -104,7 +100,6 @@ class MainMenu:
             self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
             self.titleOptions.update('OPTIONS', MEDIUM_FONT)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT_HORVED)
-        
         ###########  Remove old button display  #############################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw new button   ######################################################################
@@ -128,7 +123,6 @@ class PlayGameMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
-        
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleNewGame = Button("NEW GAME", MEDIUM_FONT, width//2, height*4//12)
         self.titleContinueGame = Button("CONTINUE GAME", MEDIUM_FONT, width//2, height*6//12)
@@ -158,7 +152,6 @@ class PlayGameMenu:
             self.titleNewGame.update('NEW GAME', MEDIUM_FONT)
             self.titleContinueGame.update('CONTINUE GAME', MEDIUM_FONT)
             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
-        
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
@@ -170,38 +163,6 @@ class PlayGameMenu:
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
        
-
-###########  CLASS CONTINUE GAME MENU  ##########################################################################
-# class ContinueGameMenu:
-#     ###########  Constructor  ###############################################################################
-#     def __init__(self, x, y, width, height):
-#         ###########  Surface, cursor and coordinate center  #################################################
-#         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
-#         self.surfaceRect = self.surface.get_rect()
-#         self.surfaceRect.center = (x, y)
-#         self.FPS = ANIMATION_SPEED
-#         self.cursor = 0
-        
-#         ########### Buttons in Continue Game Menu  ##############################################################
-#         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*8//12)
-        
-#     ###########   Update cursor and buttons status in Continue Game Menu   ######################################
-#     def update(self):
-#         ###########   Update cursor and buttons   ###########################################################
-#         if self.cursor == 0:
-#             self.titleBack.isChosen = True
-#             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
-        
-#         ###########   Remove old button display   ###########################################################
-#         self.surface.fill((0, 0, 0, 0))
-#         ###########   Draw new buttons   ####################################################################
-#         self.titleBack.draw(self.surface)
-    
-#     ###########  Draw PlayGame Menu in another surface  #####################################################
-#     def draw(self, parentSurface):
-#         parentSurface.blit(self.surface, self.surfaceRect)
-
- 
         
 ###########  CLASS OPTIONS MENU  ##########################################################################
 class OptionsMenu:
@@ -213,23 +174,31 @@ class OptionsMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 12
-        
         ########### Buttons in Options Menu  ##############################################################
         self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*1//15)
         self.titleGrid= Button("Show grid", SMALL_FONT, width//6, height*2//15, 'topLeft')
-        self.titleGridOptions= Button(f"{SETTING1['GRID']}", SMALL_FONT, width//6*5, height*2//15, 'topLeft')
+        self.titleGridOptions= Button(f"{SETTING1['GRID']}", SMALL_FONT, 
+                                      width//6*5, height*2//15, 'topLeft')
         self.titleSnakeSetting= Button("SNAKE SETTING", SMALL_FONT, width//2, height*4//15)
         self.titleSnakeMoveSpeed = Button("Move Speed", SMALL_FONT, width//6, height*5//15, 'topLeft')
-        self.titleSnakeMoveSpeedOptions = Button(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, width//6*5, height*5//15, 'topLeft')
-        self.titleSnakeDropSpeed = Button("Drop Speed (when snake died)", SMALL_FONT, width//6, height*6//15, 'topLeft')
-        self.titleSnakeDropSpeedOptions = Button(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, width//6*5, height*6//15, 'topLeft')
-        self.titleSnakeAnimationSpeed = Button("Animation Speed", SMALL_FONT, width//6, height*7//15, 'topLeft')
-        self.titleSnakeAnimationSpeedOptions = Button(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, width//6*5, height*7//15, 'topLeft')
+        self.titleSnakeMoveSpeedOptions = Button(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, 
+                                                 width//6*5, height*5//15, 'topLeft')
+        self.titleSnakeDropSpeed = Button("Drop Speed (when snake died)", SMALL_FONT, 
+                                          width//6, height*6//15, 'topLeft')
+        self.titleSnakeDropSpeedOptions = Button(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, 
+                                                 width//6*5, height*6//15, 'topLeft')
+        self.titleSnakeAnimationSpeed = Button("Animation Speed", SMALL_FONT, 
+                                               width//6, height*7//15, 'topLeft')
+        self.titleSnakeAnimationSpeedOptions = Button(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, 
+                                                      width//6*5, height*7//15, 'topLeft')
         self.titleFoodSetting = Button("FOOD SETTING", SMALL_FONT, width//2, height*9//15)
         self.titleFoodMax = Button("Max Food", SMALL_FONT, width//6, height*10//15, 'topLeft')
-        self.titleFoodMaxOptions = Button(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, width//6*5, height*10//15, 'topLeft')
-        self.titleFoodAnimationSpeed = Button("Animation Speed", SMALL_FONT, width//6, height*11//15, 'topLeft')
-        self.titleFoodAnimationSpeedOptions = Button(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, width//6*5, height*11//15, 'topLeft')
+        self.titleFoodMaxOptions = Button(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, 
+                                          width//6*5, height*10//15, 'topLeft')
+        self.titleFoodAnimationSpeed = Button("Animation Speed", SMALL_FONT, 
+                                              width//6, height*11//15, 'topLeft')
+        self.titleFoodAnimationSpeedOptions = Button(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, 
+                                                     width//6*5, height*11//15, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*13//15)
         
     ###########   Update cursor and buttons status in Options Menu   ######################################
@@ -293,16 +262,19 @@ class OptionsMenu:
         self.titleGrid.update('Show grid', SMALL_FONT, 'B')
         self.titleGridOptions.update(f"{SETTING1['GRID']}", SMALL_FONT, 'B')
         self.titleSnakeMoveSpeed.update("Move speed", SMALL_FONT, 'B')
-        self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, 'B')
+        self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['SNAKE']['MOVE_SPEED']}", 
+                                               SMALL_FONT, 'B')
         self.titleSnakeDropSpeed.update("Drop speed", SMALL_FONT, 'B')
-        self.titleSnakeDropSpeedOptions.update(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, 'B')
+        self.titleSnakeDropSpeedOptions.update(f"{SETTING1['SNAKE']['DROP_SPEED']}", 
+                                               SMALL_FONT, 'B')
         self.titleSnakeAnimationSpeed.update('Animation speed', SMALL_FONT, 'B')
-        self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, 'B')
+        self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", 
+                                                    SMALL_FONT, 'B')
         self.titleFoodMax.update('Max food', SMALL_FONT, 'B')
         self.titleFoodMaxOptions.update(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, 'B')
         self.titleFoodAnimationSpeed.update('Animation speed', SMALL_FONT, 'B')
-        self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, 'B')
-        
+        self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", 
+                                                   SMALL_FONT, 'B')
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
@@ -321,7 +293,6 @@ class OptionsMenu:
         self.titleFoodMaxOptions.draw(self.surface)
         self.titleFoodAnimationSpeed.draw(self.surface)
         self.titleFoodAnimationSpeedOptions.draw(self.surface)
-        
         self.titleBack.draw(self.surface)
     
     ###########  Draw PlayGame Menu in another surface  #####################################################
@@ -340,18 +311,17 @@ class GameOverMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         self.snake = snake
-        
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("GAME OVER", BIG_FONT, width//2, height*3//12)
         self.titleScore = Button(f"Your score: {self.snake.score}", MEDIUM_FONT_2, width//2, height*5//12)
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*7//12)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*9//12)
         
-    
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
+        ###########   Update animation of text   ############################################################
         if type == 'UpdateTextAnimation':
-            ###########   Update cursor and buttons   ###########################################################
+            ###########   Update cursor and buttons   #######################################################
             if self.cursor == 0:
                 self.titlePlayAgain.isChosen = True
                 self.titleBackMainMenu.isChosen = False
@@ -362,30 +332,31 @@ class GameOverMenu:
                 self.titleBackMainMenu.isChosen = True
                 self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
                 self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
-            
-            ###########   Remove old button display   ###########################################################
+            ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
-            ###########   Draw new buttons   ####################################################################
+            ###########   Draw new buttons   ################################################################
             self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT_2)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
+        ###########   Update location of snake when snake drop   ############################################
         elif type == 'UpdateSnakeDrop':
-            ###########   Remove old button display   ###########################################################
+            ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
-            ###########   Draw new buttons   ####################################################################
+            ###########   Draw new buttons   ################################################################
             self.snake.drop()
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
+        ###########   Update animation of snake   ###########################################################
         elif type == 'UpdateSnakeAnimation':
-            ###########   Remove old button display   ###########################################################
+            ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
-            ###########   Draw new buttons   ####################################################################
+            ###########   Draw new buttons   ################################################################
             self.snake.updateAnimation()
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
