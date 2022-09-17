@@ -119,13 +119,7 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, head=[SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)],
-                 body=[SnakeBlock(SNAKE['BODY']['UU'][1], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
-                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'],
-                                indexFrame=1)],
-                 tail=[SnakeBlock(SNAKE['TAIL']['UU'][2], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
-                                NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'],
-                                indexFrame=2)],
+    def __init__(self, head=None, body=None, tail=None,
                  currentDirection='UU', previousDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -133,9 +127,22 @@ class Snake:
         self.surfaceRect.topleft = (0, 0)
         
         ###########   Create first head, body anf tail for Snake   ##########################################
-        self.head = head
-        self.body = body
-        self.tail = tail
+        if head == None:
+            self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)]
+        else:
+            self.head = head
+        if body == None:
+            self.body = [SnakeBlock(SNAKE['BODY']['UU'][1], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
+                                    NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'],
+                                    indexFrame=1)]
+        else:
+            self.body = body
+        if tail == None:
+            self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][2], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
+                                    NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'],
+                                    indexFrame=2)]
+        else:
+            self.tail = tail
         self.head[0].draw(self.surface)
         self.body[0].draw(self.surface)
         self.tail[0].draw(self.surface)

@@ -31,14 +31,12 @@ class Game:
         self.runningMainMenu = True
         self.runningPlayGameMenu = False
         self.runningInGame = False
-        # self.runningContinueGameMenu = False
         self.runningOptionsMenu = False
         self.runningGameOverMenu = False
         
         ###########   Screens in game   #####################################################################
         self.mainMenu = MainMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.playGameMenu = PlayGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
-        # self.continueGameMenu = ContinueGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.inGame = InGame()
         self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
@@ -58,7 +56,7 @@ class Game:
     def getEvents(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.running =False
+                self.running = False
                 if self.runningInGame:
                     snake.saveSnake(self.inGame.snake)
                 elif self.runningGameOverMenu:
@@ -83,7 +81,6 @@ class Game:
                             self.runningOptionsMenu = True
                         elif self.mainMenu.cursor == 2:
                             self.running = False
-                            # setting.saveSetting('./data/setting/setting.json')
                             pygame.quit()
                             sys.exit()
                         
@@ -102,7 +99,6 @@ class Game:
                             self.inGame.snake = Snake()
                             self.inGame.showingScreenStart = True
                         elif self.playGameMenu.cursor == 1:
-                            # self.runningContinueGameMenu = True
                             self.runningInGame = True
                             self.inGame.snake = snake.loadPreviousSnake()
                             self.inGame.showingScreenStart = True
@@ -259,11 +255,10 @@ class Game:
                             self.inGame.showingScreenStart = True
                         elif self.gameOverMenu.cursor == 1:
                             self.runningMainMenu = True
-                            snake.saveSnake(Snake())
+                        snake.saveSnake(Snake())
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
                         self.inGame.update()
-                        self.inGame.showingScreenStart = True
                         self.runningGameOverMenu = False
                         
                 
@@ -276,10 +271,7 @@ class Game:
                 self.mainMenu.update()
         elif self.runningPlayGameMenu:
             if self.countTicks % (FPS * 1000 // self.playGameMenu.FPS) == 0:
-                self.playGameMenu.update()
-        # elif self.runningContinueGameMenu:
-        #     if self.countTicks % (FPS * 1000 // self.continueGameMenu.FPS) == 0:
-        #         self.continueGameMenu.update()        
+                self.playGameMenu.update()       
         elif self.runningInGame:
             if self.inGame.snake.died():
                 self.inGame.running = False
@@ -321,8 +313,6 @@ class Game:
             self.mainMenu.draw(self.screen)
         elif self.runningPlayGameMenu:
             self.playGameMenu.draw(self.screen)
-        # elif self.runningContinueGameMenu:
-        #     self.continueGameMenu.draw(self.screen)
         elif self.runningGameOverMenu:
             self.gameOverMenu.draw(self.screen)
         elif self.runningOptionsMenu:

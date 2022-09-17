@@ -41,7 +41,6 @@ class InGame:
         self.descriptionTextScreenStart.isChosen = True
         self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*SETTING2['SCREEN']['CELL_SIZE'], SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning.isChosen = True
-        # self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.snake.score)
         
     ###########   Update screen    ##########################################################################
     def update(self, type='ProvideFoodsAndUpdateSnakeMove'):
