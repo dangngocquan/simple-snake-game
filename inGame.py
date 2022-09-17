@@ -10,8 +10,7 @@ from grid import Grid
 from setting import *
 import setting
 
-
-
+###########   VARIABLE   ####################################################################################
 WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
@@ -26,13 +25,10 @@ class InGame:
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
-        
         ###########   Status screen    ######################################################################
         self.showingScreenStart = False
         self.running = False
         self.waiting = False
-        # self.showingScreenEnd = False
-        
         ###########   Object in game    #####################################################################
         self.grid = Grid(0, 0)
         self.snake = snake
@@ -52,6 +48,7 @@ class InGame:
         ###########   Remove old screen   ###################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new screen with current status   #################################################
+        ###########   Update snake move and number of food   ################################################
         if type == 'ProvideFoodsAndUpdateSnakeMove':
             if self.showingScreenStart:
                 if SETTING1['GRID'] == 'ON':
@@ -71,6 +68,7 @@ class InGame:
                 self.snake.draw(self.surface)
             elif self.waiting:
                 pass
+        ###########   Only update snake animation   #########################################################
         elif type == 'UpdateSnakeAnimation':
             if self.showingScreenStart:
                 if SETTING1['GRID'] == 'ON':
@@ -87,6 +85,7 @@ class InGame:
                 self.snake.draw(self.surface)
             elif self.waiting:
                 pass
+        ###########   Only update food animation   ##########################################################
         elif type == 'UpdateFoodAnimation':
             if self.showingScreenStart:
                 pass
