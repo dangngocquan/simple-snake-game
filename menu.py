@@ -175,86 +175,107 @@ class OptionsMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 12
         ########### Buttons in Options Menu  ##############################################################
-        self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*1//15)
-        self.titleGrid= Button("Show grid", SMALL_FONT, width//6, height*2//15, 'topLeft')
+        self.descriptionText = Button("", SMALL_FONT, width//2, height*1//17)
+        self.descriptionText.isChosen = True
+        self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*3//17)
+        self.titleGrid= Button("Show grid", SMALL_FONT, width//6, height*4//17, 'topLeft')
         self.titleGridOptions= Button(f"{SETTING1['GRID']}", SMALL_FONT, 
-                                      width//6*5, height*2//15, 'topLeft')
-        self.titleSnakeSetting= Button("SNAKE SETTING", SMALL_FONT, width//2, height*4//15)
-        self.titleSnakeMoveSpeed = Button("Move Speed", SMALL_FONT, width//6, height*5//15, 'topLeft')
+                                      width//6*5, height*4//17, 'topLeft')
+        self.titleSnakeSetting= Button("SNAKE SETTING", SMALL_FONT, width//2, height*6//17)
+        self.titleSnakeMoveSpeed = Button("Move Speed", SMALL_FONT, width//6, height*7//17, 'topLeft')
         self.titleSnakeMoveSpeedOptions = Button(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, 
-                                                 width//6*5, height*5//15, 'topLeft')
+                                                 width//6*5, height*7//17, 'topLeft')
         self.titleSnakeDropSpeed = Button("Drop Speed (when snake died)", SMALL_FONT, 
-                                          width//6, height*6//15, 'topLeft')
+                                          width//6, height*8//17, 'topLeft')
         self.titleSnakeDropSpeedOptions = Button(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, 
-                                                 width//6*5, height*6//15, 'topLeft')
+                                                 width//6*5, height*8//17, 'topLeft')
         self.titleSnakeAnimationSpeed = Button("Animation Speed", SMALL_FONT, 
-                                               width//6, height*7//15, 'topLeft')
+                                               width//6, height*9//17, 'topLeft')
         self.titleSnakeAnimationSpeedOptions = Button(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, 
-                                                      width//6*5, height*7//15, 'topLeft')
-        self.titleFoodSetting = Button("FOOD SETTING", SMALL_FONT, width//2, height*9//15)
-        self.titleFoodMax = Button("Max Food", SMALL_FONT, width//6, height*10//15, 'topLeft')
+                                                      width//6*5, height*9//17, 'topLeft')
+        self.titleFoodSetting = Button("FOOD SETTING", SMALL_FONT, width//2, height*11//17)
+        self.titleFoodMax = Button("Max Food", SMALL_FONT, width//6, height*12//17, 'topLeft')
         self.titleFoodMaxOptions = Button(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, 
-                                          width//6*5, height*10//15, 'topLeft')
+                                          width//6*5, height*12//17, 'topLeft')
         self.titleFoodAnimationSpeed = Button("Animation Speed", SMALL_FONT, 
-                                              width//6, height*11//15, 'topLeft')
+                                              width//6, height*13//17, 'topLeft')
         self.titleFoodAnimationSpeedOptions = Button(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, 
-                                                     width//6*5, height*11//15, 'topLeft')
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*13//15)
+                                                     width//6*5, height*13//17, 'topLeft')
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*15//17)
         
     ###########   Update cursor and buttons status in Options Menu   ######################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleGrid.isChosen = True
+            self.descriptionText.update('Press ENTER to setup the grid', SMALL_FONT, 'R')
         else:
             self.titleGrid.isChosen = False
         if self.cursor == 1:
             self.titleGridOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'R')
         else:
             self.titleGridOptions.isChosen = False
         if self.cursor == 2:
             self.titleSnakeMoveSpeed.isChosen = True
+            self.descriptionText.update('Press ENTER to setup the move speed of snake', SMALL_FONT, 'R')
         else:
             self.titleSnakeMoveSpeed.isChosen = False
         if self.cursor == 3:
             self.titleSnakeMoveSpeedOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'R')
         else:
             self.titleSnakeMoveSpeedOptions.isChosen = False
         if self.cursor == 4:
             self.titleSnakeDropSpeed.isChosen = True
+            self.descriptionText.update('Press ENTER to setup the drop speed of snake', SMALL_FONT, 'R')
         else:
             self.titleSnakeDropSpeed.isChosen = False
         if self.cursor == 5:
             self.titleSnakeDropSpeedOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'R')
         else:
             self.titleSnakeDropSpeedOptions.isChosen = False
         if self.cursor == 6:
             self.titleSnakeAnimationSpeed.isChosen = True
+            self.descriptionText.update('Press ENTER to setup the animation speed of snake', SMALL_FONT, 'R')
         else:
             self.titleSnakeAnimationSpeed.isChosen = False
         if self.cursor == 7:
             self.titleSnakeAnimationSpeedOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'R')
         else:
             self.titleSnakeAnimationSpeedOptions.isChosen = False
         if self.cursor == 8:
             self.titleFoodMax.isChosen = True
+            self.descriptionText.update('Press ENTER to setup the max number of food', SMALL_FONT, 'R')
         else:
             self.titleFoodMax.isChosen = False
         if self.cursor == 9:
             self.titleFoodMaxOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'R')
         else:
             self.titleFoodMaxOptions.isChosen = False
         if self.cursor == 10:
             self.titleFoodAnimationSpeed.isChosen = True
+            self.descriptionText.update('Press ENTER to setup the animation speed of food', SMALL_FONT, 'R')
         else:
             self.titleFoodAnimationSpeed.isChosen = False
         if self.cursor == 11:
             self.titleFoodAnimationSpeedOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'R')
         else:
             self.titleFoodAnimationSpeedOptions.isChosen = False
         if self.cursor == 12:
             self.titleBack.isChosen = True
             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+            self.descriptionText.update('', SMALL_FONT, 'R')
         else:
             self.titleBack.isChosen = False
             self.titleBack.update('BACK', MEDIUM_FONT)
@@ -278,6 +299,7 @@ class OptionsMenu:
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
+        self.descriptionText.draw(self.surface)
         self.titleGridSetting.draw(self.surface)
         self.titleGrid.draw(self.surface)
         self.titleGridOptions.draw(self.surface)
