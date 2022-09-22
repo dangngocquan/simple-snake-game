@@ -15,7 +15,6 @@ WIDTH = SETTING2['SCREEN']['WIDTH']
 HEIGHT = SETTING2['SCREEN']['HEIGHT']
 NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
 NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
-SETTING2['SCREEN']['CELL_SIZE'] = SETTING2['SCREEN']['CELL_SIZE']
 
 ###########  CLASS INGAME  ##################################################################################
 class InGame:

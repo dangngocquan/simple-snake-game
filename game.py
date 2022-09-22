@@ -14,6 +14,8 @@ HEIGHT = SETTING2['SCREEN']['HEIGHT']
 CAPTION = SETTING2['SCREEN']['CAPTION']
 FPS = SETTING2['SCREEN']['FPS']
 BLACK = SETTING2['COLOR']['BLACK']
+PRESS_BUTTON = SETTING2['SOUND']['PRESS_BUTTON']
+SNAKE_EAT_FOOD = SETTING2['SOUND']['SNAKE_EAT_FOOD']
 
 ###########   CLASS GAME   ##################################################################################
 class Game:
@@ -21,6 +23,7 @@ class Game:
     def __init__(self):
         ###########   Create window game, caption, clock   ##################################################
         pygame.init()
+        pygame.mixer.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
@@ -74,6 +77,7 @@ class Game:
                         self.mainMenu.cursor -= 1
                         self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_RETURN:
+                        PRESS_BUTTON.play()
                         self.runningMainMenu = False
                         if self.mainMenu.cursor == 0:
                             self.runningPlayGameMenu = True
@@ -96,6 +100,7 @@ class Game:
                         self.playGameMenu.cursor %= 3
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
+                        PRESS_BUTTON.play()
                         ###########   The cursor is pointing at "New Game"   ################################
                         if self.playGameMenu.cursor == 0:
                             self.runningInGame = True
@@ -133,6 +138,7 @@ class Game:
                             self.optionsMenu.cursor %= 13
                         ###########   Select the content that cursor poiting at   ###########################
                         elif event.key == pygame.K_RETURN:
+                            PRESS_BUTTON.play()
                             if self.optionsMenu.cursor == 12:
                                 self.runningOptionsMenu = False
                                 self.optionsMenu.cursor = 12
@@ -223,6 +229,7 @@ class Game:
                                                 newData=self.inGame.foodManager.animationSpeed)
                         ###   Return to the main options if player press ENTER   ############################
                         if event.key == pygame.K_RETURN:
+                            PRESS_BUTTON.play()
                             self.optionsMenu.cursor -= 1
                 ###########   Save current setting to json file   ###########################################
                 setting.saveSetting('./data/setting/setting.json')          
@@ -288,6 +295,7 @@ class Game:
                         self.gameOverMenu.cursor -= 1
                         self.gameOverMenu.cursor %= 2
                     elif event.key == pygame.K_RETURN:
+                        PRESS_BUTTON.play()
                         if self.gameOverMenu.cursor == 0:
                             self.runningInGame = True
                             self.inGame.showingScreenStart = True
