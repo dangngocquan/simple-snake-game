@@ -15,7 +15,7 @@ CAPTION = SETTING2['SCREEN']['CAPTION']
 FPS = SETTING2['SCREEN']['FPS']
 BLACK = SETTING2['COLOR']['BLACK']
 PRESS_BUTTON = SETTING2['SOUND']['PRESS_BUTTON']
-SNAKE_EAT_FOOD = SETTING2['SOUND']['SNAKE_EAT_FOOD']
+CHANGE_BUTTON = SETTING2['SOUND']['CHANGE_BUTTON']
 
 ###########   CLASS GAME   ##################################################################################
 class Game:
@@ -71,9 +71,11 @@ class Game:
             if self.runningMainMenu:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        CHANGE_BUTTON.play()
                         self.mainMenu.cursor += 1
                         self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        CHANGE_BUTTON.play()
                         self.mainMenu.cursor -= 1
                         self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_RETURN:
@@ -86,6 +88,7 @@ class Game:
                             self.runningOptionsMenu = True
                         elif self.mainMenu.cursor == 2:
                             self.running = False
+                            pygame.time.wait(1000)
                             pygame.quit()
                             sys.exit()            
             ###########   Get events when current screen is Play Game Menu  #################################
@@ -93,9 +96,11 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     ###########   Move the cursor   #########################################################
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        CHANGE_BUTTON.play()
                         self.playGameMenu.cursor += 1
                         self.playGameMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        CHANGE_BUTTON.play()
                         self.playGameMenu.cursor -= 1
                         self.playGameMenu.cursor %= 3
                     ###########   Select the content that the cursor is pointing at   #######################
@@ -125,12 +130,14 @@ class Game:
                     if self.optionsMenu.cursor % 2 == 0:
                         ###########   Move the cursor   #####################################################
                         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                            CHANGE_BUTTON.play()
                             if self.optionsMenu.cursor == 12:
                                 self.optionsMenu.cursor += 1
                             else:
                                 self.optionsMenu.cursor += 2
                             self.optionsMenu.cursor %= 13
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                            CHANGE_BUTTON.play()
                             if self.optionsMenu.cursor == 0:
                                 self.optionsMenu.cursor -= 1
                             else:
@@ -289,9 +296,11 @@ class Game:
             elif self.runningGameOverMenu:
                  if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        CHANGE_BUTTON.play()
                         self.gameOverMenu.cursor += 1
                         self.gameOverMenu.cursor %= 2
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        CHANGE_BUTTON.play()
                         self.gameOverMenu.cursor -= 1
                         self.gameOverMenu.cursor %= 2
                     elif event.key == pygame.K_RETURN:

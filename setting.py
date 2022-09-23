@@ -91,7 +91,9 @@ BLACK = (0, 0, 0)
 ###########  SOUND  #########################################################################################
 pygame.mixer.init()
 PRESS_BUTTON = pygame.mixer.Sound('./assets/sounds/button/pressButton.wav')
+CHANGE_BUTTON = pygame.mixer.Sound('./assets/sounds/button/changeButton.wav')
 SNAKE_EAT_FOOD = pygame.mixer.Sound('./assets/sounds/snake/eatFood.wav')
+
 
 ###########  SETTING CAN'T BE CHANGED BY PLAYER  ############################################################
 SETTING2 = {
@@ -121,6 +123,7 @@ SETTING2 = {
     'FOOD' : FOOD,
     'SOUND' : {
         'PRESS_BUTTON' : PRESS_BUTTON,
+        'CHANGE_BUTTON' : CHANGE_BUTTON,
         'SNAKE_EAT_FOOD' : SNAKE_EAT_FOOD
     }
 }
