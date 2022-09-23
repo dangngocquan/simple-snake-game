@@ -16,6 +16,7 @@ FPS = SETTING2['SCREEN']['FPS']
 BLACK = SETTING2['COLOR']['BLACK']
 PRESS_BUTTON = SETTING2['SOUND']['PRESS_BUTTON']
 CHANGE_BUTTON = SETTING2['SOUND']['CHANGE_BUTTON']
+GAME_OVER = SETTING2['SOUND']['GAME_OVER']
 
 ###########   CLASS GAME   ##################################################################################
 class Game:
@@ -253,6 +254,7 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_k:
                             if self.inGame.snake.currentDirection == None:
+                                GAME_OVER.play()
                                 self.inGame.running = False
                                 self.runningInGame = False
                                 self.runningGameOverMenu = True
@@ -331,6 +333,7 @@ class Game:
         elif self.runningInGame:
             ###########   Check game over   #################################################################
             if self.inGame.snake.died():
+                GAME_OVER.play()
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True

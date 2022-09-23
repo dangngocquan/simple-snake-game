@@ -65,14 +65,14 @@ class InGame:
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
+                self.foodManager.draw(self.surface)
+                self.scoreTextScreenRunning.draw(self.surface)
+                self.snake.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * 1000 // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
                         self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return main menu",
                                                              menu.SMALL_FONT, 'R')
-                self.foodManager.draw(self.surface)
-                self.scoreTextScreenRunning.draw(self.surface)
-                self.snake.draw(self.surface)
             elif self.waiting:
                 pass
         ###########   Only update snake animation   #########################################################
@@ -88,10 +88,10 @@ class InGame:
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
+                self.snake.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
-                self.snake.draw(self.surface)
             elif self.waiting:
                 pass
         ###########   Only update food animation   ##########################################################
@@ -103,10 +103,10 @@ class InGame:
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
+                self.snake.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
-                self.snake.draw(self.surface)
             elif self.waiting:
                 pass
             
