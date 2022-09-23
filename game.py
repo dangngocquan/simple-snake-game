@@ -25,6 +25,9 @@ class Game:
         ###########   Create window game, caption, clock   ##################################################
         pygame.init()
         pygame.mixer.init()
+        pygame.mixer.music.load('./assets/sounds/game/BoyWithUkeLoafers.wav')
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.5)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
@@ -321,6 +324,7 @@ class Game:
                                   
     ###########   Update screen with current status   #######################################################       
     def update(self):
+        
         ###########   Update screen Main Menu   #############################################################
         if self.runningMainMenu:
             if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:

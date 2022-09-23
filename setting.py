@@ -95,7 +95,6 @@ CHANGE_BUTTON = pygame.mixer.Sound('./assets/sounds/button/changeButton.wav')
 SNAKE_EAT_FOOD = pygame.mixer.Sound('./assets/sounds/snake/eatFood.wav')
 GAME_OVER = pygame.mixer.Sound('./assets/sounds/snake/died.wav')
 
-
 ###########  SETTING CAN'T BE CHANGED BY PLAYER  ############################################################
 SETTING2 = {
     'SCREEN' : {

@@ -2,28 +2,28 @@
     "HEAD": [
         {
             "direction": "UU",
-            "indexFrame": 0,
+            "indexFrame": 1,
             "x": 500,
-            "y": 300
+            "y": 400
         }
     ],
     "BODY": [
         {
             "direction": "UU",
-            "indexFrame": 1,
+            "indexFrame": 2,
             "x": 500,
-            "y": 325
+            "y": 425
         }
     ],
     "TAIL": [
         {
             "direction": "UU",
-            "indexFrame": 2,
+            "indexFrame": 3,
             "x": 500,
-            "y": 350
+            "y": 450
         }
     ],
     "score": 0,
-    "currentDirection": "UU",
+    "currentDirection": null,
     "previousDirection": "UU"
 }
