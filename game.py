@@ -1,7 +1,7 @@
 import sys
 import pygame
 from food import FoodManager
-from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu
+from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, GameSettingMenu, SoundSettingMenu
 from inGame import InGame
 from snake import Snake
 import snake
@@ -38,6 +38,8 @@ class Game:
         self.runningPlayGameMenu = False
         self.runningInGame = False
         self.runningOptionsMenu = False
+        self.runningGameSettingMenu = False
+        self.runningSoundSettingMenu = False
         self.runningGameOverMenu = False
         ###########   Screens in game   #####################################################################
         self.mainMenu = MainMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
@@ -45,7 +47,8 @@ class Game:
         self.inGame = InGame()
         self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
-        
+        self.gameSettingMenu = GameSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.soundSettingMenu = SoundSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
     
     ###########   Main loop in game   #######################################################################
     def run(self):
@@ -90,6 +93,7 @@ class Game:
                             self.playGameMenu.cursor = 0
                         elif self.mainMenu.cursor == 1:
                             self.runningOptionsMenu = True
+                            self.optionsMenu.cursor = 0
                         elif self.mainMenu.cursor == 2:
                             self.running = False
                             pygame.time.wait(1000)
@@ -125,43 +129,69 @@ class Game:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         self.runningPlayGameMenu = False
-            ###########   Get events when current screen is Options Menu   ##################################
+            ###########   Get events when current screen is Options Menu  ###################################        
             elif self.runningOptionsMenu:
+                if event.type == pygame.KEYDOWN:
+                    ###########   Move the cursor   #########################################################
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        CHANGE_BUTTON.play()
+                        self.optionsMenu.cursor += 1
+                        self.optionsMenu.cursor %= 3
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        CHANGE_BUTTON.play()
+                        self.optionsMenu.cursor -= 1
+                        self.optionsMenu.cursor %= 3
+                    ###########   Select the content that the cursor is pointing at   #######################
+                    if event.key == pygame.K_RETURN:
+                        PRESS_BUTTON.play()
+                        ###########   The cursor is pointing at "New Game"   ################################
+                        if self.optionsMenu.cursor == 0:
+                            self.runningGameSettingMenu = True
+                            self.gameSettingMenu.cursor = 0
+                        ###########   The cursor is pointing at "Continue Game"   ###########################
+                        elif self.optionsMenu.cursor == 1:
+                            self.runningSoundSettingMenu = True
+                        ###########   The cursor is poiting at "Back"   #####################################
+                        elif self.optionsMenu.cursor == 2:
+                            self.runningMainMenu = True
+                            self.mainMenu.cursor = 0
+                        self.runningOptionsMenu = False
+            ###########   Get events when current screen is Game Setting Menu   #############################
+            elif self.runningGameSettingMenu:
                 if event.type == pygame.KEYDOWN:
                     ###########   Move the cursor   #########################################################
                     ###########   If the cursor is pointing at "Show grid", "Move speed", "Drop speed",   ###
                     ###########   "Animation speed", "Max food"  ############################################
-                    if self.optionsMenu.cursor % 2 == 0:
+                    if self.gameSettingMenu.cursor % 2 == 0:
                         ###########   Move the cursor   #####################################################
                         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                             CHANGE_BUTTON.play()
-                            if self.optionsMenu.cursor == 12:
-                                self.optionsMenu.cursor += 1
+                            if self.gameSettingMenu.cursor == 12:
+                                self.gameSettingMenu.cursor += 1
                             else:
-                                self.optionsMenu.cursor += 2
-                            self.optionsMenu.cursor %= 13
+                                self.gameSettingMenu.cursor += 2
+                            self.gameSettingMenu.cursor %= 13
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
                             CHANGE_BUTTON.play()
-                            if self.optionsMenu.cursor == 0:
-                                self.optionsMenu.cursor -= 1
+                            if self.gameSettingMenu.cursor == 0:
+                                self.gameSettingMenu.cursor -= 1
                             else:
-                                self.optionsMenu.cursor -= 2
-                            self.optionsMenu.cursor %= 13
+                                self.gameSettingMenu.cursor -= 2
+                            self.gameSettingMenu.cursor %= 13
                         ###########   Select the content that cursor poiting at   ###########################
                         elif event.key == pygame.K_RETURN:
                             PRESS_BUTTON.play()
-                            if self.optionsMenu.cursor == 12:
-                                self.runningOptionsMenu = False
-                                self.optionsMenu.cursor = 12
-                                self.runningMainMenu = True
-                                self.mainMenu.cursor = 0
+                            if self.gameSettingMenu.cursor == 12:
+                                self.runningGameSettingMenu = False
+                                self.runningOptionsMenu = True
+                                self.optionsMenu.cursor = 0
                             else:
-                                self.optionsMenu.cursor += 1
+                                self.gameSettingMenu.cursor += 1
                     ###########   If the cursor is not pointing at main content ("Show grid", "Move speed", #
                     ###########   "Drop speed", "Animation speed", "Max food")   ############################
-                    elif self.optionsMenu.cursor % 2 != 0:
+                    elif self.gameSettingMenu.cursor % 2 != 0:
                         ###########   The cursor is poiting at sub options of "Show grid"   #################
-                        if self.optionsMenu.cursor == 1:
+                        if self.gameSettingMenu.cursor == 1:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_DOWN, pygame.K_s, 
                                              pygame.K_a, pygame.K_d, pygame.K_RIGHT, pygame.K_LEFT]:
                                 if SETTING1['GRID'] == 'ON':
@@ -169,7 +199,7 @@ class Game:
                                 elif SETTING1['GRID'] == 'OFF':
                                     setting.replaceData(key1='GRID', newData='ON')
                         ###   The cursor is pointing at sub options of "Move speed" (of "Snake Setting")   ##
-                        elif self.optionsMenu.cursor == 3:
+                        elif self.gameSettingMenu.cursor == 3:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED'] + 1
                                 self.inGame.snake.moveSpeed %= 61
@@ -183,7 +213,7 @@ class Game:
                             setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
                                                 newData=self.inGame.snake.moveSpeed)
                         ###   The cursor is pointing at sub options of "Drop speed" (of "Snake setting")   ###
-                        elif self.optionsMenu.cursor == 5:
+                        elif self.gameSettingMenu.cursor == 5:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED'] + 1
                                 self.inGame.snake.dropSpeed %= 61
@@ -197,7 +227,7 @@ class Game:
                             setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
                                                 newData=self.inGame.snake.dropSpeed)
                         ### The cursor is pointing at sub options of "Animation speed" (of "Snake setting") #
-                        elif self.optionsMenu.cursor == 7:
+                        elif self.gameSettingMenu.cursor == 7:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED'] + 1
                                 self.inGame.snake.animationSpeed %= 61
@@ -211,7 +241,7 @@ class Game:
                             setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
                                                 newData=self.inGame.snake.animationSpeed)
                         ###   The cursor is pointing at sub options of "Max food" (of "Food setting")   #####
-                        elif self.optionsMenu.cursor == 9:
+                        elif self.gameSettingMenu.cursor == 9:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD'] + 1
                                 self.inGame.foodManager.maxFood %= 105
@@ -225,7 +255,7 @@ class Game:
                             setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
                                                 newData=self.inGame.foodManager.maxFood)
                         ### The cursor is pointing at sub options of "Animation food" (of "Food setting") ###
-                        elif self.optionsMenu.cursor == 11:
+                        elif self.gameSettingMenu.cursor == 11:
                             if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
                                 self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] + 1
                                 self.inGame.foodManager.animationSpeed %= 61
@@ -241,9 +271,12 @@ class Game:
                         ###   Return to the main options if player press ENTER   ############################
                         if event.key == pygame.K_RETURN:
                             PRESS_BUTTON.play()
-                            self.optionsMenu.cursor -= 1
+                            self.gameSettingMenu.cursor -= 1
                 ###########   Save current setting to json file   ###########################################
-                setting.saveSetting('./data/setting/setting.json')          
+                setting.saveSetting('./data/setting/setting.json')
+            ###########   Get events when current screen is Sound Setting Menu   ############################
+            elif self.runningSoundSettingMenu:
+                pass      
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
                 ###########   Get events when current screen is Start InGame   ##############################
@@ -371,7 +404,14 @@ class Game:
         elif self.runningOptionsMenu:
             if self.countTicks % (FPS * 1000 // self.optionsMenu.FPS) == 0:
                 self.optionsMenu.update()
-            
+        ###########   Update screen when showing Game Setting Menu   ########################################
+        elif self.runningGameSettingMenu:
+            if self.countTicks % (FPS * 1000 // self.gameSettingMenu.FPS) == 0:
+                self.gameSettingMenu.update()
+        ###########   Update screen when showing Sound Setting Menu   ########################################
+        elif self.runningSoundSettingMenu:
+            if self.countTicks % (FPS * 1000 // self.soundSettingMenu.FPS) == 0:
+                self.soundSettingMenu.update() 
         
     ###########   Draw screen with current status and show it   #############################################
     def display(self):
@@ -388,4 +428,8 @@ class Game:
             self.gameOverMenu.draw(self.screen)
         elif self.runningOptionsMenu:
             self.optionsMenu.draw(self.screen)
+        elif self.runningGameSettingMenu:
+            self.gameSettingMenu.draw(self.screen)
+        elif self.runningSoundSettingMenu:
+            self.soundSettingMenu.draw(self.screen)
         pygame.display.flip()

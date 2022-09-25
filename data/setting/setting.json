@@ -2,7 +2,7 @@
     "MENU": {
         "ANIMATION_SPEED": 5
     },
-    "GRID": "OFF",
+    "GRID": "ON",
     "FOOD": {
         "MAX_FOOD": 10,
         "ANIMATION_SPEED": 6

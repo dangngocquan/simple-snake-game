@@ -173,8 +173,60 @@ class OptionsMenu:
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
-        self.cursor = 12
+        self.cursor = 0
         ########### Buttons in Options Menu  ##############################################################
+        self.titleGameSetting = Button("GAME SETTING", MEDIUM_FONT, width//2, height*1//4)
+        self.titleSoundSetting = Button("SOUND SETTING", MEDIUM_FONT, width//2, height*2//4)
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*3//4)
+        
+    ###########   Update cursor and buttons status in Options Menu   ########################################
+    def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        if self.cursor == 0:
+            self.titleGameSetting.isChosen = True
+            self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT_HORVED, 'G')
+            self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT, 'G')
+            self.titleBack.update('BACK', MEDIUM_FONT, 'G')
+        else:
+            self.titleGameSetting.isChosen = False
+        if self.cursor == 1:
+            self.titleSoundSetting.isChosen = True
+            self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT, 'G')
+            self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT_HORVED, 'G')
+            self.titleBack.update('BACK', MEDIUM_FONT, 'G')
+        else:
+            self.titleSoundSetting.isChosen = False
+        if self.cursor == 2:
+            self.titleBack.isChosen = True
+            self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT, 'G')
+            self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT, 'G')
+            self.titleBack.update('BACK', MEDIUM_FONT_HORVED, 'G')
+        else:
+            self.titleBack.isChosen = False
+        
+        ###########   Remove old button display   ###########################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
+        self.titleGameSetting.draw(self.surface)
+        self.titleSoundSetting.draw(self.surface)
+        self.titleBack.draw(self.surface)
+        
+    ###########  Draw Options Menu in another surface  ######################################################
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
+   
+
+###########  CLASS GAME SETTING MENU  #######################################################################
+class GameSettingMenu:
+    ###########  Constructor  ###############################################################################
+    def __init__(self, x, y, width, height):
+        ###########  Surface, cursor and coordinate center  #################################################
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.center = (x, y)
+        self.FPS = ANIMATION_SPEED
+        self.cursor = 12
+        ########### Buttons in Game Setting Menu  ###########################################################
         self.descriptionText = Button("", SMALL_FONT, width//2, height*1//17)
         self.descriptionText.isChosen = True
         self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*3//17)
@@ -203,7 +255,7 @@ class OptionsMenu:
                                                      width//6*5, height*13//17, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*15//17)
         
-    ###########   Update cursor and buttons status in Options Menu   ######################################
+    ###########   Update cursor and buttons status in Game Setting Menu   ###################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
@@ -317,10 +369,43 @@ class OptionsMenu:
         self.titleFoodAnimationSpeedOptions.draw(self.surface)
         self.titleBack.draw(self.surface)
     
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Game Setting Menu in another surface  #################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
+   
+   
+###########  CLASS SOUND SETTING MENU  ######################################################################
+class SoundSettingMenu:
+    ###########  Constructor  ###############################################################################
+    def __init__(self, x, y, width, height):
+        ###########  Surface, cursor and coordinate center  #################################################
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.center = (x, y)
+        self.FPS = ANIMATION_SPEED
+        self.cursor = 0
+        ########### Buttons in Options Menu  ##############################################################
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*1//3)
         
+    ###########   Update cursor and buttons status in Options Menu   ########################################
+    def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        if self.cursor == 0:
+            self.titleBack.isChosen = True
+            self.titleBack.update('BACK', MEDIUM_FONT_HORVED, 'G')
+        else:
+            self.titleBack.isChosen = False
+        
+        
+        ###########   Remove old button display   ###########################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
+        self.titleBack.draw(self.surface)
+        
+    ###########  Draw Options Menu in another surface  ######################################################
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
+  
         
 ###########  CLASS GAME OVER MENU  ##########################################################################
 class GameOverMenu:
