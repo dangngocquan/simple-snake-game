@@ -27,8 +27,12 @@ class Button:
         self.x = x
         self.y = y
         self.isChosen = False
-        self.value = 255
-        self.valueStatus = 1
+        self.valueR = 255
+        self.valueG = 255
+        self.valueB = 255
+        self.valueRStatus = 1
+        self.valueGStatus = 1
+        self.valueBStatus = 1
     
     ###########  Update text, font, coordinate and color of Button  #########################################
     def update(self, text, font, color='G'):
@@ -41,19 +45,42 @@ class Button:
             self.textRect.topleft = (self.x, self.y)
         ###########  Update color   #########################################################################
         if self.isChosen:
-            if self.value == 255 or self.value == 55:
-                self.valueStatus *= -1
-            self.value += 50 * self.valueStatus
             if color == 'R':
-                self.text = font.render(text, True, (255, self.value, self.value), None)
+                self.valueG += 51 * self.valueGStatus
+                self.valueB += 51 * self.valueBStatus
             elif color == 'G':
-                self.text = font.render(text, True, (self.value, 255, self.value), None)
+                self.valueR += 51 * self.valueRStatus
+                self.valueB += 51 * self.valueBStatus
             elif color == 'B':
-                self.text = font.render(text, True, (self.value, self.value, 255), None)
+                self.valueR += 51 * self.valueRStatus
+                self.valueG += 51 * self.valueGStatus
+            elif color == 'ALL':
+                pass
+            if self.valueR < 0:
+                self.valueR = - self.valueR
+                self.valueRStatus = 1
+            elif self.valueR > 255:
+                self.valueR = 510 - self.valueR
+                self.valueRStatus = -1
+            if self.valueG < 0:
+                self.valueG = - self.valueG
+                self.valueGStatus = 1
+            elif self.valueG > 255:
+                self.valueG = 510 - self.valueG
+                self.valueGStatus = -1
+            if self.valueB < 0:
+                self.valueB = - self.valueB
+                self.valueBStatus = 1
+            elif self.valueB > 255:
+                self.valueB = 510 - self.valueB
+                self.valueBStatus = -1
+                
+            self.text = font.render(text, True, (self.valueR, self.valueG, self.valueB), None)
         else:
-            self.value = 255
-            self.valueStatus = 1
-            self.text = font.render(text, True, (self.value, 255, self.value), None)
+            self.valueR = 255
+            self.valueG = 255
+            self.valueB = 255
+            self.text = font.render(text, True, (self.valueR, self.valueG, self.valueB), None)
             
     ###########  Draw button in another surface  ############################################################
     def draw(self, parentSurface):
