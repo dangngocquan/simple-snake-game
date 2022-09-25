@@ -102,6 +102,7 @@ class MainMenu:
         self.cursor = 0
         ########### Buttons   ###############################################################################
         self.titleSimpleSnake = Button("SIMPLE SNAKE", BIG_FONT, width//2, height//6)
+        self.titleSimpleSnake.isChosen = True
         self.titlePlayGame = Button("PLAY GAME", MEDIUM_FONT, width//2, height*5//12)
         self.titleOptions = Button("OPTIONS", MEDIUM_FONT, width//2, height*7//12)
         self.titleQuitGame = Button("QUIT GAME", MEDIUM_FONT, width//2, height*9//12)
@@ -113,6 +114,7 @@ class MainMenu:
             self.titlePlayGame.isChosen = True
             self.titleOptions.isChosen = False
             self.titleQuitGame.isChosen = False
+            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
             self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT_HORVED)
             self.titleOptions.update('OPTIONS', MEDIUM_FONT)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
@@ -120,6 +122,7 @@ class MainMenu:
             self.titlePlayGame.isChosen = False
             self.titleOptions.isChosen = True
             self.titleQuitGame.isChosen = False
+            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
             self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
             self.titleOptions.update('OPTIONS', MEDIUM_FONT_HORVED)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
@@ -127,6 +130,7 @@ class MainMenu:
             self.titlePlayGame.isChosen = False
             self.titleOptions.isChosen = False
             self.titleQuitGame.isChosen = True
+            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
             self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
             self.titleOptions.update('OPTIONS', MEDIUM_FONT)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT_HORVED)
