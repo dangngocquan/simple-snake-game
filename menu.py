@@ -1,3 +1,4 @@
+import random
 import pygame
 from snake import Snake
 from setting import *
@@ -55,7 +56,9 @@ class Button:
                 self.valueR += 51 * self.valueRStatus
                 self.valueG += 51 * self.valueGStatus
             elif color == 'ALL':
-                pass
+                self.valueR += random.randint(-25, 25)
+                self.valueG += random.randint(-25, 25)
+                self.valueB += random.randint(-25, 25)
             if self.valueR < 0:
                 self.valueR = - self.valueR
                 self.valueRStatus = 1
