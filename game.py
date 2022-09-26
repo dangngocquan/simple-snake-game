@@ -17,6 +17,7 @@ BLACK = SETTING2['COLOR']['BLACK']
 PRESS_BUTTON = SETTING2['SOUND']['PRESS_BUTTON']
 CHANGE_BUTTON = SETTING2['SOUND']['CHANGE_BUTTON']
 GAME_OVER = SETTING2['SOUND']['GAME_OVER']
+MUSIC = SETTING2['SOUND']['MUSIC']
 
 ###########   CLASS GAME   ##################################################################################
 class Game:
@@ -25,7 +26,7 @@ class Game:
         ###########   Create window game, caption, clock   ##################################################
         pygame.init()
         pygame.mixer.init()
-        pygame.mixer.music.load('./assets/sounds/game/BoyWithUkeLoafers.wav')
+        pygame.mixer.music.load(MUSIC)
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.5)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))

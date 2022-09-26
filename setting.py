@@ -125,6 +125,7 @@ SETTING2 = {
         'PRESS_BUTTON' : PRESS_BUTTON,
         'CHANGE_BUTTON' : CHANGE_BUTTON,
         'SNAKE_EAT_FOOD' : SNAKE_EAT_FOOD,
-        'GAME_OVER' : GAME_OVER
+        'GAME_OVER' : GAME_OVER,
+        'MUSIC' : './assets/sounds/game/BoyWithUkeLoafers.wav'
     }
 }
