@@ -1,29 +1,35 @@
 {
     "HEAD": [
         {
-            "direction": "UU",
-            "indexFrame": 0,
-            "x": 500,
-            "y": 300
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 875,
+            "y": 25
         }
     ],
     "BODY": [
         {
-            "direction": "UU",
-            "indexFrame": 1,
-            "x": 500,
-            "y": 325
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 900,
+            "y": 25
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 5,
+            "x": 925,
+            "y": 25
         }
     ],
     "TAIL": [
         {
-            "direction": "UU",
-            "indexFrame": 2,
-            "x": 500,
-            "y": 350
+            "direction": "LL",
+            "indexFrame": 6,
+            "x": 950,
+            "y": 25
         }
     ],
-    "score": 0,
-    "currentDirection": "UU",
-    "previousDirection": "UU"
+    "score": 40,
+    "currentDirection": null,
+    "previousDirection": "LL"
 }

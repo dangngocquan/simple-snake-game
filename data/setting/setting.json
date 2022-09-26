@@ -12,5 +12,10 @@
         "ANIMATION_SPEED": 6,
         "DROP_SPEED": 15,
         "MAX_FOOD": 4
+    },
+    "SOUND": {
+        "MUSIC_INDEX": 0,
+        "MUSIC_VOLUME": 40,
+        "SOUND_VOLUME": 60
     }
 }

@@ -12,9 +12,9 @@ def loadSetting(path):
     file.close()
 
 ###########   Function save current setting of game to json file   ##########################################
-def saveSetting(path):
+def saveSetting(path='./data/setting/setting.json'):
     global SETTING1
-    with open('./data/setting/setting.json', 'w') as file:
+    with open(path, 'w') as file:
         json.dump(SETTING1, file, indent=4)
     file.close()
 
@@ -94,6 +94,8 @@ PRESS_BUTTON = pygame.mixer.Sound('./assets/sounds/button/pressButton.wav')
 CHANGE_BUTTON = pygame.mixer.Sound('./assets/sounds/button/changeButton.wav')
 SNAKE_EAT_FOOD = pygame.mixer.Sound('./assets/sounds/snake/eatFood.wav')
 GAME_OVER = pygame.mixer.Sound('./assets/sounds/snake/died.wav')
+MUSIC_00 = './assets/sounds/game/BoyWithUkeLoafers.wav'
+MUSIC_01 = './assets/sounds/game/SwedenC418.wav'
 
 ###########  SETTING CAN'T BE CHANGED BY PLAYER  ############################################################
 SETTING2 = {
@@ -126,6 +128,12 @@ SETTING2 = {
         'CHANGE_BUTTON' : CHANGE_BUTTON,
         'SNAKE_EAT_FOOD' : SNAKE_EAT_FOOD,
         'GAME_OVER' : GAME_OVER,
-        'MUSIC' : './assets/sounds/game/BoyWithUkeLoafers.wav'
+        'MUSIC' : [MUSIC_00, MUSIC_01]
     }
 }
+
+def soundVolumeUpdate():
+    SETTING2['SOUND']['PRESS_BUTTON'].set_volume(SETTING1['SOUND']['SOUND_VOLUME'] / 100)
+    SETTING2['SOUND']['CHANGE_BUTTON'].set_volume(SETTING1['SOUND']['SOUND_VOLUME'] / 100)
+    SETTING2['SOUND']['SNAKE_EAT_FOOD'].set_volume(SETTING1['SOUND']['SOUND_VOLUME'] / 100)
+    SETTING2['SOUND']['GAME_OVER'].set_volume(SETTING1['SOUND']['SOUND_VOLUME'] / 100)

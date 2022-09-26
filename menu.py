@@ -294,74 +294,74 @@ class GameSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleGrid.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the grid', SMALL_FONT, 'R')
+            self.descriptionText.update('Press ENTER to setup the grid', SMALL_FONT, 'ALL')
         else:
             self.titleGrid.isChosen = False
         if self.cursor == 1:
             self.titleGridOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'R')
+                                        SMALL_FONT, 'ALL')
         else:
             self.titleGridOptions.isChosen = False
         if self.cursor == 2:
             self.titleSnakeMoveSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the move speed of snake', SMALL_FONT, 'R')
+            self.descriptionText.update('Press ENTER to setup the move speed of snake', SMALL_FONT, 'ALL')
         else:
             self.titleSnakeMoveSpeed.isChosen = False
         if self.cursor == 3:
             self.titleSnakeMoveSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'R')
+                                        SMALL_FONT, 'ALL')
         else:
             self.titleSnakeMoveSpeedOptions.isChosen = False
         if self.cursor == 4:
             self.titleSnakeDropSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the drop speed of snake', SMALL_FONT, 'R')
+            self.descriptionText.update('Press ENTER to setup the drop speed of snake', SMALL_FONT, 'ALL')
         else:
             self.titleSnakeDropSpeed.isChosen = False
         if self.cursor == 5:
             self.titleSnakeDropSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'R')
+                                        SMALL_FONT, 'ALL')
         else:
             self.titleSnakeDropSpeedOptions.isChosen = False
         if self.cursor == 6:
             self.titleSnakeAnimationSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the animation speed of snake', SMALL_FONT, 'R')
+            self.descriptionText.update('Press ENTER to setup the animation speed of snake', SMALL_FONT, 'ALL')
         else:
             self.titleSnakeAnimationSpeed.isChosen = False
         if self.cursor == 7:
             self.titleSnakeAnimationSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'R')
+                                        SMALL_FONT, 'ALL')
         else:
             self.titleSnakeAnimationSpeedOptions.isChosen = False
         if self.cursor == 8:
             self.titleFoodMax.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the max number of food', SMALL_FONT, 'R')
+            self.descriptionText.update('Press ENTER to setup the max number of food', SMALL_FONT, 'ALL')
         else:
             self.titleFoodMax.isChosen = False
         if self.cursor == 9:
             self.titleFoodMaxOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'R')
+                                        SMALL_FONT, 'ALL')
         else:
             self.titleFoodMaxOptions.isChosen = False
         if self.cursor == 10:
             self.titleFoodAnimationSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the animation speed of food', SMALL_FONT, 'R')
+            self.descriptionText.update('Press ENTER to setup the animation speed of food', SMALL_FONT, 'ALL')
         else:
             self.titleFoodAnimationSpeed.isChosen = False
         if self.cursor == 11:
             self.titleFoodAnimationSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'R')
+                                        SMALL_FONT, 'ALL')
         else:
             self.titleFoodAnimationSpeedOptions.isChosen = False
         if self.cursor == 12:
             self.titleBack.isChosen = True
             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
-            self.descriptionText.update('', SMALL_FONT, 'R')
+            self.descriptionText.update('', SMALL_FONT, 'ALL')
         else:
             self.titleBack.isChosen = False
             self.titleBack.update('BACK', MEDIUM_FONT)
@@ -419,21 +419,84 @@ class SoundSettingMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         ########### Buttons in Options Menu  ##############################################################
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*1//3)
+        self.descriptionText = Button("", SMALL_FONT, width//2, height*1//12)
+        self.descriptionText.isChosen = True
+        self.titleMusicSetting = Button("MUSIC SETTING", SMALL_FONT, width//2, height*3//12)
+        self.titleMusic = Button("Music", SMALL_FONT, width//6, height*4//12, 'topLeft')
+        self.titleMusicOptions = Button(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", SMALL_FONT,
+                                        width//6*5, height*4//12, 'topLeft')
+        self.titleMusicVolume = Button("Music volume", SMALL_FONT, width//6, height*5//12, 'topLeft')
+        self.titleMusicVolumeOptions = Button(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", SMALL_FONT,
+                                              width//6*5, height*5//12, 'topLeft')
+        self.titleSoundSetting = Button("SOUND SETTING", SMALL_FONT, width//2, height*7//12)
+        self.titleSoundVolume =  Button("Sound volume", SMALL_FONT, width//6, height*8//12, 'topLeft')
+        self.titleSoundVolumeOptions = Button(f"{SETTING1['SOUND']['SOUND_VOLUME']}", SMALL_FONT,
+                                              width//6*5, height*8//12, 'topLeft')
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*10//12)
         
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
+            self.titleMusic.isChosen = True
+            self.descriptionText.update('Press ENTER to choose the music for game', SMALL_FONT, 'ALL')
+        else:
+            self.titleMusic.isChosen = False
+        if self.cursor == 1:
+            self.titleMusicOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'ALL')
+        else:
+            self.titleMusicOptions.isChosen = False
+        if self.cursor == 2:
+            self.titleMusicVolume.isChosen = True
+            self.descriptionText.update('Press ENTER to set volume of music', SMALL_FONT, 'ALL')
+        else:
+            self.titleMusicVolume.isChosen = False
+        if self.cursor == 3:
+            self.titleMusicVolumeOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'ALL')
+        else:
+            self.titleMusicVolumeOptions.isChosen = False
+        if self.cursor == 4:
+            self.titleSoundVolume.isChosen = True
+            self.descriptionText.update('Press ENTER to set volume of sound', SMALL_FONT, 'ALL')
+        else:
+            self.titleSoundVolume.isChosen = False
+        if self.cursor == 5:
+            self.titleSoundVolumeOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        SMALL_FONT, 'ALL')
+        else:
+            self.titleSoundVolumeOptions.isChosen = False
+        if self.cursor == 6:
             self.titleBack.isChosen = True
-            self.titleBack.update('BACK', MEDIUM_FONT_HORVED, 'G')
+            self.titleBack.update("BACK", MEDIUM_FONT_HORVED)
+            self.descriptionText.update("", SMALL_FONT, 'ALL')
         else:
             self.titleBack.isChosen = False
+            self.titleBack.update("BACK", MEDIUM_FONT)
         
+        self.titleMusic.update("Music", SMALL_FONT, 'B')
+        self.titleMusicOptions.update(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", SMALL_FONT, 'B')
+        self.titleMusicVolume.update("Music volume", SMALL_FONT, 'B')
+        self.titleMusicVolumeOptions.update(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", SMALL_FONT, 'B')
+        self.titleSoundVolume.update("Sound volume", SMALL_FONT, 'B')
+        self.titleSoundVolumeOptions.update(f"{SETTING1['SOUND']['SOUND_VOLUME']}", SMALL_FONT, 'B')
         
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
+        self.descriptionText.draw(self.surface)
+        self.titleMusicSetting.draw(self.surface)
+        self.titleMusic.draw(self.surface)
+        self.titleMusicOptions.draw(self.surface)
+        self.titleMusicVolume.draw(self.surface)
+        self.titleMusicVolumeOptions.draw(self.surface)
+        self.titleSoundSetting.draw(self.surface)
+        self.titleSoundVolume.draw(self.surface)
+        self.titleSoundVolumeOptions.draw(self.surface)
         self.titleBack.draw(self.surface)
         
     ###########  Draw Options Menu in another surface  ######################################################

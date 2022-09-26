@@ -14,10 +14,6 @@ HEIGHT = SETTING2['SCREEN']['HEIGHT']
 CAPTION = SETTING2['SCREEN']['CAPTION']
 FPS = SETTING2['SCREEN']['FPS']
 BLACK = SETTING2['COLOR']['BLACK']
-PRESS_BUTTON = SETTING2['SOUND']['PRESS_BUTTON']
-CHANGE_BUTTON = SETTING2['SOUND']['CHANGE_BUTTON']
-GAME_OVER = SETTING2['SOUND']['GAME_OVER']
-MUSIC = SETTING2['SOUND']['MUSIC']
 
 ###########   CLASS GAME   ##################################################################################
 class Game:
@@ -26,9 +22,9 @@ class Game:
         ###########   Create window game, caption, clock   ##################################################
         pygame.init()
         pygame.mixer.init()
-        pygame.mixer.music.load(MUSIC)
+        pygame.mixer.music.load(SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
@@ -79,15 +75,15 @@ class Game:
             if self.runningMainMenu:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor += 1
                         self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor -= 1
                         self.mainMenu.cursor %= 3
                     elif event.key == pygame.K_RETURN:
-                        PRESS_BUTTON.play()
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.runningMainMenu = False
                         if self.mainMenu.cursor == 0:
                             self.runningPlayGameMenu = True
@@ -105,16 +101,16 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     ###########   Move the cursor   #########################################################
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.playGameMenu.cursor += 1
                         self.playGameMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.playGameMenu.cursor -= 1
                         self.playGameMenu.cursor %= 3
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
-                        PRESS_BUTTON.play()
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
                         ###########   The cursor is pointing at "New Game"   ################################
                         if self.playGameMenu.cursor == 0:
                             self.runningInGame = True
@@ -135,16 +131,16 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     ###########   Move the cursor   #########################################################
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.optionsMenu.cursor += 1
                         self.optionsMenu.cursor %= 3
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.optionsMenu.cursor -= 1
                         self.optionsMenu.cursor %= 3
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
-                        PRESS_BUTTON.play()
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
                         ###########   The cursor is pointing at "New Game"   ################################
                         if self.optionsMenu.cursor == 0:
                             self.runningGameSettingMenu = True
@@ -166,14 +162,14 @@ class Game:
                     if self.gameSettingMenu.cursor % 2 == 0:
                         ###########   Move the cursor   #####################################################
                         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            CHANGE_BUTTON.play()
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if self.gameSettingMenu.cursor == 12:
                                 self.gameSettingMenu.cursor += 1
                             else:
                                 self.gameSettingMenu.cursor += 2
                             self.gameSettingMenu.cursor %= 13
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            CHANGE_BUTTON.play()
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if self.gameSettingMenu.cursor == 0:
                                 self.gameSettingMenu.cursor -= 1
                             else:
@@ -181,7 +177,7 @@ class Game:
                             self.gameSettingMenu.cursor %= 13
                         ###########   Select the content that cursor poiting at   ###########################
                         elif event.key == pygame.K_RETURN:
-                            PRESS_BUTTON.play()
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             if self.gameSettingMenu.cursor == 12:
                                 self.runningGameSettingMenu = False
                                 self.runningOptionsMenu = True
@@ -271,13 +267,73 @@ class Game:
                                                 newData=self.inGame.foodManager.animationSpeed)
                         ###   Return to the main options if player press ENTER   ############################
                         if event.key == pygame.K_RETURN:
-                            PRESS_BUTTON.play()
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.gameSettingMenu.cursor -= 1
                 ###########   Save current setting to json file   ###########################################
                 setting.saveSetting('./data/setting/setting.json')
             ###########   Get events when current screen is Sound Setting Menu   ############################
             elif self.runningSoundSettingMenu:
-                pass      
+                if event.type == pygame.KEYDOWN:
+                    if self.soundSettingMenu.cursor % 2 == 0:
+                        if event.key in [pygame.K_s, pygame.K_DOWN]:
+                            if self.soundSettingMenu.cursor == 6:
+                                self.soundSettingMenu.cursor = 0
+                            else:
+                                self.soundSettingMenu.cursor += 2
+                            self.soundSettingMenu.cursor %= 7 
+                        elif event.key in [pygame.K_w, pygame.K_UP]:
+                            if self.soundSettingMenu.cursor == 0:
+                                self.soundSettingMenu.cursor = 6
+                            else:
+                                self.soundSettingMenu.cursor -= 2
+                            self.soundSettingMenu.cursor %= 7
+                        elif event.key == pygame.K_RETURN:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
+                            if self.soundSettingMenu.cursor == 6:
+                                self.runningSoundSettingMenu = False
+                                self.runningOptionsMenu = True
+                                self.optionsMenu.cursor = 0
+                            else:
+                                self.soundSettingMenu.cursor += 1
+                    elif self.soundSettingMenu.cursor % 2 != 0:
+                        if self.soundSettingMenu.cursor == 1:
+                            if event.key in [pygame.K_w, pygame.K_UP, pygame.K_d, pygame.K_RIGHT]:
+                                pygame.mixer.music.unload()
+                                setting.replaceData('SOUND', 'MUSIC_INDEX', 
+                                                    (SETTING1['SOUND']['MUSIC_INDEX'] + 1) % len(SETTING2['SOUND']['MUSIC']))
+                                pygame.mixer.music.load(
+                                    SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
+                                pygame.mixer.music.play(-1)
+                            elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
+                                pygame.mixer.music.unload()
+                                setting.replaceData('SOUND', 'MUSIC_INDEX', 
+                                                    (SETTING1['SOUND']['MUSIC_INDEX'] - 1) % len(SETTING2['SOUND']['MUSIC']))
+                                pygame.mixer.music.load(
+                                    SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
+                                pygame.mixer.music.play(-1)
+                        elif self.soundSettingMenu.cursor == 3:
+                            if event.key in [pygame.K_w, pygame.K_UP, pygame.K_d, pygame.K_RIGHT]:
+                                setting.replaceData('SOUND', 'MUSIC_VOLUME', 
+                                                    (SETTING1['SOUND']['MUSIC_VOLUME'] + 1) % 101)
+                                pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
+                            elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
+                                setting.replaceData('SOUND', 'MUSIC_VOLUME', 
+                                                    (SETTING1['SOUND']['MUSIC_VOLUME'] - 1) % 101)
+                                pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
+                        elif self.soundSettingMenu.cursor == 5:
+                            if event.key in [pygame.K_w, pygame.K_UP, pygame.K_d, pygame.K_RIGHT]:
+                                setting.replaceData('SOUND', 'SOUND_VOLUME', 
+                                                    (SETTING1['SOUND']['SOUND_VOLUME'] + 1) % 101)
+                            elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
+                                setting.replaceData('SOUND', 'SOUND_VOLUME', 
+                                                    (SETTING1['SOUND']['SOUND_VOLUME'] - 1) % 101)
+                        if event.key == pygame.K_RETURN:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
+                            setting.soundVolumeUpdate()
+                            self.soundSettingMenu.cursor -= 1
+                setting.saveSetting()
+                            
+                                
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
                 ###########   Get events when current screen is Start InGame   ##############################
@@ -291,7 +347,7 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_k:
                             if self.inGame.snake.currentDirection == None:
-                                GAME_OVER.play()
+                                SETTING2['SOUND']['GAME_OVER'].play()
                                 self.inGame.running = False
                                 self.runningInGame = False
                                 self.runningGameOverMenu = True
@@ -335,15 +391,15 @@ class Game:
             elif self.runningGameOverMenu:
                  if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.gameOverMenu.cursor += 1
                         self.gameOverMenu.cursor %= 2
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        CHANGE_BUTTON.play()
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.gameOverMenu.cursor -= 1
                         self.gameOverMenu.cursor %= 2
                     elif event.key == pygame.K_RETURN:
-                        PRESS_BUTTON.play()
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
                         if self.gameOverMenu.cursor == 0:
                             self.runningInGame = True
                             self.inGame.showingScreenStart = True
@@ -358,7 +414,7 @@ class Game:
                                   
     ###########   Update screen with current status   #######################################################       
     def update(self):
-        
+        setting.soundVolumeUpdate()
         ###########   Update screen Main Menu   #############################################################
         if self.runningMainMenu:
             if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
@@ -371,7 +427,7 @@ class Game:
         elif self.runningInGame:
             ###########   Check game over   #################################################################
             if self.inGame.snake.died():
-                GAME_OVER.play()
+                SETTING2['SOUND']['GAME_OVER'].play()
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True

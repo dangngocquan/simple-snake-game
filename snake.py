@@ -10,7 +10,6 @@ NUMBER_ROWS = SETTING2['SCREEN']['NUMBER_ROWS']
 NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
 SETTING2['SCREEN']['CELL_SIZE'] = SETTING2['SCREEN']['CELL_SIZE']
 SNAKE = SETTING2['SNAKE']
-SNAKE_EAT_FOOD = SETTING2['SOUND']['SNAKE_EAT_FOOD']
 
 ###########   Load data of snake from json file   ###########################################################
 def loadPreviousSnake():
@@ -217,7 +216,7 @@ class Snake:
     def moveAndGrowUp(self):
         if self.currentDirection == None:
             return
-        SNAKE_EAT_FOOD.play()
+        SETTING2['SOUND']['SNAKE_EAT_FOOD'].play()
         ########  Correct direction for head, body and tail  ################################################
         self.head[0].direction = self.head[0].direction[1] + self.currentDirection[0]
         newSnakeBlockDirection = self.head[0].direction
