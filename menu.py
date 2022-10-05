@@ -209,9 +209,9 @@ class OptionsMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         ########### Buttons in Options Menu  ##############################################################
-        self.titleGameSetting = Button("GAME SETTING", MEDIUM_FONT, width//2, height*1//4)
-        self.titleSoundSetting = Button("SOUND SETTING", MEDIUM_FONT, width//2, height*2//4)
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*3//4)
+        self.titleGameSetting = Button("GAME SETTING", MEDIUM_FONT, width//2, height*4//12)
+        self.titleSoundSetting = Button("SOUND SETTING", MEDIUM_FONT, width//2, height*6//12)
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*8//12)
         
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):

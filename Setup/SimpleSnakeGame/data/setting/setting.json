@@ -15,7 +15,7 @@
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
-        "MUSIC_VOLUME": 40,
-        "SOUND_VOLUME": 60
+        "MUSIC_VOLUME": 0,
+        "SOUND_VOLUME": 0
     }
 }
