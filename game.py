@@ -1,7 +1,8 @@
 import sys
 import pygame
 from food import FoodManager
-from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, GameSettingMenu, SoundSettingMenu
+from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu
+from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu
 from inGame import InGame
 from snake import Snake
 import snake
@@ -35,6 +36,7 @@ class Game:
         self.runningPlayGameMenu = False
         self.runningInGame = False
         self.runningOptionsMenu = False
+        self.runningGamemodeSettingMenu = False
         self.runningGameSettingMenu = False
         self.runningSoundSettingMenu = False
         self.runningGameOverMenu = False
@@ -44,6 +46,7 @@ class Game:
         self.inGame = InGame()
         self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.gamemodeSettingMenu = GamemodeSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gameSettingMenu = GameSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.soundSettingMenu = SoundSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
     
@@ -133,26 +136,33 @@ class Game:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.optionsMenu.cursor += 1
-                        self.optionsMenu.cursor %= 3
+                        self.optionsMenu.cursor %= 4
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.optionsMenu.cursor -= 1
-                        self.optionsMenu.cursor %= 3
+                        self.optionsMenu.cursor %= 4
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        ###########   The cursor is pointing at "New Game"   ################################
+                        ###########   The cursor is pointing at "Gamemode setting"   ########################
                         if self.optionsMenu.cursor == 0:
+                            self.runningGamemodeSettingMenu = True
+                            self.gamemodeSettingMenu.cursor = 0
+                        ###########   The cursor is pointing at "Game setting"   ############################
+                        if self.optionsMenu.cursor == 1:
                             self.runningGameSettingMenu = True
                             self.gameSettingMenu.cursor = 0
-                        ###########   The cursor is pointing at "Continue Game"   ###########################
-                        elif self.optionsMenu.cursor == 1:
+                        ###########   The cursor is pointing at "Sound setting"   ###########################
+                        elif self.optionsMenu.cursor == 2:
                             self.runningSoundSettingMenu = True
                         ###########   The cursor is poiting at "Back"   #####################################
-                        elif self.optionsMenu.cursor == 2:
+                        elif self.optionsMenu.cursor == 3:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         self.runningOptionsMenu = False
+            ###########   Get events when current screen is Gamemode Setting Menu   #########################
+            elif self.runningGameSettingMenu:
+                pass
             ###########   Get events when current screen is Game Setting Menu   #############################
             elif self.runningGameSettingMenu:
                 if event.type == pygame.KEYDOWN:
@@ -461,6 +471,10 @@ class Game:
         elif self.runningOptionsMenu:
             if self.countTicks % (FPS * 1000 // self.optionsMenu.FPS) == 0:
                 self.optionsMenu.update()
+        ###########   Update screen when showing Gamemode Setting Menu   ########################################
+        elif self.runningGamemodeSettingMenu:
+            if self.countTicks % (FPS * 1000 // self.gamemodeSettingMenu.FPS) == 0:
+                self.gamemodeSettingMenu.update()
         ###########   Update screen when showing Game Setting Menu   ########################################
         elif self.runningGameSettingMenu:
             if self.countTicks % (FPS * 1000 // self.gameSettingMenu.FPS) == 0:
@@ -485,6 +499,8 @@ class Game:
             self.gameOverMenu.draw(self.screen)
         elif self.runningOptionsMenu:
             self.optionsMenu.draw(self.screen)
+        elif self.runningGamemodeSettingMenu:
+            self.gamemodeSettingMenu.draw(self.screen)
         elif self.runningGameSettingMenu:
             self.gameSettingMenu.draw(self.screen)
         elif self.runningSoundSettingMenu:
