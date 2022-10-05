@@ -81,6 +81,34 @@ for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'U
                                 + "/tail" + direction + "" + str(i) + ".png")
         img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
         SNAKE['TAIL'][direction].append(img)
+        
+        
+SNAKE_02 = {
+    'HEAD' : {},
+    'BODY' : {},
+    'TAIL' : {}
+}
+for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
+    SNAKE_02['HEAD'][direction] = []
+    for i in range(7):
+        img = pygame.image.load("./assets/images/snake02/head/" + direction 
+                                + "/head" + direction + "" + str(i) + ".png")
+        img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
+        SNAKE_02['HEAD'][direction].append(img)
+for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
+    SNAKE_02['BODY'][direction] = []
+    for i in range(7):
+        img = pygame.image.load("./assets/images/snake02/body/" + direction
+                                + "/body" + direction + "" + str(i) + ".png", )
+        img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
+        SNAKE_02['BODY'][direction].append(img)
+for direction in ['DD', 'DL', 'DR', 'LL', 'LD', 'LU', 'RR', 'RD', 'RU', 'UU', 'UL', 'UR']:
+    SNAKE_02['TAIL'][direction] = []
+    for i in range(7):
+        img = pygame.image.load("./assets/images/snake02/tail/" + direction
+                                + "/tail" + direction + "" + str(i) + ".png")
+        img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
+        SNAKE_02['TAIL'][direction].append(img)
 
 ###########  COLOR  #########################################################################################
 GRAY = (111, 111, 111)
@@ -121,7 +149,7 @@ SETTING2 = {
         'WHITE' : WHITE,
         'GRAY' : GRAY
     },
-    'SNAKE' : SNAKE,
+    'SNAKE' : SNAKE_02,
     'FOOD' : FOOD,
     'SOUND' : {
         'PRESS_BUTTON' : PRESS_BUTTON,
