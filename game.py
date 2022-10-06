@@ -136,10 +136,17 @@ class Game:
                                 self.inGame02.showingScreenStart = True
                         ###########   The cursor is pointing at "Continue Game"   ###########################
                         elif self.playGameMenu.cursor == 1:
-                            self.runningInGame = True
-                            self.inGame.snake = snake.loadPreviousSnake()
-                            self.inGame.foodManager = food.loadPreviousFoodManager(self.SETTING1['GAMEMODE']['NUMBER_PLAYERS'])
-                            self.inGame.showingScreenStart = True
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.runningInGame = True
+                                self.inGame.snake = snake.loadPreviousSnake()
+                                self.inGame.foodManager = food.loadPreviousFoodManager()
+                                self.inGame.showingScreenStart = True
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.runningInGame02 = True
+                                self.inGame02.snake01 = snake.loadPreviousSnake(path='./data/player/twoPlayer/snake/snake01.json')
+                                self.inGame02.snake02 = snake.loadPreviousSnake(path='./data/player/twoPlayer/snake/snake02.json')
+                                self.inGame02.foodManager = food.loadPreviousFoodManager(path='./data/player/twoPlayer/food/food.json')
+                                self.inGame02.showingScreenStart = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.playGameMenu.cursor == 2:
                             self.runningMainMenu = True
@@ -489,56 +496,80 @@ class Game:
             ###########   Get events when current screen is InGame02 (2 player controls 2 snake)   ##########
             elif self.runningInGame02:
                 ###########   Get events when current screen is Start InGame   ##############################
-                if self.inGame.showingScreenStart:
+                if self.inGame02.showingScreenStart:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
-                            self.inGame.showingScreenStart = False
-                            self.inGame.running = True
+                            self.inGame02.showingScreenStart = False
+                            self.inGame02.running = True
                 ###########   Get events when snake moving   ################################################
-                elif self.inGame.running:
+                elif self.inGame02.running:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_k:
-                            if self.inGame.snake.currentDirection == None:
+                            if self.inGame02.snake01.currentDirection == None:
                                 SETTING2['SOUND']['GAME_OVER'].play()
-                                self.inGame.running = False
-                                self.runningInGame = False
+                                self.inGame02.running = False
+                                self.runningInGame02 = False
                                 self.runningGameOverMenu = True
-                                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                                 self.inGame.snake)
+                                self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                                 self.inGame02.snake01)
                         elif event.key == pygame.K_SPACE:
-                            if self.inGame.snake.currentDirection != None:
-                                self.inGame.snake.previousDirection = self.inGame.snake.currentDirection
-                                self.inGame.snake.currentDirection = None
+                            if self.inGame02.snake01.currentDirection != None:
+                                self.inGame02.snake01.previousDirection = self.inGame02.snake01.currentDirection
+                                self.inGame02.snake01.currentDirection = None
                             else:
-                                self.inGame.snake.currentDirection = self.inGame.snake.previousDirection
+                                self.inGame02.snake01.currentDirection = self.inGame02.snake01.previousDirection
+                            if self.inGame02.snake02.currentDirection != None:
+                                self.inGame02.snake02.previousDirection = self.inGame02.snake02.currentDirection
+                                self.inGame02.snake02.currentDirection = None
+                            else:
+                                self.inGame02.snake02.currentDirection = self.inGame02.snake02.previousDirection
                         elif event.key == pygame.K_ESCAPE:
-                            if self.inGame.snake.currentDirection != None:
-                                self.inGame.snake.previousDirection = self.inGame.snake.currentDirection
-                                self.inGame.snake.currentDirection = None
+                            if self.inGame02.snake01.currentDirection != None:
+                                self.inGame02.snake01.previousDirection = self.inGame02.snake01.currentDirection
+                                self.inGame02.snake01.currentDirection = None
+                                self.inGame02.snake02.previousDirection = self.inGame02.snake02.currentDirection
+                                self.inGame02.snake02.currentDirection = None
                             else:
-                                snake.saveSnake(self.inGame.snake)
-                                food.saveFoodManager(self.inGame.foodManager)
-                                self.inGame.running = False
-                                self.runningInGame = False
+                                snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
+                                snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
+                                food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                                self.inGame02.running = False
+                                self.runningInGame02 = False
                                 self.runningMainMenu = True
-                        elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            if self.inGame.snake.currentDirection != 'DD' and self.inGame.snake.checkSnakeCanMove('UU'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'UU'
-                        elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            if self.inGame.snake.currentDirection != 'UU' and self.inGame.snake.checkSnakeCanMove('DD'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'DD'
-                        elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                            if self.inGame.snake.currentDirection != 'LL' and self.inGame.snake.checkSnakeCanMove('RR'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'RR'
-                        elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                            if self.inGame.snake.currentDirection != 'RR' and self.inGame.snake.checkSnakeCanMove('LL'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'LL'
+                        elif event.key == pygame.K_w:
+                            if self.inGame02.snake01.currentDirection != 'DD' and self.inGame02.snake01.checkSnakeCanMove('UU'):
+                                if self.inGame02.snake01.currentDirection != None:
+                                    self.inGame02.snake01.currentDirection = 'UU'
+                        elif event.key == pygame.K_s:
+                            if self.inGame02.snake01.currentDirection != 'UU' and self.inGame02.snake01.checkSnakeCanMove('DD'):
+                                if self.inGame02.snake01.currentDirection != None:
+                                    self.inGame02.snake01.currentDirection = 'DD'
+                        elif event.key == pygame.K_d:
+                            if self.inGame02.snake01.currentDirection != 'LL' and self.inGame02.snake01.checkSnakeCanMove('RR'):
+                                if self.inGame02.snake01.currentDirection != None:
+                                    self.inGame02.snake01.currentDirection = 'RR'
+                        elif event.key == pygame.K_a:
+                            if self.inGame02.snake01.currentDirection != 'RR' and self.inGame02.snake01.checkSnakeCanMove('LL'):
+                                if self.inGame02.snake01.currentDirection != None:
+                                    self.inGame02.snake01.currentDirection = 'LL'
+                        elif event.key == pygame.K_UP:
+                            if self.inGame02.snake02.currentDirection != 'DD' and self.inGame02.snake02.checkSnakeCanMove('UU'):
+                                if self.inGame02.snake02.currentDirection != None:
+                                    self.inGame02.snake02.currentDirection = 'UU'
+                        elif event.key == pygame.K_DOWN:
+                            if self.inGame02.snake02.currentDirection != 'UU' and self.inGame02.snake02.checkSnakeCanMove('DD'):
+                                if self.inGame02.snake02.currentDirection != None:
+                                    self.inGame02.snake02.currentDirection = 'DD'
+                        elif event.key == pygame.K_RIGHT:
+                            if self.inGame02.snake02.currentDirection != 'LL' and self.inGame02.snake02.checkSnakeCanMove('RR'):
+                                if self.inGame02.snake02.currentDirection != None:
+                                    self.inGame02.snake02.currentDirection = 'RR'
+                        elif event.key == pygame.K_LEFT:
+                            if self.inGame02.snake02.currentDirection != 'RR' and self.inGame02.snake02.checkSnakeCanMove('LL'):
+                                if self.inGame02.snake02.currentDirection != None:
+                                    self.inGame02.snake02.currentDirection = 'LL'
                 ###########   Get events when game pause   ##################################################
-                elif self.inGame.waiting:
+                elif self.inGame02.waiting:
                     pass
             
             ###########   Get event when current screen is Game Over Menu   #################################

@@ -13,16 +13,12 @@ FOOD = SETTING2['FOOD']
 
 
 ###########   Load data of foods from json file   ###########################################################
-def loadPreviousFoodManager(numberPlayers=1):
+def loadPreviousFoodManager(path='./data/player/onePlayer/food/food.json'):
     dict = None
-    if numberPlayers == 1:
-        with open('./data/player/onePlayer/food/food.json', 'r') as file:
-            dict = json.load(file)
-        file.close()
-    elif numberPlayers == 2:
-        with open('./data/player/twoPlayer/food/food.json', 'r') as file:
-            dict = json.load(file)
-        file.close()
+
+    with open(path, 'r') as file:
+        dict = json.load(file)
+    file.close()
     
     listFood = []
     for food in dict['FOODS']:
@@ -31,7 +27,7 @@ def loadPreviousFoodManager(numberPlayers=1):
     return FoodManager(listFood=listFood)
 
 ###########   Save data of current foods to json file   #####################################################
-def saveFoodManager(foodManager=[], numberPlayers=1):
+def saveFoodManager(foodManager=[], path='./data/player/onePlayer/food/food.json'):
     data = {
         'FOODS' : [
            
@@ -47,14 +43,10 @@ def saveFoodManager(foodManager=[], numberPlayers=1):
             }
         )
     
-    if numberPlayers == 1:
-        with open('./data/player/onePlayer/food/food.json', 'w') as file:
-            json.dump(data, file, indent=4)
-        file.close()
-    elif numberPlayers == 2:
-        with open('./data/player/twoPlayer/food/food.json', 'w') as file:
-            json.dump(data, file, indent=4)
-        file.close()
+    with open(path, 'w') as file:
+        json.dump(data, file, indent=4)
+    file.close()
+
 
 
 ###########  CLASS FOOD  ####################################################################################

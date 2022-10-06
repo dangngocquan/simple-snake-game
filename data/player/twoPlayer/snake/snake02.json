@@ -1,0 +1,72 @@
+{
+    "HEAD": [
+        {
+            "direction": "RR",
+            "indexFrame": 4,
+            "x": 725,
+            "y": 500
+        }
+    ],
+    "BODY": [
+        {
+            "direction": "RR",
+            "indexFrame": 4,
+            "x": 700,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 5,
+            "x": 675,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 6,
+            "x": 650,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 0,
+            "x": 625,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 1,
+            "x": 600,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 2,
+            "x": 575,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 3,
+            "x": 550,
+            "y": 500
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 5,
+            "x": 525,
+            "y": 500
+        }
+    ],
+    "TAIL": [
+        {
+            "direction": "RR",
+            "indexFrame": 6,
+            "x": 500,
+            "y": 500
+        }
+    ],
+    "score": 140,
+    "currentDirection": null,
+    "previousDirection": "RR",
+    "typeColor": "green"
+}

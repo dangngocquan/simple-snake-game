@@ -1,0 +1,90 @@
+{
+    "HEAD": [
+        {
+            "direction": "UU",
+            "indexFrame": 1,
+            "x": 275,
+            "y": 500
+        }
+    ],
+    "BODY": [
+        {
+            "direction": "UU",
+            "indexFrame": 1,
+            "x": 275,
+            "y": 525
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 2,
+            "x": 275,
+            "y": 550
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 3,
+            "x": 275,
+            "y": 575
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 4,
+            "x": 275,
+            "y": 0
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 5,
+            "x": 275,
+            "y": 25
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 6,
+            "x": 275,
+            "y": 50
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 0,
+            "x": 275,
+            "y": 75
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 1,
+            "x": 275,
+            "y": 100
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 2,
+            "x": 275,
+            "y": 125
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 3,
+            "x": 275,
+            "y": 150
+        },
+        {
+            "direction": "UU",
+            "indexFrame": 5,
+            "x": 275,
+            "y": 175
+        }
+    ],
+    "TAIL": [
+        {
+            "direction": "UU",
+            "indexFrame": 6,
+            "x": 275,
+            "y": 200
+        }
+    ],
+    "score": 200,
+    "currentDirection": null,
+    "previousDirection": "UU",
+    "typeColor": "blue"
+}
