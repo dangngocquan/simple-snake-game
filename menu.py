@@ -670,7 +670,7 @@ class GameOverMenu:
 ###########  CLASS GAME OVER MENU 02 ########################################################################
 class GameOverMenu02:
     ###########  Constructor  ###############################################################################
-    def __init__(self, x, y, width, height, snake01=Snake(), snake02=Snake()):
+    def __init__(self, x, y, width, height, snake01=Snake(), snake02=Snake(), winner=-1):
         ###########  Surface, cursor and coordinate center  #################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -679,14 +679,47 @@ class GameOverMenu02:
         self.cursor = 0
         self.snake01 = snake01
         self.snake02 = snake02
+        self.winner = winner
+        if self.winner == -1:
+            if self.snake01.head[0].coordinate() == self.snake02.head[0].coordinate():
+                if self.snake01.score == self.snake02.score:
+                    self.winner = 0
+                elif self.snake01.score > self.snake02.score:
+                    self.winner = 1
+                elif self.snake01.score < self.snake02.score:
+                    self.winner = 2
+            elif self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks()):
+                if not self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks()):
+                    self.winner = 2
+                else:
+                    self.winner = 0
+            elif self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks()):
+                if not self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks()):
+                    self.winner = 1
+                else:
+                    self.winner = 0
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
-        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT, width//4, height*4//12)
-        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT, width//4*3, height*4//12)
-        self.titleScore01 = Button(f"Score: {self.snake01.score}", MEDIUM_FONT_2, width//4, height*11//24)
-        self.titleScore02 = Button(f"Score: {self.snake02.score}", MEDIUM_FONT_2, width//4*3, height*11//24)
-        self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*8//12)
-        self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*10//12)
+        self.titleStatusPlayer01 = None
+        self.titleStatusPlayer02 = None
+        if self.winner == 0:
+            self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT, width//4*3, height*4//12)
+        elif self.winner == 1:
+            self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT, width//4*3, height*4//12)
+        elif self.winner == 2:
+            self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT, width//4*3, height*4//12)
+        elif self.winner == 3:
+            self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT, width//4*3, height*4//12)
+        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT, width//4, height*5//12)
+        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT, width//4*3, height*5//12)
+        self.titleScore01 = Button(f"Score: {self.snake01.score}", MEDIUM_FONT_2, width//4, height*13//24)
+        self.titleScore02 = Button(f"Score: {self.snake02.score}", MEDIUM_FONT_2, width//4*3, height*13//24)
+        self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*16//24)
+        self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*19//24)
         
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
@@ -707,6 +740,8 @@ class GameOverMenu02:
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
             self.titleGameOver.draw(self.surface)
+            self.titleStatusPlayer01.draw(self.surface)
+            self.titleStatusPlayer02.draw(self.surface)
             self.titlePlayer01.draw(self.surface)
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)
@@ -720,11 +755,15 @@ class GameOverMenu02:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.snake01.drop()
+            if self.winner == 0 or self.winner == 2:
+                self.snake01.drop()
+            if self.winner == 0 or self.winner == 1:
+                self.snake02.drop()
             self.snake01.draw(self.surface)
-            self.snake02.drop()
             self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
+            self.titleStatusPlayer01.draw(self.surface)
+            self.titleStatusPlayer02.draw(self.surface)
             self.titlePlayer01.draw(self.surface)
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)
@@ -741,6 +780,8 @@ class GameOverMenu02:
             self.snake02.updateAnimation()
             self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
+            self.titleStatusPlayer01.draw(self.surface)
+            self.titleStatusPlayer02.draw(self.surface)
             self.titlePlayer01.draw(self.surface)
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)

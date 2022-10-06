@@ -1,6 +1,6 @@
 import sys
 import pygame
-from food import FoodManager
+from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
 from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, GameOverMenu02
 from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu
@@ -509,9 +509,10 @@ class Game:
                                 SETTING2['SOUND']['GAME_OVER'].play()
                                 self.inGame02.running = False
                                 self.runningInGame02 = False
-                                self.runningGameOverMenu = True
+                                self.runningGameOverMenu02 = True
                                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                                 self.inGame02.snake01)
+                                                                 snake01=self.inGame02.snake01,
+                                                                 snake02=self.inGame02.snake02, winner=0)
                         elif event.key == pygame.K_SPACE:
                             if self.inGame02.snake01.currentDirection != None:
                                 self.inGame02.snake01.previousDirection = self.inGame02.snake01.currentDirection
@@ -648,6 +649,10 @@ class Game:
                 self.runningGameOverMenu02 = True
                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                      snake01=self.inGame02.snake01, snake02=self.inGame02.snake02)
+            if (len(self.inGame02.snake01.coordinateSnakeBlocks()) + 
+                len(self.inGame02.snake02.coordinateSnakeBlocks())) == (NUMBER_COLUMNS-1)*(NUMBER_ROWS-1):
+                self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                     snake01=self.inGame02.snake01, snake02=self.inGame02.snake02, winner=3)
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:
                 if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:
