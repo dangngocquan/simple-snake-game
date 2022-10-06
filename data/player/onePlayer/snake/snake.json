@@ -1,850 +1,1042 @@
 {
     "HEAD": [
         {
-            "direction": "RR",
-            "indexFrame": 3,
-            "x": 300,
-            "y": 300
+            "direction": "LL",
+            "indexFrame": 5,
+            "x": 100,
+            "y": 450
         }
     ],
     "BODY": [
         {
-            "direction": "RR",
-            "indexFrame": 3,
-            "x": 275,
-            "y": 300
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 4,
-            "x": 250,
-            "y": 300
-        },
-        {
-            "direction": "RR",
+            "direction": "LL",
             "indexFrame": 5,
-            "x": 225,
-            "y": 300
+            "x": 125,
+            "y": 450
         },
         {
-            "direction": "RR",
+            "direction": "LL",
             "indexFrame": 6,
+            "x": 150,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 0,
+            "x": 175,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 1,
             "x": 200,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 2,
+            "x": 225,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 250,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 4,
+            "x": 275,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 5,
+            "x": 300,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 6,
+            "x": 325,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 0,
+            "x": 350,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 1,
+            "x": 375,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 2,
+            "x": 400,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 425,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 4,
+            "x": 450,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 5,
+            "x": 475,
+            "y": 450
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 6,
+            "x": 500,
+            "y": 450
+        },
+        {
+            "direction": "DL",
+            "indexFrame": 0,
+            "x": 525,
+            "y": 450
+        },
+        {
+            "direction": "DD",
+            "indexFrame": 1,
+            "x": 525,
+            "y": 425
+        },
+        {
+            "direction": "DD",
+            "indexFrame": 2,
+            "x": 525,
+            "y": 400
+        },
+        {
+            "direction": "DD",
+            "indexFrame": 3,
+            "x": 525,
+            "y": 375
+        },
+        {
+            "direction": "DD",
+            "indexFrame": 4,
+            "x": 525,
+            "y": 350
+        },
+        {
+            "direction": "DD",
+            "indexFrame": 5,
+            "x": 525,
+            "y": 325
+        },
+        {
+            "direction": "RD",
+            "indexFrame": 6,
+            "x": 525,
             "y": 300
         },
         {
             "direction": "RR",
             "indexFrame": 0,
+            "x": 500,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 1,
+            "x": 475,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 2,
+            "x": 450,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 3,
+            "x": 425,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 4,
+            "x": 400,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 5,
+            "x": 375,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 6,
+            "x": 350,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 0,
+            "x": 325,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 1,
+            "x": 300,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 2,
+            "x": 275,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 3,
+            "x": 250,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 4,
+            "x": 225,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 5,
+            "x": 200,
+            "y": 300
+        },
+        {
+            "direction": "RR",
+            "indexFrame": 6,
             "x": 175,
             "y": 300
         },
         {
             "direction": "DR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 150,
             "y": 300
         },
         {
             "direction": "LD",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 150,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 175,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 200,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 225,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 250,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 275,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 300,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 325,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 350,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 375,
             "y": 275
         },
         {
             "direction": "DL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 400,
             "y": 275
         },
         {
             "direction": "DD",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 400,
             "y": 250
         },
         {
             "direction": "RD",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 400,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 375,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 350,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 325,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 300,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 275,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 250,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 225,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 200,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 175,
             "y": 225
         },
         {
             "direction": "RR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 150,
             "y": 225
         },
         {
             "direction": "DR",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 125,
             "y": 225
         },
         {
             "direction": "DD",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 125,
             "y": 200
         },
         {
             "direction": "LD",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 125,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 150,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 175,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 200,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 225,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 250,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 275,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 300,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 325,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 350,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 375,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 400,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 425,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 450,
             "y": 175
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 475,
             "y": 175
         },
         {
             "direction": "UL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 500,
             "y": 175
         },
         {
             "direction": "UU",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 500,
             "y": 200
         },
         {
             "direction": "LU",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 500,
             "y": 225
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 525,
             "y": 225
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 550,
             "y": 225
         },
         {
             "direction": "UL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 575,
             "y": 225
         },
         {
             "direction": "UU",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 575,
             "y": 250
         },
         {
             "direction": "LU",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 575,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 600,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 625,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 650,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 675,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 700,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 725,
             "y": 275
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 750,
             "y": 275
         },
         {
             "direction": "UL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 775,
             "y": 275
         },
         {
             "direction": "UU",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 775,
             "y": 300
         },
         {
             "direction": "UU",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 775,
             "y": 325
         },
         {
             "direction": "UU",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 775,
             "y": 350
         },
         {
             "direction": "UU",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 775,
             "y": 375
         },
         {
             "direction": "UU",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 775,
             "y": 400
         },
         {
             "direction": "RU",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 775,
             "y": 425
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 750,
             "y": 425
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 725,
             "y": 425
         },
         {
             "direction": "UR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 700,
             "y": 425
         },
         {
             "direction": "UU",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 700,
             "y": 450
         },
         {
             "direction": "UU",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 700,
             "y": 475
         },
         {
             "direction": "UU",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 700,
             "y": 500
         },
         {
             "direction": "LU",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 700,
             "y": 525
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 725,
             "y": 525
         },
         {
             "direction": "UL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 750,
             "y": 525
         },
         {
             "direction": "UU",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 750,
             "y": 550
         },
         {
             "direction": "RU",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 750,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 725,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 700,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 675,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 650,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 625,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 600,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 575,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 550,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 525,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 500,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 475,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 450,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 425,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 400,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 375,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 350,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 325,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 300,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 275,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 250,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 225,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 200,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 175,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 150,
             "y": 575
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 125,
             "y": 575
         },
         {
             "direction": "UR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 100,
             "y": 575
         },
         {
             "direction": "UU",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 100,
             "y": 0
         },
         {
             "direction": "LU",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 100,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 125,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 150,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 175,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 200,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 225,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 250,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 275,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 300,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 325,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 350,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 375,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 400,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 425,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 450,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 475,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 500,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 525,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 550,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 575,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 600,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 625,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 650,
             "y": 25
         },
         {
             "direction": "LL",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 675,
             "y": 25
         },
         {
             "direction": "UL",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 700,
             "y": 25
         },
         {
             "direction": "UU",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 700,
             "y": 50
         },
         {
             "direction": "RU",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 700,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 3,
+            "indexFrame": 2,
             "x": 675,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 4,
+            "indexFrame": 3,
             "x": 650,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 5,
+            "indexFrame": 4,
             "x": 625,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 6,
+            "indexFrame": 5,
             "x": 600,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 0,
+            "indexFrame": 6,
             "x": 575,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 1,
+            "indexFrame": 0,
             "x": 550,
             "y": 75
         },
         {
             "direction": "RR",
-            "indexFrame": 2,
+            "indexFrame": 1,
             "x": 525,
             "y": 75
         },
@@ -853,203 +1045,17 @@
             "indexFrame": 3,
             "x": 500,
             "y": 75
-        },
+        }
+    ],
+    "TAIL": [
         {
             "direction": "RR",
             "indexFrame": 4,
             "x": 475,
             "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 5,
-            "x": 450,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 6,
-            "x": 425,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 0,
-            "x": 400,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 1,
-            "x": 375,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 2,
-            "x": 350,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 3,
-            "x": 325,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 4,
-            "x": 300,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 5,
-            "x": 275,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 6,
-            "x": 250,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 0,
-            "x": 225,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 1,
-            "x": 200,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 2,
-            "x": 175,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 3,
-            "x": 150,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 4,
-            "x": 125,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 5,
-            "x": 100,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 6,
-            "x": 75,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 0,
-            "x": 50,
-            "y": 75
-        },
-        {
-            "direction": "RR",
-            "indexFrame": 1,
-            "x": 25,
-            "y": 75
-        },
-        {
-            "direction": "DR",
-            "indexFrame": 2,
-            "x": 0,
-            "y": 75
-        },
-        {
-            "direction": "DD",
-            "indexFrame": 3,
-            "x": 0,
-            "y": 50
-        },
-        {
-            "direction": "DD",
-            "indexFrame": 4,
-            "x": 0,
-            "y": 25
-        },
-        {
-            "direction": "DD",
-            "indexFrame": 5,
-            "x": 0,
-            "y": 0
-        },
-        {
-            "direction": "DD",
-            "indexFrame": 6,
-            "x": 0,
-            "y": 575
-        },
-        {
-            "direction": "LD",
-            "indexFrame": 0,
-            "x": 0,
-            "y": 550
-        },
-        {
-            "direction": "LL",
-            "indexFrame": 1,
-            "x": 25,
-            "y": 550
-        },
-        {
-            "direction": "LL",
-            "indexFrame": 2,
-            "x": 50,
-            "y": 550
-        },
-        {
-            "direction": "LL",
-            "indexFrame": 3,
-            "x": 75,
-            "y": 550
-        },
-        {
-            "direction": "LL",
-            "indexFrame": 4,
-            "x": 100,
-            "y": 550
-        },
-        {
-            "direction": "LL",
-            "indexFrame": 5,
-            "x": 125,
-            "y": 550
-        },
-        {
-            "direction": "LL",
-            "indexFrame": 0,
-            "x": 150,
-            "y": 550
         }
     ],
-    "TAIL": [
-        {
-            "direction": "LL",
-            "indexFrame": 1,
-            "x": 175,
-            "y": 550
-        }
-    ],
-    "score": 3420,
+    "score": 3440,
     "currentDirection": null,
-    "previousDirection": "RR"
+    "previousDirection": "LL"
 }

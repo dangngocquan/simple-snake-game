@@ -1,6 +1,7 @@
 import sys
 import pygame
 from food import FoodManager
+import food
 from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu
 from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu
 from inGame import InGame, InGame02
@@ -72,8 +73,10 @@ class Game:
                 ###########   Save data before quit game   ##################################################
                 if self.runningInGame:
                     snake.saveSnake(self.inGame.snake)
+                    food.saveFoodManager(foodManager=self.inGame.foodManager, numberPlayers=self.numberPlayers)
                 elif self.runningGameOverMenu:
                     snake.saveSnake(Snake())
+                    food.saveFoodManager(FoodManager())
                 ###########   Quit   ########################################################################
                 self.running = False
                 pygame.quit()
@@ -122,11 +125,13 @@ class Game:
                         if self.playGameMenu.cursor == 0:
                             self.runningInGame = True
                             self.inGame.snake = Snake()
+                            self.inGame.foodManager = FoodManager()
                             self.inGame.showingScreenStart = True
                         ###########   The cursor is pointing at "Continue Game"   ###########################
                         elif self.playGameMenu.cursor == 1:
                             self.runningInGame = True
                             self.inGame.snake = snake.loadPreviousSnake()
+                            self.inGame.foodManager = food.loadPreviousFoodManager(self.numberPlayers)
                             self.inGame.showingScreenStart = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.playGameMenu.cursor == 2:
@@ -450,6 +455,7 @@ class Game:
                                 self.inGame.snake.currentDirection = None
                             else:
                                 snake.saveSnake(self.inGame.snake)
+                                food.saveFoodManager(self.inGame.foodManager)
                                 self.inGame.running = False
                                 self.runningInGame = False
                                 self.runningMainMenu = True

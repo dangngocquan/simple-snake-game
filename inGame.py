@@ -56,6 +56,7 @@ class InGame:
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake.draw(self.surface)
+                self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
             elif self.running:

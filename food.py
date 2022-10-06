@@ -11,10 +11,56 @@ NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
 CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
 FOOD = SETTING2['FOOD']
 
+
+###########   Load data of foods from json file   ###########################################################
+def loadPreviousFoodManager(numberPlayers=1):
+    dict = None
+    if numberPlayers == 1:
+        with open('./data/player/onePlayer/food/food.json', 'r') as file:
+            dict = json.load(file)
+        file.close()
+    elif numberPlayers == 2:
+        with open('./data/player/twoPlayer/food/food.json', 'r') as file:
+            dict = json.load(file)
+        file.close()
+    
+    listFood = []
+    for food in dict['FOODS']:
+        listFood.append(Food(x=food['x'], y=food['y'], indexFrame=food['indexFrame']))
+        
+    return FoodManager(listFood=listFood)
+
+###########   Save data of current foods to json file   #####################################################
+def saveFoodManager(foodManager=[], numberPlayers=1):
+    data = {
+        'FOODS' : [
+           
+        ]
+    }
+    
+    for food in foodManager.listFood:
+        data['FOODS'].append(
+            {
+                'x' : food.x,
+                'y' : food.y,
+                'indexFrame' : food.indexFrame
+            }
+        )
+    
+    if numberPlayers == 1:
+        with open('./data/player/onePlayer/food/food.json', 'w') as file:
+            json.dump(data, file, indent=4)
+        file.close()
+    elif numberPlayers == 2:
+        with open('./data/player/twoPlayer/food/food.json', 'w') as file:
+            json.dump(data, file, indent=4)
+        file.close()
+
+
 ###########  CLASS FOOD  ####################################################################################
 class Food:
     ########### Constructor  ################################################################################
-    def __init__(self, x, y):
+    def __init__(self, x, y, indexFrame=0):
         ###########  Create surface   #######################################################################
         self.surface = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -23,7 +69,7 @@ class Food:
         self.y = y
         ###########  Default image food  ####################################################################
         self.surface.blit(FOOD[0], (0, 0))
-        self.indexFrame = 0
+        self.indexFrame = indexFrame
     
     ###########  Get coordinate of food  ####################################################################
     def coordinate(self):
@@ -44,13 +90,13 @@ class Food:
 ###########  CLASS FOOD MANAGER  ############################################################################
 class FoodManager:
     ###########  Constructor  ###############################################################################
-    def __init__(self):
+    def __init__(self, listFood=[]):
         ###########  Surface and coordinate #################################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
         ###########  List food anf  number of foods  ########################################################
-        self.listFood = []
+        self.listFood = listFood
         self.maxFood = SETTING1['FOOD']['MAX_FOOD']
         self.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
     

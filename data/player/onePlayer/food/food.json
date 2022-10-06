@@ -1,0 +1,104 @@
+{
+    "FOODS": [
+        {
+            "x": 100,
+            "y": 100,
+            "indexFrame": 1
+        },
+        {
+            "x": 200,
+            "y": 200,
+            "indexFrame": 3
+        },
+        {
+            "x": 25,
+            "y": 200,
+            "indexFrame": 1
+        },
+        {
+            "x": 400,
+            "y": 0,
+            "indexFrame": 1
+        },
+        {
+            "x": 275,
+            "y": 125,
+            "indexFrame": 1
+        },
+        {
+            "x": 175,
+            "y": 250,
+            "indexFrame": 1
+        },
+        {
+            "x": 550,
+            "y": 425,
+            "indexFrame": 1
+        },
+        {
+            "x": 950,
+            "y": 125,
+            "indexFrame": 1
+        },
+        {
+            "x": 0,
+            "y": 75,
+            "indexFrame": 1
+        },
+        {
+            "x": 25,
+            "y": 425,
+            "indexFrame": 1
+        },
+        {
+            "x": 450,
+            "y": 500,
+            "indexFrame": 1
+        },
+        {
+            "x": 800,
+            "y": 175,
+            "indexFrame": 1
+        },
+        {
+            "x": 175,
+            "y": 75,
+            "indexFrame": 1
+        },
+        {
+            "x": 50,
+            "y": 0,
+            "indexFrame": 1
+        },
+        {
+            "x": 650,
+            "y": 450,
+            "indexFrame": 1
+        },
+        {
+            "x": 875,
+            "y": 475,
+            "indexFrame": 1
+        },
+        {
+            "x": 700,
+            "y": 550,
+            "indexFrame": 1
+        },
+        {
+            "x": 500,
+            "y": 550,
+            "indexFrame": 1
+        },
+        {
+            "x": 25,
+            "y": 100,
+            "indexFrame": 1
+        },
+        {
+            "x": 950,
+            "y": 25,
+            "indexFrame": 1
+        }
+    ]
+}
