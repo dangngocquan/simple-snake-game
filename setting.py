@@ -149,7 +149,7 @@ SETTING2 = {
         'WHITE' : WHITE,
         'GRAY' : GRAY
     },
-    'SNAKE' : SNAKE_02,
+    'SNAKE' : SNAKE,
     'FOOD' : FOOD,
     'SOUND' : {
         'PRESS_BUTTON' : PRESS_BUTTON,

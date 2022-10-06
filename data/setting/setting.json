@@ -19,7 +19,7 @@
         "SOUND_VOLUME": 8
     },
     "GAMEMODE": {
-        "NUMBER_PLAYERS": 1,
+        "NUMBER_PLAYERS": 2,
         "VIEW_CONTROL": "Third-person view"
     }
 }

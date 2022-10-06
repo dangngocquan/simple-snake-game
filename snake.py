@@ -19,24 +19,40 @@ def loadPreviousSnake():
     file.close()
     head = []
     for snakeBlock in dict['HEAD']:
-        head.append(SnakeBlock(SNAKE['HEAD'][snakeBlock['direction']][snakeBlock['indexFrame']], 
-                               x=snakeBlock['x'], y=snakeBlock['y'], 
-                               direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+        if dict['typeColor'] == 'blue':
+            head.append(SnakeBlock(SNAKE['HEAD'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                                x=snakeBlock['x'], y=snakeBlock['y'], 
+                                direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+        elif dict['typeColor'] == 'green':
+            head.append(SnakeBlock(SNAKE_02['HEAD'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                                x=snakeBlock['x'], y=snakeBlock['y'], 
+                                direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
     body = []
     for snakeBlock in dict['BODY']:
-        body.append(SnakeBlock(SNAKE['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 
-                               x=snakeBlock['x'], y=snakeBlock['y'], 
-                               direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+        if dict['typeColor'] == 'blue':
+            body.append(SnakeBlock(SNAKE['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                                x=snakeBlock['x'], y=snakeBlock['y'], 
+                                direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+        elif dict['typeColor'] == 'green':
+            body.append(SnakeBlock(SNAKE_02['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                                x=snakeBlock['x'], y=snakeBlock['y'], 
+                                direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
     tail = []
     for snakeBlock in dict['TAIL']:
-        tail.append(SnakeBlock(SNAKE['TAIL'][snakeBlock['direction']][snakeBlock['indexFrame']], 
-                               x=snakeBlock['x'], y=snakeBlock['y'], 
-                               direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+        if dict['typeColor'] == 'blue':
+            tail.append(SnakeBlock(SNAKE['TAIL'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                                x=snakeBlock['x'], y=snakeBlock['y'], 
+                                direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
+        elif dict['typeColor'] == 'green':
+            tail.append(SnakeBlock(SNAKE_02['TAIL'][snakeBlock['direction']][snakeBlock['indexFrame']], 
+                                x=snakeBlock['x'], y=snakeBlock['y'], 
+                                direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame']))
     score = dict["score"]
     currentDirection = dict["previousDirection"]
     previousDirection = dict["previousDirection"]
+    typeColor = dict["typeColor"]
     
-    return Snake(head=head, body=body, tail=tail, score=score, 
+    return Snake(head=head, typeColor=typeColor, body=body, tail=tail, score=score, 
                  currentDirection=currentDirection, previousDirection=previousDirection)
 
 ###########   Save data of current snake to json file   #####################################################
@@ -47,7 +63,8 @@ def saveSnake(snake):
         "TAIL" : [],
         "score" : snake.score,
         "currentDirection" : snake.currentDirection,
-        "previousDirection" : snake.previousDirection
+        "previousDirection" : snake.previousDirection,
+        "typeColor" : snake.typeColor
     }
     for snakeBlock in snake.head:
         dictSnakeBlock = {
@@ -83,7 +100,7 @@ def saveSnake(snake):
 class SnakeBlock:
     ###########   Constructor   #############################################################################
     def __init__(self, image, x=NUMBER_COLUMNS//2 * SETTING2['SCREEN']['CELL_SIZE'], y=NUMBER_ROWS//2 * SETTING2['SCREEN']['CELL_SIZE'], 
-                 direction='UU', indexFrame=0):
+                 direction='UU', indexFrame=0, typeColor='blue'):
         self.surface = pygame.Surface((SETTING2['SCREEN']['CELL_SIZE'], SETTING2['SCREEN']['CELL_SIZE']), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (x, y)
@@ -92,6 +109,7 @@ class SnakeBlock:
         self.y = y
         self.direction = direction
         self.indexFrame = indexFrame
+        self.typeColor = typeColor
     
     ###########   Get coordinate of Snake Block with type List  #############################################
     def coordinate(self):
@@ -108,7 +126,10 @@ class SnakeBlock:
         ###### Clear old image ##############################################################################
         self.surface.fill((0, 0, 0, 0))
         ###### Add new image ################################################################################
-        img = SNAKE[part][self.direction][self.indexFrame]
+        if self.typeColor == 'blue':
+            img = SNAKE[part][self.direction][self.indexFrame]
+        elif self.typeColor == 'green':
+            img = SNAKE_02[part][self.direction][self.indexFrame]
         self.surface.blit(img, (0, 0))
 
     ###########   Draw SnakeBlock in another surface   ######################################################
@@ -120,27 +141,51 @@ class SnakeBlock:
 ###########  CLASS SNAKE  ###################################################################################
 class Snake:
     ###########   Constructor   #############################################################################
-    def __init__(self, head=None, body=None, tail=None,
+    def __init__(self, typeLocation=0, typeColor = 'blue', head=None, body=None, tail=None,
                  currentDirection='UU', previousDirection='UU', score=0):
         ###########   Surface and coordinate   ##############################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.topleft = (0, 0)
+        self.typeColor = typeColor
         ###########   Create first head, body anf tail for Snake   ##########################################
         if head == None:
-            self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0], indexFrame=0)]
+            if typeColor == 'blue':
+                self.head = [SnakeBlock(SNAKE['HEAD']['UU'][0], 
+                                        x=NUMBER_COLUMNS//4*(2+typeLocation)*SETTING2['SCREEN']['CELL_SIZE'], 
+                                        y=NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'],
+                                        indexFrame=0, typeColor=typeColor)]
+            elif typeColor == 'green':
+                self.head = [SnakeBlock(SNAKE_02['HEAD']['UU'][0], 
+                                        x=NUMBER_COLUMNS//4*(2+typeLocation)*SETTING2['SCREEN']['CELL_SIZE'], 
+                                        y=NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'],
+                                        indexFrame=0, typeColor=typeColor)]
         else:
             self.head = head
         if body == None:
-            self.body = [SnakeBlock(SNAKE['BODY']['UU'][1], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
-                                    NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'],
-                                    indexFrame=1)]
+            if typeColor == 'blue':
+                self.body = [SnakeBlock(image=SNAKE['BODY']['UU'][1], 
+                                        x=NUMBER_COLUMNS//4*(2+typeLocation)*SETTING2['SCREEN']['CELL_SIZE'], 
+                                        y=NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'],
+                                        indexFrame=1, typeColor=typeColor)]
+            elif typeColor == 'green':
+                self.body = [SnakeBlock(image=SNAKE_02['BODY']['UU'][1], 
+                                        x=NUMBER_COLUMNS//4*(2+typeLocation)*SETTING2['SCREEN']['CELL_SIZE'], 
+                                        y=NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + SETTING2['SCREEN']['CELL_SIZE'],
+                                        indexFrame=1, typeColor=typeColor)]
         else:
             self.body = body
         if tail == None:
-            self.tail = [SnakeBlock(SNAKE['TAIL']['UU'][2], NUMBER_COLUMNS//2*SETTING2['SCREEN']['CELL_SIZE'], 
-                                    NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'],
-                                    indexFrame=2)]
+            if typeColor == 'blue':
+                self.tail = [SnakeBlock(image=SNAKE['TAIL']['UU'][2], 
+                                        x=NUMBER_COLUMNS//4*(2+typeLocation)*SETTING2['SCREEN']['CELL_SIZE'], 
+                                        y=NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'],
+                                        indexFrame=2, typeColor=typeColor)]
+            elif typeColor == 'green':
+                self.tail = [SnakeBlock(image=SNAKE_02['TAIL']['UU'][2], 
+                                        x=NUMBER_COLUMNS//4*(2+typeLocation)*SETTING2['SCREEN']['CELL_SIZE'], 
+                                        y=NUMBER_ROWS//2*SETTING2['SCREEN']['CELL_SIZE'] + 2*SETTING2['SCREEN']['CELL_SIZE'],
+                                        indexFrame=2, typeColor=typeColor)]
         else:
             self.tail = tail
         self.head[0].draw(self.surface)
@@ -241,12 +286,17 @@ class Snake:
         newSnakeBlock = SnakeBlock(SNAKE['BODY'][newSnakeBlockDirection][newSnakeBlockIndexFrame], 
                                    x=newSnakeBlockCoordinate[0],
                                    y=newSnakeBlockCoordinate[1], direction=newSnakeBlockDirection, 
-                                   indexFrame=self.head[0].indexFrame)
+                                   indexFrame=self.head[0].indexFrame,
+                                   typeColor=self.typeColor)
         self.body.insert(0, newSnakeBlock)
     
     ###########   Check if snake died, game over   ##########################################################
-    def died(self):
-        return self.head[0].coordinate() in [snakeBlock.coordinate() for snakeBlock in (self.body + self.tail)]
+    def died(self, otherCoordinateSnakeBlocks=[]):
+        if self.head[0].coordinate() in [snakeBlock.coordinate() for snakeBlock in (self.body + self.tail)]:
+            return True
+        if self.head[0].coordinate() in otherCoordinateSnakeBlocks:
+            return True
+                
          
     ###########   Update snake displacement  ################################################################
     def updateLocation(self, foodList):
