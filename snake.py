@@ -14,7 +14,7 @@ SNAKE = SETTING2['SNAKE']
 ###########   Load data of snake from json file   ###########################################################
 def loadPreviousSnake():
     dict = None
-    with open('./data/player/snake.json', 'r') as file:
+    with open('./data/player/onePlayer/snake/snake.json', 'r') as file:
         dict = json.load(file)
     file.close()
     head = []
@@ -73,7 +73,7 @@ def saveSnake(snake):
             "y" : snakeBlock.y
         }
         data['TAIL'].append(dictSnakeBlock)
-    with open('./data/player/snake.json', 'w') as file:
+    with open('./data/player/onePlayer/snake/snake.json', 'w') as file:
         json.dump(data, file, indent=4)
     file.close()
     

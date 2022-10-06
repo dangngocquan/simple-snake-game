@@ -15,8 +15,8 @@
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
-        "MUSIC_VOLUME": 20,
-        "SOUND_VOLUME": 10
+        "MUSIC_VOLUME": 7,
+        "SOUND_VOLUME": 8
     },
     "GAMEMODE": {
         "NUMBER_PLAYERS": 1,
