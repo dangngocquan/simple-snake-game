@@ -15,7 +15,11 @@
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
-        "MUSIC_VOLUME": 0,
-        "SOUND_VOLUME": 30
+        "MUSIC_VOLUME": 20,
+        "SOUND_VOLUME": 10
+    },
+    "GAMEMODE": {
+        "NUMBER_PLAYERS": 1,
+        "VIEW_CONTROL": "Third-person view"
     }
 }

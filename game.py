@@ -158,10 +158,9 @@ class Game:
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.optionsMenu.cursor == 3:
                             self.runningMainMenu = True
-                            self.mainMenu.cursor = 0
                         self.runningOptionsMenu = False
             ###########   Get events when current screen is Gamemode Setting Menu   #########################
-            elif self.runningGameSettingMenu:
+            elif self.runningGamemodeSettingMenu:
                 pass
             ###########   Get events when current screen is Game Setting Menu   #############################
             elif self.runningGameSettingMenu:
@@ -191,7 +190,6 @@ class Game:
                             if self.gameSettingMenu.cursor == 12:
                                 self.runningGameSettingMenu = False
                                 self.runningOptionsMenu = True
-                                self.optionsMenu.cursor = 0
                             else:
                                 self.gameSettingMenu.cursor += 1
                     ###########   If the cursor is not pointing at main content ("Show grid", "Move speed", #
@@ -302,7 +300,7 @@ class Game:
                             if self.soundSettingMenu.cursor == 6:
                                 self.runningSoundSettingMenu = False
                                 self.runningOptionsMenu = True
-                                self.optionsMenu.cursor = 0
+                                # self.optionsMenu.cursor = 0
                             else:
                                 self.soundSettingMenu.cursor += 1
                     elif self.soundSettingMenu.cursor % 2 != 0:
