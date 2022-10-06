@@ -639,12 +639,15 @@ class Game:
         ###########   Update screen when 2 player controlling 2 snake   #####################################
         elif self.runningInGame02:
             ###########   Check game over   #################################################################
-            if self.inGame02.snake01.died(otherCoordinateSnakeBlocks=self.inGame02.snake02.coordinateSnakeBlocks()):
+            snake01Died = self.inGame02.snake01.died(otherCoordinateSnakeBlocks=self.inGame02.snake02.coordinateSnakeBlocks())
+            snake02Died = self.inGame02.snake02.died(otherCoordinateSnakeBlocks=self.inGame02.snake01.coordinateSnakeBlocks())
+            if snake01Died or snake02Died:
                 SETTING2['SOUND']['GAME_OVER'].play()
                 self.inGame02.running = False
                 self.runningInGame02 = False
                 self.runningGameOverMenu02 = True
-                self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame02.snake01)
+                self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                     snake01=self.inGame02.snake01, snake02=self.inGame02.snake02)
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:
                 if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:
@@ -672,11 +675,19 @@ class Game:
                 self.gameOverMenu.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
+        ###########   Update screen when Game Over 2 player   ###############################################
+        elif self.runningGameOverMenu02:
+            if self.countTicks % (FPS * 1000 // self.inGame02.snake01.dropSpeed) == 0:
+                self.gameOverMenu02.update(type='UpdateSnakeDrop')
+            if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:
+                self.gameOverMenu02.update(type='UpdateSnakeAnimation')
+            if self.countTicks % (FPS * 1000 // self.gameOverMenu02.FPS) == 0:
+                self.gameOverMenu02.update()        
         ###########   Update screen when showing Options Menu   #############################################
         elif self.runningOptionsMenu:
             if self.countTicks % (FPS * 1000 // self.optionsMenu.FPS) == 0:
                 self.optionsMenu.update()
-        ###########   Update screen when showing Gamemode Setting Menu   ########################################
+        ###########   Update screen when showing Gamemode Setting Menu   ####################################
         elif self.runningGamemodeSettingMenu:
             if self.countTicks % (FPS * 1000 // self.gamemodeSettingMenu.FPS) == 0:
                 self.gamemodeSettingMenu.update()
@@ -684,10 +695,13 @@ class Game:
         elif self.runningGameSettingMenu:
             if self.countTicks % (FPS * 1000 // self.gameSettingMenu.FPS) == 0:
                 self.gameSettingMenu.update()
-        ###########   Update screen when showing Sound Setting Menu   ########################################
+        ###########   Update screen when showing Sound Setting Menu   #######################################
         elif self.runningSoundSettingMenu:
             if self.countTicks % (FPS * 1000 // self.soundSettingMenu.FPS) == 0:
-                self.soundSettingMenu.update() 
+                self.soundSettingMenu.update()
+        
+        
+        
         
     ###########   Draw screen with current status and show it   #############################################
     def display(self):
@@ -704,6 +718,8 @@ class Game:
             self.playGameMenu.draw(self.screen)
         elif self.runningGameOverMenu:
             self.gameOverMenu.draw(self.screen)
+        elif self.runningGameOverMenu02:
+            self.gameOverMenu02.draw(self.screen)
         elif self.runningOptionsMenu:
             self.optionsMenu.draw(self.screen)
         elif self.runningGamemodeSettingMenu:

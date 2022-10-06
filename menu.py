@@ -1,4 +1,5 @@
 import random
+from cairo import Surface
 import pygame
 from snake import Snake
 from setting import *
@@ -669,19 +670,23 @@ class GameOverMenu:
 ###########  CLASS GAME OVER MENU 02 ########################################################################
 class GameOverMenu02:
     ###########  Constructor  ###############################################################################
-    def __init__(self, x, y, width, height, snake=Snake()):
+    def __init__(self, x, y, width, height, snake01=Snake(), snake02=Snake()):
         ###########  Surface, cursor and coordinate center  #################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
-        self.snake = snake
+        self.snake01 = snake01
+        self.snake02 = snake02
         ########### Buttons in Play Game Menu  ##############################################################
-        self.titleGameOver = Button("GAME OVER", BIG_FONT, width//2, height*3//12)
-        self.titleScore = Button(f"Your score: {self.snake.score}", MEDIUM_FONT_2, width//2, height*5//12)
-        self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*7//12)
-        self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*9//12)
+        self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
+        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT, width//4, height*4//12)
+        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT, width//4*3, height*4//12)
+        self.titleScore01 = Button(f"Score: {self.snake01.score}", MEDIUM_FONT_2, width//4, height*11//24)
+        self.titleScore02 = Button(f"Score: {self.snake02.score}", MEDIUM_FONT_2, width//4*3, height*11//24)
+        self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*8//12)
+        self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*10//12)
         
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
@@ -701,10 +706,13 @@ class GameOverMenu02:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT_2)
-            self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
-            self.titleScore.draw(self.surface)
+            self.titlePlayer01.draw(self.surface)
+            self.titlePlayer02.draw(self.surface)
+            self.titleScore01.draw(self.surface)
+            self.titleScore02.draw(self.surface)
+            self.snake01.draw(self.surface)
+            self.snake02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
         ###########   Update location of snake when snake drop   ############################################
@@ -712,10 +720,15 @@ class GameOverMenu02:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.snake.drop()
-            self.snake.draw(self.surface)
+            self.snake01.drop()
+            self.snake01.draw(self.surface)
+            self.snake02.drop()
+            self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
-            self.titleScore.draw(self.surface)
+            self.titlePlayer01.draw(self.surface)
+            self.titlePlayer02.draw(self.surface)
+            self.titleScore01.draw(self.surface)
+            self.titleScore02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
         ###########   Update animation of snake   ###########################################################
@@ -723,10 +736,15 @@ class GameOverMenu02:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.snake.updateAnimation()
-            self.snake.draw(self.surface)
+            self.snake01.updateAnimation()
+            self.snake01.draw(self.surface)
+            self.snake02.updateAnimation()
+            self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
-            self.titleScore.draw(self.surface)
+            self.titlePlayer01.draw(self.surface)
+            self.titlePlayer02.draw(self.surface)
+            self.titleScore01.draw(self.surface)
+            self.titleScore02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
         
