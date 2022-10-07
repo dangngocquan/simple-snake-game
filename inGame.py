@@ -56,14 +56,15 @@ class InGame:
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake.draw(self.surface)
+                self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
-                self.score = self.snake.score
+                # self.score = self.snake.score
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
-                self.score = self.snake.score
+                # self.score = self.snake.score
                 self.snake.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
@@ -182,7 +183,6 @@ class InGame02:
                 self.snake01.draw(self.surface)
                 self.snake02.draw(self.surface)
                 self.foodManager.draw(self.surface)
-                # self.score = self.snake.score
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
                 self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", menu.SMALL_FONT, 'R')
@@ -190,7 +190,6 @@ class InGame02:
                 self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.SMALL_FONT, 'R')
                 self.scoreTextScreenRunning02.draw(self.surface)
             elif self.running:
-                # self.score = self.snake.score
                 self.snake01.updateLocation(self.foodManager.listFood)
                 self.snake02.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())

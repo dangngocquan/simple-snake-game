@@ -73,10 +73,22 @@ class Game:
                 ###########   Save data before quit game   ##################################################
                 if self.runningInGame:
                     snake.saveSnake(self.inGame.snake)
-                    food.saveFoodManager(foodManager=self.inGame.foodManager, numberPlayers=self.SETTING1['GAMEMODE']['NUMBER_PLAYERS'])
+                    food.saveFoodManager(foodManager=self.inGame.foodManager)
                 elif self.runningGameOverMenu:
                     snake.saveSnake(Snake())
                     food.saveFoodManager(FoodManager())
+                elif self.runningInGame02:
+                    snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
+                    snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
+                    food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                elif self.runningGameOverMenu02:
+                    self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
+                    self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
+                    self.inGame02.foodManager = FoodManager()
+                    self.inGame02.update()
+                    snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
+                    snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
+                    food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
                 ###########   Quit   ########################################################################
                 self.running = False
                 pygame.quit()
@@ -591,11 +603,39 @@ class Game:
                             self.inGame.showingScreenStart = True
                         elif self.gameOverMenu.cursor == 1:
                             self.runningMainMenu = True
-                        snake.saveSnake(Snake())
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
+                        snake.saveSnake(self.inGame.snake)
+                        food.saveFoodManager()
                         self.inGame.update()
                         self.runningGameOverMenu = False
+            
+            ###########   Get event when current screen is Game Over Menu 02   ##############################
+            elif self.runningGameOverMenu02:
+                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.gameOverMenu02.cursor += 1
+                        self.gameOverMenu02.cursor %= 2
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.gameOverMenu02.cursor -= 1
+                        self.gameOverMenu02.cursor %= 2
+                    elif event.key == pygame.K_RETURN:
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        if self.gameOverMenu02.cursor == 0:
+                            self.runningInGame02 = True
+                            self.inGame02.showingScreenStart = True
+                        elif self.gameOverMenu02.cursor == 1:
+                            self.runningMainMenu = True
+                        self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
+                        self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
+                        self.inGame02.foodManager = FoodManager()                            
+                        snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
+                        snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
+                        food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                        self.inGame02.update()
+                        self.runningGameOverMenu02 = False
                         
                                   
     ###########   Update screen with current status   #######################################################       
