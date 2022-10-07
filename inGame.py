@@ -163,7 +163,7 @@ class InGame02:
         self.scoreTextScreenRunning02.isChosen = True
         
     ###########   Update screen    ##########################################################################
-    def update(self, type='ProvideFoodsAndUpdateSnakeMove', tempCountTicks=0):
+    def update(self, type='ProvideFoodsAndUpdateSnakeMove', tempCountTicks=0, snakeMove01=True, snakeMove02=True):
         self.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
         self.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
         self.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
@@ -190,8 +190,10 @@ class InGame02:
                 self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.SMALL_FONT, 'R')
                 self.scoreTextScreenRunning02.draw(self.surface)
             elif self.running:
-                self.snake01.updateLocation(self.foodManager.listFood)
-                self.snake02.updateLocation(self.foodManager.listFood)
+                if snakeMove01 == True:
+                    self.snake01.updateLocation(self.foodManager.listFood)
+                if snakeMove02 == True:
+                    self.snake02.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())
                 self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", menu.SMALL_FONT, 'R')
                 self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.SMALL_FONT, 'R')

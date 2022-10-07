@@ -27,7 +27,7 @@ def loadPreviousFoodManager(path='./data/player/onePlayer/food/food.json'):
     return FoodManager(listFood=listFood)
 
 ###########   Save data of current foods to json file   #####################################################
-def saveFoodManager(foodManager=[], path='./data/player/onePlayer/food/food.json'):
+def saveFoodManager(foodManager, path='./data/player/onePlayer/food/food.json'):
     data = {
         'FOODS' : [
            

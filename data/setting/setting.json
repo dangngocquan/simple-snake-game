@@ -4,7 +4,7 @@
     },
     "GRID": "ON",
     "FOOD": {
-        "MAX_FOOD": 1,
+        "MAX_FOOD": 10,
         "ANIMATION_SPEED": 6
     },
     "SNAKE": {
@@ -14,11 +14,11 @@
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
-        "MUSIC_VOLUME": 7,
+        "MUSIC_VOLUME": 37,
         "SOUND_VOLUME": 8
     },
     "GAMEMODE": {
         "NUMBER_PLAYERS": 2,
-        "VIEW_CONTROL": "Third-person view"
+        "VIEW_CONTROL": "First-person view"
     }
 }

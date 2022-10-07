@@ -408,7 +408,7 @@ class Game:
                                 setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
                                                 newData=(SETTING1['FOOD']['ANIMATION_SPEED'] - 1)%61)
                                 if self.inGame.foodManager.animationSpeed == 0:
-                                    setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', newData=60)
+                                    setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', newData=60 )
                                 if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                     self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
                                 elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
@@ -442,7 +442,6 @@ class Game:
                             if self.soundSettingMenu.cursor == 6:
                                 self.runningSoundSettingMenu = False
                                 self.runningOptionsMenu = True
-                                # self.optionsMenu.cursor = 0
                             else:
                                 self.soundSettingMenu.cursor += 1
                     elif self.soundSettingMenu.cursor % 2 != 0:
@@ -496,6 +495,12 @@ class Game:
                         if event.key == pygame.K_SPACE:
                             self.inGame.showingScreenStart = False
                             self.inGame.running = True
+                        elif event.key == pygame.K_ESCAPE:
+                            snake.saveSnake(self.inGame.snake)
+                            food.saveFoodManager(self.inGame.foodManager)
+                            self.inGame.showingScreenStart = False
+                            self.runningInGame = False
+                            self.runningMainMenu = True
                 ###########   Get events when snake moving   ################################################
                 elif self.inGame.running:
                     if event.type == pygame.KEYDOWN:
@@ -524,21 +529,51 @@ class Game:
                                 self.runningInGame = False
                                 self.runningMainMenu = True
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            if self.inGame.snake.currentDirection != 'DD' and self.inGame.snake.checkSnakeCanMove('UU'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'UU'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame.snake.currentDirection != 'DD' and self.inGame.snake.checkSnakeCanMove('UU'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'UU'
                         elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            if self.inGame.snake.currentDirection != 'UU' and self.inGame.snake.checkSnakeCanMove('DD'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'DD'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame.snake.currentDirection != 'UU' and self.inGame.snake.checkSnakeCanMove('DD'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'DD'
                         elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                            if self.inGame.snake.currentDirection != 'LL' and self.inGame.snake.checkSnakeCanMove('RR'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'RR'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame.snake.currentDirection != 'LL' and self.inGame.snake.checkSnakeCanMove('RR'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'RR'
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                if self.inGame.snake.currentDirection == 'UU' and self.inGame.snake.checkSnakeCanMove('RR'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'RR'
+                                elif self.inGame.snake.currentDirection == 'RR' and self.inGame.snake.checkSnakeCanMove('DD'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'DD'
+                                elif self.inGame.snake.currentDirection == 'DD' and self.inGame.snake.checkSnakeCanMove('LL'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'LL'
+                                elif self.inGame.snake.currentDirection == 'LL' and self.inGame.snake.checkSnakeCanMove('UU'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'UU'        
                         elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                            if self.inGame.snake.currentDirection != 'RR' and self.inGame.snake.checkSnakeCanMove('LL'):
-                                if self.inGame.snake.currentDirection != None:
-                                    self.inGame.snake.currentDirection = 'LL'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame.snake.currentDirection != 'RR' and self.inGame.snake.checkSnakeCanMove('LL'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'LL'
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                if self.inGame.snake.currentDirection == 'UU' and self.inGame.snake.checkSnakeCanMove('LL'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'LL'
+                                elif self.inGame.snake.currentDirection == 'LL' and self.inGame.snake.checkSnakeCanMove('DD'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'DD'
+                                elif self.inGame.snake.currentDirection == 'DD' and self.inGame.snake.checkSnakeCanMove('RR'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'RR'
+                                elif self.inGame.snake.currentDirection == 'RR' and self.inGame.snake.checkSnakeCanMove('UU'):
+                                    if self.inGame.snake.currentDirection != None:
+                                        self.inGame.snake.currentDirection = 'UU'
                 ###########   Get events when game pause   ##################################################
                 elif self.inGame.waiting:
                     pass
@@ -551,6 +586,13 @@ class Game:
                         if event.key == pygame.K_SPACE:
                             self.inGame02.showingScreenStart = False
                             self.inGame02.running = True
+                        elif event.key == pygame.K_ESCAPE:
+                            snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
+                            snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
+                            food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                            self.inGame02.showingScreenStart = False
+                            self.runningInGame02 = False
+                            self.runningMainMenu = True
                 ###########   Get events when snake moving   ################################################
                 elif self.inGame02.running:
                     if event.type == pygame.KEYDOWN:
@@ -588,37 +630,97 @@ class Game:
                                 self.runningInGame02 = False
                                 self.runningMainMenu = True
                         elif event.key == pygame.K_w:
-                            if self.inGame02.snake01.currentDirection != 'DD' and self.inGame02.snake01.checkSnakeCanMove('UU'):
-                                if self.inGame02.snake01.currentDirection != None:
-                                    self.inGame02.snake01.currentDirection = 'UU'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake01.currentDirection != 'DD' and self.inGame02.snake01.checkSnakeCanMove('UU'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'UU'
                         elif event.key == pygame.K_s:
-                            if self.inGame02.snake01.currentDirection != 'UU' and self.inGame02.snake01.checkSnakeCanMove('DD'):
-                                if self.inGame02.snake01.currentDirection != None:
-                                    self.inGame02.snake01.currentDirection = 'DD'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake01.currentDirection != 'UU' and self.inGame02.snake01.checkSnakeCanMove('DD'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'DD'
                         elif event.key == pygame.K_d:
-                            if self.inGame02.snake01.currentDirection != 'LL' and self.inGame02.snake01.checkSnakeCanMove('RR'):
-                                if self.inGame02.snake01.currentDirection != None:
-                                    self.inGame02.snake01.currentDirection = 'RR'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake01.currentDirection != 'LL' and self.inGame02.snake01.checkSnakeCanMove('RR'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'RR'
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                if self.inGame02.snake01.currentDirection == 'UU' and self.inGame02.snake01.checkSnakeCanMove('RR'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'RR'
+                                elif self.inGame02.snake01.currentDirection == 'RR' and self.inGame02.snake01.checkSnakeCanMove('DD'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'DD'
+                                elif self.inGame02.snake01.currentDirection == 'DD' and self.inGame02.snake01.checkSnakeCanMove('LL'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'LL'
+                                elif self.inGame02.snake01.currentDirection == 'LL' and self.inGame02.snake01.checkSnakeCanMove('UU'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'UU'
                         elif event.key == pygame.K_a:
-                            if self.inGame02.snake01.currentDirection != 'RR' and self.inGame02.snake01.checkSnakeCanMove('LL'):
-                                if self.inGame02.snake01.currentDirection != None:
-                                    self.inGame02.snake01.currentDirection = 'LL'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake01.currentDirection != 'RR' and self.inGame02.snake01.checkSnakeCanMove('LL'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'LL'
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                if self.inGame02.snake01.currentDirection == 'UU' and self.inGame02.snake01.checkSnakeCanMove('LL'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'LL'
+                                elif self.inGame02.snake01.currentDirection == 'LL' and self.inGame02.snake01.checkSnakeCanMove('DD'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'DD'
+                                elif self.inGame02.snake01.currentDirection == 'DD' and self.inGame02.snake01.checkSnakeCanMove('RR'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'RR'
+                                elif self.inGame02.snake01.currentDirection == 'RR' and self.inGame02.snake01.checkSnakeCanMove('UU'):
+                                    if self.inGame02.snake01.currentDirection != None:
+                                        self.inGame02.snake01.currentDirection = 'UU'
                         elif event.key == pygame.K_UP:
-                            if self.inGame02.snake02.currentDirection != 'DD' and self.inGame02.snake02.checkSnakeCanMove('UU'):
-                                if self.inGame02.snake02.currentDirection != None:
-                                    self.inGame02.snake02.currentDirection = 'UU'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake02.currentDirection != 'DD' and self.inGame02.snake02.checkSnakeCanMove('UU'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'UU'
                         elif event.key == pygame.K_DOWN:
-                            if self.inGame02.snake02.currentDirection != 'UU' and self.inGame02.snake02.checkSnakeCanMove('DD'):
-                                if self.inGame02.snake02.currentDirection != None:
-                                    self.inGame02.snake02.currentDirection = 'DD'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake02.currentDirection != 'UU' and self.inGame02.snake02.checkSnakeCanMove('DD'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'DD'
                         elif event.key == pygame.K_RIGHT:
-                            if self.inGame02.snake02.currentDirection != 'LL' and self.inGame02.snake02.checkSnakeCanMove('RR'):
-                                if self.inGame02.snake02.currentDirection != None:
-                                    self.inGame02.snake02.currentDirection = 'RR'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake02.currentDirection != 'LL' and self.inGame02.snake02.checkSnakeCanMove('RR'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'RR'
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                if self.inGame02.snake02.currentDirection == 'UU' and self.inGame02.snake02.checkSnakeCanMove('RR'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'RR'
+                                elif self.inGame02.snake02.currentDirection == 'RR' and self.inGame02.snake02.checkSnakeCanMove('DD'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'DD'
+                                elif self.inGame02.snake02.currentDirection == 'DD' and self.inGame02.snake02.checkSnakeCanMove('LL'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'LL'
+                                elif self.inGame02.snake02.currentDirection == 'LL' and self.inGame02.snake02.checkSnakeCanMove('UU'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'UU'
                         elif event.key == pygame.K_LEFT:
-                            if self.inGame02.snake02.currentDirection != 'RR' and self.inGame02.snake02.checkSnakeCanMove('LL'):
-                                if self.inGame02.snake02.currentDirection != None:
-                                    self.inGame02.snake02.currentDirection = 'LL'
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                if self.inGame02.snake02.currentDirection != 'RR' and self.inGame02.snake02.checkSnakeCanMove('LL'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'LL'
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                if self.inGame02.snake02.currentDirection == 'UU' and self.inGame02.snake02.checkSnakeCanMove('LL'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'LL'
+                                elif self.inGame02.snake02.currentDirection == 'LL' and self.inGame02.snake02.checkSnakeCanMove('DD'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'DD'
+                                elif self.inGame02.snake02.currentDirection == 'DD' and self.inGame02.snake02.checkSnakeCanMove('RR'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'RR'
+                                elif self.inGame02.snake02.currentDirection == 'RR' and self.inGame02.snake02.checkSnakeCanMove('UU'):
+                                    if self.inGame02.snake02.currentDirection != None:
+                                        self.inGame02.snake02.currentDirection = 'UU'
                 ###########   Get events when game pause   ##################################################
                 elif self.inGame02.waiting:
                     pass
@@ -643,9 +745,9 @@ class Game:
                             self.runningMainMenu = True
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
-                        snake.saveSnake(self.inGame.snake)
-                        food.saveFoodManager()
                         self.inGame.update()
+                        snake.saveSnake(self.inGame.snake)
+                        food.saveFoodManager(self.inGame.foodManager)
                         self.runningGameOverMenu = False
             
             ###########   Get event when current screen is Game Over Menu 02   ##############################
@@ -746,7 +848,9 @@ class Game:
                 if self.countTicks % (FPS * 1000 // self.inGame02.foodManager.animationSpeed) == 0:
                     self.inGame02.update(type='UpdateFoodAnimation')
                 if self.countTicks % (FPS * 1000 // self.inGame02.snake01.moveSpeed) == 0:
-                    self.inGame02.update(tempCountTicks=self.countTicks)
+                    self.inGame02.update(tempCountTicks=self.countTicks, snakeMove02=False)
+                if self.countTicks % (FPS * 1000 // self.inGame02.snake02.moveSpeed) == 0:
+                    self.inGame02.update(tempCountTicks=self.countTicks, snakeMove01=False)
             ###########   Update screen when pause game   ###################################################
             elif self.inGame02.waiting:
                 pass

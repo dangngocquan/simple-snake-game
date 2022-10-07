@@ -1,36 +1,48 @@
 {
     "HEAD": [
         {
-            "direction": "RR",
-            "indexFrame": 5,
-            "x": 775,
-            "y": 400
+            "direction": "LL",
+            "indexFrame": 2,
+            "x": 650,
+            "y": 150
         }
     ],
     "BODY": [
         {
-            "direction": "RR",
-            "indexFrame": 5,
-            "x": 750,
-            "y": 400
+            "direction": "LL",
+            "indexFrame": 2,
+            "x": 675,
+            "y": 150
         },
         {
-            "direction": "RR",
-            "indexFrame": 0,
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 700,
+            "y": 150
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 4,
             "x": 725,
-            "y": 400
+            "y": 150
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 6,
+            "x": 750,
+            "y": 150
         }
     ],
     "TAIL": [
         {
-            "direction": "RR",
-            "indexFrame": 1,
-            "x": 700,
-            "y": 400
+            "direction": "LL",
+            "indexFrame": 0,
+            "x": 775,
+            "y": 150
         }
     ],
-    "score": 20,
+    "score": 60,
     "currentDirection": null,
-    "previousDirection": "RR",
+    "previousDirection": "LL",
     "typeColor": "blue"
 }
