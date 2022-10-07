@@ -4,14 +4,13 @@
     },
     "GRID": "ON",
     "FOOD": {
-        "MAX_FOOD": 20,
+        "MAX_FOOD": 1,
         "ANIMATION_SPEED": 6
     },
     "SNAKE": {
         "MOVE_SPEED": 20,
         "ANIMATION_SPEED": 10,
-        "DROP_SPEED": 15,
-        "MAX_FOOD": 4
+        "DROP_SPEED": 15
     },
     "SOUND": {
         "MUSIC_INDEX": 0,

@@ -337,34 +337,43 @@ class Snake:
         self.head[0].draw(self.surface)
     
     ###########   Snake drop   ##############################################################################
-    def drop(self):
+    def drop(self, otherSnakeCoordinateBlocks=[]):
         for snakeBlock in (self.head + self.body + self.tail):
             if [snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
-                if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
-                    snakeBlock.setCoordinate(snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                if [snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in otherSnakeCoordinateBlocks:
+                    if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
+                        snakeBlock.setCoordinate(snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
             else:
                 if snakeBlock.x < WIDTH//2:
                     if [snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
                         snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
-                            snakeBlock.setCoordinate(snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
-                                                     snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                        if [snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
+                            snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in otherSnakeCoordinateBlocks:
+                            if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
+                                snakeBlock.setCoordinate(snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
+                                                        snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
                     elif [snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
                           snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT and snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'] >= 0:
-                            snakeBlock.setCoordinate(snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
-                                                     snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                        if [snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
+                          snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in otherSnakeCoordinateBlocks:
+                            if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT and snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'] >= 0:
+                                snakeBlock.setCoordinate(snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
+                                                        snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
                 else:
                     if [snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
                         snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT and snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'] >= 0:
-                            snakeBlock.setCoordinate(snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
-                                                     snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                        if [snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
+                        snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in otherSnakeCoordinateBlocks:
+                            if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT and snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'] >= 0:
+                                snakeBlock.setCoordinate(snakeBlock.x - SETTING2['SCREEN']['CELL_SIZE'], 
+                                                        snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
                     elif [snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
                           snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
-                        if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
-                            snakeBlock.setCoordinate(snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
-                                                     snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
+                        if [snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
+                          snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in otherSnakeCoordinateBlocks:
+                            if snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'] < HEIGHT:
+                                snakeBlock.setCoordinate(snakeBlock.x + SETTING2['SCREEN']['CELL_SIZE'], 
+                                                        snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE'])
         ###########   Remove old images   ###################################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new images   #####################################################################

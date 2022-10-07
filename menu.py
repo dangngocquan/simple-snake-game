@@ -714,8 +714,8 @@ class GameOverMenu02:
         elif self.winner == 3:
             self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT, width//4, height*4//12)
             self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT, width//4*3, height*4//12)
-        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT, width//4, height*5//12)
-        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT, width//4*3, height*5//12)
+        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT, width//4, height*21//48)
+        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT, width//4*3, height*21//48)
         self.titleScore01 = Button(f"Score: {self.snake01.score}", MEDIUM_FONT_2, width//4, height*13//24)
         self.titleScore02 = Button(f"Score: {self.snake02.score}", MEDIUM_FONT_2, width//4*3, height*13//24)
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*16//24)
@@ -756,9 +756,9 @@ class GameOverMenu02:
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
             if self.winner == 0 or self.winner == 2:
-                self.snake01.drop()
+                self.snake01.drop(otherSnakeCoordinateBlocks=self.snake02.coordinateSnakeBlocks())
             if self.winner == 0 or self.winner == 1:
-                self.snake02.drop()
+                self.snake02.drop(otherSnakeCoordinateBlocks=self.snake01.coordinateSnakeBlocks())
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
