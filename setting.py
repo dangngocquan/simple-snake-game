@@ -38,11 +38,13 @@ CELL_SIZE = 25
 ###########  MENU  ##########################################################################################
 pygame.font.init()
 BIG_FONT = pygame.font.SysFont('algerian', 96)
-MEDIUM_FONT = pygame.font.SysFont('castellar', 48)
-MEDIUM_FONT_HORVED = pygame.font.SysFont('castellar', 56)
-MEDIUM_FONT_2 = pygame.font.SysFont('chiller', 48)
-SMALL_FONT = pygame.font.SysFont('chiller', 36)
-DESCRIPTION_FONT = pygame.font.SysFont('castellar', 22)
+MEDIUM_FONT = pygame.font.SysFont('algerian', 48)
+MEDIUM_FONT_HORVED = pygame.font.SysFont('algerian', 60)
+# castellar chiller
+MEDIUM_FONT_2 = pygame.font.SysFont('algerian', 40)
+SMALL_FONT = pygame.font.SysFont('algerian', 32)
+DESCRIPTION_FONT = pygame.font.SysFont('algerian', 28)
+DESCRIPTION_FONT_2 = pygame.font.SysFont('algerian', 22)
 
 ###########  FOOD SETTING  ##################################################################################
 DEFAULT_MAX_FOOD = 5

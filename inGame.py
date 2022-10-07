@@ -32,12 +32,13 @@ class InGame:
         self.grid = Grid(0, 0)
         self.snake = snake
         self.foodManager = foodManager
-        self.descriptionTextScreenStart = Button("Press SPACE to start", menu.SMALL_FONT, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
-        self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return main menu", 
-                                               menu.SMALL_FONT, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu", 
+                                               menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextPauseGame.isChosen = True
-        self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.SMALL_FONT, 3*SETTING2['SCREEN']['CELL_SIZE'], SETTING2['SCREEN']['CELL_SIZE'])
+        self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 
+                                             3*SETTING2['SCREEN']['CELL_SIZE'], SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning.isChosen = True
         
     ###########   Update screen    ##########################################################################
@@ -59,15 +60,13 @@ class InGame:
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
-                self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
-                # self.score = self.snake.score
-                self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
+                self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, 'R')
+                self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 'R')
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
-                # self.score = self.snake.score
                 self.snake.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
-                self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.SMALL_FONT, 'R')
+                self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 'R')
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
@@ -76,8 +75,8 @@ class InGame:
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * 1000 // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                        self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return main menu",
-                                                             menu.SMALL_FONT, 'R')
+                        self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu",
+                                                             menu.DESCRIPTION_FONT_2, 'R')
             elif self.waiting:
                 pass
         ###########   Only update snake animation   #########################################################
@@ -150,20 +149,21 @@ class InGame02:
         self.snake01 = snake01
         self.snake02 = snake02
         self.foodManager = foodManager
-        self.descriptionTextScreenStart = Button("Press SPACE to start", menu.SMALL_FONT, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
-        self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return main menu", 
-                                               menu.SMALL_FONT, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu", 
+                                               menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextPauseGame.isChosen = True
-        self.scoreTextScreenRunning01 = Button(f"First player's score: {self.snake01.score}", menu.SMALL_FONT, 
-                                               x=7*SETTING2['SCREEN']['CELL_SIZE'], y=SETTING2['SCREEN']['CELL_SIZE'])
+        self.scoreTextScreenRunning01 = Button(f"First player's score: {self.snake01.score}", menu.DESCRIPTION_FONT_2, 
+                                               x=6*SETTING2['SCREEN']['CELL_SIZE'], y=SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning01.isChosen = True
-        self.scoreTextScreenRunning02 = Button(f"Second player's score: {self.snake02.score}", menu.SMALL_FONT, 
+        self.scoreTextScreenRunning02 = Button(f"Second player's score: {self.snake02.score}", menu.DESCRIPTION_FONT_2, 
                                                x=(NUMBER_COLUMNS-7)*SETTING2['SCREEN']['CELL_SIZE'], y=SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning02.isChosen = True
         
     ###########   Update screen    ##########################################################################
-    def update(self, type='ProvideFoodsAndUpdateSnakeMove', tempCountTicks=0, snakeMove01=True, snakeMove02=True):
+    def update(self, type='ProvideFoodsAndUpdateSnakeMove', tempCountTicks=0, 
+               snakeMove01=True, snakeMove02=True):
         self.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
         self.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
         self.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
@@ -182,21 +182,25 @@ class InGame02:
                     self.grid.draw(self.surface)
                 self.snake01.draw(self.surface)
                 self.snake02.draw(self.surface)
+                self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
-                self.descriptionTextScreenStart.update("Press SPACE to start", menu.SMALL_FONT, 'R')
-                self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", menu.SMALL_FONT, 'R')
+                if tempCountTicks % (SETTING2['SCREEN']['FPS'] * 1000 // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
+                    self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, 'R')
+                if snakeMove01 == True:
+                    self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", menu.DESCRIPTION_FONT_2, 'B')
+                if snakeMove02 == True:
+                    self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.DESCRIPTION_FONT_2, 'G')
                 self.scoreTextScreenRunning01.draw(self.surface)
-                self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.SMALL_FONT, 'R')
                 self.scoreTextScreenRunning02.draw(self.surface)
             elif self.running:
                 if snakeMove01 == True:
                     self.snake01.updateLocation(self.foodManager.listFood)
+                    self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", menu.DESCRIPTION_FONT_2, 'B')
                 if snakeMove02 == True:
                     self.snake02.updateLocation(self.foodManager.listFood)
+                    self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.DESCRIPTION_FONT_2, 'G')
                 self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())
-                self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", menu.SMALL_FONT, 'R')
-                self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.SMALL_FONT, 'R')
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
@@ -207,8 +211,8 @@ class InGame02:
                 if self.snake01.currentDirection == None or self.snake02.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * 1000 // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                        self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return main menu",
-                                                             menu.SMALL_FONT, 'R')
+                        self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu",
+                                                             menu.DESCRIPTION_FONT_2, 'R')
             elif self.waiting:
                 pass
         ###########   Only update snake animation   #########################################################

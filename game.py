@@ -201,21 +201,21 @@ class Game:
                     if self.gamemodeSettingMenu.cursor % 2 == 0:
                         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 4:
+                            if self.gamemodeSettingMenu.cursor == 6:
                                 self.gamemodeSettingMenu.cursor += 1
                             else:
                                 self.gamemodeSettingMenu.cursor += 2
-                            self.gamemodeSettingMenu.cursor %= 5
+                            self.gamemodeSettingMenu.cursor %= 7
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if self.gamemodeSettingMenu.cursor == 0:
                                 self.gamemodeSettingMenu.cursor -= 1
                             else:
                                 self.gamemodeSettingMenu.cursor -= 2
-                            self.gamemodeSettingMenu.cursor %= 5
+                            self.gamemodeSettingMenu.cursor %= 7
                         elif event.key == pygame.K_RETURN:
                             SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 4:
+                            if self.gamemodeSettingMenu.cursor == 6:
                                 self.runningGamemodeSettingMenu = False
                                 self.runningOptionsMenu = True
                             else:
@@ -235,6 +235,19 @@ class Game:
                                 elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                     setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
                         elif self.gamemodeSettingMenu.cursor == 3:
+                            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                                if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
+                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
+                                elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
+                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
+                            elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                                if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
+                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
+                                elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
+                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
+                        elif self.gamemodeSettingMenu.cursor == 5:
                             if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
@@ -605,6 +618,10 @@ class Game:
                                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                                  snake01=self.inGame02.snake01,
                                                                  snake02=self.inGame02.snake02, winner=0)
+                                if (len(self.inGame02.snake01.coordinateSnakeBlocks()) + 
+                                    len(self.inGame02.snake02.coordinateSnakeBlocks())) > NUMBER_COLUMNS*NUMBER_ROWS//2:
+                                    self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                                        snake01=self.inGame02.snake01, snake02=self.inGame02.snake02, winner=3)
                         elif event.key == pygame.K_SPACE:
                             if self.inGame02.snake01.currentDirection != None:
                                 self.inGame02.snake01.previousDirection = self.inGame02.snake01.currentDirection
@@ -829,10 +846,6 @@ class Game:
                 self.runningGameOverMenu02 = True
                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                      snake01=self.inGame02.snake01, snake02=self.inGame02.snake02)
-            if (len(self.inGame02.snake01.coordinateSnakeBlocks()) + 
-                len(self.inGame02.snake02.coordinateSnakeBlocks())) == (NUMBER_COLUMNS-1)*(NUMBER_ROWS-1):
-                self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                     snake01=self.inGame02.snake01, snake02=self.inGame02.snake02, winner=3)
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:
                 if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:

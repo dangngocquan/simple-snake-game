@@ -276,53 +276,69 @@ class GamemodeSettingMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         ########### Buttons in Gamemode Setting Menu  #######################################################
-        self.descriptionText = Button("", SMALL_FONT, width//2, height*1//12)
+        self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//12)
         self.descriptionText.isChosen = True
-        self.titleModeSetting = Button("MODE SETTING", SMALL_FONT, width//2, height*3//12)
-        self.titlePlayerNumber = Button("Number of players", SMALL_FONT, width//6, height*4//12, 'topLeft')
+        self.titleModeSetting = Button("MODE SETTING", MEDIUM_FONT_2, width//2, height*3//12)
+        self.titlePlayerNumber = Button("Number of players", SMALL_FONT, width//8, height*4//12, 'topLeft')
         self.titlePlayerNumberOptions = Button(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", SMALL_FONT,
-                                        width//12*9, height*4//12, 'topLeft')
-        self.titleViewControlSetting = Button("VIEW CONTROL SETTING", SMALL_FONT, width//2, height*6//12)
-        self.titleViewControl =  Button("View control", SMALL_FONT, width//6, height*7//12, 'topLeft')
+                                        width//12*8, height*4//12, 'topLeft')
+        self.titleAutoSpeedUpSnake = Button("Auto speed up snake", SMALL_FONT, width//8, height*5//12, 'topLeft')
+        self.titleAutoSpeedUpSnakeOptions = Button(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", SMALL_FONT,
+                                        width//12*8, height*5//12, 'topLeft')
+        self.titleViewControlSetting = Button("VIEW CONTROL SETTING", MEDIUM_FONT_2, width//2, height*7//12)
+        self.titleViewControl =  Button("View control", SMALL_FONT, width//8, height*8//12, 'topLeft')
         self.titleViewControlOptions = Button(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", SMALL_FONT,
-                                              width//12*9, height*7//12, 'topLeft')
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*9//12)
+                                              width//12*8, height*8//12, 'topLeft')
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*10//12)
         
-    ###########   Update cursor and buttons status in Options Menu   ########################################
+    ###########   Update cursor and buttons status in Gamemode setting Menu   ###############################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titlePlayerNumber.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the number of players', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to choose the number of players', DESCRIPTION_FONT, 'ALL')
         else:
             self.titlePlayerNumber.isChosen = False
         if self.cursor == 1:
             self.titlePlayerNumberOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titlePlayerNumberOptions.isChosen = False
         if self.cursor == 2:
+            self.titleAutoSpeedUpSnake.isChosen = True
+            self.descriptionText.update('Press ENTER to set auto speed up snake', DESCRIPTION_FONT, 'ALL')
+        else:
+            self.titleAutoSpeedUpSnake.isChosen = False
+        if self.cursor == 3:
+            self.titleAutoSpeedUpSnakeOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        DESCRIPTION_FONT_2, 'ALL')
+        else:
+            self.titleAutoSpeedUpSnakeOptions.isChosen = False
+        if self.cursor == 4:
             self.titleViewControl.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the view control', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to choose the view control', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleViewControl.isChosen = False
-        if self.cursor == 3:
+        if self.cursor == 5:
             self.titleViewControlOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleViewControlOptions.isChosen = False
-        if self.cursor == 4:
+        if self.cursor == 6:
             self.titleBack.isChosen = True
             self.titleBack.update("BACK", MEDIUM_FONT_HORVED)
-            self.descriptionText.update("", SMALL_FONT, 'ALL')
+            self.descriptionText.update("", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleBack.isChosen = False
             self.titleBack.update("BACK", MEDIUM_FONT)
         
         self.titlePlayerNumber.update("Number of players", SMALL_FONT, 'B')
         self.titlePlayerNumberOptions.update(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", SMALL_FONT, 'B')
+        self.titleAutoSpeedUpSnake.update("Auto speed up snake", SMALL_FONT, 'B')
+        self.titleAutoSpeedUpSnakeOptions.update(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", SMALL_FONT, 'B')
         self.titleViewControl.update("View control", SMALL_FONT, 'B')
         self.titleViewControlOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", SMALL_FONT, 'B')
         
@@ -333,6 +349,8 @@ class GamemodeSettingMenu:
         self.titleModeSetting.draw(self.surface)
         self.titlePlayerNumber.draw(self.surface)
         self.titlePlayerNumberOptions.draw(self.surface)
+        self.titleAutoSpeedUpSnake.draw(self.surface)
+        self.titleAutoSpeedUpSnakeOptions.draw(self.surface)
         self.titleViewControlSetting.draw(self.surface)
         self.titleViewControl.draw(self.surface)
         self.titleViewControlOptions.draw(self.surface)
@@ -354,32 +372,32 @@ class GameSettingMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 12
         ########### Buttons in Game Setting Menu  ###########################################################
-        self.descriptionText = Button("", SMALL_FONT, width//2, height*1//17)
+        self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//17)
         self.descriptionText.isChosen = True
-        self.titleGridSetting= Button("GRID SETTING", SMALL_FONT, width//2, height*3//17)
-        self.titleGrid= Button("Show grid", SMALL_FONT, width//6, height*4//17, 'topLeft')
+        self.titleGridSetting= Button("GRID SETTING", MEDIUM_FONT_2, width//2, height*3//17)
+        self.titleGrid= Button("Show grid", SMALL_FONT, width//8, height*4//17, 'topLeft')
         self.titleGridOptions= Button(f"{SETTING1['GRID']}", SMALL_FONT, 
-                                      width//6*5, height*4//17, 'topLeft')
-        self.titleSnakeSetting= Button("SNAKE SETTING", SMALL_FONT, width//2, height*6//17)
-        self.titleSnakeMoveSpeed = Button("Move Speed", SMALL_FONT, width//6, height*7//17, 'topLeft')
+                                      width//16*13, height*4//17, 'topLeft')
+        self.titleSnakeSetting= Button("SNAKE SETTING", MEDIUM_FONT_2, width//2, height*6//17)
+        self.titleSnakeMoveSpeed = Button("Move Speed", SMALL_FONT, width//8, height*7//17, 'topLeft')
         self.titleSnakeMoveSpeedOptions = Button(f"{SETTING1['SNAKE']['MOVE_SPEED']}", SMALL_FONT, 
-                                                 width//6*5, height*7//17, 'topLeft')
+                                                 width//16*13, height*7//17, 'topLeft')
         self.titleSnakeDropSpeed = Button("Drop Speed (when snake died)", SMALL_FONT, 
-                                          width//6, height*8//17, 'topLeft')
+                                          width//8, height*8//17, 'topLeft')
         self.titleSnakeDropSpeedOptions = Button(f"{SETTING1['SNAKE']['DROP_SPEED']}", SMALL_FONT, 
-                                                 width//6*5, height*8//17, 'topLeft')
+                                                 width//16*13, height*8//17, 'topLeft')
         self.titleSnakeAnimationSpeed = Button("Animation Speed", SMALL_FONT, 
-                                               width//6, height*9//17, 'topLeft')
+                                               width//8, height*9//17, 'topLeft')
         self.titleSnakeAnimationSpeedOptions = Button(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", SMALL_FONT, 
-                                                      width//6*5, height*9//17, 'topLeft')
-        self.titleFoodSetting = Button("FOOD SETTING", SMALL_FONT, width//2, height*11//17)
-        self.titleFoodMax = Button("Max Food", SMALL_FONT, width//6, height*12//17, 'topLeft')
+                                                      width//16*13, height*9//17, 'topLeft')
+        self.titleFoodSetting = Button("FOOD SETTING", MEDIUM_FONT_2, width//2, height*11//17)
+        self.titleFoodMax = Button("Max Food", SMALL_FONT, width//8, height*12//17, 'topLeft')
         self.titleFoodMaxOptions = Button(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, 
-                                          width//6*5, height*12//17, 'topLeft')
+                                          width//16*13, height*12//17, 'topLeft')
         self.titleFoodAnimationSpeed = Button("Animation Speed", SMALL_FONT, 
-                                              width//6, height*13//17, 'topLeft')
+                                              width//8, height*13//17, 'topLeft')
         self.titleFoodAnimationSpeedOptions = Button(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, 
-                                                     width//6*5, height*13//17, 'topLeft')
+                                                     width//16*13, height*13//17, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*15//17)
         
     ###########   Update cursor and buttons status in Game Setting Menu   ###################################
@@ -387,74 +405,74 @@ class GameSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleGrid.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the grid', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to setup the grid', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleGrid.isChosen = False
         if self.cursor == 1:
             self.titleGridOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleGridOptions.isChosen = False
         if self.cursor == 2:
             self.titleSnakeMoveSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the move speed of snake', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to setup the move speed of snake', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSnakeMoveSpeed.isChosen = False
         if self.cursor == 3:
             self.titleSnakeMoveSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeMoveSpeedOptions.isChosen = False
         if self.cursor == 4:
             self.titleSnakeDropSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the drop speed of snake', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to setup the drop speed of snake', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSnakeDropSpeed.isChosen = False
         if self.cursor == 5:
             self.titleSnakeDropSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeDropSpeedOptions.isChosen = False
         if self.cursor == 6:
             self.titleSnakeAnimationSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the animation speed of snake', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to setup the animation speed of snake', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSnakeAnimationSpeed.isChosen = False
         if self.cursor == 7:
             self.titleSnakeAnimationSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeAnimationSpeedOptions.isChosen = False
         if self.cursor == 8:
             self.titleFoodMax.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the max number of food', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to setup the max number of food', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleFoodMax.isChosen = False
         if self.cursor == 9:
             self.titleFoodMaxOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleFoodMaxOptions.isChosen = False
         if self.cursor == 10:
             self.titleFoodAnimationSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the animation speed of food', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to setup the animation speed of food', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleFoodAnimationSpeed.isChosen = False
         if self.cursor == 11:
             self.titleFoodAnimationSpeedOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleFoodAnimationSpeedOptions.isChosen = False
         if self.cursor == 12:
             self.titleBack.isChosen = True
             self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
-            self.descriptionText.update('', SMALL_FONT, 'ALL')
+            self.descriptionText.update('', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleBack.isChosen = False
             self.titleBack.update('BACK', MEDIUM_FONT)
@@ -512,19 +530,19 @@ class SoundSettingMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         ########### Buttons in Options Menu  ##############################################################
-        self.descriptionText = Button("", SMALL_FONT, width//2, height*1//12)
+        self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//12)
         self.descriptionText.isChosen = True
-        self.titleMusicSetting = Button("MUSIC SETTING", SMALL_FONT, width//2, height*3//12)
-        self.titleMusic = Button("Music", SMALL_FONT, width//6, height*4//12, 'topLeft')
+        self.titleMusicSetting = Button("MUSIC SETTING", MEDIUM_FONT_2, width//2, height*3//12)
+        self.titleMusic = Button("Music", SMALL_FONT, width//8, height*4//12, 'topLeft')
         self.titleMusicOptions = Button(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", SMALL_FONT,
-                                        width//6*5, height*4//12, 'topLeft')
-        self.titleMusicVolume = Button("Music volume", SMALL_FONT, width//6, height*5//12, 'topLeft')
+                                        width//16*13, height*4//12, 'topLeft')
+        self.titleMusicVolume = Button("Music volume", SMALL_FONT, width//8, height*5//12, 'topLeft')
         self.titleMusicVolumeOptions = Button(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", SMALL_FONT,
-                                              width//6*5, height*5//12, 'topLeft')
-        self.titleSoundSetting = Button("SOUND SETTING", SMALL_FONT, width//2, height*7//12)
-        self.titleSoundVolume =  Button("Sound volume", SMALL_FONT, width//6, height*8//12, 'topLeft')
+                                              width//16*13, height*5//12, 'topLeft')
+        self.titleSoundSetting = Button("SOUND SETTING", MEDIUM_FONT_2, width//2, height*7//12)
+        self.titleSoundVolume =  Button("Sound volume", SMALL_FONT, width//8, height*8//12, 'topLeft')
         self.titleSoundVolumeOptions = Button(f"{SETTING1['SOUND']['SOUND_VOLUME']}", SMALL_FONT,
-                                              width//6*5, height*8//12, 'topLeft')
+                                              width//16*13, height*8//12, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*10//12)
         
     ###########   Update cursor and buttons status in Options Menu   ########################################
@@ -532,41 +550,41 @@ class SoundSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleMusic.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the music for game', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to choose the music for game', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleMusic.isChosen = False
         if self.cursor == 1:
             self.titleMusicOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleMusicOptions.isChosen = False
         if self.cursor == 2:
             self.titleMusicVolume.isChosen = True
-            self.descriptionText.update('Press ENTER to set volume of music', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to set volume of music', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleMusicVolume.isChosen = False
         if self.cursor == 3:
             self.titleMusicVolumeOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleMusicVolumeOptions.isChosen = False
         if self.cursor == 4:
             self.titleSoundVolume.isChosen = True
-            self.descriptionText.update('Press ENTER to set volume of sound', SMALL_FONT, 'ALL')
+            self.descriptionText.update('Press ENTER to set volume of sound', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSoundVolume.isChosen = False
         if self.cursor == 5:
             self.titleSoundVolumeOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
-                                        SMALL_FONT, 'ALL')
+                                        DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSoundVolumeOptions.isChosen = False
         if self.cursor == 6:
             self.titleBack.isChosen = True
             self.titleBack.update("BACK", MEDIUM_FONT_HORVED)
-            self.descriptionText.update("", SMALL_FONT, 'ALL')
+            self.descriptionText.update("", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleBack.isChosen = False
             self.titleBack.update("BACK", MEDIUM_FONT)
@@ -610,6 +628,7 @@ class GameOverMenu:
         self.snake = snake
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("GAME OVER", BIG_FONT, width//2, height*3//12)
+        self.titleGameOver.isChosen = True
         self.titleScore = Button(f"Your score: {self.snake.score}", MEDIUM_FONT_2, width//2, height*5//12)
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*7//12)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*9//12)
@@ -629,10 +648,11 @@ class GameOverMenu:
                 self.titleBackMainMenu.isChosen = True
                 self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
                 self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
+            self.titleGameOver.update("GAME OVER", BIG_FONT, color = 'ALL')
+            self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT_2)
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT_2)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -700,24 +720,25 @@ class GameOverMenu02:
                     self.winner = 0
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
+        self.titleGameOver.isChosen = True
         self.titleStatusPlayer01 = None
         self.titleStatusPlayer02 = None
         if self.winner == 0:
-            self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT, width//4, height*4//12)
-            self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT, width//4*3, height*4//12)
+            self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT_2, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT_2, width//4*3, height*4//12)
         elif self.winner == 1:
-            self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT, width//4, height*4//12)
-            self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT, width//4*3, height*4//12)
+            self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT_2, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT_2, width//4*3, height*4//12)
         elif self.winner == 2:
-            self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT, width//4, height*4//12)
-            self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT, width//4*3, height*4//12)
+            self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT_2, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT_2, width//4*3, height*4//12)
         elif self.winner == 3:
-            self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT, width//4, height*4//12)
-            self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT, width//4*3, height*4//12)
-        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT, width//4, height*21//48)
-        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT, width//4*3, height*21//48)
-        self.titleScore01 = Button(f"Score: {self.snake01.score}", MEDIUM_FONT_2, width//4, height*13//24)
-        self.titleScore02 = Button(f"Score: {self.snake02.score}", MEDIUM_FONT_2, width//4*3, height*13//24)
+            self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT_2, width//4, height*4//12)
+            self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT_2, width//4*3, height*4//12)
+        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT_2, width//4, height*21//48)
+        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT_2, width//4*3, height*21//48)
+        self.titleScore01 = Button(f"Score: {self.snake01.score}", DESCRIPTION_FONT, width//4, height*13//24)
+        self.titleScore02 = Button(f"Score: {self.snake02.score}", DESCRIPTION_FONT, width//4*3, height*13//24)
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*16//24)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*19//24)
         
@@ -736,9 +757,12 @@ class GameOverMenu02:
                 self.titleBackMainMenu.isChosen = True
                 self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
                 self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
+            self.titleGameOver.update("END MATCH", BIG_FONT, color='ALL')    
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
+            self.snake01.draw(self.surface)
+            self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleStatusPlayer01.draw(self.surface)
             self.titleStatusPlayer02.draw(self.surface)
@@ -746,8 +770,6 @@ class GameOverMenu02:
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)
             self.titleScore02.draw(self.surface)
-            self.snake01.draw(self.surface)
-            self.snake02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
         ###########   Update location of snake when snake drop   ############################################
