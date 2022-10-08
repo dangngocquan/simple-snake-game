@@ -1,3 +1,14 @@
 {
-    "FOODS": []
+    "FOODS": [
+        {
+            "x": 25,
+            "y": 400,
+            "indexFrame": 3
+        },
+        {
+            "x": 950,
+            "y": 100,
+            "indexFrame": 0
+        }
+    ]
 }

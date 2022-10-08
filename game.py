@@ -31,6 +31,7 @@ class Game:
         pygame.display.set_caption(CAPTION)
         self.clock = pygame.time.Clock()
         self.countTicks = 0
+        self.divisibility = 462
         ###########   Status in game   ######################################################################
         self.running = True
         self.runningMainMenu = True
@@ -60,8 +61,8 @@ class Game:
         while self.running:
             self.clock.tick(FPS)
             self.getEvents()
-            for i in range(1000):
-                self.countTicks = (self.countTicks + 1) % (FPS * 1000)
+            for i in range(self.divisibility):
+                self.countTicks = (self.countTicks + 1) % (FPS * self.divisibility)
                 self.update()
             self.display()
     
@@ -115,7 +116,7 @@ class Game:
                             self.optionsMenu.cursor = 0
                         elif self.mainMenu.cursor == 2:
                             self.running = False
-                            pygame.time.wait(1000)
+                            pygame.time.wait(500)
                             pygame.quit()
                             sys.exit()            
             ###########   Get events when current screen is Play Game Menu  #################################
@@ -800,11 +801,11 @@ class Game:
         setting.soundVolumeUpdate()
         ###########   Update screen Main Menu   #############################################################
         if self.runningMainMenu:
-            if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.mainMenu.FPS) == 0:
                 self.mainMenu.update()
         ###########   Update screen Play Game Menu   ########################################################
         elif self.runningPlayGameMenu:
-            if self.countTicks % (FPS * 1000 // self.playGameMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.playGameMenu.FPS) == 0:
                 self.playGameMenu.update()
         ###########   Update screen when player controlling snake   #########################################
         elif self.runningInGame:
@@ -817,20 +818,20 @@ class Game:
                 self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
             ###########   Update screen when showing screen start in Ingame   ###############################
             if self.inGame.showingScreenStart:
-                if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeAnimation')
-                if self.countTicks % (FPS * 1000 // self.inGame.foodManager.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame.foodManager.animationSpeed) == 0:
                     self.inGame.update(type='UpdateFoodAnimation')
-                if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.mainMenu.FPS) == 0:
                     self.inGame.update()
             ###########   Update screen when player is playing   ############################################
             elif self.inGame.running:
-                if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
                     self.inGame.update(type='UpdateSnakeAnimation')
-                if self.countTicks % (FPS * 1000 // self.inGame.foodManager.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame.foodManager.animationSpeed) == 0:
                     self.inGame.update(type='UpdateFoodAnimation')
-                if self.countTicks % (FPS * 1000 // self.inGame.snake.moveSpeed) == 0:
-                    self.inGame.update(tempCountTicks=self.countTicks)
+                if self.countTicks % (FPS * self.divisibility // self.inGame.snake.moveSpeed) == 0:
+                    self.inGame.update(tempCountTicks=self.countTicks, divisibility=self.divisibility)
             ###########   Update screen when pause game   ###################################################
             elif self.inGame.waiting:
                 pass
@@ -848,56 +849,58 @@ class Game:
                                                      snake01=self.inGame02.snake01, snake02=self.inGame02.snake02)
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:
-                if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.animationSpeed) == 0:
                     self.inGame02.update(type='UpdateSnakeAnimation')
-                if self.countTicks % (FPS * 1000 // self.inGame02.foodManager.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame02.foodManager.animationSpeed) == 0:
                     self.inGame02.update(type='UpdateFoodAnimation')
-                if self.countTicks % (FPS * 1000 // self.mainMenu.FPS) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.mainMenu.FPS) == 0:
                     self.inGame02.update()
             ###########   Update screen when player is playing   ############################################
             elif self.inGame02.running:
-                if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.animationSpeed) == 0:
                     self.inGame02.update(type='UpdateSnakeAnimation')
-                if self.countTicks % (FPS * 1000 // self.inGame02.foodManager.animationSpeed) == 0:
+                if self.countTicks % (FPS * self.divisibility // self.inGame02.foodManager.animationSpeed) == 0:
                     self.inGame02.update(type='UpdateFoodAnimation')
-                if self.countTicks % (FPS * 1000 // self.inGame02.snake01.moveSpeed) == 0:
-                    self.inGame02.update(tempCountTicks=self.countTicks, snakeMove02=False)
-                if self.countTicks % (FPS * 1000 // self.inGame02.snake02.moveSpeed) == 0:
-                    self.inGame02.update(tempCountTicks=self.countTicks, snakeMove01=False)
+                if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.moveSpeed) == 0:
+                    self.inGame02.update(tempCountTicks=self.countTicks, snakeMove02=False, 
+                                         divisibility=self.divisibility)
+                if self.countTicks % (FPS * self.divisibility // self.inGame02.snake02.moveSpeed) == 0:
+                    self.inGame02.update(tempCountTicks=self.countTicks, snakeMove01=False, 
+                                         divisibility=self.divisibility)
             ###########   Update screen when pause game   ###################################################
             elif self.inGame02.waiting:
                 pass
         ###########   Update screen when Game Over   ########################################################
         elif self.runningGameOverMenu:
-            if self.countTicks % (FPS * 1000 // self.inGame.snake.dropSpeed) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.inGame.snake.dropSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeDrop')
-            if self.countTicks % (FPS * 1000 // self.inGame.snake.animationSpeed) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeAnimation')
-            if self.countTicks % (FPS * 1000 // self.gameOverMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.gameOverMenu.FPS) == 0:
                 self.gameOverMenu.update()
         ###########   Update screen when Game Over 2 player   ###############################################
         elif self.runningGameOverMenu02:
-            if self.countTicks % (FPS * 1000 // self.inGame02.snake01.dropSpeed) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.dropSpeed) == 0:
                 self.gameOverMenu02.update(type='UpdateSnakeDrop')
-            if self.countTicks % (FPS * 1000 // self.inGame02.snake01.animationSpeed) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.animationSpeed) == 0:
                 self.gameOverMenu02.update(type='UpdateSnakeAnimation')
-            if self.countTicks % (FPS * 1000 // self.gameOverMenu02.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.gameOverMenu02.FPS) == 0:
                 self.gameOverMenu02.update()        
         ###########   Update screen when showing Options Menu   #############################################
         elif self.runningOptionsMenu:
-            if self.countTicks % (FPS * 1000 // self.optionsMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.optionsMenu.FPS) == 0:
                 self.optionsMenu.update()
         ###########   Update screen when showing Gamemode Setting Menu   ####################################
         elif self.runningGamemodeSettingMenu:
-            if self.countTicks % (FPS * 1000 // self.gamemodeSettingMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.gamemodeSettingMenu.FPS) == 0:
                 self.gamemodeSettingMenu.update()
         ###########   Update screen when showing Game Setting Menu   ########################################
         elif self.runningGameSettingMenu:
-            if self.countTicks % (FPS * 1000 // self.gameSettingMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.gameSettingMenu.FPS) == 0:
                 self.gameSettingMenu.update()
         ###########   Update screen when showing Sound Setting Menu   #######################################
         elif self.runningSoundSettingMenu:
-            if self.countTicks % (FPS * 1000 // self.soundSettingMenu.FPS) == 0:
+            if self.countTicks % (FPS * self.divisibility // self.soundSettingMenu.FPS) == 0:
                 self.soundSettingMenu.update()
         
         
