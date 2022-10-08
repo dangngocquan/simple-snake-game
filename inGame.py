@@ -5,6 +5,8 @@ import snake
 from snake import SnakeBlock, Snake
 import food
 from food import Food, FoodManager
+from wall import Wall, WallManager
+import wall
 import grid
 from grid import Grid
 from setting import *
@@ -19,7 +21,7 @@ NUMBER_COLUMNS = SETTING2['SCREEN']['NUMBER_COLUMNS']
 ###########  CLASS INGAME  ##################################################################################
 class InGame:
     ###########   Constructor   #############################################################################
-    def __init__(self, snake=Snake(), foodManager = FoodManager()):
+    def __init__(self, snake=Snake(), foodManager = FoodManager(), wallManager = WallManager()):
         ###########   Create surface and coordinate   #######################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -31,6 +33,7 @@ class InGame:
         ###########   Object in game    #####################################################################
         self.grid = Grid(0, 0)
         self.snake = snake
+        self.wallManager = wallManager
         self.foodManager = foodManager
         self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
@@ -62,6 +65,7 @@ class InGame:
                 self.snake.draw(self.surface)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.foodManager.draw(self.surface)
+                self.wallManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, 'R')
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 'R')
@@ -73,8 +77,9 @@ class InGame:
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
-                self.scoreTextScreenRunning.draw(self.surface)
                 self.snake.draw(self.surface)
+                self.wallManager.draw(self.surface)
+                self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
@@ -90,6 +95,7 @@ class InGame:
                 self.snake.updateAnimation()
                 self.snake.draw(self.surface)
                 self.foodManager.draw(self.surface)
+                self.wallManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
@@ -98,6 +104,7 @@ class InGame:
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.snake.draw(self.surface)
+                self.wallManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
@@ -111,6 +118,7 @@ class InGame:
                 self.foodManager.updateAnimation()
                 self.snake.draw(self.surface)
                 self.foodManager.draw(self.surface)
+                self.wallManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
@@ -119,6 +127,7 @@ class InGame:
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.snake.draw(self.surface)
+                self.wallManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)

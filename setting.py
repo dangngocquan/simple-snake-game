@@ -54,8 +54,16 @@ for i in range(4):
     img = pygame.image.load("./assets/images/food/food" + str(i) + ".png")
     img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
     FOOD.append(img)
-    
 
+
+###########  WALL  ##########################################################################################
+WALL = []  
+for i in range(1):
+    img = pygame.image.load("./assets/images/wall/wall" + str(i) + ".png")
+    img = pygame.transform.scale(img, (CELL_SIZE, CELL_SIZE))
+    WALL.append(img)
+    
+    
 ###########  SNAKE  #########################################################################################
 SNAKE = {
     'HEAD' : {},
@@ -153,6 +161,7 @@ SETTING2 = {
     },
     'SNAKE' : SNAKE,
     'FOOD' : FOOD,
+    'WALL' : WALL,
     'SOUND' : {
         'PRESS_BUTTON' : PRESS_BUTTON,
         'CHANGE_BUTTON' : CHANGE_BUTTON,

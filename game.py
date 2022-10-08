@@ -7,6 +7,8 @@ from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu
 from inGame import InGame, InGame02
 from snake import Snake
 import snake
+import wall
+from wall import Wall, WallManager
 from setting import *
 import setting
 
@@ -140,6 +142,7 @@ class Game:
                                 self.runningInGame = True
                                 self.inGame.snake = Snake()
                                 self.inGame.foodManager = FoodManager()
+                                self.inGame.wallManager = wall.loadWallManagerFromListMaps(indexMap=1)
                                 self.inGame.showingScreenStart = True
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.runningInGame02 = True
