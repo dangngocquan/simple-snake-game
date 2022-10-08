@@ -4,6 +4,7 @@ from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
 from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, GameOverMenu02
 from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu, MapSettingMenu
+from menu import ExistingMapsMenu, CreateNewMap
 from inGame import InGame, InGame02
 from snake import Snake
 import snake
@@ -45,6 +46,8 @@ class Game:
         self.runningGameSettingMenu = False
         self.runningSoundSettingMenu = False
         self.runningMapSettingMenu = False
+        self.runningExistingMapsMenu = False
+        self.runningCreateNewMap = False
         self.runningGameOverMenu = False
         self.runningGameOverMenu02 = False
         ###########   Screens in game   #####################################################################
@@ -61,6 +64,8 @@ class Game:
         self.gameSettingMenu = GameSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.soundSettingMenu = SoundSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.mapSettingMenu = MapSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.existingMapsMenu = ExistingMapsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.createNewMap = CreateNewMap(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
     
     ###########   Main loop in game   #######################################################################
     def run(self):
@@ -536,17 +541,45 @@ class Game:
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        ###########   The cursor is pointing at "Existing maps"   ################################
+                        ###########   The cursor is pointing at "Existing maps"   ###########################
                         if self.mapSettingMenu.cursor == 0:
-                            pass
-                        ###########   The cursor is pointing at "Create new map"   ###########################
+                            self.runningExistingMapsMenu = True
+                        ###########   The cursor is pointing at "Create new map"   ##########################
                         elif self.mapSettingMenu.cursor == 1:
-                            pass
+                            self.runningCreateNewMap = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.mapSettingMenu.cursor == 2:
                             self.runningOptionsMenu = True
                         self.runningMapSettingMenu = False
-                                       
+                        
+            ###########   Get events when current screen is Existing Maps Menu   ############################
+            elif self.runningExistingMapsMenu:
+                if event.type == pygame.KEYDOWN:
+                    if event.key in [pygame.K_DOWN, pygame.K_LEFT, pygame.K_a, pygame.K_s]:
+                        if SETTING1['MAP']['INDEX_MAP'] > 0:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='MAP', key2='INDEX_MAP',
+                                                newData=SETTING1['MAP']['INDEX_MAP']-1)
+                    elif event.key in [pygame.K_UP, pygame.K_RIGHT, pygame.K_d, pygame.K_w]:
+                        if SETTING1['MAP']['INDEX_MAP'] < len(wall.LIST_MAP) - 1:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='MAP', key2='INDEX_MAP',
+                                                newData=SETTING1['MAP']['INDEX_MAP']+1)
+                    elif event.key == pygame.K_RETURN:
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        self.runningExistingMapsMenu = False
+                        self.runningMapSettingMenu = True
+                    elif event.key == pygame.K_k:
+                        if SETTING1['MAP']['INDEX_MAP'] > 0:
+                            setting.replaceData(key1='MAP', key2='INDEX_MAP',
+                                                newData=SETTING1['MAP']['INDEX_MAP']-1)
+                            wall.removeMapTFromListMaps(indexMap=(SETTING1['MAP']['INDEX_MAP']+1))
+                            
+                setting.saveSetting()
+            ###########   Get events when current screen is Existing Maps Menu   ############################
+            elif self.runningCreateNewMap:
+                pass
+                           
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
                 ###########   Get events when current screen is Start InGame   ##############################
@@ -966,6 +999,14 @@ class Game:
         elif self.runningMapSettingMenu:
             if self.countTicks % (FPS * self.divisibility // self.mapSettingMenu.FPS) == 0:
                 self.mapSettingMenu.update()
+        ###########   Update screen when showing Existing Maps Menu   #########################################
+        elif self.runningExistingMapsMenu:
+            if self.countTicks % (FPS * self.divisibility // self.existingMapsMenu.FPS) == 0:
+                self.existingMapsMenu.update()
+        ###########   Update screen when showing CreatNewMap   #########################################
+        elif self.runningCreateNewMap:
+            if self.countTicks % (FPS * self.divisibility // self.createNewMap.FPS) == 0:
+                self.createNewMap.update()
         
         
         
@@ -997,4 +1038,8 @@ class Game:
             self.soundSettingMenu.draw(self.screen)
         elif self.runningMapSettingMenu:
             self.mapSettingMenu.draw(self.screen)
+        elif self.runningExistingMapsMenu:
+            self.existingMapsMenu.draw(self.screen)
+        elif self.runningCreateNewMap:
+            self.createNewMap.draw(self.screen)
         pygame.display.flip()

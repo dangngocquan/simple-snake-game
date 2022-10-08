@@ -35,7 +35,8 @@ class InGame:
         self.snake = snake
         self.wallManager = wallManager
         self.foodManager = foodManager
-        self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", 
+                                                 menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
         self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu", 
                                                menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)

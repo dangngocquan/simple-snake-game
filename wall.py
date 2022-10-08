@@ -12,6 +12,25 @@ CELL_SIZE = SETTING2['SCREEN']['CELL_SIZE']
 WALL = SETTING2['WALL']
 
 
+###########   Load list map from json file   ################################################################
+def loadListMaps(path='./data/setting/map.json'):
+    dict = None
+    with open(path, 'r') as file:
+        dict = json.load(file)
+    file.close()
+    
+    listMap = []
+    for dictMap in dict['MAPS']:
+        listWall = []
+        createdTime = dictMap['CREATED_TIME']
+        for wall in dictMap['WALLS']:
+            listWall.append(Wall(x=wall['x'], y=wall['y']))
+        listMap.append({
+            "WALLS" : listWall,
+            "CREATED_TIME" : createdTime
+        })
+    return listMap
+
 ###########   Load data of walls from json file   ###########################################################
 def loadPreviousWallManager(path='./data/player/onePlayer/wall/wall.json'):
     dict = None
@@ -28,19 +47,10 @@ def loadPreviousWallManager(path='./data/player/onePlayer/wall/wall.json'):
 
 ###########   Load data of walls from list maps json file   #################################################
 def loadWallManagerFromListMaps(path='./data/setting/map.json', indexMap=0):
-    dict = None
-
-    with open(path, 'r') as file:
-        dict = json.load(file)
-    file.close()
-    
-    listWall = []
-    if indexMap >= len(dict['MAPS']):
+    listMap = loadListMaps(path)
+    if indexMap >= len(listMap):
         indexMap = 0
-    for wall in dict['MAPS'][indexMap]['WALLS']:
-        listWall.append(Wall(x=wall['x'], y=wall['y']))
-        
-    return WallManager(listWall=listWall)
+    return WallManager(listWall=listMap[indexMap]['WALLS'])
 
 
 ###########   Save data of current walls to json file   #####################################################
@@ -61,33 +71,6 @@ def saveWallManager(wallManager, path='./data/player/onePlayer/wall/wall.json'):
     
     with open(path, 'w') as file:
         json.dump(data, file, indent=4)
-    file.close()
-
-###########   Save data of map   ############################################################################
-def saveWallManagerToListMaps(wallManager, path='./data/setting/map.json'):
-    map = {
-        'WALLS' : [
-           
-        ]
-    }
-    
-    for wall in wallManager.listWall:
-        map['WALLS'].append(
-            {
-                'x' : wall.x,
-                'y' : wall.y,
-            }
-        )
-    
-    dict = None
-    with open(path, 'r') as file:
-        dict = json.load(file)
-    file.close()
-    
-    dict['MAPS'].append(map)
-    
-    with open(path, 'w') as file:
-        json.dump(dict, file, indent=4)
     file.close()
 
 
@@ -137,4 +120,79 @@ class WallManager:
     
     ###########  Draw all foods on another surface  #########################################################
     def draw(self, parentSurface):
-        parentSurface.blit(self.surface, self.surfaceRect) 
+        parentSurface.blit(self.surface, self.surfaceRect)
+        
+
+################ LIST MAPS   ################################################################################       
+LIST_MAP = loadListMaps()
+
+################   Update new version of LIST MAPS   ########################################################
+def updateListMaps():
+    LIST_MAP = loadListMaps()
+    
+###########   Save data of map   ############################################################################
+def addNewMapToListMaps(wallManager, createdTime, path='./data/setting/map.json'):
+    newMap = {
+        'WALLS' : [
+           
+        ],
+        'CREATED_TIME' : createdTime
+    }
+    
+    for wall in wallManager.listWall:
+        newMap['WALLS'].append(
+            {
+                'x' : wall.x,
+                'y' : wall.y,
+            }
+        )
+    
+    LIST_MAP.append(newMap)
+    
+    data = {
+            "MAPS" : []
+        }
+    for map in LIST_MAP:
+        WALLS = []
+        createdTime = map['CREATED_TIME']
+        for wall in map['WALLS']:
+            WALLS.append({
+                "x" : wall.x,
+                "y" : wall.y
+            })
+        data['MAPS'].append({
+            "WALLS" : WALLS,
+            'CREATED_TIME' : createdTime
+        })
+    
+    with open(path, 'w') as file:
+        json.dump(data, file, indent=4)
+    file.close()
+    updateListMaps()
+
+
+###########   Remove map from list maps  ####################################################################
+def removeMapTFromListMaps(path='./data/setting/map.json', indexMap=0):
+    if indexMap > 0:
+        LIST_MAP.pop(indexMap)
+        
+        data = {
+            "MAPS" : []
+        }
+        for map in LIST_MAP:
+            WALLS = []
+            createdTime = map['CREATED_TIME']
+            for wall in map['WALLS']:
+                WALLS.append({
+                    "x" : wall.x,
+                    "y" : wall.y
+                })
+            data['MAPS'].append({
+                "WALLS" : WALLS,
+                'CREATED_TIME' : createdTime
+            })
+        
+        with open(path, 'w') as file:
+            json.dump(data, file, indent=4)
+        file.close()
+        updateListMaps()

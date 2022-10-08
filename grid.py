@@ -13,7 +13,7 @@ GRAY = SETTING2['COLOR']['GRAY']
 ###########   CLASS GRID   ##################################################################################
 class Grid:
     ###########   Constructor   #############################################################################
-    def __init__(self, x, y):
+    def __init__(self, x, y, widthLine=1):
         ###########   Create surface and coordiante topLeft   ###############################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -21,10 +21,10 @@ class Grid:
         ###########   Draw lines   ##########################################################################
         for row in range(NUMBER_ROWS):
             pygame.draw.line(self.surface, GRAY, (0, row*CELL_SIZE), 
-                             (WIDTH, row*CELL_SIZE))
+                             (WIDTH, row*CELL_SIZE), width=widthLine)
         for column in range(NUMBER_COLUMNS):
             pygame.draw.line(self.surface, GRAY, (column*CELL_SIZE, 0), 
-                             (column*CELL_SIZE, HEIGHT))
+                             (column*CELL_SIZE, HEIGHT), width=widthLine)
     
     ###########   Update status of Grid   ###################################################################
     def update(self):
