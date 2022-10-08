@@ -4,6 +4,7 @@ import pygame
 from snake import Snake
 from setting import *
 import setting
+from wall import WallManager
 
 ###########   VARIABLE   ####################################################################################
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
@@ -210,10 +211,11 @@ class OptionsMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         ########### Buttons in Options Menu  ##############################################################
-        self.titleGamemodeSetting = Button("GAME MODE SETTING", MEDIUM_FONT, width//2, height*3//12)
-        self.titleGameSetting = Button("GAME SETTING", MEDIUM_FONT, width//2, height*5//12)
-        self.titleSoundSetting = Button("SOUND SETTING", MEDIUM_FONT, width//2, height*7//12)
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*9//12)
+        self.titleGamemodeSetting = Button("GAME MODE SETTING", MEDIUM_FONT, width//2, height*2//12)
+        self.titleGameSetting = Button("GAME SETTING", MEDIUM_FONT, width//2, height*4//12)
+        self.titleSoundSetting = Button("SOUND SETTING", MEDIUM_FONT, width//2, height*6//12)
+        self.titleMapSetting = Button("MAP SETTING", MEDIUM_FONT, width//2, height*8//12)
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*10//12)
         
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):
@@ -223,6 +225,7 @@ class OptionsMenu:
             self.titleGamemodeSetting.update('GAME MODE SETTING', MEDIUM_FONT_HORVED, 'G')
             self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT, 'G')
             self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT, 'G')
+            self.titleMapSetting.update('MAP SETTING', MEDIUM_FONT, 'G')
             self.titleBack.update('BACK', MEDIUM_FONT, 'G')
         else:
             self.titleGamemodeSetting.isChosen = False
@@ -231,6 +234,7 @@ class OptionsMenu:
             self.titleGamemodeSetting.update('GAME MODE SETTING', MEDIUM_FONT, 'G')
             self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT_HORVED, 'G')
             self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT, 'G')
+            self.titleMapSetting.update('MAP SETTING', MEDIUM_FONT, 'G')
             self.titleBack.update('BACK', MEDIUM_FONT, 'G')
         else:
             self.titleGameSetting.isChosen = False
@@ -239,14 +243,25 @@ class OptionsMenu:
             self.titleGamemodeSetting.update('GAME MODE SETTING', MEDIUM_FONT, 'G')
             self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT, 'G')
             self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT_HORVED, 'G')
+            self.titleMapSetting.update('MAP SETTING', MEDIUM_FONT, 'G')
             self.titleBack.update('BACK', MEDIUM_FONT, 'G')
         else:
             self.titleSoundSetting.isChosen = False
         if self.cursor == 3:
+            self.titleMapSetting.isChosen = True
+            self.titleGamemodeSetting.update('GAME MODE SETTING', MEDIUM_FONT, 'G')
+            self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT, 'G')
+            self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT, 'G')
+            self.titleMapSetting.update('MAP SETTING', MEDIUM_FONT_HORVED, 'G')
+            self.titleBack.update('BACK', MEDIUM_FONT, 'G')
+        else:
+            self.titleMapSetting.isChosen = False
+        if self.cursor == 4:
             self.titleBack.isChosen = True
             self.titleGamemodeSetting.update('GAME MODE SETTING', MEDIUM_FONT, 'G')
             self.titleGameSetting.update('GAME SETTING', MEDIUM_FONT, 'G')
             self.titleSoundSetting.update('SOUND SETTING', MEDIUM_FONT, 'G')
+            self.titleMapSetting.update('MAP SETTING', MEDIUM_FONT, 'G')
             self.titleBack.update('BACK', MEDIUM_FONT_HORVED, 'G')
         else:
             self.titleBack.isChosen = False
@@ -257,6 +272,7 @@ class OptionsMenu:
         self.titleGamemodeSetting.draw(self.surface)
         self.titleGameSetting.draw(self.surface)
         self.titleSoundSetting.draw(self.surface)
+        self.titleMapSetting.draw(self.surface)
         self.titleBack.draw(self.surface)
         
     ###########  Draw Gamemode settings Menu in another surface  ######################################################
@@ -614,11 +630,63 @@ class SoundSettingMenu:
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
   
+  
+  ###########  CLASS MAP SETTING MENU  ######################################################################
+class MapSettingMenu:
+    ###########  Constructor  ###############################################################################
+    def __init__(self, x, y, width, height):
+        ###########  Surface, cursor and coordinate center  #################################################
+        self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.surfaceRect = self.surface.get_rect()
+        self.surfaceRect.center = (x, y)
+        self.FPS = ANIMATION_SPEED
+        self.cursor = 0
+        ########### Buttons in Options Menu  ##############################################################
+        self.titleExistingMap = Button("EXISTING MAPS", MEDIUM_FONT, width//2, height*3//12)
+        self.titleCreateNewMap = Button("CREATE NEW MAP", MEDIUM_FONT, width//2, height*5//12)
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*7//12)
+        
+    ###########   Update cursor and buttons status in Options Menu   ########################################
+    def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        if self.cursor == 0:
+            self.titleExistingMap.isChosen = True
+            self.titleCreateNewMap.isChosen = False
+            self.titleBack.isChosen = False
+            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT_HORVED)
+            self.titleCreateNewMap.update('CREATE NEW MAP', MEDIUM_FONT)
+            self.titleBack.update('BACK', MEDIUM_FONT)
+        elif self.cursor == 1:
+            self.titleExistingMap.isChosen = False
+            self.titleCreateNewMap.isChosen = True
+            self.titleBack.isChosen = False
+            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT)
+            self.titleCreateNewMap.update('CREATE NEW MAP', MEDIUM_FONT_HORVED)
+            self.titleBack.update('BACK', MEDIUM_FONT)
+        elif self.cursor == 2:
+            self.titleExistingMap.isChosen = False
+            self.titleCreateNewMap.isChosen = False
+            self.titleBack.isChosen = True
+            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT)
+            self.titleCreateNewMap.update('CREATE NEW MAP', MEDIUM_FONT)
+            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+        ###########   Remove old button display   ###########################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########   Draw new buttons   ####################################################################
+        self.titleExistingMap.draw(self.surface)
+        self.titleCreateNewMap.draw(self.surface)
+        self.titleBack.draw(self.surface)
+    
+    ###########  Draw PlayGame Menu in another surface  #####################################################
+    def draw(self, parentSurface):
+        parentSurface.blit(self.surface, self.surfaceRect)
+  
+  
         
 ###########  CLASS GAME OVER MENU  ##########################################################################
 class GameOverMenu:
     ###########  Constructor  ###############################################################################
-    def __init__(self, x, y, width, height, snake=Snake()):
+    def __init__(self, x, y, width, height, snake=Snake(), wallManager=WallManager()):
         ###########  Surface, cursor and coordinate center  #################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -626,6 +694,7 @@ class GameOverMenu:
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         self.snake = snake
+        self.wallManager = wallManager
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("GAME OVER", BIG_FONT, width//2, height*3//12)
         self.titleGameOver.isChosen = True
@@ -653,6 +722,7 @@ class GameOverMenu:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
+            self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -663,7 +733,8 @@ class GameOverMenu:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.snake.drop()
+            self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls())
+            self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -675,6 +746,7 @@ class GameOverMenu:
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
             self.snake.updateAnimation()
+            self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -690,7 +762,8 @@ class GameOverMenu:
 ###########  CLASS GAME OVER MENU 02 ########################################################################
 class GameOverMenu02:
     ###########  Constructor  ###############################################################################
-    def __init__(self, x, y, width, height, snake01=Snake(), snake02=Snake(), winner=-1):
+    def __init__(self, x, y, width, height, snake01=Snake(), 
+                 snake02=Snake(), winner=-1, wallManager=WallManager()):
         ###########  Surface, cursor and coordinate center  #################################################
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -699,25 +772,24 @@ class GameOverMenu02:
         self.cursor = 0
         self.snake01 = snake01
         self.snake02 = snake02
+        self.wallManager = wallManager
         self.winner = winner
+        snake01Died = self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks(),
+                                        wallCoordinates=self.wallManager.coordinateWalls())
+        snake02Died = self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks(),
+                                        wallCoordinates=self.wallManager.coordinateWalls())
         if self.winner == -1:
-            if self.snake01.head[0].coordinate() == self.snake02.head[0].coordinate():
+            if snake01Died and snake02Died:
                 if self.snake01.score == self.snake02.score:
                     self.winner = 0
                 elif self.snake01.score > self.snake02.score:
                     self.winner = 1
                 elif self.snake01.score < self.snake02.score:
                     self.winner = 2
-            elif self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks()):
-                if not self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks()):
-                    self.winner = 2
-                else:
-                    self.winner = 0
-            elif self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks()):
-                if not self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks()):
-                    self.winner = 1
-                else:
-                    self.winner = 0
+            elif snake01Died:
+                self.winner = 2
+            elif snake02Died:
+                self.winner = 1
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
         self.titleGameOver.isChosen = True
@@ -761,6 +833,7 @@ class GameOverMenu02:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
+            self.wallManager.draw(self.surface)
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
@@ -778,9 +851,12 @@ class GameOverMenu02:
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
             if self.winner == 0 or self.winner == 2:
-                self.snake01.drop(otherSnakeCoordinateBlocks=self.snake02.coordinateSnakeBlocks())
+                self.snake01.drop(otherSnakeCoordinateBlocks=self.snake02.coordinateSnakeBlocks(),
+                                  wallCoordinateBlocks=self.wallManager.coordinateWalls())
             if self.winner == 0 or self.winner == 1:
-                self.snake02.drop(otherSnakeCoordinateBlocks=self.snake01.coordinateSnakeBlocks())
+                self.snake02.drop(otherSnakeCoordinateBlocks=self.snake01.coordinateSnakeBlocks(),
+                                  wallCoordinateBlocks=self.wallManager.coordinateWalls())
+            self.wallManager.draw(self.surface)
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
             self.titleGameOver.draw(self.surface)
@@ -797,6 +873,7 @@ class GameOverMenu02:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
+            self.wallManager.draw(self.surface)
             self.snake01.updateAnimation()
             self.snake01.draw(self.surface)
             self.snake02.updateAnimation()

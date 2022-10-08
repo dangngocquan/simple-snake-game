@@ -60,12 +60,12 @@ class InGame:
         ###########   Update snake move and number of food   ################################################
         if type == 'ProvideFoodsAndUpdateSnakeMove':
             if self.showingScreenStart:
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake.draw(self.surface)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.foodManager.draw(self.surface)
-                self.wallManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, 'R')
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 'R')
@@ -74,11 +74,11 @@ class InGame:
                 self.snake.updateLocation(self.foodManager.listFood)
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 'R')
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.snake.draw(self.surface)
-                self.wallManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
@@ -90,21 +90,21 @@ class InGame:
         ###########   Only update snake animation   #########################################################
         elif type == 'UpdateSnakeAnimation':
             if self.showingScreenStart:
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake.updateAnimation()
                 self.snake.draw(self.surface)
                 self.foodManager.draw(self.surface)
-                self.wallManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
                 self.snake.updateAnimation()
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.snake.draw(self.surface)
-                self.wallManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
@@ -113,21 +113,21 @@ class InGame:
         ###########   Only update food animation   ##########################################################
         elif type == 'UpdateFoodAnimation':
             if self.showingScreenStart:
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.updateAnimation()
                 self.snake.draw(self.surface)
                 self.foodManager.draw(self.surface)
-                self.wallManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
                 self.foodManager.updateAnimation()
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
                 self.snake.draw(self.surface)
-                self.wallManager.draw(self.surface)
                 self.scoreTextScreenRunning.draw(self.surface)
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
@@ -147,7 +147,7 @@ class InGame02:
     ###########   Constructor   #############################################################################
     def __init__(self, snake01=Snake(typeLocation=-1, typeColor='blue'),
                  snake02=Snake(typeLocation=1, typeColor='green'),
-                 foodManager = FoodManager()):
+                 foodManager = FoodManager(), wallManager=WallManager()):
         ###########   Create surface and coordinate   #######################################################
         self.surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
@@ -161,6 +161,7 @@ class InGame02:
         self.snake01 = snake01
         self.snake02 = snake02
         self.foodManager = foodManager
+        self.wallManager = wallManager
         self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
         self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu", 
@@ -194,6 +195,7 @@ class InGame02:
         ###########   Update snake move and number of food   ################################################
         if type == 'ProvideFoodsAndUpdateSnakeMove':
             if self.showingScreenStart:
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake01.draw(self.surface)
@@ -217,6 +219,7 @@ class InGame02:
                     self.snake02.updateLocation(self.foodManager.listFood)
                     self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.DESCRIPTION_FONT_2, 'G')
                 self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
@@ -234,6 +237,7 @@ class InGame02:
         ###########   Only update snake animation   #########################################################
         elif type == 'UpdateSnakeAnimation':
             if self.showingScreenStart:
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake01.updateAnimation()
@@ -247,6 +251,7 @@ class InGame02:
             elif self.running:
                 self.snake01.updateAnimation()
                 self.snake02.updateAnimation()
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)
@@ -261,6 +266,7 @@ class InGame02:
         ###########   Only update food animation   ##########################################################
         elif type == 'UpdateFoodAnimation':
             if self.showingScreenStart:
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.updateAnimation()
@@ -272,6 +278,7 @@ class InGame02:
                 self.scoreTextScreenRunning02.draw(self.surface)
             elif self.running:
                 self.foodManager.updateAnimation()
+                self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.foodManager.draw(self.surface)

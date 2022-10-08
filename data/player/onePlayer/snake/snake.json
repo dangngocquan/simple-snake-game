@@ -1,36 +1,42 @@
 {
     "HEAD": [
         {
-            "direction": "UU",
-            "indexFrame": 1,
-            "x": 0,
-            "y": 375
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 100,
+            "y": 225
         }
     ],
     "BODY": [
         {
-            "direction": "UU",
-            "indexFrame": 1,
-            "x": 0,
-            "y": 400
+            "direction": "LL",
+            "indexFrame": 3,
+            "x": 125,
+            "y": 225
         },
         {
-            "direction": "UU",
-            "indexFrame": 3,
-            "x": 0,
-            "y": 425
+            "direction": "LL",
+            "indexFrame": 4,
+            "x": 150,
+            "y": 225
+        },
+        {
+            "direction": "LL",
+            "indexFrame": 6,
+            "x": 175,
+            "y": 225
         }
     ],
     "TAIL": [
         {
-            "direction": "UU",
-            "indexFrame": 4,
-            "x": 0,
-            "y": 450
+            "direction": "LL",
+            "indexFrame": 0,
+            "x": 200,
+            "y": 225
         }
     ],
-    "score": 17,
-    "currentDirection": "UU",
+    "score": 34,
+    "currentDirection": "LL",
     "previousDirection": "UU",
     "typeColor": "blue"
 }

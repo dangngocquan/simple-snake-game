@@ -3,7 +3,7 @@ import pygame
 from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
 from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, GameOverMenu02
-from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu
+from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu, MapSettingMenu
 from inGame import InGame, InGame02
 from snake import Snake
 import snake
@@ -44,6 +44,7 @@ class Game:
         self.runningGamemodeSettingMenu = False
         self.runningGameSettingMenu = False
         self.runningSoundSettingMenu = False
+        self.runningMapSettingMenu = False
         self.runningGameOverMenu = False
         self.runningGameOverMenu02 = False
         ###########   Screens in game   #####################################################################
@@ -51,12 +52,15 @@ class Game:
         self.playGameMenu = PlayGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.inGame = InGame()
         self.inGame02 = InGame02()
-        self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
-        self.gameOverMenu02 = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
+        self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake, 
+                                         self.inGame.wallManager)
+        self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame02.snake01,
+                                             self.inGame02.snake02, self.inGame02.wallManager)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gamemodeSettingMenu = GamemodeSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gameSettingMenu = GameSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.soundSettingMenu = SoundSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.mapSettingMenu = MapSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
     
     ###########   Main loop in game   #######################################################################
     def run(self):
@@ -77,13 +81,17 @@ class Game:
                 if self.runningInGame:
                     snake.saveSnake(self.inGame.snake)
                     food.saveFoodManager(foodManager=self.inGame.foodManager)
+                    wall.saveWallManager(self.inGame.wallManager)
                 elif self.runningGameOverMenu:
                     snake.saveSnake(Snake())
                     food.saveFoodManager(FoodManager())
+                    wall.saveWallManager(wall.loadWallManagerFromListMaps(indexMap=SETTING1['MAP']['INDEX_MAP']))
                 elif self.runningInGame02:
                     snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
                     snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
                     food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                    wall.saveWallManager(self.inGame02.wallManager,
+                                         path='./data/player/twoPlayer/wall/wall.json')
                 elif self.runningGameOverMenu02:
                     self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
                     self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
@@ -92,6 +100,8 @@ class Game:
                     snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
                     snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
                     food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                    wall.saveWallManager(wall.loadWallManagerFromListMaps(indexMap=SETTING1['MAP']['INDEX_MAP']),
+                                         path='./data/player/twoPlayer/wall/wall.json')
                 ###########   Quit   ########################################################################
                 self.running = False
                 pygame.quit()
@@ -142,13 +152,16 @@ class Game:
                                 self.runningInGame = True
                                 self.inGame.snake = Snake()
                                 self.inGame.foodManager = FoodManager()
-                                self.inGame.wallManager = wall.loadWallManagerFromListMaps(indexMap=1)
+                                self.inGame.wallManager = wall.loadWallManagerFromListMaps(
+                                    indexMap=SETTING1['MAP']['INDEX_MAP'])
                                 self.inGame.showingScreenStart = True
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.runningInGame02 = True
                                 self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
                                 self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
                                 self.inGame02.foodManager = FoodManager()
+                                self.inGame02.wallManager = wall.loadWallManagerFromListMaps(
+                                    indexMap=SETTING1['MAP']['INDEX_MAP'])
                                 self.inGame02.showingScreenStart = True
                         ###########   The cursor is pointing at "Continue Game"   ###########################
                         elif self.playGameMenu.cursor == 1:
@@ -156,12 +169,14 @@ class Game:
                                 self.runningInGame = True
                                 self.inGame.snake = snake.loadPreviousSnake()
                                 self.inGame.foodManager = food.loadPreviousFoodManager()
+                                self.inGame.wallManager = wall.loadPreviousWallManager()
                                 self.inGame.showingScreenStart = True
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.runningInGame02 = True
                                 self.inGame02.snake01 = snake.loadPreviousSnake(path='./data/player/twoPlayer/snake/snake01.json')
                                 self.inGame02.snake02 = snake.loadPreviousSnake(path='./data/player/twoPlayer/snake/snake02.json')
                                 self.inGame02.foodManager = food.loadPreviousFoodManager(path='./data/player/twoPlayer/food/food.json')
+                                self.inGame02.wallManager = wall.loadPreviousWallManager(path='./data/player/twoPlayer/wall/wall.json')
                                 self.inGame02.showingScreenStart = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.playGameMenu.cursor == 2:
@@ -175,11 +190,11 @@ class Game:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.optionsMenu.cursor += 1
-                        self.optionsMenu.cursor %= 4
+                        self.optionsMenu.cursor %= 5
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.optionsMenu.cursor -= 1
-                        self.optionsMenu.cursor %= 4
+                        self.optionsMenu.cursor %= 5
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
@@ -194,8 +209,12 @@ class Game:
                         ###########   The cursor is pointing at "Sound setting"   ###########################
                         elif self.optionsMenu.cursor == 2:
                             self.runningSoundSettingMenu = True
-                        ###########   The cursor is poiting at "Back"   #####################################
+                        ###########   The cursor is pointing at "Map setting"   ###########################
                         elif self.optionsMenu.cursor == 3:
+                            self.runningMapSettingMenu = True
+                            self.mapSettingMenu.cursor = 0
+                        ###########   The cursor is poiting at "Back"   #####################################
+                        elif self.optionsMenu.cursor == 4:
                             self.runningMainMenu = True
                         self.runningOptionsMenu = False
             ###########   Get events when current screen is Gamemode Setting Menu   #########################
@@ -502,8 +521,32 @@ class Game:
                             setting.soundVolumeUpdate()
                             self.soundSettingMenu.cursor -= 1
                 setting.saveSetting()
-                            
-                                
+            ###########   Get events when current screen is Map Setting Menu   ##############################             
+            elif self.runningMapSettingMenu:
+                if event.type == pygame.KEYDOWN:
+                    ###########   Move the cursor   #########################################################
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.mapSettingMenu.cursor += 1
+                        self.mapSettingMenu.cursor %= 3
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.mapSettingMenu.cursor -= 1
+                        self.mapSettingMenu.cursor %= 3
+                    ###########   Select the content that the cursor is pointing at   #######################
+                    if event.key == pygame.K_RETURN:
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        ###########   The cursor is pointing at "Existing maps"   ################################
+                        if self.mapSettingMenu.cursor == 0:
+                            pass
+                        ###########   The cursor is pointing at "Create new map"   ###########################
+                        elif self.mapSettingMenu.cursor == 1:
+                            pass
+                        ###########   The cursor is poiting at "Back"   #####################################
+                        elif self.mapSettingMenu.cursor == 2:
+                            self.runningOptionsMenu = True
+                        self.runningMapSettingMenu = False
+                                       
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:
                 ###########   Get events when current screen is Start InGame   ##############################
@@ -515,6 +558,7 @@ class Game:
                         elif event.key == pygame.K_ESCAPE:
                             snake.saveSnake(self.inGame.snake)
                             food.saveFoodManager(self.inGame.foodManager)
+                            wall.saveWallManager(self.inGame.wallManager)
                             self.inGame.showingScreenStart = False
                             self.runningInGame = False
                             self.runningMainMenu = True
@@ -528,7 +572,8 @@ class Game:
                                 self.runningInGame = False
                                 self.runningGameOverMenu = True
                                 self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                                 self.inGame.snake)
+                                                                 snake=self.inGame.snake,
+                                                                 wallManager=self.inGame.wallManager)
                         elif event.key == pygame.K_SPACE:
                             if self.inGame.snake.currentDirection != None:
                                 self.inGame.snake.previousDirection = self.inGame.snake.currentDirection
@@ -542,6 +587,7 @@ class Game:
                             else:
                                 snake.saveSnake(self.inGame.snake)
                                 food.saveFoodManager(self.inGame.foodManager)
+                                wall.saveWallManager(self.inGame.wallManager)
                                 self.inGame.running = False
                                 self.runningInGame = False
                                 self.runningMainMenu = True
@@ -607,6 +653,8 @@ class Game:
                             snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
                             snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
                             food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                            wall.saveWallManager(self.inGame02.wallManager,
+                                                 path='./data/player/twoPlayer/wall/wall.json')
                             self.inGame02.showingScreenStart = False
                             self.runningInGame02 = False
                             self.runningMainMenu = True
@@ -621,11 +669,14 @@ class Game:
                                 self.runningGameOverMenu02 = True
                                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                                  snake01=self.inGame02.snake01,
-                                                                 snake02=self.inGame02.snake02, winner=0)
+                                                                 snake02=self.inGame02.snake02, winner=0,
+                                                                 wallManager=self.inGame02.wallManager)
                                 if (len(self.inGame02.snake01.coordinateSnakeBlocks()) + 
                                     len(self.inGame02.snake02.coordinateSnakeBlocks())) > NUMBER_COLUMNS*NUMBER_ROWS//2:
                                     self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                                        snake01=self.inGame02.snake01, snake02=self.inGame02.snake02, winner=3)
+                                                                        snake01=self.inGame02.snake01, 
+                                                                        snake02=self.inGame02.snake02, winner=3,
+                                                                        wallManager=self.inGame02.wallManager)
                         elif event.key == pygame.K_SPACE:
                             if self.inGame02.snake01.currentDirection != None:
                                 self.inGame02.snake01.previousDirection = self.inGame02.snake01.currentDirection
@@ -647,6 +698,8 @@ class Game:
                                 snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
                                 snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
                                 food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                                wall.saveWallManager(self.inGame02.wallManager,
+                                                 path='./data/player/twoPlayer/wall/wall.json')
                                 self.inGame02.running = False
                                 self.runningInGame02 = False
                                 self.runningMainMenu = True
@@ -813,12 +866,13 @@ class Game:
         ###########   Update screen when player controlling snake   #########################################
         elif self.runningInGame:
             ###########   Check game over   #################################################################
-            if self.inGame.snake.died():
+            if self.inGame.snake.died(wallCoordinates=self.inGame.wallManager.coordinateWalls()):
                 SETTING2['SOUND']['GAME_OVER'].play()
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True
-                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame.snake)
+                self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                 snake=self.inGame.snake, wallManager=self.inGame.wallManager)
             ###########   Update screen when showing screen start in Ingame   ###############################
             if self.inGame.showingScreenStart:
                 if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
@@ -841,15 +895,18 @@ class Game:
         ###########   Update screen when 2 player controlling 2 snake   #####################################
         elif self.runningInGame02:
             ###########   Check game over   #################################################################
-            snake01Died = self.inGame02.snake01.died(otherCoordinateSnakeBlocks=self.inGame02.snake02.coordinateSnakeBlocks())
-            snake02Died = self.inGame02.snake02.died(otherCoordinateSnakeBlocks=self.inGame02.snake01.coordinateSnakeBlocks())
+            snake01Died = self.inGame02.snake01.died(otherCoordinateSnakeBlocks=self.inGame02.snake02.coordinateSnakeBlocks(),
+                                                     wallCoordinates=self.inGame02.wallManager.coordinateWalls())
+            snake02Died = self.inGame02.snake02.died(otherCoordinateSnakeBlocks=self.inGame02.snake01.coordinateSnakeBlocks(),
+                                                     wallCoordinates=self.inGame02.wallManager.coordinateWalls())
             if snake01Died or snake02Died:
                 SETTING2['SOUND']['GAME_OVER'].play()
                 self.inGame02.running = False
                 self.runningInGame02 = False
                 self.runningGameOverMenu02 = True
                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                     snake01=self.inGame02.snake01, snake02=self.inGame02.snake02)
+                                                     snake01=self.inGame02.snake01, snake02=self.inGame02.snake02,
+                                                     wallManager=self.inGame02.wallManager)
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:
                 if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.animationSpeed) == 0:
@@ -905,6 +962,10 @@ class Game:
         elif self.runningSoundSettingMenu:
             if self.countTicks % (FPS * self.divisibility // self.soundSettingMenu.FPS) == 0:
                 self.soundSettingMenu.update()
+        ###########   Update screen when showing Map Setting Menu   #########################################
+        elif self.runningMapSettingMenu:
+            if self.countTicks % (FPS * self.divisibility // self.mapSettingMenu.FPS) == 0:
+                self.mapSettingMenu.update()
         
         
         
@@ -934,4 +995,6 @@ class Game:
             self.gameSettingMenu.draw(self.screen)
         elif self.runningSoundSettingMenu:
             self.soundSettingMenu.draw(self.screen)
+        elif self.runningMapSettingMenu:
+            self.mapSettingMenu.draw(self.screen)
         pygame.display.flip()
