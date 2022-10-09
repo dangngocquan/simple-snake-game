@@ -152,8 +152,8 @@ class GameOverMenu02:
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
         self.titleGameOver.isChosen = True
-        self.titleStatusPlayer01 = None
-        self.titleStatusPlayer02 = None
+        self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT_2, width//4, height*4//12)
+        self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT_2, width//4*3, height*4//12)
         if self.winner == 0:
             self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT_2, width//4, height*4//12)
             self.titleStatusPlayer02 = Button("LOSER", MEDIUM_FONT_2, width//4*3, height*4//12)
@@ -175,6 +175,12 @@ class GameOverMenu02:
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*16//24)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*19//24)
         
+        self.titleStatusPlayer01.isChosen = True
+        self.titleStatusPlayer02.isChosen = True
+        self.titlePlayer01.isChosen = True
+        self.titlePlayer02.isChosen = True 
+        self.titleScore01.isChosen = True
+        self.titleScore02.isChosen = True
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
         ###########   Update animation of text   ############################################################
@@ -190,7 +196,22 @@ class GameOverMenu02:
                 self.titleBackMainMenu.isChosen = True
                 self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
                 self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
-            self.titleGameOver.update("END MATCH", BIG_FONT, color='ALL')    
+            self.titleGameOver.update("END MATCH", BIG_FONT, color='ALL')
+            if self.winner == 1:
+                self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')
+                self.titlePlayer01.update("PLAYER 01", MEDIUM_FONT_2, 'R')
+                self.titleScore01.update(f"Score: {self.snake01.score}", DESCRIPTION_FONT, 'R')
+            elif self.winner == 2:
+                self.titleStatusPlayer02.update("WINNER", MEDIUM_FONT_2, 'R')
+                self.titlePlayer02.update("PLAYER 02", MEDIUM_FONT_2, 'R')
+                self.titleScore02.update(f"Score: {self.snake02.score}", DESCRIPTION_FONT, 'R')
+            elif self.winner == 3:
+                self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')
+                self.titlePlayer01.update("PLAYER 01", MEDIUM_FONT_2, 'R')
+                self.titleScore01.update(f"Score: {self.snake01.score}", DESCRIPTION_FONT, 'R')
+                self.titleStatusPlayer02.update("WINNER", MEDIUM_FONT_2, 'R')
+                self.titlePlayer02.update("PLAYER 02", MEDIUM_FONT_2, 'R')
+                self.titleScore02.update(f"Score: {self.snake02.score}", DESCRIPTION_FONT, 'R')
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################

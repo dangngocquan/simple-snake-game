@@ -932,11 +932,15 @@ class Game:
                         elif self.gameOverMenu.cursor == 1:
                             self.runningMainMenu = True
                         self.inGame.snake = Snake()
-                        self.inGame.foodManager = FoodManager()
+                        self.inGame.foodManager.removeAllFoods()
+                        self.inGame.wallManager = wall.loadWallManagerFromListMaps(
+                            indexMap=SETTING1['MAP']['INDEX_MAP']
+                        )
                         self.inGame.update()
                         wall.saveWallManager(self.inGame.wallManager)
                         snake.saveSnake(self.inGame.snake)
                         food.saveFoodManager(self.inGame.foodManager)
+                        self.inGame.update()
                         self.runningGameOverMenu = False
             
             ###########   Get event when current screen is Game Over Menu 02   ##############################
@@ -959,7 +963,10 @@ class Game:
                             self.runningMainMenu = True
                         self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
                         self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
-                        self.inGame02.foodManager = FoodManager()
+                        self.inGame02.foodManager.removeAllFoods()
+                        self.inGame02.wallManager = wall.loadWallManagerFromListMaps(
+                            indexMap=SETTING1['MAP']['INDEX_MAP']
+                        )
                         wall.saveWallManager(self.inGame02.wallManager,
                                          path='./data/player/twoPlayer/wall/wall.json')                           
                         snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')

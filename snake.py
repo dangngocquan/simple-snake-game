@@ -30,6 +30,7 @@ def loadPreviousSnake(path='./data/player/onePlayer/snake/snake.json'):
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
                                 typeColor=dict['typeColor']))
     body = []
+    
     for snakeBlock in dict['BODY']:
         if dict['typeColor'] == 'blue':
             body.append(SnakeBlock(SNAKE['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 

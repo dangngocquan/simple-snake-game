@@ -77,7 +77,11 @@ class GameSettingMenu:
             self.titleSnakeMoveSpeed.isChosen = False
         if self.cursor == 3:
             self.titleSnakeMoveSpeedOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
+            if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == 'OFF':
+                self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
+                                        DESCRIPTION_FONT_2, 'ALL')
+            elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == 'ON':
+                self.descriptionText.update("Gamemode 'AUTO SPEED UP SNAKE' is 'ON', so this options is disabled.", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeMoveSpeedOptions.isChosen = False

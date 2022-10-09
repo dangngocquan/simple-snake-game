@@ -1,12 +1,6 @@
-import datetime
-import random
 import pygame
-from snake import Snake
 from setting import *
 import setting
-from wall import Wall, WallManager
-import wall
-from grid import Grid
 from grid import *
 from button import Button
 
@@ -52,34 +46,34 @@ class SoundSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleMusic.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the music for game', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to choose the music for game", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleMusic.isChosen = False
         if self.cursor == 1:
             self.titleMusicOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleMusicOptions.isChosen = False
         if self.cursor == 2:
             self.titleMusicVolume.isChosen = True
-            self.descriptionText.update('Press ENTER to set volume of music', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to set volume of music", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleMusicVolume.isChosen = False
         if self.cursor == 3:
             self.titleMusicVolumeOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleMusicVolumeOptions.isChosen = False
         if self.cursor == 4:
             self.titleSoundVolume.isChosen = True
-            self.descriptionText.update('Press ENTER to set volume of sound', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to set volume of sound", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSoundVolume.isChosen = False
         if self.cursor == 5:
             self.titleSoundVolumeOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSoundVolumeOptions.isChosen = False
