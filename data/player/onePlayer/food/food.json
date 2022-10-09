@@ -1,34 +1,3 @@
 {
-    "FOODS": [
-        {
-            "x": 125,
-            "y": 450,
-            "indexFrame": 0
-        },
-        {
-            "x": 875,
-            "y": 500,
-            "indexFrame": 0
-        },
-        {
-            "x": 200,
-            "y": 575,
-            "indexFrame": 0
-        },
-        {
-            "x": 950,
-            "y": 475,
-            "indexFrame": 2
-        },
-        {
-            "x": 900,
-            "y": 175,
-            "indexFrame": 1
-        },
-        {
-            "x": 125,
-            "y": 225,
-            "indexFrame": 0
-        }
-    ]
+    "FOODS": []
 }

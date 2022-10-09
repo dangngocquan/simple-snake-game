@@ -1,2 +1,7 @@
 snake/eatFood: https://mixkit.co/free-sound-effects/eat/
 button/pressButton: https://pixabay.com/sound-effects/search/button/?manual_search=1&order=None
+music0: BoyWithUke - Loafers (Official Lyric Video):
+ https://www.youtube.com/watch?v=iGCE7nXfQK8&list=PLZQKIedkyIQ07V8CiKUc8KkBL_aekG77o&index=2
+ music1: Sweden - C418: https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html
+
+ Create button on pygame: https://www.youtube.com/watch?v=G8MYGDf_9ho
