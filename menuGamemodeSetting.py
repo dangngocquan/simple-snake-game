@@ -1,12 +1,5 @@
-import datetime
-import random
 import pygame
-from snake import Snake
 from setting import *
-import setting
-from wall import Wall, WallManager
-import wall
-from grid import Grid
 from grid import *
 from button import Button
 
@@ -55,45 +48,45 @@ class GamemodeSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titlePlayerNumber.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the number of players', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to choose the number of players", DESCRIPTION_FONT, 'ALL')
         else:
             self.titlePlayerNumber.isChosen = False
         if self.cursor == 1:
             self.titlePlayerNumberOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titlePlayerNumberOptions.isChosen = False
         if self.cursor == 2:
             self.titleAutoSpeedUpSnake.isChosen = True
-            self.descriptionText.update('Press ENTER to set auto speed up snake', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to set auto speed up snake", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleAutoSpeedUpSnake.isChosen = False
         if self.cursor == 3:
             self.titleAutoSpeedUpSnakeOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleAutoSpeedUpSnakeOptions.isChosen = False
         if self.cursor == 4:
             self.titleTargetScore.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the view control', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup Target score", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleTargetScore.isChosen = False
         if self.cursor == 5:
             self.titleTargetScoreOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleTargetScoreOptions.isChosen = False
         if self.cursor == 6:
             self.titleViewControl.isChosen = True
-            self.descriptionText.update('Press ENTER to choose the view control', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to choose the view control", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleViewControl.isChosen = False
         if self.cursor == 7:
             self.titleViewControlOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleViewControlOptions.isChosen = False

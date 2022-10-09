@@ -15,7 +15,7 @@
     "SOUND": {
         "MUSIC_INDEX": 0,
         "MUSIC_VOLUME": 100,
-        "SOUND_VOLUME": 50
+        "SOUND_VOLUME": 40
     },
     "GAMEMODE": {
         "TARGET_SCORE": 100,
@@ -24,6 +24,6 @@
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {
-        "INDEX_MAP": 5
+        "INDEX_MAP": 0
     }
 }
