@@ -2,9 +2,16 @@ import sys
 import pygame
 from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
-from menu import MainMenu, PlayGameMenu, GameOverMenu, OptionsMenu, GameOverMenu02
-from menu import GameSettingMenu, SoundSettingMenu, GamemodeSettingMenu, MapSettingMenu
-from menu import ExistingMapsMenu, CreateNewMap
+from menuMain import MainMenu
+from menuPlayGame import PlayGameMenu
+from menuOptions import OptionsMenu
+from menuGamemodeSetting import GamemodeSettingMenu
+from menuInGameSetting import GameSettingMenu
+from menuSoundSetting import SoundSettingMenu
+from menuMapSetting import MapSettingMenu
+from menuExistingMaps import ExistingMapsMenu
+from menuCreateNewMap import CreateNewMap
+from menuGameOver import GameOverMenu, GameOverMenu02
 from inGame import InGame, InGame02
 from snake import Snake
 import snake
