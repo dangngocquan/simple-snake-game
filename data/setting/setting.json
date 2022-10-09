@@ -4,13 +4,13 @@
     },
     "GRID": "ON",
     "FOOD": {
-        "MAX_FOOD": 5,
+        "MAX_FOOD": 98,
         "ANIMATION_SPEED": 10
     },
     "SNAKE": {
-        "MOVE_SPEED": 17,
+        "MOVE_SPEED": 11,
         "ANIMATION_SPEED": 6,
-        "DROP_SPEED": 2
+        "DROP_SPEED": 14
     },
     "SOUND": {
         "MUSIC_INDEX": 1,
@@ -19,10 +19,10 @@
     },
     "GAMEMODE": {
         "NUMBER_PLAYERS": 1,
-        "AUTO_SPEED_UP": "OFF",
+        "AUTO_SPEED_UP": "ON",
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {
-        "INDEX_MAP": 1
+        "INDEX_MAP": 5
     }
 }
