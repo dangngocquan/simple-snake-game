@@ -1,11 +1,7 @@
-import datetime
-import random
 import pygame
 from snake import Snake
 from setting import *
 import setting
-from wall import Wall, WallManager
-import wall
 from grid import Grid
 from grid import *
 from button import Button
@@ -65,67 +61,67 @@ class GameSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titleGrid.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the grid', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup the grid", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleGrid.isChosen = False
         if self.cursor == 1:
             self.titleGridOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleGridOptions.isChosen = False
         if self.cursor == 2:
             self.titleSnakeMoveSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the move speed of snake', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup the move speed of snake", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSnakeMoveSpeed.isChosen = False
         if self.cursor == 3:
             self.titleSnakeMoveSpeedOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeMoveSpeedOptions.isChosen = False
         if self.cursor == 4:
             self.titleSnakeDropSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the drop speed of snake', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup the drop speed of snake", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSnakeDropSpeed.isChosen = False
         if self.cursor == 5:
             self.titleSnakeDropSpeedOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeDropSpeedOptions.isChosen = False
         if self.cursor == 6:
             self.titleSnakeAnimationSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the animation speed of snake', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup the animation speed of snake", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleSnakeAnimationSpeed.isChosen = False
         if self.cursor == 7:
             self.titleSnakeAnimationSpeedOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleSnakeAnimationSpeedOptions.isChosen = False
         if self.cursor == 8:
             self.titleFoodMax.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the max number of food', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup the max number of food", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleFoodMax.isChosen = False
         if self.cursor == 9:
             self.titleFoodMaxOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleFoodMaxOptions.isChosen = False
         if self.cursor == 10:
             self.titleFoodAnimationSpeed.isChosen = True
-            self.descriptionText.update('Press ENTER to setup the animation speed of food', DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Press 'ENTER' to setup the animation speed of food", DESCRIPTION_FONT, 'ALL')
         else:
             self.titleFoodAnimationSpeed.isChosen = False
         if self.cursor == 11:
             self.titleFoodAnimationSpeedOptions.isChosen = True
-            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleFoodAnimationSpeedOptions.isChosen = False
