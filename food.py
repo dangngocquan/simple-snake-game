@@ -123,6 +123,18 @@ class FoodManager:
         for food in self.listFood:
             food.update()
             food.draw(self.surface)
+            
+    
+    ###########  Remove all foos of Food Manager ############################################################
+    def removeAllFoods(self):
+        ###########  Remove all foods  ######################################################################
+        self.listFood = []
+        ###########  Remove old image foods  ################################################################
+        self.surface.fill((0, 0, 0, 0))
+        ###########  Draw all new image foods  ##############################################################
+        for food in self.listFood:
+            food.update()
+            food.draw(self.surface)
         
     ###########   Update animation of foods   ###############################################################
     def updateAnimation(self):

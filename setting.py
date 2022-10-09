@@ -132,6 +132,7 @@ PRESS_BUTTON = pygame.mixer.Sound('./assets/sounds/button/pressButton.wav')
 CHANGE_BUTTON = pygame.mixer.Sound('./assets/sounds/button/changeButton.wav')
 SNAKE_EAT_FOOD = pygame.mixer.Sound('./assets/sounds/snake/eatFood.wav')
 GAME_OVER = pygame.mixer.Sound('./assets/sounds/snake/died.wav')
+WIN_GAME = pygame.mixer.Sound('./assets/sounds/snake/winGame.wav')
 MUSIC_00 = './assets/sounds/game/BoyWithUkeLoafers.wav'
 MUSIC_01 = './assets/sounds/game/SwedenC418.wav'
 
@@ -167,6 +168,7 @@ SETTING2 = {
         'CHANGE_BUTTON' : CHANGE_BUTTON,
         'SNAKE_EAT_FOOD' : SNAKE_EAT_FOOD,
         'GAME_OVER' : GAME_OVER,
+        'WIN_GAME' : WIN_GAME,
         'MUSIC' : [MUSIC_00, MUSIC_01]
     }
 }

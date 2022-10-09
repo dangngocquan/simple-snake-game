@@ -159,7 +159,7 @@ class Game:
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 self.runningInGame = True
                                 self.inGame.snake = Snake()
-                                self.inGame.foodManager = FoodManager()
+                                self.inGame.foodManager.removeAllFoods()
                                 self.inGame.wallManager = wall.loadWallManagerFromListMaps(
                                     indexMap=SETTING1['MAP']['INDEX_MAP'])
                                 self.inGame.showingScreenStart = True
@@ -167,7 +167,7 @@ class Game:
                                 self.runningInGame02 = True
                                 self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
                                 self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
-                                self.inGame02.foodManager = FoodManager()
+                                self.inGame02.foodManager.removeAllFoods()
                                 self.inGame02.wallManager = wall.loadWallManagerFromListMaps(
                                     indexMap=SETTING1['MAP']['INDEX_MAP'])
                                 self.inGame02.showingScreenStart = True
@@ -232,21 +232,21 @@ class Game:
                     if self.gamemodeSettingMenu.cursor % 2 == 0:
                         if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 6:
+                            if self.gamemodeSettingMenu.cursor == 8:
                                 self.gamemodeSettingMenu.cursor += 1
                             else:
                                 self.gamemodeSettingMenu.cursor += 2
-                            self.gamemodeSettingMenu.cursor %= 7
+                            self.gamemodeSettingMenu.cursor %= 9
                         elif event.key == pygame.K_UP or event.key == pygame.K_w:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if self.gamemodeSettingMenu.cursor == 0:
                                 self.gamemodeSettingMenu.cursor -= 1
                             else:
                                 self.gamemodeSettingMenu.cursor -= 2
-                            self.gamemodeSettingMenu.cursor %= 7
+                            self.gamemodeSettingMenu.cursor %= 9
                         elif event.key == pygame.K_RETURN:
                             SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 6:
+                            if self.gamemodeSettingMenu.cursor == 8:
                                 self.runningGamemodeSettingMenu = False
                                 self.runningOptionsMenu = True
                             else:
@@ -279,6 +279,16 @@ class Game:
                                 elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
                                     setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
                         elif self.gamemodeSettingMenu.cursor == 5:
+                            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                                if SETTING1['GAMEMODE']['TARGET_SCORE'] > 100:
+                                    setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
+                                                        newData=SETTING1['GAMEMODE']['TARGET_SCORE']-100)
+                            elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                                setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
+                                                        newData=SETTING1['GAMEMODE']['TARGET_SCORE']+100)
+                        elif self.gamemodeSettingMenu.cursor == 7:
                             if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
@@ -917,6 +927,7 @@ class Game:
                         self.inGame.snake = Snake()
                         self.inGame.foodManager = FoodManager()
                         self.inGame.update()
+                        wall.saveWallManager(self.inGame.wallManager)
                         snake.saveSnake(self.inGame.snake)
                         food.saveFoodManager(self.inGame.foodManager)
                         self.runningGameOverMenu = False
@@ -941,7 +952,9 @@ class Game:
                             self.runningMainMenu = True
                         self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
                         self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
-                        self.inGame02.foodManager = FoodManager()                            
+                        self.inGame02.foodManager = FoodManager()
+                        wall.saveWallManager(self.inGame02.wallManager,
+                                         path='./data/player/twoPlayer/wall/wall.json')                           
                         snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
                         snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
                         food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
@@ -963,8 +976,13 @@ class Game:
         ###########   Update screen when player controlling snake   #########################################
         elif self.runningInGame:
             ###########   Check game over   #################################################################
-            if self.inGame.snake.died(wallCoordinates=self.inGame.wallManager.coordinateWalls()):
-                SETTING2['SOUND']['GAME_OVER'].play()
+            snakeDied = self.inGame.snake.died(wallCoordinates=self.inGame.wallManager.coordinateWalls())
+            targetScoreReached = self.inGame.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
+            if (snakeDied or targetScoreReached):
+                if snakeDied:
+                    SETTING2['SOUND']['GAME_OVER'].play()
+                elif targetScoreReached:
+                    SETTING2['SOUND']['WIN_GAME'].play()
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True
@@ -996,8 +1014,13 @@ class Game:
                                                      wallCoordinates=self.inGame02.wallManager.coordinateWalls())
             snake02Died = self.inGame02.snake02.died(otherCoordinateSnakeBlocks=self.inGame02.snake01.coordinateSnakeBlocks(),
                                                      wallCoordinates=self.inGame02.wallManager.coordinateWalls())
-            if snake01Died or snake02Died:
-                SETTING2['SOUND']['GAME_OVER'].play()
+            targetScoreReached01 = self.inGame02.snake01.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
+            targetScoreReached02 = self.inGame02.snake02.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
+            if (snake01Died or snake02Died or targetScoreReached01 or targetScoreReached02):
+                if snake01Died or snake02Died:
+                    SETTING2['SOUND']['GAME_OVER'].play()
+                elif targetScoreReached01 or targetScoreReached02:
+                    SETTING2['SOUND']['WIN_GAME'].play()
                 self.inGame02.running = False
                 self.runningInGame02 = False
                 self.runningGameOverMenu02 = True

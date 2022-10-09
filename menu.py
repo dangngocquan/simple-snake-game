@@ -297,18 +297,21 @@ class GamemodeSettingMenu:
         ########### Buttons in Gamemode Setting Menu  #######################################################
         self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//12)
         self.descriptionText.isChosen = True
-        self.titleModeSetting = Button("MODE SETTING", MEDIUM_FONT_2, width//2, height*3//12)
-        self.titlePlayerNumber = Button("Number of players", SMALL_FONT, width//8, height*4//12, 'topLeft')
+        self.titleModeSetting = Button("MODE SETTING", MEDIUM_FONT_2, width//2, height*5//24)
+        self.titlePlayerNumber = Button("Number of players", SMALL_FONT, width//8, height*7//24, 'topLeft')
         self.titlePlayerNumberOptions = Button(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", SMALL_FONT,
-                                        width//12*8, height*4//12, 'topLeft')
-        self.titleAutoSpeedUpSnake = Button("Auto speed up snake", SMALL_FONT, width//8, height*5//12, 'topLeft')
+                                        width//12*8, height*7//24, 'topLeft')
+        self.titleAutoSpeedUpSnake = Button("Auto speed up snake", SMALL_FONT, width//8, height*9//24, 'topLeft')
         self.titleAutoSpeedUpSnakeOptions = Button(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", SMALL_FONT,
-                                        width//12*8, height*5//12, 'topLeft')
-        self.titleViewControlSetting = Button("VIEW CONTROL SETTING", MEDIUM_FONT_2, width//2, height*7//12)
-        self.titleViewControl =  Button("View control", SMALL_FONT, width//8, height*8//12, 'topLeft')
+                                        width//12*8, height*9//24, 'topLeft')
+        self.titleTargetScore = Button("Auto speed up snake", SMALL_FONT, width//8, height*11//24, 'topLeft')
+        self.titleTargetScoreOptions = Button(f"{SETTING1['GAMEMODE']['TARGET_SCORE']}", SMALL_FONT,
+                                        width//12*8, height*11//24, 'topLeft')
+        self.titleViewControlSetting = Button("VIEW CONTROL SETTING", MEDIUM_FONT_2, width//2, height*14//24)
+        self.titleViewControl =  Button("View control", SMALL_FONT, width//8, height*16//24, 'topLeft')
         self.titleViewControlOptions = Button(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", SMALL_FONT,
-                                              width//12*8, height*8//12, 'topLeft')
-        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*10//12)
+                                              width//12*8, height*16//24, 'topLeft')
+        self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*19//24)
         
     ###########   Update cursor and buttons status in Gamemode setting Menu   ###############################
     def update(self):
@@ -336,17 +339,28 @@ class GamemodeSettingMenu:
         else:
             self.titleAutoSpeedUpSnakeOptions.isChosen = False
         if self.cursor == 4:
+            self.titleTargetScore.isChosen = True
+            self.descriptionText.update('Press ENTER to choose the view control', DESCRIPTION_FONT, 'ALL')
+        else:
+            self.titleTargetScore.isChosen = False
+        if self.cursor == 5:
+            self.titleTargetScoreOptions.isChosen = True
+            self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
+                                        DESCRIPTION_FONT_2, 'ALL')
+        else:
+            self.titleTargetScoreOptions.isChosen = False
+        if self.cursor == 6:
             self.titleViewControl.isChosen = True
             self.descriptionText.update('Press ENTER to choose the view control', DESCRIPTION_FONT, 'ALL')
         else:
             self.titleViewControl.isChosen = False
-        if self.cursor == 5:
+        if self.cursor == 7:
             self.titleViewControlOptions.isChosen = True
             self.descriptionText.update('Press A D W S to change your choice, Press ENTER to save your setting', 
                                         DESCRIPTION_FONT_2, 'ALL')
         else:
             self.titleViewControlOptions.isChosen = False
-        if self.cursor == 6:
+        if self.cursor == 8:
             self.titleBack.isChosen = True
             self.titleBack.update("BACK", MEDIUM_FONT_HORVED)
             self.descriptionText.update("", DESCRIPTION_FONT, 'ALL')
@@ -358,6 +372,8 @@ class GamemodeSettingMenu:
         self.titlePlayerNumberOptions.update(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", SMALL_FONT, 'B')
         self.titleAutoSpeedUpSnake.update("Auto speed up snake", SMALL_FONT, 'B')
         self.titleAutoSpeedUpSnakeOptions.update(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", SMALL_FONT, 'B')
+        self.titleTargetScore.update("Target score", SMALL_FONT, 'B')
+        self.titleTargetScoreOptions.update(f"{SETTING1['GAMEMODE']['TARGET_SCORE']}", SMALL_FONT, 'B')
         self.titleViewControl.update("View control", SMALL_FONT, 'B')
         self.titleViewControlOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", SMALL_FONT, 'B')
         
@@ -370,6 +386,8 @@ class GamemodeSettingMenu:
         self.titlePlayerNumberOptions.draw(self.surface)
         self.titleAutoSpeedUpSnake.draw(self.surface)
         self.titleAutoSpeedUpSnakeOptions.draw(self.surface)
+        self.titleTargetScore.draw(self.surface)
+        self.titleTargetScoreOptions.draw(self.surface)
         self.titleViewControlSetting.draw(self.surface)
         self.titleViewControl.draw(self.surface)
         self.titleViewControlOptions.draw(self.surface)
@@ -835,7 +853,7 @@ class CreateNewMap:
         self.instruction4 = Button("Press 'D' to delete the last wall block you just added.", DESCRIPTION_FONT, width//2, height*9//24)
         self.instruction5 = Button("Press 'C' to clear all wall blocks.", DESCRIPTION_FONT, width//2, height*11//24)
         self.instruction6 = Button("Press 'ENTER' to save your map.", DESCRIPTION_FONT, width//2, height*13//24)
-        self.instruction7 = Button("Press 'ESC' to return Map Setting and don't save your map.", DESCRIPTION_FONT, width//2, height*15//24)
+        self.instruction7 = Button("Press 'ESC' to return Map Setting.", DESCRIPTION_FONT, width//2, height*15//24)
         self.titleStart = Button("START", MEDIUM_FONT, width//2, height*18//24)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*21//24)
     
@@ -963,11 +981,17 @@ class GameOverMenu:
         self.snake = snake
         self.wallManager = wallManager
         ########### Buttons in Play Game Menu  ##############################################################
-        self.titleGameOver = Button("GAME OVER", BIG_FONT, width//2, height*3//12)
+        if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
+            self.titleGameOver = Button("<< YOU WON >>", BIG_FONT, width//2, height*3//12)
+        else:
+            self.titleGameOver = Button("GAME OVER", BIG_FONT, width//2, height*3//12)
         self.titleGameOver.isChosen = True
-        self.titleScore = Button(f"Your score: {self.snake.score}", MEDIUM_FONT_2, width//2, height*5//12)
-        self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*7//12)
-        self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*9//12)
+        self.titleTargetScore = Button(f"Target score: {SETTING1['GAMEMODE']['TARGET_SCORE']}", 
+                                       MEDIUM_FONT_2, width//2, height*5//12)
+        self.titleScore = Button(f"Your score: {self.snake.score}", MEDIUM_FONT_2, width//2, height*6//12)
+       
+        self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*8//12)
+        self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*10//12)
         
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
@@ -984,7 +1008,10 @@ class GameOverMenu:
                 self.titleBackMainMenu.isChosen = True
                 self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
                 self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
-            self.titleGameOver.update("GAME OVER", BIG_FONT, color = 'ALL')
+            if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
+                self.titleGameOver.update("<< YOU WON >>", BIG_FONT, color = 'ALL')
+            else:
+                self.titleGameOver.update("GAME OVER", BIG_FONT, color = 'ALL')
             self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT_2)
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
@@ -992,6 +1019,7 @@ class GameOverMenu:
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
+            self.titleTargetScore.draw(self.surface)
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
@@ -1000,10 +1028,12 @@ class GameOverMenu:
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
-            self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls())
+            if self.snake.score < SETTING1['GAMEMODE']['TARGET_SCORE']:
+                self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls())
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
+            self.titleTargetScore.draw(self.surface)
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
@@ -1016,6 +1046,7 @@ class GameOverMenu:
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)
+            self.titleTargetScore.draw(self.surface)
             self.titleScore.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
@@ -1045,8 +1076,16 @@ class GameOverMenu02:
                                         wallCoordinates=self.wallManager.coordinateWalls())
         snake02Died = self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks(),
                                         wallCoordinates=self.wallManager.coordinateWalls())
+        targetScoreReach01 = self.snake01.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
+        targetScoreReach02 = self.snake02.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
         if self.winner == -1:
-            if snake01Died and snake02Died:
+            if targetScoreReach01 and targetScoreReach02:
+                self.winner = 3
+            elif targetScoreReach01:
+                self.winner = 1
+            elif targetScoreReach02:
+                self.winner = 2
+            elif snake01Died and snake02Died:
                 if self.snake01.score == self.snake02.score:
                     self.winner = 0
                 elif self.snake01.score > self.snake02.score:
@@ -1077,6 +1116,8 @@ class GameOverMenu02:
         self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT_2, width//4, height*21//48)
         self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT_2, width//4*3, height*21//48)
         self.titleScore01 = Button(f"Score: {self.snake01.score}", DESCRIPTION_FONT, width//4, height*13//24)
+        self.titleTargetScore = Button(f"Target Score: {SETTING1['GAMEMODE']['TARGET_SCORE']}", 
+                                       DESCRIPTION_FONT, width//4*2, height*13//24)
         self.titleScore02 = Button(f"Score: {self.snake02.score}", DESCRIPTION_FONT, width//4*3, height*13//24)
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*16//24)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*19//24)
@@ -1109,6 +1150,7 @@ class GameOverMenu02:
             self.titlePlayer01.draw(self.surface)
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)
+            self.titleTargetScore.draw(self.surface)
             self.titleScore02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
@@ -1132,6 +1174,7 @@ class GameOverMenu02:
             self.titlePlayer01.draw(self.surface)
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)
+            self.titleTargetScore.draw(self.surface)
             self.titleScore02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
@@ -1151,6 +1194,7 @@ class GameOverMenu02:
             self.titlePlayer01.draw(self.surface)
             self.titlePlayer02.draw(self.surface)
             self.titleScore01.draw(self.surface)
+            self.titleTargetScore.draw(self.surface)
             self.titleScore02.draw(self.surface)
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
