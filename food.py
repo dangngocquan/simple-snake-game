@@ -97,21 +97,22 @@ class FoodManager:
         return [food.coordinate() for food in self.listFood]
     
     ###########  Create a random Food  ######################################################################
-    def createRandomValidFood(self, coordinateSnakeBlockss=[]):
-        if len(self.listFood) + len(coordinateSnakeBlockss) >= NUMBER_ROWS * NUMBER_COLUMNS:
+    def createRandomValidFood(self, coordinateSnakeBlockss=[], coordinateWalls=[]):
+        listCoordinateCanChoose = []
+        for row in range(NUMBER_ROWS):
+            for column in range(NUMBER_COLUMNS):
+                if [column*CELL_SIZE, row*CELL_SIZE] not in (coordinateSnakeBlockss + coordinateWalls):
+                    listCoordinateCanChoose.append([column*CELL_SIZE, row*CELL_SIZE])
+        if len(listCoordinateCanChoose) == 0:
             return None
-        randomX = random.randint(0, NUMBER_COLUMNS-1) * CELL_SIZE
-        randomY = random.randint(0, NUMBER_ROWS-1) * CELL_SIZE
-        while ([randomX, randomY] in (self.coordinateFoods() + coordinateSnakeBlockss)):
-            randomX = random.randint(0, NUMBER_COLUMNS-1) * CELL_SIZE
-            randomY = random.randint(0, NUMBER_ROWS-1) * CELL_SIZE
-        return Food(randomX, randomY)
+        coordinate = random.choice(listCoordinateCanChoose)
+        return Food(coordinate[0], coordinate[1])
     
     ###########  Update status food man #####################################################################
-    def supplementFood(self, coordinateSnakeBlockss):
+    def supplementFood(self, coordinateSnakeBlockss, coordinateWalls):
         ###########  Supplement the Food Manager  ###########################################################
         while len(self.listFood) < self.maxFood:
-            randomValidFood = self.createRandomValidFood(coordinateSnakeBlockss)
+            randomValidFood = self.createRandomValidFood(coordinateSnakeBlockss, coordinateWalls)
             if randomValidFood == None:
                 break
             else:

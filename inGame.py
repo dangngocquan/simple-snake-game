@@ -65,7 +65,7 @@ class InGame:
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)
                 self.snake.draw(self.surface)
-                self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
+                self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks(), self.wallManager.coordinateWalls())
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", menu.DESCRIPTION_FONT_2, 'R')
@@ -73,7 +73,7 @@ class InGame:
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
                 self.snake.updateLocation(self.foodManager.listFood)
-                self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks())
+                self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks(), self.wallManager.coordinateWalls())
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", menu.DESCRIPTION_FONT_2, 'R')
                 self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
@@ -201,7 +201,8 @@ class InGame02:
                     self.grid.draw(self.surface)
                 self.snake01.draw(self.surface)
                 self.snake02.draw(self.surface)
-                self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())
+                self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks(),
+                                                self.wallManager.coordinateWalls())
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
@@ -219,7 +220,8 @@ class InGame02:
                 if snakeMove02 == True:
                     self.snake02.updateLocation(self.foodManager.listFood)
                     self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", menu.DESCRIPTION_FONT_2, 'G')
-                self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks())
+                self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks(),
+                                                self.wallManager.coordinateWalls())
                 self.wallManager.draw(self.surface)
                 if SETTING1['GRID'] == 'ON':
                     self.grid.draw(self.surface)

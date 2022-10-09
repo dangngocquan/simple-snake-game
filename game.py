@@ -107,6 +107,9 @@ class Game:
                     food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
                     wall.saveWallManager(wall.loadWallManagerFromListMaps(indexMap=SETTING1['MAP']['INDEX_MAP']),
                                          path='./data/player/twoPlayer/wall/wall.json')
+                elif self.runningCreateNewMap:
+                    wall.saveWallManager(self.createNewMap.wallManager,
+                                                 path='./data/creatingMap/creatingMap.json')
                 ###########   Quit   ########################################################################
                 self.running = False
                 pygame.quit()
@@ -547,6 +550,8 @@ class Game:
                         ###########   The cursor is pointing at "Create new map"   ##########################
                         elif self.mapSettingMenu.cursor == 1:
                             self.runningCreateNewMap = True
+                            self.createNewMap.cursor = 0
+                            self.createNewMap.showingInstruction = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.mapSettingMenu.cursor == 2:
                             self.runningOptionsMenu = True
@@ -578,7 +583,66 @@ class Game:
                 setting.saveSetting()
             ###########   Get events when current screen is Existing Maps Menu   ############################
             elif self.runningCreateNewMap:
-                pass
+                if self.createNewMap.showingInstruction:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key in [pygame.K_DOWN, pygame.K_LEFT, pygame.K_a, pygame.K_s]:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            self.createNewMap.cursor -= 1
+                            self.createNewMap.cursor %= 2
+                        elif event.key in [pygame.K_UP, pygame.K_RIGHT, pygame.K_d, pygame.K_w]:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            self.createNewMap.cursor += 1
+                            self.createNewMap.cursor %= 2
+                        if event.key == pygame.K_RETURN:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
+                            ###########   The cursor is pointing at "START"   ###########################
+                            if self.createNewMap.cursor == 0:
+                                self.createNewMap.showingInstruction = False
+                                self.createNewMap.drawingNewMap = True
+                                self.createNewMap.wallManager = wall.loadPreviousWallManager(
+                                    path='./data/creatingMap/creatingMap.json'
+                                )
+                            ###########   The cursor is poiting at "BACK"   #####################################
+                            elif self.createNewMap.cursor == 1:
+                                self.createNewMap.showingInstruction = False
+                                self.runningCreateNewMap = False
+                                self.runningMapSettingMenu = True
+                elif self.createNewMap.drawingNewMap:
+                    if event.type == pygame.MOUSEMOTION:
+                        self.createNewMap.mouseMotionPosition = pygame.mouse.get_pos()
+                    elif event.type == pygame.MOUSEBUTTONDOWN:
+                        if event.button == 1:
+                            self.createNewMap.mouseLeftClickPosition = pygame.mouse.get_pos()
+                        elif event.button == 3:
+                            self.createNewMap.mouseRightClickPosition = pygame.mouse.get_pos()
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5,
+                                         pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                            keyString = pygame.key.name(event.key)
+                            self.createNewMap.addNewRandomWallBlock(number=int(keyString))
+                        elif event.key == pygame.K_d:
+                            self.createNewMap.removeLastWallBlock()
+                        elif event.key == pygame.K_c:
+                            self.createNewMap.removeAllWallBlocks()
+                        elif event.key == pygame.K_RETURN:
+                            self.createNewMap.saveMap()
+                            self.createNewMap.drawingNewMap = False
+                            self.createNewMap.showingInstruction = True
+                            self.createNewMap.update()
+                            self.createNewMap.removeAllWallBlocks()
+                            wall.saveWallManager(self.createNewMap.wallManager,
+                                                 path='./data/creatingMap/creatingMap.json')
+                            self.runningCreateNewMap = False
+                            self.runningMapSettingMenu = True
+                        elif event.key == pygame.K_ESCAPE:
+                            wall.saveWallManager(self.createNewMap.wallManager,
+                                                 path='./data/creatingMap/creatingMap.json')
+                            self.createNewMap.drawingNewMap = False
+                            self.createNewMap.showingInstruction = True
+                            self.createNewMap.update()
+                            self.runningCreateNewMap = False
+                            self.runningMapSettingMenu = True
+                            
                            
             ###########   Get events when current screen is InGame (player controls snake)   ################
             elif self.runningInGame:

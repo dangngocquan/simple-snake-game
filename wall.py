@@ -118,6 +118,11 @@ class WallManager:
     def coordinateWalls(self):
         return [wall.coordinate() for wall in self.listWall]
     
+    def updateImage(self):
+        self.surface.fill((0, 0, 0, 0))
+        for wall in self.listWall:
+            wall.draw(self.surface)
+    
     ###########  Draw all foods on another surface  #########################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
@@ -140,12 +145,7 @@ def addNewMapToListMaps(wallManager, createdTime, path='./data/setting/map.json'
     }
     
     for wall in wallManager.listWall:
-        newMap['WALLS'].append(
-            {
-                'x' : wall.x,
-                'y' : wall.y,
-            }
-        )
+        newMap['WALLS'].append(wall)
     
     LIST_MAP.append(newMap)
     
