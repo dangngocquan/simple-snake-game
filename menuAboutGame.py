@@ -15,8 +15,8 @@ WHITE = SETTING2['COLOR']['WHITE']
 
 
 
-###########  CLASS PLAY GAME MENU  ##########################################################################
-class PlayGameMenu:
+###########  CLASS ABOUT GAME MENU  ##########################################################################
+class AboutGameMenu:
     ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
         ###########  Surface, cursor and coordinate center  #################################################

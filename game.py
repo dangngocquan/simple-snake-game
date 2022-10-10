@@ -11,6 +11,7 @@ from menuSoundSetting import SoundSettingMenu
 from menuMapSetting import MapSettingMenu
 from menuExistingMaps import ExistingMapsMenu
 from menuCreateNewMap import CreateNewMap
+from menuAboutGame import AboutGameMenu
 from menuGameOver import GameOverMenu, GameOverMenu02
 from inGame import InGame, InGame02
 from snake import Snake
@@ -55,6 +56,7 @@ class Game:
         self.runningMapSettingMenu = False
         self.runningExistingMapsMenu = False
         self.runningCreateNewMap = False
+        self.runningAboutGameMenu = False
         self.runningGameOverMenu = False
         self.runningGameOverMenu02 = False
         ###########   Screens in game   #####################################################################
@@ -73,6 +75,7 @@ class Game:
         self.mapSettingMenu = MapSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.existingMapsMenu = ExistingMapsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.createNewMap = CreateNewMap(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.aboutGameMenu = AboutGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
     
     ###########   Main loop in game   #######################################################################
     def run(self):
@@ -127,11 +130,11 @@ class Game:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor += 1
-                        self.mainMenu.cursor %= 3
+                        self.mainMenu.cursor %= 4
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor -= 1
-                        self.mainMenu.cursor %= 3
+                        self.mainMenu.cursor %= 4
                     elif event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.runningMainMenu = False
@@ -142,6 +145,9 @@ class Game:
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
                         elif self.mainMenu.cursor == 2:
+                            self.runningAboutGameMenu = True
+                            self.aboutGameMenu.cursor = 0
+                        elif self.mainMenu.cursor == 3:
                             self.running = False
                             pygame.time.wait(500)
                             pygame.quit()
@@ -232,6 +238,9 @@ class Game:
                         elif self.optionsMenu.cursor == 4:
                             self.runningMainMenu = True
                         self.runningOptionsMenu = False
+            ###########   Get events when current screen is Options Menu  ###################################        
+            elif self.runningAboutGameMenu:
+                pass
             ###########   Get events when current screen is Gamemode Setting Menu   #########################
             elif self.runningGamemodeSettingMenu:
                 if event.type == pygame.KEYDOWN:
@@ -1108,6 +1117,10 @@ class Game:
         elif self.runningCreateNewMap:
             if self.countTicks % (FPS * self.divisibility // self.createNewMap.FPS) == 0:
                 self.createNewMap.update()
+        ###########   Update screen About Game Menu   #######################################################
+        elif self.runningAboutGameMenu:
+            if self.countTicks % (FPS * self.divisibility // self.aboutGameMenu.FPS) == 0:
+                self.aboutGameMenu.update()
         
         
         
@@ -1143,4 +1156,6 @@ class Game:
             self.existingMapsMenu.draw(self.screen)
         elif self.runningCreateNewMap:
             self.createNewMap.draw(self.screen)
+        elif self.runningAboutGameMenu:
+            self.aboutGameMenu.draw(self.screen)
         pygame.display.flip()
