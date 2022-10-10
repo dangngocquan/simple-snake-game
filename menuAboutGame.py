@@ -2,6 +2,7 @@ import pygame
 from setting import *
 from grid import *
 from button import Button
+from menuGetInput import GetPasswordMenu
 
 ###########   VARIABLE   ####################################################################################
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
@@ -23,6 +24,10 @@ class AboutGameMenu:
         self.surface = pygame.Surface((width, height), pygame.SRCALPHA)
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
+        
+        self.passwordBox = GetPasswordMenu(width//2, height//2, width//2, height//2)
+        self.isHiddenPasswordBox = True
+        
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         ########### Buttons in Play Game Menu  ##############################################################
@@ -118,6 +123,9 @@ class AboutGameMenu:
 
         self.titleLinkTutorialCreateButtonInYoutube.update("TUTORIAL CREATE BUTTON IN PYGAME (YOUTUBE)", DESCRIPTION_FONT_2, 'B')
         self.titleLinkSourceCode.update("SOURCE CODE (IF YOU WANT)", DESCRIPTION_FONT_2, 'B')
+        
+        if not self.isHiddenPasswordBox:
+            self.passwordBox.update()
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
@@ -139,6 +147,8 @@ class AboutGameMenu:
         self.titleLinkSourceCode.draw(self.surface)
         self.titleBack.draw(self.surface)
         self.titleBack.draw(self.surface)
+        if not self.isHiddenPasswordBox:
+            self.passwordBox.draw(self.surface)
     
     ###########  Draw PlayGame Menu in another surface  #####################################################
     def draw(self, parentSurface):
