@@ -31,6 +31,7 @@ class GameOverMenu:
         self.cursor = 0
         self.snake = snake
         self.wallManager = wallManager
+        self.snakeDropDependOnMouse = False
         ########### Buttons in Play Game Menu  ##############################################################
         if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
             self.titleGameOver = Button("<< YOU WON >>", BIG_FONT, width//2, height*3//12)
@@ -45,7 +46,7 @@ class GameOverMenu:
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*10//12)
         
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
-    def update(self, type='UpdateTextAnimation'):
+    def update(self, type='UpdateTextAnimation', pos=(0,0)):
         ###########   Update animation of text   ############################################################
         if type == 'UpdateTextAnimation':
             ###########   Update cursor and buttons   #######################################################
@@ -80,7 +81,7 @@ class GameOverMenu:
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
             if self.snake.score < SETTING1['GAMEMODE']['TARGET_SCORE']:
-                self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls())
+                self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls(), pos=pos)
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)

@@ -1171,7 +1171,7 @@ class Game:
         ###########   Update screen when Game Over   ########################################################
         elif self.runningGameOverMenu:
             if self.countTicks % (FPS * self.divisibility // self.inGame.snake.dropSpeed) == 0:
-                self.gameOverMenu.update(type='UpdateSnakeDrop')
+                self.gameOverMenu.update(type='UpdateSnakeDrop', pos=pygame.mouse.get_pos())
             if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * self.divisibility // self.gameOverMenu.FPS) == 0:
