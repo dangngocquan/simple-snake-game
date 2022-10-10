@@ -546,10 +546,12 @@ class Game:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData('SOUND', 'SOUND_VOLUME', 
                                                     (SETTING1['SOUND']['SOUND_VOLUME'] + 1) % 101)
+                                setting.soundVolumeUpdate()
                             elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData('SOUND', 'SOUND_VOLUME', 
                                                     (SETTING1['SOUND']['SOUND_VOLUME'] - 1) % 101)
+                                setting.soundVolumeUpdate()
                         if event.key == pygame.K_RETURN:
                             SETTING2['SOUND']['PRESS_BUTTON'].play()
                             setting.soundVolumeUpdate()
@@ -987,7 +989,6 @@ class Game:
                                   
     ###########   Update screen with current status   #######################################################       
     def update(self):
-        setting.soundVolumeUpdate()
         ###########   Update screen Main Menu   #############################################################
         if self.runningMainMenu:
             if self.countTicks % (FPS * self.divisibility // self.mainMenu.FPS) == 0:
