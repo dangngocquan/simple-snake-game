@@ -25,7 +25,7 @@ class AboutGameMenu:
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         
-        self.passwordBox = GetPasswordMenu(width//2, height//2, width//2, height//2)
+        self.passwordBox = GetPasswordMenu(width//2, height//2, width//2+40, height//2+20)
         self.isHiddenPasswordBox = True
         
         self.FPS = ANIMATION_SPEED
@@ -52,102 +52,104 @@ class AboutGameMenu:
         
     ###########   Update cursor and buttons status in Play Game Menu   ######################################
     def update(self):
-        ###########   Update cursor and buttons   ###########################################################
-        if self.cursor == 0:
-            self.titleLinkMusic01.isChosen = True
-        else:
-            self.titleLinkMusic01.isChosen = False
-        if self.cursor == 1:
-            self.titleLinkMusic02.isChosen = True
-        else:
-            self.titleLinkMusic02.isChosen = False
-        if self.cursor == 2:
-            self.titleLinkSound01.isChosen = True
-        else:
-            self.titleLinkSound01.isChosen = False
-        if self.cursor == 3:
-            self.titleLinkSound02.isChosen = True
-        else:
-            self.titleLinkSound02.isChosen = False
-        if self.cursor == 4:
-            self.titleLinkSound03.isChosen = True
-        else:
-            self.titleLinkSound03.isChosen = False
-        if self.cursor == 5:
-            self.titleLinkSound04.isChosen = True
-        else:
-            self.titleLinkSound04.isChosen = False
-        if self.cursor == 6:
-            self.titleLinkSound05.isChosen = True
-        else:
-            self.titleLinkSound05.isChosen = False
-        if self.cursor == 7:
-            self.titleLinkGraphic01.isChosen = True
-        else:
-            self.titleLinkGraphic01.isChosen = False
-        if self.cursor == 8:
-            self.titleLinkGraphic02.isChosen = True
-        else:
-            self.titleLinkGraphic02.isChosen = False
-        if self.cursor == 9:
-            self.titleLinkGraphic03.isChosen = True
-        else:
-            self.titleLinkGraphic03.isChosen = False
-        if self.cursor == 10:
-            self.titleLinkTutorialCreateButtonInYoutube.isChosen = True
-        else:
-            self.titleLinkTutorialCreateButtonInYoutube.isChosen = False
-        if self.cursor == 11:
-            self.titleLinkSourceCode.isChosen = True
-        else:
-            self.titleLinkSourceCode.isChosen = False
-        if self.cursor == 12:
-            self.titleBack.isChosen = True
-            self.titleBack.update("BACK", MEDIUM_FONT_HORVED, 'G')
-        else:
-            self.titleBack.isChosen = False
-            self.titleBack.update("BACK", MEDIUM_FONT, 'G')
-            
-        self.titleLinkMusic01.update("MUSIC00: BoyWithUke - Loafers", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkMusic02.update("MUSIC01: Sweden - C418", DESCRIPTION_FONT_2, 'B')
+        if self.isHiddenPasswordBox:
+            ###########   Update cursor and buttons   ###########################################################
+            if self.cursor == 0:
+                self.titleLinkMusic01.isChosen = True
+            else:
+                self.titleLinkMusic01.isChosen = False
+            if self.cursor == 1:
+                self.titleLinkMusic02.isChosen = True
+            else:
+                self.titleLinkMusic02.isChosen = False
+            if self.cursor == 2:
+                self.titleLinkSound01.isChosen = True
+            else:
+                self.titleLinkSound01.isChosen = False
+            if self.cursor == 3:
+                self.titleLinkSound02.isChosen = True
+            else:
+                self.titleLinkSound02.isChosen = False
+            if self.cursor == 4:
+                self.titleLinkSound03.isChosen = True
+            else:
+                self.titleLinkSound03.isChosen = False
+            if self.cursor == 5:
+                self.titleLinkSound04.isChosen = True
+            else:
+                self.titleLinkSound04.isChosen = False
+            if self.cursor == 6:
+                self.titleLinkSound05.isChosen = True
+            else:
+                self.titleLinkSound05.isChosen = False
+            if self.cursor == 7:
+                self.titleLinkGraphic01.isChosen = True
+            else:
+                self.titleLinkGraphic01.isChosen = False
+            if self.cursor == 8:
+                self.titleLinkGraphic02.isChosen = True
+            else:
+                self.titleLinkGraphic02.isChosen = False
+            if self.cursor == 9:
+                self.titleLinkGraphic03.isChosen = True
+            else:
+                self.titleLinkGraphic03.isChosen = False
+            if self.cursor == 10:
+                self.titleLinkTutorialCreateButtonInYoutube.isChosen = True
+            else:
+                self.titleLinkTutorialCreateButtonInYoutube.isChosen = False
+            if self.cursor == 11:
+                self.titleLinkSourceCode.isChosen = True
+            else:
+                self.titleLinkSourceCode.isChosen = False
+            if self.cursor == 12:
+                self.titleBack.isChosen = True
+                self.titleBack.update("BACK", MEDIUM_FONT_HORVED, 'G')
+            else:
+                self.titleBack.isChosen = False
+                self.titleBack.update("BACK", MEDIUM_FONT, 'G')
+                
+            self.titleLinkMusic01.update("MUSIC00: BoyWithUke - Loafers", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkMusic02.update("MUSIC01: Sweden - C418", DESCRIPTION_FONT_2, 'B')
 
-        self.titleLinkSound01.update("CHANGE BUTTON", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkSound02.update("PRESS BUTTON", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkSound03.update("SNAKE EAT FOOD", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkSound04.update("GAME OVER", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkSound05.update("WIN GAME", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkSound01.update("CHANGE BUTTON", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkSound02.update("PRESS BUTTON", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkSound03.update("SNAKE EAT FOOD", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkSound04.update("GAME OVER", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkSound05.update("WIN GAME", DESCRIPTION_FONT_2, 'B')
 
-        self.titleLinkGraphic01.update("SNAKE", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkGraphic02.update("FOOD", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkGraphic03.update("WALL", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkGraphic01.update("SNAKE", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkGraphic02.update("FOOD", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkGraphic03.update("WALL", DESCRIPTION_FONT_2, 'B')
 
-        self.titleLinkTutorialCreateButtonInYoutube.update("TUTORIAL CREATE BUTTON IN PYGAME (YOUTUBE)", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkSourceCode.update("SOURCE CODE (IF YOU WANT)", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkTutorialCreateButtonInYoutube.update("TUTORIAL CREATE BUTTON IN PYGAME (YOUTUBE)", DESCRIPTION_FONT_2, 'B')
+            self.titleLinkSourceCode.update("SOURCE CODE (IF YOU WANT)", DESCRIPTION_FONT_2, 'B')
         
-        if not self.isHiddenPasswordBox:
+        elif not self.isHiddenPasswordBox:
             self.passwordBox.update()
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
-        self.titleMusic.draw(self.surface)
-        self.titleLinkMusic01.draw(self.surface)
-        self.titleLinkMusic02.draw(self.surface)
-        self.titleSound.draw(self.surface)
-        self.titleLinkSound01.draw(self.surface)
-        self.titleLinkSound02.draw(self.surface)
-        self.titleLinkSound03.draw(self.surface)
-        self.titleLinkSound04.draw(self.surface)
-        self.titleLinkSound05.draw(self.surface)
-        self.titleGraphic.draw(self.surface)
-        self.titleLinkGraphic01.draw(self.surface)
-        self.titleLinkGraphic02.draw(self.surface)
-        self.titleLinkGraphic03.draw(self.surface)
-        self.titleOthers.draw(self.surface)
-        self.titleLinkTutorialCreateButtonInYoutube.draw(self.surface)
-        self.titleLinkSourceCode.draw(self.surface)
-        self.titleBack.draw(self.surface)
-        self.titleBack.draw(self.surface)
-        if not self.isHiddenPasswordBox:
+        if self.isHiddenPasswordBox:
+            self.titleMusic.draw(self.surface)
+            self.titleLinkMusic01.draw(self.surface)
+            self.titleLinkMusic02.draw(self.surface)
+            self.titleSound.draw(self.surface)
+            self.titleLinkSound01.draw(self.surface)
+            self.titleLinkSound02.draw(self.surface)
+            self.titleLinkSound03.draw(self.surface)
+            self.titleLinkSound04.draw(self.surface)
+            self.titleLinkSound05.draw(self.surface)
+            self.titleGraphic.draw(self.surface)
+            self.titleLinkGraphic01.draw(self.surface)
+            self.titleLinkGraphic02.draw(self.surface)
+            self.titleLinkGraphic03.draw(self.surface)
+            self.titleOthers.draw(self.surface)
+            self.titleLinkTutorialCreateButtonInYoutube.draw(self.surface)
+            self.titleLinkSourceCode.draw(self.surface)
+            self.titleBack.draw(self.surface)
+            self.titleBack.draw(self.surface)
+        elif not self.isHiddenPasswordBox:
             self.passwordBox.draw(self.surface)
     
     ###########  Draw PlayGame Menu in another surface  #####################################################
