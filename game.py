@@ -254,43 +254,43 @@ class Game:
                     ###########   Select the content that the cursor is pointing at   #######################
                     if event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        ###########   The cursor is pointing at "Gamemode setting"   ########################
+                        ###########   The cursor is pointing at "Music00: BoyWithUkey - Loafers"   ########################
                         if self.aboutGameMenu.cursor == 0:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Game setting"   ############################
-                        if self.aboutGameMenu.cursor == 1:
                             webbrowser.open(
                                 url="https://www.youtube.com/watch?v=iGCE7nXfQK8&list=PLZQKIedkyIQ07V8CiKUc8KkBL_aekG77o&index=2")
-                        ###########   The cursor is pointing at "Sound setting"   ###########################
+                        ###########   The cursor is pointing at "Music01: Sweden - C418"   ############################
+                        if self.aboutGameMenu.cursor == 1:
+                            webbrowser.open(utl="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Change Button"   ###########################
                         elif self.aboutGameMenu.cursor == 2:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://drive.google.com/file/d/1RV6iASyK85xAnvJ1OZl99khjsnmhi_0g/view?usp=sharing")
+                        ###########   The cursor is pointing at "Press Button"   ###########################
                         elif self.aboutGameMenu.cursor == 3:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://drive.google.com/file/d/1gu6LhBLcEVvN_x9rTD95nLLwzuWoVbdC/view?usp=sharing")
+                        ###########   The cursor is pointing at "Snake eat food"   ###########################
                         elif self.aboutGameMenu.cursor == 4:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://drive.google.com/file/d/1oeuZJTJYihGg22lgQX0hQaTSlDpNcrxw/view?usp=sharing")
+                        ###########   The cursor is pointing at "Game Over"   ###########################
                         elif self.aboutGameMenu.cursor == 5:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://pixabay.com/sound-effects/search/gameover/?manual_search=1&order=None")
+                        ###########   The cursor is pointing at "Win Game"   ###########################
                         elif self.aboutGameMenu.cursor == 6:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://pixabay.com/sound-effects/search/win/?manual_search=1&order=None")
+                        ###########   The cursor is pointing at "Snake"   ###########################
                         elif self.aboutGameMenu.cursor == 7:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://drive.google.com/drive/folders/1z1hBUdLROt_smwh3E25rmqYrmDptpaCn?usp=sharing")
+                        ###########   The cursor is pointing at "Food"   ###########################
                         elif self.aboutGameMenu.cursor == 8:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://drive.google.com/drive/folders/1IBQvUQiYWVVAU1Y_L3Q-yHZWRdFaY-pw?usp=sharing")
+                        ###########   The cursor is pointing at "Wall"   ###########################
                         elif self.aboutGameMenu.cursor == 9:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://drive.google.com/drive/folders/164DmyjPfnDHMxZZhz7OBMTfZXXnF5m4L?usp=sharing")
+                        ###########   The cursor is pointing at "Tutorial create button in pygame (youtube)"   ###########################
                         elif self.aboutGameMenu.cursor == 10:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                            webbrowser.open(url="https://www.youtube.com/watch?v=G8MYGDf_9ho")
+                        ###########   The cursor is pointing at "Source code (if you want)"   ###########################
                         elif self.aboutGameMenu.cursor == 11:
-                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                            webbrowser.open(url="https://github.com/dangngocquan/SimpleSnakeGame")
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.aboutGameMenu.cursor == 12:
                             self.runningMainMenu = True

@@ -103,8 +103,8 @@ class AboutGameMenu:
             self.titleBack.isChosen = False
             self.titleBack.update("BACK", MEDIUM_FONT, 'G')
             
-        self.titleLinkMusic01.update("MUSIC00: Sweden - C418", DESCRIPTION_FONT_2, 'B')
-        self.titleLinkMusic02.update("MUSIC01: BoyWithUke - Loafers", DESCRIPTION_FONT_2, 'B')
+        self.titleLinkMusic01.update("MUSIC00: BoyWithUke - Loafers", DESCRIPTION_FONT_2, 'B')
+        self.titleLinkMusic02.update("MUSIC01: Sweden - C418", DESCRIPTION_FONT_2, 'B')
 
         self.titleLinkSound01.update("CHANGE BUTTON", DESCRIPTION_FONT_2, 'B')
         self.titleLinkSound02.update("PRESS BUTTON", DESCRIPTION_FONT_2, 'B')
