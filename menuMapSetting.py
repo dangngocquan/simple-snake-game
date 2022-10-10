@@ -1,12 +1,6 @@
-import datetime
-import random
 import pygame
 from snake import Snake
 from setting import *
-import setting
-from wall import Wall, WallManager
-import wall
-from grid import Grid
 from grid import *
 from button import Button
 

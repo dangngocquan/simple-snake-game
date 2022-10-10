@@ -1,5 +1,3 @@
-import datetime
-import random
 import pygame
 from snake import Snake
 from setting import *
