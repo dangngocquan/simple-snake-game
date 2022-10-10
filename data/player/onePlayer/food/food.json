@@ -1,29 +1,29 @@
 {
     "FOODS": [
         {
-            "x": 850,
-            "y": 550,
-            "indexFrame": 1
+            "x": 75,
+            "y": 400,
+            "indexFrame": 0
+        },
+        {
+            "x": 975,
+            "y": 350,
+            "indexFrame": 0
+        },
+        {
+            "x": 725,
+            "y": 50,
+            "indexFrame": 0
         },
         {
             "x": 50,
-            "y": 25,
-            "indexFrame": 1
-        },
-        {
-            "x": 500,
-            "y": 525,
-            "indexFrame": 3
-        },
-        {
-            "x": 775,
             "y": 300,
-            "indexFrame": 3
+            "indexFrame": 0
         },
         {
-            "x": 400,
-            "y": 75,
-            "indexFrame": 1
+            "x": 875,
+            "y": 0,
+            "indexFrame": 0
         }
     ]
 }

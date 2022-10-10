@@ -35,10 +35,10 @@ class InGame:
         self.snake = snake
         self.wallManager = wallManager
         self.foodManager = foodManager
-        self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", 
+        self.descriptionTextScreenStart = Button("Press 'SPACE' to start, Press 'ESC' to return Main menu", 
                                                  button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
-        self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu", 
+        self.descriptionTextPauseGame = Button("Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu", 
                                                button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextPauseGame.isChosen = True
         self.scoreTextScreenRunning = Button(f"Score: {self.snake.score}", button.DESCRIPTION_FONT_2, 
@@ -68,7 +68,8 @@ class InGame:
                 self.foodManager.supplementFood(self.snake.coordinateSnakeBlocks(), self.wallManager.coordinateWalls())
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
-                self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", button.DESCRIPTION_FONT_2, 'R')
+                self.descriptionTextScreenStart.update("Press 'SPACE' to start, Press 'ESC' to return Main menu", 
+                                                       button.DESCRIPTION_FONT_2, 'R')
                 self.scoreTextScreenRunning.update(f"Score: {self.snake.score}", button.DESCRIPTION_FONT_2, 'R')
                 self.scoreTextScreenRunning.draw(self.surface)
             elif self.running:
@@ -84,8 +85,9 @@ class InGame:
                 if self.snake.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                        self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu",
-                                                             button.DESCRIPTION_FONT_2, 'R')
+                        self.descriptionTextPauseGame.update(
+                            "Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu",
+                            button.DESCRIPTION_FONT_2, 'R')
             elif self.waiting:
                 pass
         ###########   Only update snake animation   #########################################################
@@ -163,9 +165,9 @@ class InGame02:
         self.snake02 = snake02
         self.foodManager = foodManager
         self.wallManager = wallManager
-        self.descriptionTextScreenStart = Button("Press SPACE to start, Press ESC to return Main menu", button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextScreenStart = Button("Press 'SPACE' to start, Press 'ESC' to return Main menu", button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
-        self.descriptionTextPauseGame = Button("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu", 
+        self.descriptionTextPauseGame = Button("Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu", 
                                                button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextPauseGame.isChosen = True
         self.scoreTextScreenRunning01 = Button(f"First player's score: {self.snake01.score}", button.DESCRIPTION_FONT_2, 
@@ -206,7 +208,7 @@ class InGame02:
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                    self.descriptionTextScreenStart.update("Press SPACE to start, Press ESC to return Main menu", button.DESCRIPTION_FONT_2, 'R')
+                    self.descriptionTextScreenStart.update("Press 'SPACE' to start, Press 'ESC' to return Main menu", button.DESCRIPTION_FONT_2, 'R')
                 if snakeMove01 == True:
                     self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", button.DESCRIPTION_FONT_2, 'B')
                 if snakeMove02 == True:
@@ -233,7 +235,7 @@ class InGame02:
                 if self.snake01.currentDirection == None or self.snake02.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                        self.descriptionTextPauseGame.update("Press SPACE to continue, Press K for a surprise, Press ESC to return Main menu",
+                        self.descriptionTextPauseGame.update("Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu",
                                                              button.DESCRIPTION_FONT_2, 'R')
             elif self.waiting:
                 pass
