@@ -1,4 +1,5 @@
 import sys
+import webbrowser
 import pygame
 from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
@@ -240,7 +241,60 @@ class Game:
                         self.runningOptionsMenu = False
             ###########   Get events when current screen is Options Menu  ###################################        
             elif self.runningAboutGameMenu:
-                pass
+                if event.type == pygame.KEYDOWN:
+                    ###########   Move the cursor   #########################################################
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.aboutGameMenu.cursor += 1
+                        self.aboutGameMenu.cursor %= 13
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.aboutGameMenu.cursor -= 1
+                        self.aboutGameMenu.cursor %= 13
+                    ###########   Select the content that the cursor is pointing at   #######################
+                    if event.key == pygame.K_RETURN:
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        ###########   The cursor is pointing at "Gamemode setting"   ########################
+                        if self.aboutGameMenu.cursor == 0:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Game setting"   ############################
+                        if self.aboutGameMenu.cursor == 1:
+                            webbrowser.open(
+                                url="https://www.youtube.com/watch?v=iGCE7nXfQK8&list=PLZQKIedkyIQ07V8CiKUc8KkBL_aekG77o&index=2")
+                        ###########   The cursor is pointing at "Sound setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 2:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 3:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 4:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 5:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 6:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 7:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 8:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 9:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 10:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        elif self.aboutGameMenu.cursor == 11:
+                            webbrowser.open(url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                        ###########   The cursor is poiting at "Back"   #####################################
+                        elif self.aboutGameMenu.cursor == 12:
+                            self.runningMainMenu = True
+                            self.runningAboutGameMenu = False
             ###########   Get events when current screen is Gamemode Setting Menu   #########################
             elif self.runningGamemodeSettingMenu:
                 if event.type == pygame.KEYDOWN:
