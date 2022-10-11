@@ -1,3 +1,4 @@
+from turtle import pos
 import pygame
 from snake import Snake
 from setting import *
@@ -31,7 +32,8 @@ class GameOverMenu:
         self.cursor = 0
         self.snake = snake
         self.wallManager = wallManager
-        self.snakeDropDependOnMouse = False
+        self.dropType = '5'
+        self.positionMouse = (0,0)
         ########### Buttons in Play Game Menu  ##############################################################
         if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
             self.titleGameOver = Button("<< YOU WON >>", BIG_FONT, width//2, height*3//12)
@@ -45,8 +47,15 @@ class GameOverMenu:
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*8//12)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*10//12)
         
+        
+    def updatePositionMouse(self, positionMouse):
+        self.positionMouse = positionMouse
+        
+    def updateDropType(self, dropType):
+        self.dropType = dropType
+    
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
-    def update(self, type='UpdateTextAnimation', pos=(0,0)):
+    def update(self, type='UpdateTextAnimation'):
         ###########   Update animation of text   ############################################################
         if type == 'UpdateTextAnimation':
             ###########   Update cursor and buttons   #######################################################
@@ -81,7 +90,8 @@ class GameOverMenu:
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
             if self.snake.score < SETTING1['GAMEMODE']['TARGET_SCORE']:
-                self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls(), pos=pos)
+                self.snake.drop(wallCoordinateBlocks=self.wallManager.coordinateWalls(), 
+                                dropType=self.dropType, positionMouse=self.positionMouse)
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
             self.titleGameOver.draw(self.surface)

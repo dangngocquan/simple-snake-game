@@ -10,7 +10,7 @@
     "SNAKE": {
         "MOVE_SPEED": 15,
         "ANIMATION_SPEED": 6,
-        "DROP_SPEED": 45
+        "DROP_SPEED": 15
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
@@ -24,6 +24,6 @@
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {
-        "INDEX_MAP": 0
+        "INDEX_MAP": 2
     }
 }

@@ -1020,8 +1020,12 @@ class Game:
             
             ###########   Get event when current screen is Game Over Menu   #################################
             elif self.runningGameOverMenu:
-                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                self.gameOverMenu.updatePositionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.KEYDOWN:
+                    if event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3,
+                                     pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7]:
+                        self.gameOverMenu.updateDropType(pygame.key.name(event.key))
+                    elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.gameOverMenu.cursor += 1
                         self.gameOverMenu.cursor %= 2
@@ -1050,7 +1054,7 @@ class Game:
             
             ###########   Get event when current screen is Game Over Menu 02   ##############################
             elif self.runningGameOverMenu02:
-                 if event.type == pygame.KEYDOWN:
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.gameOverMenu02.cursor += 1
@@ -1171,7 +1175,7 @@ class Game:
         ###########   Update screen when Game Over   ########################################################
         elif self.runningGameOverMenu:
             if self.countTicks % (FPS * self.divisibility // self.inGame.snake.dropSpeed) == 0:
-                self.gameOverMenu.update(type='UpdateSnakeDrop', pos=pygame.mouse.get_pos())
+                self.gameOverMenu.update(type='UpdateSnakeDrop')
             if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * self.divisibility // self.gameOverMenu.FPS) == 0:
