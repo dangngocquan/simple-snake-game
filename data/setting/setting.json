@@ -19,7 +19,7 @@
     },
     "GAMEMODE": {
         "TARGET_SCORE": 3000,
-        "NUMBER_PLAYERS": 1,
+        "NUMBER_PLAYERS": 2,
         "AUTO_SPEED_UP": "OFF",
         "VIEW_CONTROL": "Third-person view"
     },

@@ -2,29 +2,29 @@
     "HEAD": [
         {
             "direction": "UU",
-            "indexFrame": 5,
+            "indexFrame": 0,
             "x": 750,
-            "y": 150
+            "y": 300
         }
     ],
     "BODY": [
         {
             "direction": "UU",
-            "indexFrame": 6,
+            "indexFrame": 1,
             "x": 750,
-            "y": 175
+            "y": 325
         }
     ],
     "TAIL": [
         {
             "direction": "UU",
-            "indexFrame": 0,
+            "indexFrame": 2,
             "x": 750,
-            "y": 200
+            "y": 350
         }
     ],
     "score": 0,
-    "currentDirection": null,
+    "currentDirection": "UU",
     "previousDirection": "UU",
     "typeColor": "green"
 }

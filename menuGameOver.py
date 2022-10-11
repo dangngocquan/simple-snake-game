@@ -32,7 +32,7 @@ class GameOverMenu:
         self.cursor = 0
         self.snake = snake
         self.wallManager = wallManager
-        self.dropType = '5'
+        self.dropType = '0'
         self.positionMouse = (0,0)
         ########### Buttons in Play Game Menu  ##############################################################
         if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
@@ -133,6 +133,8 @@ class GameOverMenu02:
         self.snake01 = snake01
         self.snake02 = snake02
         self.wallManager = wallManager
+        self.dropType = '0'
+        self.positionMouse = (0,0)
         self.winner = winner
         snake01Died = self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks(),
                                         wallCoordinates=self.wallManager.coordinateWalls())
@@ -190,6 +192,13 @@ class GameOverMenu02:
         self.titlePlayer02.isChosen = True 
         self.titleScore01.isChosen = True
         self.titleScore02.isChosen = True
+        
+    def updatePositionMouse(self, positionMouse):
+        self.positionMouse = positionMouse
+        
+    def updateDropType(self, dropType):
+        self.dropType = dropType
+        
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
         ###########   Update animation of text   ############################################################
@@ -244,10 +253,12 @@ class GameOverMenu02:
             ###########   Draw new buttons   ################################################################
             if self.winner == 0 or self.winner == 2:
                 self.snake01.drop(otherSnakeCoordinateBlocks=self.snake02.coordinateSnakeBlocks(),
-                                  wallCoordinateBlocks=self.wallManager.coordinateWalls())
+                                  wallCoordinateBlocks=self.wallManager.coordinateWalls(),
+                                  dropType=self.dropType, positionMouse=self.positionMouse)
             if self.winner == 0 or self.winner == 1:
                 self.snake02.drop(otherSnakeCoordinateBlocks=self.snake01.coordinateSnakeBlocks(),
-                                  wallCoordinateBlocks=self.wallManager.coordinateWalls())
+                                  wallCoordinateBlocks=self.wallManager.coordinateWalls(),
+                                  dropType=self.dropType, positionMouse=self.positionMouse)
             self.wallManager.draw(self.surface)
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
@@ -268,9 +279,13 @@ class GameOverMenu02:
             ###########   Draw new buttons   ################################################################
             self.wallManager.draw(self.surface)
             self.snake01.updateAnimation()
-            self.snake01.draw(self.surface)
             self.snake02.updateAnimation()
-            self.snake02.draw(self.surface)
+            if self.winner == 2:
+                self.snake01.draw(self.surface)
+                self.snake02.draw(self.surface)
+            else:
+                self.snake02.draw(self.surface)
+                self.snake01.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleStatusPlayer01.draw(self.surface)
             self.titleStatusPlayer02.draw(self.surface)
