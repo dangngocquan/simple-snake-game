@@ -1,3 +1,4 @@
+import random
 import pygame
 from setting import *
 import setting
@@ -207,8 +208,12 @@ class Snake:
         self.score = score
 
     ###########  Get all coordinate of Snake Blocks #########################################################
-    def coordinateSnakeBlocks(self):
-        return [snakeBlock.coordinate() for snakeBlock in (self.head + self.body + self.tail)]
+    def coordinateSnakeBlocks(self, avoidCoordinates=[]):
+        ans = []
+        for snakeBlock in (self.head + self.body + self.tail):
+            if snakeBlock.coordinate() not in avoidCoordinates:
+                ans.append(snakeBlock.coordinate())
+        return ans
     
     ###########   Check if snake can move or not with next direction   ######################################
     def checkSnakeCanMove(self, aDirection):
@@ -337,15 +342,36 @@ class Snake:
             self.body[index].draw(self.surface)
         self.head[0].draw(self.surface)
     
+    def correctCoordinate(self, by='x'):
+        if by == 'x':
+            for snakeBlock in (self.head + self.body + self.tail):
+                tempCoordinate = snakeBlock.coordinate()
+                if tempCoordinate[0] % CELL_SIZE != 0:
+                    snakeBlock.setCoordinate(tempCoordinate[0]//CELL_SIZE*CELL_SIZE, tempCoordinate[1])
+        elif by == 'y':
+            for snakeBlock in (self.head + self.body + self.tail):
+                tempCoordinate = snakeBlock.coordinate()
+                if tempCoordinate[1] % CELL_SIZE != 0:
+                    snakeBlock.setCoordinate(tempCoordinate[0], tempCoordinate[1]//CELL_SIZE*CELL_SIZE)
+        elif by == 'xy':
+            for snakeBlock in (self.head + self.body + self.tail):
+                tempCoordinate = snakeBlock.coordinate()
+                if tempCoordinate[0] % CELL_SIZE != 0 or tempCoordinate[1] % CELL_SIZE != 0:
+                    snakeBlock.setCoordinate(tempCoordinate[0]//CELL_SIZE*CELL_SIZE, 
+                                             tempCoordinate[1]//CELL_SIZE*CELL_SIZE)
+    
+    def isOverlap(self, x, y, coordinates=[]):
+        for coordinate in coordinates:
+            x0 = coordinate[0]
+            y0 = coordinate[1]
+            if (x0-CELL_SIZE < x and x < x0+CELL_SIZE and y0-CELL_SIZE < y and y < y0+CELL_SIZE):
+                return True
+        return False
+    
     ###########   Snake drop   ##############################################################################
     def drop(self, otherSnakeCoordinateBlocks=[], wallCoordinateBlocks=[], dropType='0', positionMouse=(0,0)):
         if dropType == '0':
-            for snakeBlock in (self.head + self.body + self.tail):
-                tempCoordinate = snakeBlock.coordinate()
-                x1 = tempCoordinate[0]*CELL_SIZE % (NUMBER_COLUMNS*CELL_SIZE)
-                y1 = tempCoordinate[1]*CELL_SIZE % (NUMBER_ROWS*CELL_SIZE)
-                if tempCoordinate[0] % CELL_SIZE != 0 or tempCoordinate[1] % CELL_SIZE != 0:
-                    snakeBlock.setCoordinate(x1, y1)
+            self.correctCoordinate('xy')
             for snakeBlock in (self.head + self.body + self.tail):
                 if [snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in self.coordinateSnakeBlocks():
                     if [snakeBlock.x, snakeBlock.y + SETTING2['SCREEN']['CELL_SIZE']] not in (
@@ -392,21 +418,15 @@ class Snake:
         elif dropType == '1':
             x = positionMouse[0]//CELL_SIZE*CELL_SIZE
             y = positionMouse[1]//CELL_SIZE*CELL_SIZE
-            for snakeBlock in (self.head + self.body + self.tail):
-                tempCoordinate = snakeBlock.coordinate()
-                if tempCoordinate[0] == x:
-                    continue
-                x1 = tempCoordinate[0]*CELL_SIZE % (NUMBER_COLUMNS*CELL_SIZE)
-                y1 = tempCoordinate[1]*CELL_SIZE % (NUMBER_ROWS*CELL_SIZE)
-                if tempCoordinate[0] % CELL_SIZE != 0 or tempCoordinate[1] % CELL_SIZE != 0:
-                    snakeBlock.setCoordinate(x1, y1)
+            self.correctCoordinate('xy')
             for snakeBlock in (self.head + self.body + self.tail):
                 tempCoordinate = snakeBlock.coordinate()
                 if tempCoordinate[0] == x:
                     continue
                 x1 = tempCoordinate[0] + (x - tempCoordinate[0])//abs(tempCoordinate[0] - x)*CELL_SIZE
                 y1 = tempCoordinate[1]
-                if [x1, y1] not in (self.coordinateSnakeBlocks() + otherSnakeCoordinateBlocks + wallCoordinateBlocks):
+                if [x1, y1] not in (self.coordinateSnakeBlocks() 
+                                    + otherSnakeCoordinateBlocks + wallCoordinateBlocks):
                     snakeBlock.setCoordinate(x1, y1)
         elif dropType == '2':
             x = positionMouse[0]
@@ -415,21 +435,16 @@ class Snake:
                 tempCoordinate = snakeBlock.coordinate()
                 if tempCoordinate[0] == x:
                     continue
-                x1 = tempCoordinate[0] + (x - tempCoordinate[0])//abs(tempCoordinate[0] - x)
+                x1 = tempCoordinate[0] + (x-tempCoordinate[0])//abs(x-tempCoordinate[0])
                 y1 = tempCoordinate[1]
-                if [x1, y1] not in (self.coordinateSnakeBlocks() + otherSnakeCoordinateBlocks + wallCoordinateBlocks):
+                if not self.isOverlap(x1, y1, (self.coordinateSnakeBlocks(avoidCoordinates=[tempCoordinate]) 
+                                    + otherSnakeCoordinateBlocks + wallCoordinateBlocks)):
                     snakeBlock.setCoordinate(x1, y1)
+                
         elif dropType == '3':
             x = positionMouse[0]//CELL_SIZE*CELL_SIZE
             y = positionMouse[1]//CELL_SIZE*CELL_SIZE
-            for snakeBlock in (self.head + self.body + self.tail):
-                tempCoordinate = snakeBlock.coordinate()
-                if tempCoordinate[1] == y:
-                    continue
-                x1 = tempCoordinate[0]*CELL_SIZE % (NUMBER_COLUMNS*CELL_SIZE)
-                y1 = tempCoordinate[1]*CELL_SIZE % (NUMBER_ROWS*CELL_SIZE)
-                if tempCoordinate[0] % CELL_SIZE != 0 or tempCoordinate[1] % CELL_SIZE != 0:
-                    snakeBlock.setCoordinate(x1, y1)
+            self.correctCoordinate('xy')
             for snakeBlock in (self.head + self.body + self.tail):
                 tempCoordinate = snakeBlock.coordinate()
                 if tempCoordinate[1] == y:
@@ -445,64 +460,37 @@ class Snake:
                 tempCoordinate = snakeBlock.coordinate()
                 if tempCoordinate[1] == y:
                     continue
-                x1 = tempCoordinate[0] 
-                y1 = tempCoordinate[1] + (y - tempCoordinate[1])//abs(tempCoordinate[1] - y)
-                if [x1, y1] not in (self.coordinateSnakeBlocks() + otherSnakeCoordinateBlocks + wallCoordinateBlocks):
-                    snakeBlock.setCoordinate(x1, y1)    
+                x1 = tempCoordinate[0]
+                y1 = tempCoordinate[1] + (y-tempCoordinate[1])//abs(y-tempCoordinate[1])
+                if not self.isOverlap(x1, y1, (self.coordinateSnakeBlocks(avoidCoordinates=[tempCoordinate]) 
+                                    + otherSnakeCoordinateBlocks + wallCoordinateBlocks)):
+                    snakeBlock.setCoordinate(x1, y1)
         elif dropType == '5':
-            x = positionMouse[0]//CELL_SIZE*CELL_SIZE
-            y = positionMouse[1]//CELL_SIZE*CELL_SIZE
+            x = positionMouse[0]
+            y = positionMouse[1]
             for snakeBlock in (self.head + self.body + self.tail):
                 tempCoordinate = snakeBlock.coordinate()
-                snakeBlock.setCoordinate(x=tempCoordinate[0]//CELL_SIZE*CELL_SIZE,
-                                         y=tempCoordinate[1]//CELL_SIZE*CELL_SIZE)
-                tempCoordinate = snakeBlock.coordinate()
-                # if tempCoordinate[0] == x or tempCoordinate[1] == y:
-                #     continue
-                # k = min(abs(tempCoordinate[0] - x), abs(tempCoordinate[1] - y))//CELL_SIZE
-                # x1 = tempCoordinate[0] + (x//CELL_SIZE - tempCoordinate[0]//CELL_SIZE)//k*CELL_SIZE
-                # y1 = tempCoordinate[1] + (y//CELL_SIZE - tempCoordinate[1]//CELL_SIZE)//k*CELL_SIZE
-                # if [x1, y1] in (self.coordinateSnakeBlocks() + otherSnakeCoordinateBlocks + wallCoordinateBlocks):
-                #     k = 1
-                #     x1 = tempCoordinate[0] + (x - tempCoordinate[0])//k*CELL_SIZE
-                #     y1 = tempCoordinate[1] + (y - tempCoordinate[1])//k*CELL_SIZE
-                # if [x1, y1] not in (self.coordinateSnakeBlocks() + otherSnakeCoordinateBlocks + wallCoordinateBlocks):
-                #     snakeBlock.setCoordinate(x1, y1)
+                
+                k = max(abs(x-tempCoordinate[0]), abs(y-tempCoordinate[1]))
+                if k == 0:
+                    continue
+                x1 = tempCoordinate[0] + (x - tempCoordinate[0])//k
+                y1 = tempCoordinate[1] + (y - tempCoordinate[1])//k
+                if not self.isOverlap(x1, y1, (self.coordinateSnakeBlocks(avoidCoordinates=[tempCoordinate]) 
+                                    + otherSnakeCoordinateBlocks + wallCoordinateBlocks)):
+                    snakeBlock.setCoordinate(x1, y1)
         elif dropType == '6':
             x = positionMouse[0]
             y = positionMouse[1]
             for snakeBlock in (self.head + self.body + self.tail):
                 tempCoordinate = snakeBlock.coordinate()
-                if tempCoordinate[0] == x or tempCoordinate[1] == y:
+                
+                k = min(abs(x-tempCoordinate[0]), abs(y-tempCoordinate[1]))
+                if k == 0:
                     continue
-                k = min(abs(tempCoordinate[0] - x), abs(tempCoordinate[1] - y))
                 x1 = tempCoordinate[0] + (x - tempCoordinate[0])//k
                 y1 = tempCoordinate[1] + (y - tempCoordinate[1])//k
-                if [x1//CELL_SIZE*CELL_SIZE, y1//CELL_SIZE*CELL_SIZE] in (self.coordinateSnakeBlocks() 
-                                                                          + otherSnakeCoordinateBlocks 
-                                                                          + wallCoordinateBlocks):
-                    k = 1
-                    x1 = tempCoordinate[0] + (x - tempCoordinate[0])//k
-                    y1 = tempCoordinate[1] + (y - tempCoordinate[1])//k
-                if ([x1//CELL_SIZE*CELL_SIZE, y1//CELL_SIZE*CELL_SIZE] not in (
-                                                                              self.coordinateSnakeBlocks() 
-                                                                              + otherSnakeCoordinateBlocks 
-                                                                              + wallCoordinateBlocks)
-                    and [x1//CELL_SIZE*CELL_SIZE + CELL_SIZE, y1//CELL_SIZE*CELL_SIZE + CELL_SIZE] not in (
-                                                                              self.coordinateSnakeBlocks() 
-                                                                              + otherSnakeCoordinateBlocks 
-                                                                              + wallCoordinateBlocks)
-                    and [x1//CELL_SIZE*CELL_SIZE + CELL_SIZE, y1//CELL_SIZE*CELL_SIZE - CELL_SIZE] not in (
-                                                                              self.coordinateSnakeBlocks() 
-                                                                              + otherSnakeCoordinateBlocks 
-                                                                              + wallCoordinateBlocks)
-                    and [x1//CELL_SIZE*CELL_SIZE - CELL_SIZE, y1//CELL_SIZE*CELL_SIZE + CELL_SIZE] not in (
-                                                                              self.coordinateSnakeBlocks() 
-                                                                              + otherSnakeCoordinateBlocks 
-                                                                              + wallCoordinateBlocks)
-                    and [x1//CELL_SIZE*CELL_SIZE - CELL_SIZE, y1//CELL_SIZE*CELL_SIZE - CELL_SIZE] not in (self.coordinateSnakeBlocks() 
-                                                                              + otherSnakeCoordinateBlocks 
-                                                                              + wallCoordinateBlocks)):
+                if [x1, y1] not in self.coordinateSnakeBlocks():
                     snakeBlock.setCoordinate(x1, y1)
         ###########   Remove old images   ###################################################################
         self.surface.fill((0, 0, 0, 0))

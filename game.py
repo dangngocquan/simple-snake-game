@@ -1174,8 +1174,15 @@ class Game:
                 pass
         ###########   Update screen when Game Over   ########################################################
         elif self.runningGameOverMenu:
-            if self.countTicks % (FPS * self.divisibility // self.inGame.snake.dropSpeed) == 0:
-                self.gameOverMenu.update(type='UpdateSnakeDrop')
+            if self.gameOverMenu.dropType in ['2', '4', '5']:
+                if self.countTicks % (FPS * self.divisibility // (self.inGame.snake.dropSpeed*10)) == 0:
+                    self.gameOverMenu.update(type='UpdateSnakeDrop')
+            if self.gameOverMenu.dropType in ['6']:
+                if self.countTicks % (FPS * self.divisibility // (self.inGame.snake.dropSpeed*4)) == 0:
+                    self.gameOverMenu.update(type='UpdateSnakeDrop')
+            else:
+                if self.countTicks % (FPS * self.divisibility // (self.inGame.snake.dropSpeed)) == 0:
+                    self.gameOverMenu.update(type='UpdateSnakeDrop')
             if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
                 self.gameOverMenu.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * self.divisibility // self.gameOverMenu.FPS) == 0:
