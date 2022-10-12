@@ -1,9 +1,9 @@
-from turtle import position
 import pygame
 from setting import *
 import setting
 from grid import *
 from button import Button
+from account import ACCOUNT_MANAGER
 
 ###########   VARIABLE   ####################################################################################
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
@@ -71,9 +71,38 @@ class ExistingAccountMenu:
         self.container22Rect = self.container22.get_rect()
         self.container22Rect.topleft = (0, 0)
         
-        self.container21 = pygame.Surface((self.container2Rect.width - self.container22Rect.width, height), pygame.SRCALPHA)
+        self.container21 = pygame.Surface((self.container2Rect.width - self.container22Rect.width - 20, 
+                                           40*10), pygame.SRCALPHA)
         self.container21Rect = self.container21.get_rect()
-        self.container21Rect.topleft = (0, 0)
+        self.container21Rect.topleft = (0, self.selection1Rect.height)
+        
+        ######################   In container21   ############################################################
+        self.subtractNumber = 0
+        self.listCell = []
+        self.listCellRect = []
+        self.listTitleNameAccount = []
+        for i in range(len(ACCOUNT_MANAGER.listAccount)):
+            cell = pygame.Surface((self.container21Rect.width, 40), pygame.SRCALPHA)
+            cellRect = cell.get_rect()
+            cellRect.topleft = (0, 40*i - self.subtractNumber)
+            titleName = Button(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT, 20, 10, 'topLeft')
+            self.listCell.append(cell)
+            self.listCellRect.append(cellRect)
+            self.listTitleNameAccount.append(titleName)
+        
+        ######################   In container22   ############################################################
+        self.titleName = Button(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", MEDIUM_FONT,
+                                         20, self.container22Rect.height//24*2, 'topLeft')
+        self.titleCreatedTime = Button(
+            f"Created time: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].createdTime}", DESCRIPTION_FONT_2,
+                                         20, self.container22Rect.height//24*6, 'topLeft')
+        self.titleWinMatch = Button(f"Number win match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch}", 
+                                    DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*8, 'topLeft')
+        self.titleLoseMatch = Button(f"Number loss match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch}", 
+                                     DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*10, 'topLeft')
+        tempSeconds = ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed
+        self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600}h{(tempSeconds%3600)//60}m{tempSeconds%60}s", 
+                                     DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*12, 'topLeft')
         
     
     def updatePostionMouse(self, position):
@@ -142,23 +171,37 @@ class ExistingAccountMenu:
             self.titleCurrentAccount.isChosen = False
             self.titleOtherAccounts.isChosen = False
             self.titleBack.isChosen = False
-    
-    
+        if self.cursor == 1:
+            for i in range(len(ACCOUNT_MANAGER.listAccount)):
+                if self.isPointedAt(positionMouse=self.positionMouse,
+                                    surfaceCheckRect=self.listCellRect[i],
+                                    parent1SurfaceRect=self.container21Rect,
+                                    parent2SurfaceRect=self.container2Rect):
+                    self.listTitleNameAccount[i].isChosen = True
+                else:
+                    self.listTitleNameAccount[i].isChosen = False
+            
+    def increaseSubtractNumber(self):
+        if len(ACCOUNT_MANAGER.listAccount) > 10:
+            self.subtractNumber += 40
+            self.subtractNumber = min(len(ACCOUNT_MANAGER.listAccount)*40 - 400, self.subtractNumber)
+        
+    def decreaseSubtractNumber(self):
+        self.subtractNumber -= 40
+        self.subtractNumber = max(0, self.subtractNumber)
        
     ###########  Update cursor and button status in Accounts Setting Menu ###############################################
     def update(self):
         ###########  Update cursor and button of Accounts Setting menu  #################################################
         self.updateMousePoitedAt()
         
-        # if self.cursor == 0:
-        #     pass
-        # elif self.cursor == 1:
-        #     pass
-        # elif self.cursor == 2:
-        #     pass
         self.titleCurrentAccount.update("CURRENT ACCOUNT", DESCRIPTION_FONT, 'B')
         self.titleOtherAccounts.update("OTHER ACCOUNTS", DESCRIPTION_FONT, 'B')
         self.titleBack.update("BACK", DESCRIPTION_FONT, 'B')
+        
+        for i in range(len(ACCOUNT_MANAGER.listAccount)):
+            self.listTitleNameAccount[i].update(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT, 'B')
+            self.listCellRect[i].topleft = (0, 40*i - self.subtractNumber)
         ###########  Remove old display  #############################################################
         self.surface.fill((0, 0, 0, 0))
         self.container1.fill((0, 0, 0, 0))
@@ -172,8 +215,10 @@ class ExistingAccountMenu:
         elif self.cursor == 2:
             self.selection3.fill((70, 70, 70))
         self.container2.fill((111, 111, 111))
-        self.container21.fill((0, 111, 111))
-        self.container22.fill((111, 0, 111))
+        self.container21.fill((90, 90, 90))
+        for i in range(len(ACCOUNT_MANAGER.listAccount)):
+                self.listCell[i].fill((90, 90, 90))
+        self.container22.fill((111, 111, 111))
         ###########  Draw new screen   ######################################################################
         self.titleCurrentAccount.draw(self.selection1)
         self.titleOtherAccounts.draw(self.selection2)
@@ -181,7 +226,20 @@ class ExistingAccountMenu:
         self.container1.blit(self.selection1, self.selection1Rect)
         self.container1.blit(self.selection2, self.selection2Rect)
         self.container1.blit(self.selection3, self.selection3Rect)
-        self.container2.blit(self.container21, self.container21Rect)
+        
+        self.container22.blit(self.titleName.text, self.titleName.textRect)
+        self.container22.blit(self.titleCreatedTime.text, self.titleCreatedTime.textRect)
+        self.container22.blit(self.titleWinMatch.text, self.titleWinMatch.textRect)
+        self.container22.blit(self.titleLoseMatch.text, self.titleLoseMatch.textRect)
+        self.container22.blit(self.titleTotalTimePlayed.text, self.titleTotalTimePlayed.textRect)
+        if self.cursor == 0:
+            self.container22Rect.topleft = (self.container2Rect.width//16*2, 0)
+        elif self.cursor == 1:
+            self.container22Rect.topleft = (self.container2Rect.width//8*3, 0)
+            for i in range(len(ACCOUNT_MANAGER.listAccount)):
+                self.listCell[i].blit(self.listTitleNameAccount[i].text, self.listTitleNameAccount[i].textRect)
+                self.container21.blit(self.listCell[i], self.listCellRect[i])
+            self.container2.blit(self.container21, self.container21Rect)    
         self.container2.blit(self.container22, self.container22Rect)
         self.surface.blit(self.container1, self.container1Rect)
         self.surface.blit(self.container2, self.container2Rect)

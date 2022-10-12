@@ -241,6 +241,13 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.existingAccountMenu.updatePositonLeftMouse()
+                    elif event.button == pygame.BUTTON_WHEELDOWN:
+                        self.existingAccountMenu.increaseSubtractNumber()
+                    elif event.button == pygame.BUTTON_WHEELUP:
+                        self.existingAccountMenu.decreaseSubtractNumber()
+                if self.existingAccountMenu.cursor == 2:
+                    self.runningExistingAccountMenu = False
+                    self.runningAccountsSetting = True
             ###########   Get events when current screen is Options Menu  ###################################        
             elif self.runningOptionsMenu:
                 if event.type == pygame.KEYDOWN:

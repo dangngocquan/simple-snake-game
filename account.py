@@ -72,3 +72,5 @@ def saveData(accountManager=[], path='./data/accounts/accounts.json'):
         json.dump(data, file, indent=4)
     file.close()
     
+
+ACCOUNT_MANAGER = loadData()
