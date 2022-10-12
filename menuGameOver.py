@@ -35,6 +35,8 @@ class GameOverMenu:
         self.dropType = '0'
         self.positionMouse = (0,0)
         ########### Buttons in Play Game Menu  ##############################################################
+        self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
+                                       DESCRIPTION_FONT_2, width//2, height*1//24)
         if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
             self.titleGameOver = Button("<< YOU WON >>", BIG_FONT, width//2, height*3//12)
         else:
@@ -79,6 +81,7 @@ class GameOverMenu:
             ###########   Draw new buttons   ################################################################
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
+            self.titleDescription.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleTargetScore.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -94,6 +97,7 @@ class GameOverMenu:
                                 dropType=self.dropType, positionMouse=self.positionMouse)
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
+            self.titleDescription.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleTargetScore.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -107,6 +111,7 @@ class GameOverMenu:
             self.snake.updateAnimation()
             self.wallManager.draw(self.surface)
             self.snake.draw(self.surface)
+            self.titleDescription.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleTargetScore.draw(self.surface)
             self.titleScore.draw(self.surface)
@@ -161,6 +166,8 @@ class GameOverMenu02:
             elif snake02Died:
                 self.winner = 1
         ########### Buttons in Play Game Menu  ##############################################################
+        self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
+                                       DESCRIPTION_FONT_2, width//2, height*1//24)
         self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
         self.titleGameOver.isChosen = True
         self.titleStatusPlayer01 = Button("LOSER", MEDIUM_FONT_2, width//4, height*4//12)
@@ -236,6 +243,7 @@ class GameOverMenu02:
             self.wallManager.draw(self.surface)
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
+            self.titleDescription.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleStatusPlayer01.draw(self.surface)
             self.titleStatusPlayer02.draw(self.surface)
@@ -262,6 +270,7 @@ class GameOverMenu02:
             self.wallManager.draw(self.surface)
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
+            self.titleDescription.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleStatusPlayer01.draw(self.surface)
             self.titleStatusPlayer02.draw(self.surface)
@@ -286,6 +295,7 @@ class GameOverMenu02:
             else:
                 self.snake02.draw(self.surface)
                 self.snake01.draw(self.surface)
+            self.titleDescription.draw(self.surface)
             self.titleGameOver.draw(self.surface)
             self.titleStatusPlayer01.draw(self.surface)
             self.titleStatusPlayer02.draw(self.surface)

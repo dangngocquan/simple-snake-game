@@ -1,4 +1,3 @@
-import datetime
 from game import Game
 
 def main():

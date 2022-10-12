@@ -28,36 +28,54 @@ class MainMenu:
         ########### Buttons   ###############################################################################
         self.titleSimpleSnake = Button("SIMPLE SNAKE", BIG_FONT, width//2, height//6)
         self.titleSimpleSnake.isChosen = True
-        self.titlePlayGame = Button("PLAY GAME", MEDIUM_FONT, width//2, height*4//12)
-        self.titleOptions = Button("OPTIONS", MEDIUM_FONT, width//2, height*6//12)
-        self.titleAboutGame = Button("ABOUT GAME", MEDIUM_FONT, width//2, height*8//12)
-        self.titleQuitGame = Button("QUIT GAME", MEDIUM_FONT, width//2, height*10//12)
+        self.titlePlayGame = Button("PLAY GAME", MEDIUM_FONT, width//2, height*8//24)
+        self.titleAccount = Button("ACCOUNT", MEDIUM_FONT, width//2, height*11//24)
+        self.titleOptions = Button("OPTIONS", MEDIUM_FONT, width//2, height*14//24)
+        self.titleAboutGame = Button("ABOUT GAME", MEDIUM_FONT, width//2, height*17//24)
+        self.titleQuitGame = Button("QUIT GAME", MEDIUM_FONT, width//2, height*20//24)
         
     ###########  Update cursor and button status in Main Menu ###############################################
     def update(self):
         ###########  Update cursor and button of main menu  #################################################
         if self.cursor == 0:
             self.titlePlayGame.isChosen = True
+            self.titleAccount.isChosen = False
             self.titleOptions.isChosen = False
             self.titleAboutGame.isChosen = False
             self.titleQuitGame.isChosen = False
             self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
             self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT_HORVED)
+            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
             self.titleOptions.update('OPTIONS', MEDIUM_FONT)
             self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
         elif self.cursor == 1:
             self.titlePlayGame.isChosen = False
+            self.titleAccount.isChosen = True
+            self.titleOptions.isChosen = False
+            self.titleAboutGame.isChosen = False
+            self.titleQuitGame.isChosen = False
+            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
+            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
+            self.titleAccount.update("ACCOUNT", MEDIUM_FONT_HORVED)
+            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
+            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
+            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
+        elif self.cursor == 2:
+            self.titlePlayGame.isChosen = False
+            self.titleAccount.isChosen = False
             self.titleOptions.isChosen = True
             self.titleAboutGame.isChosen = False
             self.titleQuitGame.isChosen = False
             self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
             self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
+            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
             self.titleOptions.update('OPTIONS', MEDIUM_FONT_HORVED)
             self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 2:
+        elif self.cursor == 3:
             self.titlePlayGame.isChosen = False
+            self.titleAccount.isChosen = False
             self.titleOptions.isChosen = False
             self.titleAboutGame.isChosen = True
             self.titleQuitGame.isChosen = False
@@ -66,8 +84,9 @@ class MainMenu:
             self.titleOptions.update('OPTIONS', MEDIUM_FONT)
             self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT_HORVED)
             self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 3:
+        elif self.cursor == 4:
             self.titlePlayGame.isChosen = False
+            self.titleAccount.isChosen = False
             self.titleOptions.isChosen = False
             self.titleAboutGame.isChosen = False
             self.titleQuitGame.isChosen = True
@@ -81,6 +100,7 @@ class MainMenu:
         ###########  Draw new button   ######################################################################
         self.titleSimpleSnake.draw(self.surface)
         self.titlePlayGame.draw(self.surface)
+        self.titleAccount.draw(self.surface)
         self.titleOptions.draw(self.surface)
         self.titleAboutGame.draw(self.surface)
         self.titleQuitGame.draw(self.surface)

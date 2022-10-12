@@ -361,10 +361,12 @@ class Snake:
                                              tempCoordinate[1]//CELL_SIZE*CELL_SIZE)
     
     def isOverlap(self, x, y, coordinates=[]):
+        if x > CELL_SIZE*(NUMBER_COLUMNS-1) or y > CELL_SIZE*(NUMBER_ROWS-1):
+            return True
         for coordinate in coordinates:
             x0 = coordinate[0]
             y0 = coordinate[1]
-            if (x0-CELL_SIZE < x and x < x0+CELL_SIZE and y0-CELL_SIZE < y and y < y0+CELL_SIZE):
+            if ((x0-CELL_SIZE < x and x < x0+CELL_SIZE and y0-CELL_SIZE < y and y < y0+CELL_SIZE)):
                 return True
         return False
     

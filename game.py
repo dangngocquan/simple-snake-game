@@ -1,11 +1,12 @@
 import sys
 import webbrowser
-from click import password_option
 import pygame
 from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
 from menuMain import MainMenu
 from menuPlayGame import PlayGameMenu
+from menuAccountsSetting import AccountsSettingMenu
+from menuExistingAccount import ExistingAccountMenu
 from menuOptions import OptionsMenu
 from menuGamemodeSetting import GamemodeSettingMenu
 from menuInGameSetting import GameSettingMenu
@@ -51,6 +52,8 @@ class Game:
         self.runningPlayGameMenu = False
         self.runningInGame = False
         self.runningInGame02 = False
+        self.runningAccountsSetting = False
+        self.runningExistingAccountMenu = False
         self.runningOptionsMenu = False
         self.runningGamemodeSettingMenu = False
         self.runningGameSettingMenu = False
@@ -70,6 +73,8 @@ class Game:
                                          self.inGame.wallManager)
         self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, self.inGame02.snake01,
                                              self.inGame02.snake02, self.inGame02.wallManager)
+        self.accountsSetting = AccountsSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.existingAccountMenu = ExistingAccountMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gamemodeSettingMenu = GamemodeSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gameSettingMenu = GameSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
@@ -132,11 +137,11 @@ class Game:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor += 1
-                        self.mainMenu.cursor %= 4
+                        self.mainMenu.cursor %= 5
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor -= 1
-                        self.mainMenu.cursor %= 4
+                        self.mainMenu.cursor %= 5
                     elif event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.runningMainMenu = False
@@ -144,12 +149,15 @@ class Game:
                             self.runningPlayGameMenu = True
                             self.playGameMenu.cursor = 0
                         elif self.mainMenu.cursor == 1:
+                            self.runningAccountsSetting = True
+                            self.accountsSetting.cursor = 0
+                        elif self.mainMenu.cursor == 2:
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
-                        elif self.mainMenu.cursor == 2:
+                        elif self.mainMenu.cursor == 3:
                             self.runningAboutGameMenu = True
                             self.aboutGameMenu.cursor = 0
-                        elif self.mainMenu.cursor == 3:
+                        elif self.mainMenu.cursor == 4:
                             self.running = False
                             pygame.time.wait(500)
                             pygame.quit()
@@ -206,6 +214,33 @@ class Game:
                             self.runningMainMenu = True
                             self.mainMenu.cursor = 0
                         self.runningPlayGameMenu = False
+            ###########   Get events when current screen is Accounts Setting Menu   #####################################
+            elif self.runningAccountsSetting:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.accountsSetting.cursor += 1
+                        self.accountsSetting.cursor %= 3
+                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                        self.accountsSetting.cursor -= 1
+                        self.accountsSetting.cursor %= 3
+                    elif event.key == pygame.K_RETURN:
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        self.runningAccountsSetting = False
+                        if self.accountsSetting.cursor == 0:
+                            self.runningExistingAccountMenu = True
+                            self.existingAccountMenu.cursor = 0
+                        elif self.accountsSetting.cursor == 1:
+                            pass
+                        elif self.accountsSetting.cursor == 2:
+                            self.runningMainMenu = True
+            ###########   Get events when current screen is Existing Account Menu   #####################################
+            elif self.runningExistingAccountMenu:
+                self.existingAccountMenu.updatePostionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.existingAccountMenu.updatePositonLeftMouse()
             ###########   Get events when current screen is Options Menu  ###################################        
             elif self.runningOptionsMenu:
                 if event.type == pygame.KEYDOWN:
@@ -1205,7 +1240,15 @@ class Game:
             if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.animationSpeed) == 0:
                 self.gameOverMenu02.update(type='UpdateSnakeAnimation')
             if self.countTicks % (FPS * self.divisibility // self.gameOverMenu02.FPS) == 0:
-                self.gameOverMenu02.update()        
+                self.gameOverMenu02.update()       
+        ###########   Update screen when showing Accounts Setting Menu   ####################################
+        elif self.runningAccountsSetting:
+            if self.countTicks % (FPS * self.divisibility // self.accountsSetting.FPS) == 0:
+                self.accountsSetting.update() 
+        ###########   Update screen when showing Existing Account Menu   ####################################
+        elif self.runningExistingAccountMenu:
+            if self.countTicks % (FPS * self.divisibility // self.existingAccountMenu.FPS) == 0:
+                self.existingAccountMenu.update() 
         ###########   Update screen when showing Options Menu   #############################################
         elif self.runningOptionsMenu:
             if self.countTicks % (FPS * self.divisibility // self.optionsMenu.FPS) == 0:
@@ -1259,6 +1302,10 @@ class Game:
             self.gameOverMenu.draw(self.screen)
         elif self.runningGameOverMenu02:
             self.gameOverMenu02.draw(self.screen)
+        elif self.runningAccountsSetting:
+            self.accountsSetting.draw(self.screen)
+        elif self.runningExistingAccountMenu:
+            self.existingAccountMenu.draw(self.screen)
         elif self.runningOptionsMenu:
             self.optionsMenu.draw(self.screen)
         elif self.runningGamemodeSettingMenu:

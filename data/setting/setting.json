@@ -15,15 +15,18 @@
     "SOUND": {
         "MUSIC_INDEX": 0,
         "MUSIC_VOLUME": 100,
-        "SOUND_VOLUME": 50
+        "SOUND_VOLUME": 40
     },
     "GAMEMODE": {
         "TARGET_SCORE": 3000,
-        "NUMBER_PLAYERS": 2,
+        "NUMBER_PLAYERS": 1,
         "AUTO_SPEED_UP": "OFF",
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {
         "INDEX_MAP": 0
+    },
+    "ACCOUNT" : {
+        "INDEX_ACCOUNT" : 0
     }
 }
