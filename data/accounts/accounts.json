@@ -1,21 +1,7 @@
 {
     "ACCOUNTS": [
         {
-            "NAME": "NOBODY1",
-            "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
             "NAME": "NOBODY2",
-            "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "NOBODY3",
             "CREATED_TIME": "12/10/2022 16:01:38",
             "WIN_MATCH": 0,
             "LOSE_MATCH": 0,
@@ -50,13 +36,6 @@
             "TOTAL_TIME_PLAYED": 0
         },
         {
-            "NAME": "NOBODY8",
-            "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
             "NAME": "NOBODY9",
             "CREATED_TIME": "12/10/2022 16:01:38",
             "WIN_MATCH": 0,
@@ -79,20 +58,6 @@
         },
         {
             "NAME": "NOBODY12",
-            "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "NOBODY13",
-            "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "NOBODY14",
             "CREATED_TIME": "12/10/2022 16:01:38",
             "WIN_MATCH": 0,
             "LOSE_MATCH": 0,

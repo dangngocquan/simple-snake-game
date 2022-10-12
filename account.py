@@ -55,8 +55,6 @@ def saveData(accountManager=[], path='./data/accounts/accounts.json'):
         ]
     }
     
-    # accountManager = [Account(name="NOBODY", createdTime=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-    #                           winMatch=0, loseMatch=0, totalTimePlayed=0)]
     for account in accountManager:
         data["ACCOUNTS"].append(
             {
