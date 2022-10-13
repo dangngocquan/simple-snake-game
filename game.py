@@ -140,11 +140,11 @@ class Game:
                     if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor += 1
-                        self.mainMenu.cursor %= 5
+                        self.mainMenu.cursor %= 7
                     elif event.key == pygame.K_UP or event.key == pygame.K_w:
                         SETTING2['SOUND']['CHANGE_BUTTON'].play()
                         self.mainMenu.cursor -= 1
-                        self.mainMenu.cursor %= 5
+                        self.mainMenu.cursor %= 7
                     elif event.key == pygame.K_RETURN:
                         SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.runningMainMenu = False
@@ -158,9 +158,13 @@ class Game:
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
                         elif self.mainMenu.cursor == 3:
+                            pass
+                        elif self.mainMenu.cursor == 4:
+                            pass
+                        elif self.mainMenu.cursor == 5:
                             self.runningAboutGameMenu = True
                             self.aboutGameMenu.cursor = 0
-                        elif self.mainMenu.cursor == 4:
+                        elif self.mainMenu.cursor == 6:
                             self.running = False
                             pygame.time.wait(500)
                             pygame.quit()
