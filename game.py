@@ -15,6 +15,8 @@ from menuSoundSetting import SoundSettingMenu
 from menuMapSetting import MapSettingMenu
 from menuExistingMaps import ExistingMapsMenu
 from menuCreateNewMap import CreateNewMap
+from menuStatistics import StatisticsMenu
+from menuHistory import HistoryMenu
 from menuAboutGame import AboutGameMenu
 from menuGameOver import GameOverMenu, GameOverMenu02
 from inGame import InGame, InGame02
@@ -63,6 +65,8 @@ class Game:
         self.runningMapSettingMenu = False
         self.runningExistingMapsMenu = False
         self.runningCreateNewMap = False
+        self.runningStatisticsMenu = False
+        self.runningHistoryMenu = False
         self.runningAboutGameMenu = False
         self.runningGameOverMenu = False
         self.runningGameOverMenu02 = False
@@ -85,6 +89,8 @@ class Game:
         self.mapSettingMenu = MapSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.existingMapsMenu = ExistingMapsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.createNewMap = CreateNewMap(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.statisticsMenu = StatisticsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.historyMenu = HistoryMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.aboutGameMenu = AboutGameMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
     
     ###########   Main loop in game   #######################################################################
@@ -158,9 +164,11 @@ class Game:
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
                         elif self.mainMenu.cursor == 3:
-                            pass
+                            self.runningStatisticsMenu = True
+                            self.statisticsMenu.cursor = 0
                         elif self.mainMenu.cursor == 4:
-                            pass
+                            self.runningHistoryMenu = True
+                            self.historyMenu.cursor = 0
                         elif self.mainMenu.cursor == 5:
                             self.runningAboutGameMenu = True
                             self.aboutGameMenu.cursor = 0
@@ -308,7 +316,25 @@ class Game:
                         elif self.optionsMenu.cursor == 4:
                             self.runningMainMenu = True
                         self.runningOptionsMenu = False
-            ###########   Get events when current screen is Options Menu  ###################################        
+            ###########   Get events when current screen is Statistics Menu   #####################################
+            elif self.runningStatisticsMenu:
+                self.statisticsMenu.updatePostionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.statisticsMenu.updatePositionLeftMouse()
+                if self.statisticsMenu.cursor == -1:
+                    self.runningStatisticsMenu = False
+                    self.runningMainMenu = True
+            ###########   Get events when current screen is History Menu   #####################################
+            elif self.runningHistoryMenu:
+                self.historyMenu.updatePostionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.historyMenu.updatePositionLeftMouse()
+                if self.historyMenu.cursor == -1:
+                    self.runningHistoryMenu = False
+                    self.runningMainMenu = True
+            ###########   Get events when current screen is About Game Menu  ###################################    
             elif self.runningAboutGameMenu:
                 if event.type == pygame.KEYDOWN:
                     if self.aboutGameMenu.isHiddenPasswordBox:
@@ -1315,6 +1341,14 @@ class Game:
             if self.countTicks % (FPS * self.divisibility // self.createNewMap.FPS) == 0:
                 self.createNewMap.update()
         ###########   Update screen About Game Menu   #######################################################
+        elif self.runningStatisticsMenu:
+            if self.countTicks % (FPS * self.divisibility // self.statisticsMenu.FPS) == 0:
+                self.statisticsMenu.update()
+        ###########   Update screen History Menu   #######################################################
+        elif self.runningHistoryMenu:
+            if self.countTicks % (FPS * self.divisibility // self.historyMenu.FPS) == 0:
+                self.historyMenu.update()
+        ###########   Update screen About Game Menu   #######################################################
         elif self.runningAboutGameMenu:
             if self.countTicks % (FPS * self.divisibility // self.aboutGameMenu.FPS) == 0:
                 self.aboutGameMenu.update()
@@ -1359,6 +1393,10 @@ class Game:
             self.existingMapsMenu.draw(self.screen)
         elif self.runningCreateNewMap:
             self.createNewMap.draw(self.screen)
+        elif self.runningStatisticsMenu:
+            self.statisticsMenu.draw(self.screen)
+        elif self.runningHistoryMenu:
+            self.historyMenu.draw(self.screen)
         elif self.runningAboutGameMenu:
             self.aboutGameMenu.draw(self.screen)
         pygame.display.flip()

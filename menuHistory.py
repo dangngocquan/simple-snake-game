@@ -15,25 +15,25 @@ DESCRIPTION_FONT = SETTING2['MENU']['DESCRIPTION_FONT']
 WHITE = SETTING2['COLOR']['WHITE']
 
 
-###########   Load data of Statistics from json file   ############################################################
-def loadData(path='./data/statistics/statistics.json'):
+##########   Load data of Statistics from json file   ############################################################
+def loadData(path='./data/history/history.json'):
     data = None
     with open(path, 'r') as file:
         data = json.load(file)
     file.close()
     return data
 
-STATISTICS = loadData()
+HISTORY = loadData()
 
 ###########   Save data of Account Manager to json file   ############################################################
-def saveData(path='./data/statistics/statistics.json'):   
+def saveData(path='./data/history/history.json'):   
     with open(path, 'w') as file:
-        json.dump(STATISTICS, file, indent=4)
+        json.dump(HISTORY, file, indent=4)
     file.close()
-   
 
-###########  CLASS STATISTICS MENU  ##########################################################################
-class StatisticsMenu:
+
+###########  CLASS HISTORY MENU  ##########################################################################
+class HistoryMenu:
     ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
         ###########  Surface, cursor and coordinate center  #################################################
@@ -41,22 +41,54 @@ class StatisticsMenu:
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         
+        self.container0 = pygame.Surface((900, 420), pygame.SRCALPHA)
+        self.container0Rect = self.container0.get_rect()
+        self.container0Rect.center = (width//2, height//2)
+        
+        ##################   Surfaces in Container0   #######################################################
+        self.container1 = pygame.Surface((self.container0Rect.width, 60), pygame.SRCALPHA)
+        self.container1Rect = self.container1.get_rect()
+        self.container1Rect.topleft = (0, 0)
+        
+        self.container2 = pygame.Surface(
+            (self.container0Rect.width, self.container0Rect.height - self.container1Rect.height), pygame.SRCALPHA)
+        self.container2Rect = self.container2.get_rect()
+        self.container2Rect.topleft = (0 , self.container1Rect.height)
+        
+        ##################   Cells and text in Container1    #################################################
+        self.columnAccount = pygame.Surface((self.container1Rect.width//8*2, 60), pygame.SRCALPHA)
+        self.columnAccountRect = self.columnAccount.get_rect()
+        self.columnAccountRect.topleft = (0, 0)
+        self.titleAccount = Button("Account", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        self.columnTime = pygame.Surface((self.container1Rect.width//8*2, 60), pygame.SRCALPHA)
+        self.columnTimeRect = self.columnTime.get_rect()
+        self.columnTimeRect.topleft = (self.columnAccountRect.topright[0], 0)
+        self.titleTime = Button("Time", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        self.columnScore = pygame.Surface((self.container1Rect.width//8*1, 60), pygame.SRCALPHA)
+        self.columnScoreRect = self.columnScore.get_rect()
+        self.columnScoreRect.topleft = (self.columnTimeRect.topright[0], 0)
+        self.titleScore = Button("Score", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        self.columnResult = pygame.Surface((self.container1Rect.width//8*1, 60), pygame.SRCALPHA)
+        self.columnResultRect = self.columnResult.get_rect()
+        self.columnResultRect.topleft = (self.columnScoreRect.topright[0], 0)
+        self.titleResult = Button("Result", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        self.columnTypeGame = pygame.Surface((self.container1Rect.width//8*2, 60), pygame.SRCALPHA)
+        self.columnTypeGameRect = self.columnTypeGame.get_rect()
+        self.columnTypeGameRect.topleft = (self.columnResultRect.topright[0], 0)
+        self.titleTypeGame = Button("Type Game", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        
+        
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
         ########### Buttons in Statistics Menu  ##############################################################
-        self.title = Button("Statistics", MEDIUM_FONT, width//10, height*1//24, 'topLeft')
-        self.titleHighestScore = Button(f"Highest score:    {STATISTICS['HIGHEST_SCORE']} - {STATISTICS['PLAYER_HAS_HIGHEST_SCORE']}", 
-                                        DESCRIPTION_FONT, width//10, height*4//24, 'topLeft')
-        self.titleTotalTimePlayed = Button(f"Total Time Played:    {STATISTICS['TOTAL_TIME_PLAYED']}", DESCRIPTION_FONT, 
-                                           width//10, height*6//24, 'topLeft')
-        self.titleNumberOfMatchesPlayed = Button(f"Number of matches played:    {STATISTICS['NUMBER_OF_MATCHES_PLAYED']}", 
-                                                 DESCRIPTION_FONT, width//10, height*8//24, 'topLeft')
-        self.titleNumberOfMatchesWon = Button(f"Number Of Matches Won:    {STATISTICS['NUMBER_OF_MATCHES_WON']}", 
-                                              DESCRIPTION_FONT, width//10, height*10//24, 'topLeft')
-        self.titleNumberOfMatchesLost = Button(f"Number of matches lost:    {STATISTICS['NUMBER_OF_MATCHES_LOST']}", 
-                                               DESCRIPTION_FONT, width//10, height*12//24, 'topLeft')
+        self.title = Button("HISTORY", MEDIUM_FONT, width//2, height//24*2)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*22//24)
     
     
@@ -92,7 +124,7 @@ class StatisticsMenu:
                             surfaceCheckRect=self.titleBack.textRect):
             self.cursor = 0
         else:
-            self.cursor = 2
+            self.cursor = 1
     
     
     def updatePositionLeftMouse(self):
@@ -113,29 +145,36 @@ class StatisticsMenu:
         else:
             self.titleBack.isChosen = False
             self.titleBack.update("BACK", MEDIUM_FONT, 'G')
-            
-        self.titleHighestScore.update(
-            f"Highest score:    {STATISTICS['HIGHEST_SCORE']} - {STATISTICS['PLAYER_HAS_HIGHEST_SCORE']}", 
-            DESCRIPTION_FONT) 
-        self.titleTotalTimePlayed.update(
-            f"Total Time Played:    {STATISTICS['TOTAL_TIME_PLAYED']}", DESCRIPTION_FONT)
-        self.titleNumberOfMatchesPlayed.update(
-            f"Number of matches played:    {STATISTICS['NUMBER_OF_MATCHES_PLAYED']}", DESCRIPTION_FONT)
-        self.titleNumberOfMatchesWon.update(
-            f"Number Of Matches Won:    {STATISTICS['NUMBER_OF_MATCHES_WON']}", DESCRIPTION_FONT)
-        self.titleNumberOfMatchesLost.update(
-            f"Number of matches lost:    {STATISTICS['NUMBER_OF_MATCHES_LOST']}", DESCRIPTION_FONT)
         
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
+        self.container0.fill((111, 111, 111))
+        self.container1.fill((50, 50, 50))
+        self.columnAccount.fill((50, 50, 50))
+        self.columnTime.fill((50, 50, 50))
+        self.columnScore.fill((50, 50, 50))
+        self.columnResult.fill((50, 50, 50))
+        self.columnTypeGame.fill((50, 50, 50))
+        self.container2.fill((80, 80, 80))
         ###########   Draw new buttons   ####################################################################
         self.title.draw(self.surface)
-        self.titleHighestScore.draw(self.surface)
-        self.titleTotalTimePlayed.draw(self.surface)
-        self.titleNumberOfMatchesPlayed.draw(self.surface)
-        self.titleNumberOfMatchesWon.draw(self.surface)
-        self.titleNumberOfMatchesLost.draw(self.surface)
         self.titleBack.draw(self.surface)
+        
+        self.titleAccount.draw(self.columnAccount)
+        self.titleTime.draw(self.columnTime)
+        self.titleScore.draw(self.columnScore)
+        self.titleResult.draw(self.columnResult)
+        self.titleTypeGame.draw(self.columnTypeGame)
+        
+        self.container1.blit(self.columnAccount, self.columnAccountRect)
+        self.container1.blit(self.columnTime, self.columnTimeRect)
+        self.container1.blit(self.columnScore, self.columnScoreRect)
+        self.container1.blit(self.columnResult, self.columnResultRect)
+        self.container1.blit(self.columnTypeGame, self.columnTypeGameRect)
+        
+        self.container0.blit(self.container1, self.container1Rect)
+        self.container0.blit(self.container2, self.container2Rect)
+        self.surface.blit(self.container0, self.container0Rect)
 
     
     ###########  Draw PlayGame Menu in another surface  #####################################################
