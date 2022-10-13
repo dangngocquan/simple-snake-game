@@ -7,6 +7,7 @@ from menuMain import MainMenu
 from menuPlayGame import PlayGameMenu
 from menuAccountsSetting import AccountsSettingMenu
 from menuExistingAccount import ExistingAccountMenu
+from menuCreateNewAccount import CreateNewAccountMenu
 from menuOptions import OptionsMenu
 from menuGamemodeSetting import GamemodeSettingMenu
 from menuInGameSetting import GameSettingMenu
@@ -54,6 +55,7 @@ class Game:
         self.runningInGame02 = False
         self.runningAccountsSetting = False
         self.runningExistingAccountMenu = False
+        self.runningCreateNewAccountMenu = False
         self.runningOptionsMenu = False
         self.runningGamemodeSettingMenu = False
         self.runningGameSettingMenu = False
@@ -75,6 +77,7 @@ class Game:
                                              self.inGame02.snake02, self.inGame02.wallManager)
         self.accountsSetting = AccountsSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.existingAccountMenu = ExistingAccountMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
+        self.createNewAccountMenu = CreateNewAccountMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.optionsMenu = OptionsMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gamemodeSettingMenu = GamemodeSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
         self.gameSettingMenu = GameSettingMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT)
@@ -232,7 +235,8 @@ class Game:
                             self.runningExistingAccountMenu = True
                             self.existingAccountMenu.cursor = 0
                         elif self.accountsSetting.cursor == 1:
-                            pass
+                            self.runningCreateNewAccountMenu = True
+                            self.createNewAccountMenu.cursor = 0
                         elif self.accountsSetting.cursor == 2:
                             self.runningMainMenu = True
             ###########   Get events when current screen is Existing Account Menu   #####################################
@@ -247,6 +251,24 @@ class Game:
                         self.existingAccountMenu.decreaseSubtractNumber()
                 if self.existingAccountMenu.cursor == 2:
                     self.runningExistingAccountMenu = False
+                    self.runningAccountsSetting = True
+            ###########   Get events when current screen is Create New Account Menu   #######################
+            elif self.runningCreateNewAccountMenu:
+                self.createNewAccountMenu.updatePostionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        self.createNewAccountMenu.getInputStringMenu.removeChar()
+                    else:
+                        self.createNewAccountMenu.getInputStringMenu.addChar(pygame.key.name(event.key))
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.createNewAccountMenu.updatePositionLeftMouse()
+                if self.createNewAccountMenu.cursor == -1:
+                    self.runningCreateNewAccountMenu = False
+                    self.runningAccountsSetting = True
+                elif self.createNewAccountMenu.cursor == 1:
+                    pygame.time.wait(500)
+                    self.runningCreateNewAccountMenu = False
                     self.runningAccountsSetting = True
             ###########   Get events when current screen is Options Menu  ###################################        
             elif self.runningOptionsMenu:
@@ -1255,7 +1277,11 @@ class Game:
         ###########   Update screen when showing Existing Account Menu   ####################################
         elif self.runningExistingAccountMenu:
             if self.countTicks % (FPS * self.divisibility // self.existingAccountMenu.FPS) == 0:
-                self.existingAccountMenu.update() 
+                self.existingAccountMenu.update()
+        ###########   Update screen when showing Existing Account Menu   ####################################
+        elif self.runningCreateNewAccountMenu:
+            if self.countTicks % (FPS * self.divisibility // self.createNewAccountMenu.FPS) == 0:
+                self.createNewAccountMenu.update() 
         ###########   Update screen when showing Options Menu   #############################################
         elif self.runningOptionsMenu:
             if self.countTicks % (FPS * self.divisibility // self.optionsMenu.FPS) == 0:
@@ -1313,6 +1339,8 @@ class Game:
             self.accountsSetting.draw(self.screen)
         elif self.runningExistingAccountMenu:
             self.existingAccountMenu.draw(self.screen)
+        elif self.runningCreateNewAccountMenu:
+            self.createNewAccountMenu.draw(self.screen)
         elif self.runningOptionsMenu:
             self.optionsMenu.draw(self.screen)
         elif self.runningGamemodeSettingMenu:

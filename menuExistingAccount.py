@@ -26,7 +26,7 @@ class ExistingAccountMenu:
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
-        self.cursor = 1
+        self.cursor = 0
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
         self.tempIndexAccount = 2
@@ -87,7 +87,7 @@ class ExistingAccountMenu:
             cell = pygame.Surface((self.container21Rect.width, 40), pygame.SRCALPHA)
             cellRect = cell.get_rect()
             cellRect.topleft = (0, 40*i - self.subtractNumber)
-            titleName = Button(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT, 20, 10, 'topLeft')
+            titleName = Button(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT_2, 20, 10, 'topLeft')
             self.listCell.append(cell)
             self.listCellRect.append(cellRect)
             self.listTitleNameAccount.append(titleName)
@@ -148,6 +148,9 @@ class ExistingAccountMenu:
                             parent1SurfaceRect=self.container22Rect,
                             parent2SurfaceRect=self.container2Rect):
                 if self.tempIndexAccount > 0:
+                    if self.tempIndexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
+                        setting.replaceData(key1='ACCOUNT', key2='INDEX_ACCOUNT', newData=0)
+                        setting.saveSetting()
                     ACCOUNT_MANAGER.removeAccount(indexAccount=self.tempIndexAccount)
                     self.tempIndexAccount -= 1
                     account.saveData(ACCOUNT_MANAGER.listAccount)
@@ -270,9 +273,17 @@ class ExistingAccountMenu:
         self.titleOtherAccounts.update("OTHER ACCOUNTS", DESCRIPTION_FONT, 'B')
         self.titleBack.update("BACK", DESCRIPTION_FONT, 'B')
         
+        self.listCell = []
+        self.listCellRect = []
+        self.listTitleNameAccount = []
         for i in range(len(ACCOUNT_MANAGER.listAccount)):
-            self.listTitleNameAccount[i].update(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT, 'B')
-            self.listCellRect[i].topleft = (0, 40*i - self.subtractNumber)
+            cell = pygame.Surface((self.container21Rect.width, 40), pygame.SRCALPHA)
+            cellRect = cell.get_rect()
+            cellRect.topleft = (0, 40*i - self.subtractNumber)
+            titleName = Button(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT_2, 20, 10, 'topLeft')
+            self.listCell.append(cell)
+            self.listCellRect.append(cellRect)
+            self.listTitleNameAccount.append(titleName)
             
         self.updateAccountInfoShowing()
         

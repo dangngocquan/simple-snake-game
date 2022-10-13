@@ -119,7 +119,7 @@ class CreateNewMap:
         
     def saveMap(self):
         wall.addNewMapToListMaps(wallManager=self.wallManager,
-                                 createdTime=str(datetime.datetime.now()))
+                                 createdTime=str(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
     
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):
