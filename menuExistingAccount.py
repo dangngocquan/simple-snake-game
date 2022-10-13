@@ -228,13 +228,19 @@ class ExistingAccountMenu:
                 self.titleDeleteThisAccount.isChosen = False
 
     def increaseSubtractNumber(self):
-        if len(ACCOUNT_MANAGER.listAccount) > 10:
-            self.subtractNumber += 40
-            self.subtractNumber = min(len(ACCOUNT_MANAGER.listAccount)*40 - 400, self.subtractNumber)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.container21Rect,
+                            parent1SurfaceRect=self.container2Rect):
+            if len(ACCOUNT_MANAGER.listAccount) > 10:
+                self.subtractNumber += 40
+                self.subtractNumber = min(len(ACCOUNT_MANAGER.listAccount)*40 - 400, self.subtractNumber)
         
     def decreaseSubtractNumber(self):
-        self.subtractNumber -= 40
-        self.subtractNumber = max(0, self.subtractNumber)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.container21Rect,
+                            parent1SurfaceRect=self.container2Rect):
+            self.subtractNumber -= 40
+            self.subtractNumber = max(0, self.subtractNumber)
         
     def updateAccountInfoShowing(self):
         if self.cursor == 0:
@@ -267,24 +273,26 @@ class ExistingAccountMenu:
     ###########  Update cursor and button status in Accounts Setting Menu ###############################################
     def update(self):
         ###########  Update cursor and button of Accounts Setting menu  #################################################
+        if len(self.listCell) != len(ACCOUNT_MANAGER.listAccount):
+            self.listCell = []
+            self.listCellRect = []
+            self.listTitleNameAccount = []
+            for i in range(len(ACCOUNT_MANAGER.listAccount)):
+                cell = pygame.Surface((self.container21Rect.width, 40), pygame.SRCALPHA)
+                cellRect = cell.get_rect()
+                cellRect.topleft = (0, 40*i - self.subtractNumber)
+                titleName = Button(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT_2, 20, 10, 'topLeft')
+                self.listCell.append(cell)
+                self.listCellRect.append(cellRect)
+                self.listTitleNameAccount.append(titleName)
+        for i in range(len(self.listCellRect)):
+            self.listCellRect[i].topleft = (0, 40*i - self.subtractNumber)
         self.updateMousePoitedAt()
-        
+        for i in range(len(ACCOUNT_MANAGER.listAccount)):
+            self.listTitleNameAccount[i].update(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT_2, 'B')
         self.titleCurrentAccount.update("CURRENT ACCOUNT", DESCRIPTION_FONT, 'B')
         self.titleOtherAccounts.update("OTHER ACCOUNTS", DESCRIPTION_FONT, 'B')
-        self.titleBack.update("BACK", DESCRIPTION_FONT, 'B')
-        
-        self.listCell = []
-        self.listCellRect = []
-        self.listTitleNameAccount = []
-        for i in range(len(ACCOUNT_MANAGER.listAccount)):
-            cell = pygame.Surface((self.container21Rect.width, 40), pygame.SRCALPHA)
-            cellRect = cell.get_rect()
-            cellRect.topleft = (0, 40*i - self.subtractNumber)
-            titleName = Button(f"{ACCOUNT_MANAGER.listAccount[i].name}", DESCRIPTION_FONT_2, 20, 10, 'topLeft')
-            self.listCell.append(cell)
-            self.listCellRect.append(cellRect)
-            self.listTitleNameAccount.append(titleName)
-            
+        self.titleBack.update("BACK", DESCRIPTION_FONT, 'B')    
         self.updateAccountInfoShowing()
         
         self.titlePlayThisAccount.update("Play this account", DESCRIPTION_FONT, 'G')
