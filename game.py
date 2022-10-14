@@ -253,19 +253,13 @@ class Game:
                             
             ###########   Get events when current screen is Accounts Setting Menu   #####################################
             elif self.runningAccountsSetting:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.accountsSetting.cursor += 1
-                        self.accountsSetting.cursor %= 3
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.accountsSetting.cursor -= 1
-                        self.accountsSetting.cursor %= 3
-                    elif event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        self.runningAccountsSetting = False
+                self.accountsSetting.updatePositionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        self.accountsSetting.updatePositionLeftMouse()
                         if self.accountsSetting.cursor == 0:
+                            self.runningAccountsSetting = False
                             self.runningExistingAccountMenu = True
                             self.existingAccountMenu.cursor = 0
                             ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
@@ -273,9 +267,11 @@ class Game:
                             account.saveData(ACCOUNT_MANAGER.listAccount)
                             self.startTimePlayThisAccount = datetime.now()
                         elif self.accountsSetting.cursor == 1:
+                            self.runningAccountsSetting = False
                             self.runningCreateNewAccountMenu = True
                             self.createNewAccountMenu.cursor = 0
                         elif self.accountsSetting.cursor == 2:
+                            self.runningAccountsSetting = False
                             self.runningMainMenu = True
             ###########   Get events when current screen is Existing Account Menu   #####################################
             elif self.runningExistingAccountMenu:
