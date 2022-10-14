@@ -12,77 +12,14 @@
             "CREATED_TIME": "13/10/2022 18:35:37",
             "WIN_MATCH": 7,
             "LOSE_MATCH": 17,
-            "TOTAL_TIME_PLAYED": 644
+            "TOTAL_TIME_PLAYED": 750
         },
         {
             "NAME": "briss2",
-            "CREATED_TIME": "13/10/2022 18:39:25",
-            "WIN_MATCH": 6,
-            "LOSE_MATCH": 4,
-            "TOTAL_TIME_PLAYED": 130
-        },
-        {
-            "NAME": "briss3",
-            "CREATED_TIME": "13/10/2022 18:55:14",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss4",
-            "CREATED_TIME": "13/10/2022 18:55:21",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss5",
-            "CREATED_TIME": "13/10/2022 18:55:30",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss6",
-            "CREATED_TIME": "13/10/2022 18:55:33",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss7",
-            "CREATED_TIME": "13/10/2022 18:55:37",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss8",
-            "CREATED_TIME": "13/10/2022 18:55:42",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss10",
-            "CREATED_TIME": "13/10/2022 18:55:56",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss11",
-            "CREATED_TIME": "13/10/2022 18:55:59",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "briss14",
-            "CREATED_TIME": "13/10/2022 20:22:06",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 123
+            "CREATED_TIME": "14/10/2022 21:35:31",
+            "WIN_MATCH": 2,
+            "LOSE_MATCH": 2,
+            "TOTAL_TIME_PLAYED": 244
         }
     ]
 }

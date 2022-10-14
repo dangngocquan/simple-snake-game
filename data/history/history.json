@@ -1,6 +1,34 @@
 {
     "HISTORY": [
         {
+            "NAME": "briss2",
+            "TIME": "14/10/2022 21:45:55",
+            "SCORE": 60,
+            "RESULT": "WIN",
+            "TYPE_GAME": "SOLO MATCH"
+        },
+        {
+            "NAME": "briss2",
+            "TIME": "14/10/2022 21:45:49",
+            "SCORE": 105,
+            "RESULT": "WIN",
+            "TYPE_GAME": "SOLO MATCH"
+        },
+        {
+            "NAME": "briss2",
+            "TIME": "14/10/2022 21:36:25",
+            "SCORE": 285,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SOLO MATCH"
+        },
+        {
+            "NAME": "briss2",
+            "TIME": "14/10/2022 21:36:08",
+            "SCORE": 270,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SOLO MATCH"
+        },
+        {
             "NAME": "briss",
             "TIME": "14/10/2022 21:27:24",
             "SCORE": 345,

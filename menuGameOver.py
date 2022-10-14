@@ -149,23 +149,16 @@ class GameOverMenu02:
         targetScoreReach01 = self.snake01.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
         targetScoreReach02 = self.snake02.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
         if self.winner == -1:
-            if targetScoreReach01 and targetScoreReach02:
-                self.winner = 3
-            elif targetScoreReach01:
-                self.winner = 1
-            elif targetScoreReach02:
-                self.winner = 2
-            elif snake01Died and snake02Died:
-                if self.snake01.score == self.snake02.score:
-                    self.winner = 0
-                elif self.snake01.score > self.snake02.score:
+            if snake01Died or snake02Died:
+                if snake02Died:
                     self.winner = 1
-                elif self.snake01.score < self.snake02.score:
+                else:
                     self.winner = 2
-            elif snake01Died:
-                self.winner = 2
-            elif snake02Died:
-                self.winner = 1
+            elif targetScoreReach01 or targetScoreReach02:
+                if targetScoreReach01:
+                    self.winner = 1
+                else:
+                    self.winner = 2
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
                                        DESCRIPTION_FONT_2, width//2, height*1//24)
