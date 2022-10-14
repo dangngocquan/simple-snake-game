@@ -331,6 +331,12 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.historyMenu.updatePositionLeftMouse()
+                    elif event.button == pygame.BUTTON_WHEELDOWN:
+                        self.historyMenu.increaseSubtractNumber()
+                    elif event.button == pygame.BUTTON_WHEELUP:
+                        self.historyMenu.decreaseSubtractNumber()
+                    elif event.button == pygame.BUTTON_RIGHT:
+                        self.historyMenu.addNewHistory()
                 if self.historyMenu.cursor == -1:
                     self.runningHistoryMenu = False
                     self.runningMainMenu = True

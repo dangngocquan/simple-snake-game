@@ -1,14 +1,147 @@
 {
     "HISTORY": [
         {
-            "NAME": "BRISS",
+            "NAME": "",
+            "TIME": "",
+            "SCORE": 0,
+            "RESULT": "LOSE",
+            "TYPE_GAME": ""
+        },
+        {
+            "NAME": "",
+            "TIME": "",
+            "SCORE": 0,
+            "RESULT": "LOSE",
+            "TYPE_GAME": ""
+        },
+        {
+            "NAME": "",
+            "TIME": "",
+            "SCORE": 0,
+            "RESULT": "LOSE",
+            "TYPE_GAME": ""
+        },
+        {
+            "NAME": "BRISS1",
             "TIME": "13/10/2022 23:24:27",
             "SCORE": 17,
             "RESULT": "LOSE",
             "TYPE_GAME": "SINGLE MATCH"
         },
         {
-            "NAME": "BRISS",
+            "NAME": "BRISS2",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS3",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS4",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS5",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS6",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS7",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS8",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS9",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS10",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS11",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS12",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS13",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS14",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS15",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS16",
+            "TIME": "13/10/2022 23:23:19",
+            "SCORE": 12,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS17",
+            "TIME": "13/10/2022 23:24:27",
+            "SCORE": 17,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
+            "NAME": "BRISS18",
             "TIME": "13/10/2022 23:23:19",
             "SCORE": 12,
             "RESULT": "LOSE",

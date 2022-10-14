@@ -2,7 +2,6 @@ import pygame
 from setting import *
 from grid import *
 from button import Button
-from menuGetInput import GetPasswordMenu
 
 ###########   VARIABLE   ####################################################################################
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
@@ -45,7 +44,9 @@ class HistoryMenu:
         self.container0Rect = self.container0.get_rect()
         self.container0Rect.center = (width//2, height//2)
         
-        ##################   Surfaces in Container0   #######################################################
+        ##################   Surfaces and variables in Container0   #########################################
+        self.subtractNumber = 0
+        
         self.container1 = pygame.Surface((self.container0Rect.width, 60), pygame.SRCALPHA)
         self.container1Rect = self.container1.get_rect()
         self.container1Rect.topleft = (0, 0)
@@ -56,31 +57,79 @@ class HistoryMenu:
         self.container2Rect.topleft = (0 , self.container1Rect.height)
         
         ##################   Cells and text in Container1    #################################################
-        self.columnAccount = pygame.Surface((self.container1Rect.width//8*2, 60), pygame.SRCALPHA)
+        self.columnAccount = pygame.Surface((self.container1Rect.width//16*4, 60), pygame.SRCALPHA)
         self.columnAccountRect = self.columnAccount.get_rect()
         self.columnAccountRect.topleft = (0, 0)
         self.titleAccount = Button("Account", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
         
-        self.columnTime = pygame.Surface((self.container1Rect.width//8*2, 60), pygame.SRCALPHA)
+        self.columnTime = pygame.Surface((self.container1Rect.width//16*4+20, 60), pygame.SRCALPHA)
         self.columnTimeRect = self.columnTime.get_rect()
         self.columnTimeRect.topleft = (self.columnAccountRect.topright[0], 0)
         self.titleTime = Button("Time", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
         
-        self.columnScore = pygame.Surface((self.container1Rect.width//8*1, 60), pygame.SRCALPHA)
+        self.columnScore = pygame.Surface((self.container1Rect.width//16*2, 60), pygame.SRCALPHA)
         self.columnScoreRect = self.columnScore.get_rect()
         self.columnScoreRect.topleft = (self.columnTimeRect.topright[0], 0)
         self.titleScore = Button("Score", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
         
-        self.columnResult = pygame.Surface((self.container1Rect.width//8*1, 60), pygame.SRCALPHA)
+        self.columnResult = pygame.Surface((self.container1Rect.width//16*2-10, 60), pygame.SRCALPHA)
         self.columnResultRect = self.columnResult.get_rect()
         self.columnResultRect.topleft = (self.columnScoreRect.topright[0], 0)
         self.titleResult = Button("Result", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
         
-        self.columnTypeGame = pygame.Surface((self.container1Rect.width//8*2, 60), pygame.SRCALPHA)
+        self.columnTypeGame = pygame.Surface((self.container1Rect.width//16*4-10, 60), pygame.SRCALPHA)
         self.columnTypeGameRect = self.columnTypeGame.get_rect()
         self.columnTypeGameRect.topleft = (self.columnResultRect.topright[0], 0)
         self.titleTypeGame = Button("Type Game", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
         
+        ##################   Cells and text in Container2    #################################################
+        self.listCellRow = []
+        self.listCellRowRect = []
+        for rowIndex in range(len(HISTORY['HISTORY'])):
+            cellRow = pygame.Surface((self.container2Rect.width, 40), pygame.SRCALPHA)
+            cellRowRect = cellRow.get_rect()
+            cellRowRect.topleft = (0, 40*rowIndex - self.subtractNumber)
+            
+            columnAccount = pygame.Surface((self.columnAccountRect.width, cellRowRect.height), pygame.SRCALPHA)
+            columnAccountRect = columnAccount.get_rect()
+            columnAccountRect.topleft = (0, 0)
+            titleAccount = Button(f"{HISTORY['HISTORY'][rowIndex]['NAME']}", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+            
+            columnTime = pygame.Surface((self.columnTimeRect.width, cellRowRect.height), pygame.SRCALPHA)
+            columnTimeRect = columnTime.get_rect()
+            columnTimeRect.topleft = (columnAccountRect.topright[0], 0)
+            titleTime = Button(f"{HISTORY['HISTORY'][rowIndex]['TIME']}", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+            
+            columnScore = pygame.Surface((self.columnScoreRect.width, cellRowRect.height), pygame.SRCALPHA)
+            columnScoreRect = columnScore.get_rect()
+            columnScoreRect.topleft = (columnTimeRect.topright[0], 0)
+            titleScore = Button(f"{HISTORY['HISTORY'][rowIndex]['SCORE']}", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+            
+            columnResult = pygame.Surface((self.columnResultRect.width, cellRowRect.height), pygame.SRCALPHA)
+            columnResultRect = columnResult.get_rect()
+            columnResultRect.topleft = (columnScoreRect.topright[0], 0)
+            titleResult = Button(f"{HISTORY['HISTORY'][rowIndex]['RESULT']}", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+            
+            columnTypeGame = pygame.Surface((self.columnTypeGameRect.width, cellRowRect.height), pygame.SRCALPHA)
+            columnTypeGameRect = columnTypeGame.get_rect()
+            columnTypeGameRect.topleft = (columnResultRect.topright[0], 0)
+            titleTypeGame = Button(f"{HISTORY['HISTORY'][rowIndex]['TYPE_GAME']}", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+            
+            titleAccount.draw(columnAccount)
+            titleTime.draw(columnTime)
+            titleScore.draw(columnScore)
+            titleResult.draw(columnResult)
+            titleTypeGame.draw(columnTypeGame)
+            
+            cellRow.blit(columnAccount, columnAccountRect)
+            cellRow.blit(columnTime, columnTimeRect)
+            cellRow.blit(columnScore, columnScoreRect)
+            cellRow.blit(columnResult, columnResultRect)
+            cellRow.blit(columnTypeGame, columnTypeGameRect)
+            
+            self.listCellRow.append(cellRow)
+            self.listCellRowRect.append(cellRowRect)
+            
         
         
         self.FPS = ANIMATION_SPEED
@@ -132,8 +181,73 @@ class HistoryMenu:
         if self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.titleBack.textRect):
             self.cursor = -1
+
     
+    def increaseSubtractNumber(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.container0Rect):
+            if len(HISTORY['HISTORY']) > 9:
+                self.subtractNumber += 40
+                self.subtractNumber = min(len(HISTORY['HISTORY'])*40 - 360, self.subtractNumber)
+        
+    def decreaseSubtractNumber(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.container0Rect):
+            self.subtractNumber -= 40
+            self.subtractNumber = max(0, self.subtractNumber)
     
+    def addNewHistory(self, name="", time="", score=0, result="LOSE", typeGame = ""):
+        cellRow = pygame.Surface((self.container2Rect.width, 40), pygame.SRCALPHA)
+        cellRowRect = cellRow.get_rect()
+        cellRowRect.topleft = (0, 0)
+        
+        columnAccount = pygame.Surface((self.columnAccountRect.width, cellRowRect.height), pygame.SRCALPHA)
+        columnAccountRect = columnAccount.get_rect()
+        columnAccountRect.topleft = (0, 0)
+        titleAccount = Button(name, DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        columnTime = pygame.Surface((self.columnTimeRect.width, cellRowRect.height), pygame.SRCALPHA)
+        columnTimeRect = columnTime.get_rect()
+        columnTimeRect.topleft = (columnAccountRect.topright[0], 0)
+        titleTime = Button(time, DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        columnScore = pygame.Surface((self.columnScoreRect.width, cellRowRect.height), pygame.SRCALPHA)
+        columnScoreRect = columnScore.get_rect()
+        columnScoreRect.topleft = (columnTimeRect.topright[0], 0)
+        titleScore = Button(f"{score}", DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        columnResult = pygame.Surface((self.columnResultRect.width, cellRowRect.height), pygame.SRCALPHA)
+        columnResultRect = columnResult.get_rect()
+        columnResultRect.topleft = (columnScoreRect.topright[0], 0)
+        titleResult = Button(result, DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        columnTypeGame = pygame.Surface((self.columnTypeGameRect.width, cellRowRect.height), pygame.SRCALPHA)
+        columnTypeGameRect = columnTypeGame.get_rect()
+        columnTypeGameRect.topleft = (columnResultRect.topright[0], 0)
+        titleTypeGame = Button(typeGame, DESCRIPTION_FONT_2, 10, 10, 'topLeft')
+        
+        titleAccount.draw(columnAccount)
+        titleTime.draw(columnTime)
+        titleScore.draw(columnScore)
+        titleResult.draw(columnResult)
+        titleTypeGame.draw(columnTypeGame)
+        
+        cellRow.blit(columnAccount, columnAccountRect)
+        cellRow.blit(columnTime, columnTimeRect)
+        cellRow.blit(columnScore, columnScoreRect)
+        cellRow.blit(columnResult, columnResultRect)
+        cellRow.blit(columnTypeGame, columnTypeGameRect)
+        
+        self.listCellRow.insert(0, cellRow)
+        self.listCellRowRect.insert(0, cellRowRect)
+        HISTORY['HISTORY'].insert(0, {
+            "NAME" : name,
+            "TIME" : time,
+            "SCORE" : score,
+            "RESULT" : result,
+            "TYPE_GAME" : typeGame
+        })
+        saveData()
     
     ###########   Update cursor and buttons status in Play Game Menu   ######################################
     def update(self):
@@ -145,6 +259,9 @@ class HistoryMenu:
         else:
             self.titleBack.isChosen = False
             self.titleBack.update("BACK", MEDIUM_FONT, 'G')
+            
+        for rowIndex in range(len(self.listCellRowRect)):
+            self.listCellRowRect[rowIndex].topleft = (0, 40*rowIndex - self.subtractNumber)
         
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
@@ -171,6 +288,9 @@ class HistoryMenu:
         self.container1.blit(self.columnScore, self.columnScoreRect)
         self.container1.blit(self.columnResult, self.columnResultRect)
         self.container1.blit(self.columnTypeGame, self.columnTypeGameRect)
+        
+        for indexRow in range(len(self.listCellRow)):
+            self.container2.blit(self.listCellRow[indexRow], self.listCellRowRect[indexRow])
         
         self.container0.blit(self.container1, self.container1Rect)
         self.container0.blit(self.container2, self.container2Rect)
