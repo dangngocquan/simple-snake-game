@@ -1,4 +1,5 @@
 import pygame
+from account import ACCOUNT_MANAGER
 import button
 from button import Button
 import snake
@@ -165,15 +166,17 @@ class InGame02:
         self.snake02 = snake02
         self.foodManager = foodManager
         self.wallManager = wallManager
-        self.descriptionTextScreenStart = Button("Press 'SPACE' to start, Press 'ESC' to return Main menu", button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
+        self.descriptionTextScreenStart = Button("Press 'SPACE' to start, Press 'ESC' to return Main menu", 
+                                                 button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextScreenStart.isChosen = True
         self.descriptionTextPauseGame = Button("Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu", 
                                                button.DESCRIPTION_FONT_2, WIDTH//2, HEIGHT*11//12)
         self.descriptionTextPauseGame.isChosen = True
-        self.scoreTextScreenRunning01 = Button(f"First player's score: {self.snake01.score}", button.DESCRIPTION_FONT_2, 
-                                               x=6*SETTING2['SCREEN']['CELL_SIZE'], y=SETTING2['SCREEN']['CELL_SIZE'])
+        self.scoreTextScreenRunning01 = Button(
+            f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}'s score: {self.snake01.score}", 
+            button.DESCRIPTION_FONT_2, x=6*SETTING2['SCREEN']['CELL_SIZE'], y=SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning01.isChosen = True
-        self.scoreTextScreenRunning02 = Button(f"Second player's score: {self.snake02.score}", button.DESCRIPTION_FONT_2, 
+        self.scoreTextScreenRunning02 = Button(f"Other player's score: {self.snake02.score}", button.DESCRIPTION_FONT_2, 
                                                x=(NUMBER_COLUMNS-7)*SETTING2['SCREEN']['CELL_SIZE'], y=SETTING2['SCREEN']['CELL_SIZE'])
         self.scoreTextScreenRunning02.isChosen = True
         
@@ -208,20 +211,26 @@ class InGame02:
                 self.foodManager.draw(self.surface)
                 self.descriptionTextScreenStart.draw(self.surface)
                 if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                    self.descriptionTextScreenStart.update("Press 'SPACE' to start, Press 'ESC' to return Main menu", button.DESCRIPTION_FONT_2, 'R')
+                    self.descriptionTextScreenStart.update(
+                        "Press 'SPACE' to start, Press 'ESC' to return Main menu", button.DESCRIPTION_FONT_2, 'R')
                 if snakeMove01 == True:
-                    self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", button.DESCRIPTION_FONT_2, 'B')
+                    self.scoreTextScreenRunning01.update(
+                        f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}'s score: {self.snake01.score}", 
+                        button.DESCRIPTION_FONT_2, 'B')
                 if snakeMove02 == True:
-                    self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", button.DESCRIPTION_FONT_2, 'G')
+                    self.scoreTextScreenRunning02.update(
+                        f"Other player's score: {self.snake02.score}", button.DESCRIPTION_FONT_2, 'G')
                 self.scoreTextScreenRunning01.draw(self.surface)
                 self.scoreTextScreenRunning02.draw(self.surface)
             elif self.running:
                 if snakeMove01 == True:
                     self.snake01.updateLocation(self.foodManager.listFood)
-                    self.scoreTextScreenRunning01.update(f"First player's score: {self.snake01.score}", button.DESCRIPTION_FONT_2, 'B')
+                    self.scoreTextScreenRunning01.update(
+                        f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}'s score: {self.snake01.score}", 
+                        button.DESCRIPTION_FONT_2, 'B')
                 if snakeMove02 == True:
                     self.snake02.updateLocation(self.foodManager.listFood)
-                    self.scoreTextScreenRunning02.update(f"Second player's score: {self.snake02.score}", button.DESCRIPTION_FONT_2, 'G')
+                    self.scoreTextScreenRunning02.update(f"Other player's score: {self.snake02.score}", button.DESCRIPTION_FONT_2, 'G')
                 self.foodManager.supplementFood(self.snake01.coordinateSnakeBlocks() + self.snake02.coordinateSnakeBlocks(),
                                                 self.wallManager.coordinateWalls())
                 self.wallManager.draw(self.surface)
@@ -235,8 +244,9 @@ class InGame02:
                 if self.snake01.currentDirection == None or self.snake02.currentDirection == None:
                     self.descriptionTextPauseGame.draw(self.surface)
                     if tempCountTicks % (SETTING2['SCREEN']['FPS'] * divisibility // SETTING1['MENU']['ANIMATION_SPEED']) == 0:
-                        self.descriptionTextPauseGame.update("Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu",
-                                                             button.DESCRIPTION_FONT_2, 'R')
+                        self.descriptionTextPauseGame.update(
+                            "Press 'SPACE' to continue, Press 'K' for a surprise, Press 'ESC' to return Main menu",
+                            button.DESCRIPTION_FONT_2, 'R')
             elif self.waiting:
                 pass
         ###########   Only update snake animation   #########################################################
