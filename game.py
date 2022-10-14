@@ -331,38 +331,35 @@ class Game:
                     self.runningAccountsSetting = True
             ###########   Get events when current screen is Options Menu  ###################################        
             elif self.runningOptionsMenu:
-                if event.type == pygame.KEYDOWN:
-                    ###########   Move the cursor   #########################################################
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.optionsMenu.cursor += 1
-                        self.optionsMenu.cursor %= 5
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.optionsMenu.cursor -= 1
-                        self.optionsMenu.cursor %= 5
-                    ###########   Select the content that the cursor is pointing at   #######################
-                    if event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                self.optionsMenu.updatePositionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        self.optionsMenu.updatePositionLeftMouse()
                         ###########   The cursor is pointing at "Gamemode setting"   ########################
                         if self.optionsMenu.cursor == 0:
+                            self.runningOptionsMenu = False
                             self.runningGamemodeSettingMenu = True
                             self.gamemodeSettingMenu.cursor = 0
                         ###########   The cursor is pointing at "Game setting"   ############################
                         if self.optionsMenu.cursor == 1:
+                            self.runningOptionsMenu = False
                             self.runningGameSettingMenu = True
                             self.gameSettingMenu.cursor = 0
                         ###########   The cursor is pointing at "Sound setting"   ###########################
                         elif self.optionsMenu.cursor == 2:
+                            self.runningOptionsMenu = False
                             self.runningSoundSettingMenu = True
+                            self.soundSettingMenu.cursor = 0
                         ###########   The cursor is pointing at "Map setting"   ###########################
                         elif self.optionsMenu.cursor == 3:
+                            self.runningOptionsMenu = False
                             self.runningMapSettingMenu = True
                             self.mapSettingMenu.cursor = 0
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.optionsMenu.cursor == 4:
+                            self.runningOptionsMenu = False
                             self.runningMainMenu = True
-                        self.runningOptionsMenu = False
             ###########   Get events when current screen is Statistics Menu   #####################################
             elif self.runningStatisticsMenu:
                 self.statisticsMenu.updatePostionMouse(pygame.mouse.get_pos())
