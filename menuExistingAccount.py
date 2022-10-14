@@ -103,7 +103,7 @@ class ExistingAccountMenu:
         self.titleLoseMatch = Button(f"Number loss match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch}", 
                                      DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*10, 'topLeft')
         tempSeconds = ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed
-        self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600}h{(tempSeconds%3600)//60}m{tempSeconds%60}s", 
+        self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600:0>2}:{(tempSeconds%3600)//60:0>2}:{tempSeconds%60:0>2}", 
                                      DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*12, 'topLeft')
         
         self.titlePlayThisAccount = Button("PLAY THIS ACCOUNT", DESCRIPTION_FONT, 20, self.container22Rect.height//24*16, 'topLeft')
@@ -247,7 +247,7 @@ class ExistingAccountMenu:
             self.titleLoseMatch = Button(f"Number loss match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch}", 
                                         DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*10, 'topLeft')
             tempSeconds = ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed
-            self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600}h{(tempSeconds%3600)//60}m{tempSeconds%60}s", 
+            self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600:0>2}:{(tempSeconds%3600)//60:0>2}:{tempSeconds%60:0>2}", 
                                         DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*12, 'topLeft')
         elif self.cursor == 1:
             self.titleName = Button(f"{ACCOUNT_MANAGER.listAccount[self.tempIndexAccount].name}", MEDIUM_FONT,
@@ -260,7 +260,7 @@ class ExistingAccountMenu:
             self.titleLoseMatch = Button(f"Number loss match: {ACCOUNT_MANAGER.listAccount[self.tempIndexAccount].loseMatch}", 
                                         DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*10, 'topLeft')
             tempSeconds = ACCOUNT_MANAGER.listAccount[self.tempIndexAccount].totalTimePlayed
-            self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600}h{(tempSeconds%3600)//60}m{tempSeconds%60}s", 
+            self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600:0>2}:{(tempSeconds%3600)//60:0>2}:{tempSeconds%60:0>2}", 
                                         DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*12, 'topLeft')
        
     ###########  Update cursor and button status in Accounts Setting Menu ###############################################

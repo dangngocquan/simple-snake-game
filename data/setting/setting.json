@@ -18,7 +18,7 @@
         "SOUND_VOLUME": 40
     },
     "GAMEMODE": {
-        "TARGET_SCORE": 3000,
+        "TARGET_SCORE": 400,
         "NUMBER_PLAYERS": 2,
         "AUTO_SPEED_UP": "OFF",
         "VIEW_CONTROL": "Third-person view"
@@ -27,6 +27,6 @@
         "INDEX_MAP": 5
     },
     "ACCOUNT": {
-        "INDEX_ACCOUNT": 0
+        "INDEX_ACCOUNT": 1
     }
 }
