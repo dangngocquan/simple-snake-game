@@ -140,20 +140,13 @@ class ExistingAccountMenu:
                             surfaceCheckRect=self.titlePlayThisAccount.textRect,
                             parent1SurfaceRect=self.container22Rect,
                             parent2SurfaceRect=self.container2Rect):
-                setting.replaceData(key1='ACCOUNT', key2='INDEX_ACCOUNT', newData=self.tempIndexAccount)
-                setting.saveSetting()
-                self.cursor = 2
+                self.cursor = 3
             if self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.titleDeleteThisAccount.textRect,
                             parent1SurfaceRect=self.container22Rect,
                             parent2SurfaceRect=self.container2Rect):
                 if self.tempIndexAccount > 0:
-                    if self.tempIndexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
-                        setting.replaceData(key1='ACCOUNT', key2='INDEX_ACCOUNT', newData=0)
-                        setting.saveSetting()
-                    ACCOUNT_MANAGER.removeAccount(indexAccount=self.tempIndexAccount)
-                    self.tempIndexAccount -= 1
-                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                    self.cursor = 4
         self.positionLeftMouse = (-100, -100)
     
     def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 

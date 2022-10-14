@@ -49,8 +49,9 @@ class StatisticsMenu:
         self.title = Button("Statistics", MEDIUM_FONT, width//10, height*1//24, 'topLeft')
         self.titleHighestScore = Button(f"Highest score:    {STATISTICS['HIGHEST_SCORE']} - {STATISTICS['PLAYER_HAS_HIGHEST_SCORE']}", 
                                         DESCRIPTION_FONT, width//10, height*4//24, 'topLeft')
-        self.titleTotalTimePlayed = Button(f"Total Time Played:    {STATISTICS['TOTAL_TIME_PLAYED']}", DESCRIPTION_FONT, 
-                                           width//10, height*6//24, 'topLeft')
+        self.titleTotalTimePlayed = Button(
+            f"Total Time Played:    {STATISTICS['TOTAL_TIME_PLAYED']//3600:0>2}:{STATISTICS['TOTAL_TIME_PLAYED']%3600//60:0>2}:{STATISTICS['TOTAL_TIME_PLAYED']%60:0>2}", 
+            DESCRIPTION_FONT, width//10, height*6//24, 'topLeft')
         self.titleNumberOfMatchesPlayed = Button(f"Number of matches played:    {STATISTICS['NUMBER_OF_MATCHES_PLAYED']}", 
                                                  DESCRIPTION_FONT, width//10, height*8//24, 'topLeft')
         self.titleNumberOfMatchesWon = Button(f"Number Of Matches Won:    {STATISTICS['NUMBER_OF_MATCHES_WON']}", 
@@ -118,7 +119,8 @@ class StatisticsMenu:
             f"Highest score:    {STATISTICS['HIGHEST_SCORE']} - {STATISTICS['PLAYER_HAS_HIGHEST_SCORE']}", 
             DESCRIPTION_FONT) 
         self.titleTotalTimePlayed.update(
-            f"Total Time Played:    {STATISTICS['TOTAL_TIME_PLAYED']}", DESCRIPTION_FONT)
+            f"Total Time Played:    {STATISTICS['TOTAL_TIME_PLAYED']//3600:0>2}:{STATISTICS['TOTAL_TIME_PLAYED']%3600//60:0>2}:{STATISTICS['TOTAL_TIME_PLAYED']%60:0>2}",
+            DESCRIPTION_FONT)
         self.titleNumberOfMatchesPlayed.update(
             f"Number of matches played:    {STATISTICS['NUMBER_OF_MATCHES_PLAYED']}", DESCRIPTION_FONT)
         self.titleNumberOfMatchesWon.update(

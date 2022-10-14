@@ -19,12 +19,12 @@
     },
     "GAMEMODE": {
         "TARGET_SCORE": 3000,
-        "NUMBER_PLAYERS": 1,
+        "NUMBER_PLAYERS": 2,
         "AUTO_SPEED_UP": "OFF",
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {
-        "INDEX_MAP": 3
+        "INDEX_MAP": 5
     },
     "ACCOUNT": {
         "INDEX_ACCOUNT": 0

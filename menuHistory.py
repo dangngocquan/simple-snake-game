@@ -187,13 +187,13 @@ class HistoryMenu:
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.container0Rect):
             if len(HISTORY['HISTORY']) > 9:
-                self.subtractNumber += 40
+                self.subtractNumber += 20
                 self.subtractNumber = min(len(HISTORY['HISTORY'])*40 - 360, self.subtractNumber)
         
     def decreaseSubtractNumber(self):
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.container0Rect):
-            self.subtractNumber -= 40
+            self.subtractNumber -= 20
             self.subtractNumber = max(0, self.subtractNumber)
     
     def addNewHistory(self, name="", time="", score=0, result="LOSE", typeGame = ""):

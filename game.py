@@ -1,6 +1,10 @@
+from datetime import datetime
+import statistics
 import sys
 import webbrowser
 import pygame
+from account import ACCOUNT_MANAGER
+import account
 from food import NUMBER_COLUMNS, NUMBER_ROWS, FoodManager
 import food
 from menuMain import MainMenu
@@ -15,7 +19,8 @@ from menuSoundSetting import SoundSettingMenu
 from menuMapSetting import MapSettingMenu
 from menuExistingMaps import ExistingMapsMenu
 from menuCreateNewMap import CreateNewMap
-from menuStatistics import StatisticsMenu
+from menuStatistics import STATISTICS, StatisticsMenu
+import menuStatistics
 from menuHistory import HistoryMenu
 from menuAboutGame import AboutGameMenu
 from menuGameOver import GameOverMenu, GameOverMenu02
@@ -49,6 +54,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.countTicks = 0
         self.divisibility = 462
+        self.startTimeOpen = datetime.now()
+        self.startTimePlayThisAccount = datetime.now()
         ###########   Status in game   ######################################################################
         self.running = True
         self.runningMainMenu = True
@@ -108,6 +115,11 @@ class Game:
         for event in pygame.event.get():
             ###########   Quit game   #######################################################################
             if event.type == pygame.QUIT:
+                STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
+                menuStatistics.saveData()
+                ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
+                    (datetime.now() - self.startTimePlayThisAccount).total_seconds())
+                account.saveData(ACCOUNT_MANAGER.listAccount)
                 ###########   Save data before quit game   ##################################################
                 if self.runningInGame:
                     snake.saveSnake(self.inGame.snake)
@@ -164,6 +176,9 @@ class Game:
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
                         elif self.mainMenu.cursor == 3:
+                            STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
+                            self.startTimeOpen = datetime.now()
+                            menuStatistics.saveData()
                             self.runningStatisticsMenu = True
                             self.statisticsMenu.cursor = 0
                         elif self.mainMenu.cursor == 4:
@@ -174,6 +189,8 @@ class Game:
                             self.aboutGameMenu.cursor = 0
                         elif self.mainMenu.cursor == 6:
                             self.running = False
+                            STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
+                            menuStatistics.saveData()
                             pygame.time.wait(500)
                             pygame.quit()
                             sys.exit()            
@@ -262,6 +279,28 @@ class Game:
                     elif event.button == pygame.BUTTON_WHEELUP:
                         self.existingAccountMenu.decreaseSubtractNumber()
                 if self.existingAccountMenu.cursor == 2:
+                    self.runningExistingAccountMenu = False
+                    self.runningAccountsSetting = True
+                elif self.existingAccountMenu.cursor == 3:
+                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
+                        (datetime.now() - self.startTimePlayThisAccount).total_seconds())
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                    self.startTimePlayThisAccount = datetime.now()
+                    setting.replaceData(key1='ACCOUNT', key2='INDEX_ACCOUNT', newData=self.existingAccountMenu.tempIndexAccount)
+                    setting.saveSetting()
+                    self.runningExistingAccountMenu = False
+                    self.runningAccountsSetting = True
+                elif self.existingAccountMenu.cursor == 4:
+                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
+                        (datetime.now() - self.startTimePlayThisAccount).total_seconds())
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                    self.startTimePlayThisAccount = datetime.now()
+                    if self.existingAccountMenu.tempIndexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
+                        setting.replaceData(key1='ACCOUNT', key2='INDEX_ACCOUNT', newData=0)
+                        setting.saveSetting()
+                    ACCOUNT_MANAGER.removeAccount(indexAccount=self.existingAccountMenu.tempIndexAccount)
+                    self.existingAccountMenu.tempIndexAccount -= 1
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
                     self.runningExistingAccountMenu = False
                     self.runningAccountsSetting = True
             ###########   Get events when current screen is Create New Account Menu   #######################
@@ -887,6 +926,12 @@ class Game:
                         if event.key == pygame.K_k:
                             if self.inGame.snake.currentDirection == None:
                                 SETTING2['SOUND']['GAME_OVER'].play()
+                                STATISTICS['NUMBER_OF_MATCHES_PLAYED'] += 1
+                                menuStatistics.saveData()
+                                STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
+                                menuStatistics.saveData()
+                                ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
+                                account.saveData(ACCOUNT_MANAGER.listAccount)
                                 self.inGame.running = False
                                 self.runningInGame = False
                                 self.runningGameOverMenu = True
@@ -982,20 +1027,32 @@ class Game:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_k:
                             if self.inGame02.snake01.currentDirection == None:
-                                SETTING2['SOUND']['GAME_OVER'].play()
                                 self.inGame02.running = False
                                 self.runningInGame02 = False
                                 self.runningGameOverMenu02 = True
-                                self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
-                                                                 snake01=self.inGame02.snake01,
-                                                                 snake02=self.inGame02.snake02, winner=0,
-                                                                 wallManager=self.inGame02.wallManager)
+                                STATISTICS['NUMBER_OF_MATCHES_PLAYED'] += 1
+                                menuStatistics.saveData()
                                 if (len(self.inGame02.snake01.coordinateSnakeBlocks()) + 
                                     len(self.inGame02.snake02.coordinateSnakeBlocks())) > NUMBER_COLUMNS*NUMBER_ROWS//2:
+                                    SETTING2['SOUND']['WIN_GAME']
                                     self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                                         snake01=self.inGame02.snake01, 
                                                                         snake02=self.inGame02.snake02, winner=3,
                                                                         wallManager=self.inGame02.wallManager)
+                                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
+                                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                                    STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
+                                    menuStatistics.saveData()
+                                else:
+                                    SETTING2['SOUND']['GAME_OVER'].play()
+                                    self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
+                                                                    snake01=self.inGame02.snake01,
+                                                                    snake02=self.inGame02.snake02, winner=0,
+                                                                    wallManager=self.inGame02.wallManager)
+                                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
+                                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                                    STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
+                                    menuStatistics.saveData()
                         elif event.key == pygame.K_SPACE:
                             if self.inGame02.snake01.currentDirection != None:
                                 self.inGame02.snake01.previousDirection = self.inGame02.snake01.currentDirection
@@ -1207,13 +1264,23 @@ class Game:
             if (snakeDied or targetScoreReached):
                 if snakeDied:
                     SETTING2['SOUND']['GAME_OVER'].play()
+                    STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
+                    menuStatistics.saveData()
+                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
                 elif targetScoreReached:
                     SETTING2['SOUND']['WIN_GAME'].play()
+                    STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
+                    menuStatistics.saveData()
+                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
                 self.inGame.running = False
                 self.runningInGame = False
                 self.runningGameOverMenu = True
                 self.gameOverMenu = GameOverMenu(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                  snake=self.inGame.snake, wallManager=self.inGame.wallManager)
+                STATISTICS['NUMBER_OF_MATCHES_PLAYED'] += 1
+                menuStatistics.saveData()
             ###########   Update screen when showing screen start in Ingame   ###############################
             if self.inGame.showingScreenStart:
                 if self.countTicks % (FPS * self.divisibility // self.inGame.snake.animationSpeed) == 0:
@@ -1245,14 +1312,36 @@ class Game:
             if (snake01Died or snake02Died or targetScoreReached01 or targetScoreReached02):
                 if snake01Died or snake02Died:
                     SETTING2['SOUND']['GAME_OVER'].play()
+                    if snake01Died:
+                        STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
+                        menuStatistics.saveData()
+                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
+                        account.saveData(ACCOUNT_MANAGER.listAccount)
+                    elif snake02Died:
+                        STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
+                        menuStatistics.saveData()
+                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
+                        account.saveData(ACCOUNT_MANAGER.listAccount)
                 elif targetScoreReached01 or targetScoreReached02:
                     SETTING2['SOUND']['WIN_GAME'].play()
+                    if targetScoreReached01:
+                        STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
+                        menuStatistics.saveData()
+                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
+                        account.saveData(ACCOUNT_MANAGER.listAccount)
+                    elif targetScoreReached02:
+                        STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
+                        menuStatistics.saveData()
+                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
+                        account.saveData(ACCOUNT_MANAGER.listAccount)
                 self.inGame02.running = False
                 self.runningInGame02 = False
                 self.runningGameOverMenu02 = True
                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                      snake01=self.inGame02.snake01, snake02=self.inGame02.snake02,
                                                      wallManager=self.inGame02.wallManager)
+                STATISTICS['NUMBER_OF_MATCHES_PLAYED'] += 1
+                menuStatistics.saveData()
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:
                 if self.countTicks % (FPS * self.divisibility // self.inGame02.snake01.animationSpeed) == 0:

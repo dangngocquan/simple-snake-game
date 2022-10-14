@@ -3,9 +3,9 @@
         {
             "NAME": "NOBODY",
             "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
+            "WIN_MATCH": 1,
+            "LOSE_MATCH": 2,
+            "TOTAL_TIME_PLAYED": 190
         },
         {
             "NAME": "briss",
@@ -82,14 +82,7 @@
             "CREATED_TIME": "13/10/2022 20:22:06",
             "WIN_MATCH": 0,
             "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
-        },
-        {
-            "NAME": "bris100",
-            "CREATED_TIME": "13/10/2022 20:36:57",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 0
+            "TOTAL_TIME_PLAYED": 123
         }
     ]
 }
