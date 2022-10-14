@@ -25,6 +25,8 @@ class MainMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
+        self.positionMouse = (-100, -100)
+        self.positionLeftMouse = (-100, -100)
         ########### Buttons   ###############################################################################
         self.titleSimpleSnake = Button("SIMPLE SNAKE", BIG_FONT, width//2, height//24*2)
         self.titleSimpleSnake.isChosen = True

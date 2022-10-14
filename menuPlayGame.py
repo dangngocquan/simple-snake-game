@@ -25,35 +25,90 @@ class PlayGameMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
+        self.positionMouse = (-100, -100)
+        self.positionLeftMouse = (-100, -100)
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleNewGame = Button("NEW GAME", MEDIUM_FONT, width//2, height*4//12)
         self.titleContinueGame = Button("CONTINUE GAME", MEDIUM_FONT, width//2, height*6//12)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*8//12)
+    
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePostionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
         
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleNewGame.textRect):
+            self.titleNewGame.isChosen = True
+            self.titleNewGame.update('NEW GAME', MEDIUM_FONT_HORVED)
+        else:
+            self.titleNewGame.isChosen = False
+            self.titleNewGame.update('NEW GAME', MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleContinueGame.textRect):
+            self.titleContinueGame.isChosen = True
+            self.titleContinueGame.update("CONTNUE GAME", MEDIUM_FONT_HORVED)
+        else:
+            self.titleContinueGame.isChosen = False
+            self.titleContinueGame.update("CONTNUE GAME", MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBack.textRect):
+            self.titleBack.isChosen = True
+            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+        else:
+            self.titleBack.isChosen = False
+            self.titleBack.update('BACK', MEDIUM_FONT)
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleNewGame.textRect):
+            self.cursor = 0
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleContinueGame.textRect):
+            self.cursor = 1
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBack.textRect):
+            self.cursor = 2
+        else:
+            self.cursor = 3
+        self.positionLeftMouse = (-100, -100)
+    
+    
+    
     ###########   Update cursor and buttons status in Play Game Menu   ######################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
-        if self.cursor == 0:
-            self.titleNewGame.isChosen = True
-            self.titleContinueGame.isChosen = False
-            self.titleBack.isChosen = False
-            self.titleNewGame.update('NEW GAME', MEDIUM_FONT_HORVED)
-            self.titleContinueGame.update('CONTINUE GAME', MEDIUM_FONT)
-            self.titleBack.update('BACK', MEDIUM_FONT)
-        elif self.cursor == 1:
-            self.titleNewGame.isChosen = False
-            self.titleContinueGame.isChosen = True
-            self.titleBack.isChosen = False
-            self.titleNewGame.update('NEW GAME', MEDIUM_FONT)
-            self.titleContinueGame.update('CONTINUE GAME', MEDIUM_FONT_HORVED)
-            self.titleBack.update('BACK', MEDIUM_FONT)
-        elif self.cursor == 2:
-            self.titleNewGame.isChosen = False
-            self.titleContinueGame.isChosen = False
-            self.titleBack.isChosen = True
-            self.titleNewGame.update('NEW GAME', MEDIUM_FONT)
-            self.titleContinueGame.update('CONTINUE GAME', MEDIUM_FONT)
-            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+        self.updateMousePoitedAt()
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################

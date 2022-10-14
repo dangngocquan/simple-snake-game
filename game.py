@@ -207,21 +207,14 @@ class Game:
                             sys.exit()            
             ###########   Get events when current screen is Play Game Menu  #################################
             elif self.runningPlayGameMenu:
-                if event.type == pygame.KEYDOWN:
-                    ###########   Move the cursor   #########################################################
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.playGameMenu.cursor += 1
-                        self.playGameMenu.cursor %= 3
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.playGameMenu.cursor -= 1
-                        self.playGameMenu.cursor %= 3
-                    ###########   Select the content that the cursor is pointing at   #######################
-                    if event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
+                self.playGameMenu.updatePostionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.playGameMenu.updatePositionLeftMouse()
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
                         ###########   The cursor is pointing at "New Game"   ################################
                         if self.playGameMenu.cursor == 0:
+                            self.runningPlayGameMenu = False
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 self.runningInGame = True
                                 self.inGame.snake = Snake()
@@ -239,6 +232,7 @@ class Game:
                                 self.inGame02.showingScreenStart = True
                         ###########   The cursor is pointing at "Continue Game"   ###########################
                         elif self.playGameMenu.cursor == 1:
+                            self.runningPlayGameMenu = False
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 self.runningInGame = True
                                 self.inGame.snake = snake.loadPreviousSnake()
@@ -254,9 +248,9 @@ class Game:
                                 self.inGame02.showingScreenStart = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.playGameMenu.cursor == 2:
+                            self.runningPlayGameMenu = False
                             self.runningMainMenu = True
-                            self.mainMenu.cursor = 0
-                        self.runningPlayGameMenu = False
+                            
             ###########   Get events when current screen is Accounts Setting Menu   #####################################
             elif self.runningAccountsSetting:
                 if event.type == pygame.KEYDOWN:
