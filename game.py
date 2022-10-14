@@ -156,7 +156,7 @@ class Game:
                 sys.exit()
             ###########   Get events when current screen is Main Menu   #####################################
             if self.runningMainMenu:
-                self.mainMenu.updatePostionMouse(pygame.mouse.get_pos())
+                self.mainMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.mainMenu.updatePositionLeftMouse()
@@ -207,7 +207,7 @@ class Game:
                             sys.exit()            
             ###########   Get events when current screen is Play Game Menu  #################################
             elif self.runningPlayGameMenu:
-                self.playGameMenu.updatePostionMouse(pygame.mouse.get_pos())
+                self.playGameMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.playGameMenu.updatePositionLeftMouse()
@@ -1230,70 +1230,60 @@ class Game:
                 self.gameOverMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.KEYDOWN:
                     if event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3,
-                                     pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7]:
+                                     pygame.K_4, pygame.K_5, pygame.K_6]:
                         self.gameOverMenu.updateDropType(pygame.key.name(event.key))
-                    elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.gameOverMenu.cursor += 1
-                        self.gameOverMenu.cursor %= 2
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.gameOverMenu.cursor -= 1
-                        self.gameOverMenu.cursor %= 2
-                    elif event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        if self.gameOverMenu.cursor == 0:
-                            self.runningInGame = True
-                            self.inGame.showingScreenStart = True
-                        elif self.gameOverMenu.cursor == 1:
-                            self.runningMainMenu = True
-                        self.inGame.snake = Snake()
-                        self.inGame.foodManager.removeAllFoods()
-                        self.inGame.wallManager = wall.loadWallManagerFromListMaps(
-                            indexMap=SETTING1['MAP']['INDEX_MAP']
-                        )
-                        self.inGame.update()
-                        wall.saveWallManager(self.inGame.wallManager)
-                        snake.saveSnake(self.inGame.snake)
-                        food.saveFoodManager(self.inGame.foodManager)
-                        self.inGame.update()
-                        self.runningGameOverMenu = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        self.gameOverMenu.updatePositionLeftMouse()
+                        if self.gameOverMenu.cursor < 2:
+                            if self.gameOverMenu.cursor == 0:
+                                self.runningInGame = True
+                                self.inGame.showingScreenStart = True
+                            elif self.gameOverMenu.cursor == 1:
+                                self.runningMainMenu = True
+                            self.inGame.snake = Snake()
+                            self.inGame.foodManager.removeAllFoods()
+                            self.inGame.wallManager = wall.loadWallManagerFromListMaps(
+                                indexMap=SETTING1['MAP']['INDEX_MAP']
+                            )
+                            self.inGame.update()
+                            wall.saveWallManager(self.inGame.wallManager)
+                            snake.saveSnake(self.inGame.snake)
+                            food.saveFoodManager(self.inGame.foodManager)
+                            self.inGame.update()
+                            self.runningGameOverMenu = False
             
             ###########   Get event when current screen is Game Over Menu 02   ##############################
             elif self.runningGameOverMenu02:
                 self.gameOverMenu02.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.KEYDOWN:
                     if event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3,
-                                     pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7]:
+                                     pygame.K_4, pygame.K_5, pygame.K_6]:
                         self.gameOverMenu02.updateDropType(pygame.key.name(event.key))
-                    elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.gameOverMenu02.cursor += 1
-                        self.gameOverMenu02.cursor %= 2
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.gameOverMenu02.cursor -= 1
-                        self.gameOverMenu02.cursor %= 2
-                    elif event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        if self.gameOverMenu02.cursor == 0:
-                            self.runningInGame02 = True
-                            self.inGame02.showingScreenStart = True
-                        elif self.gameOverMenu02.cursor == 1:
-                            self.runningMainMenu = True
-                        self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
-                        self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
-                        self.inGame02.foodManager.removeAllFoods()
-                        self.inGame02.wallManager = wall.loadWallManagerFromListMaps(
-                            indexMap=SETTING1['MAP']['INDEX_MAP']
-                        )
-                        wall.saveWallManager(self.inGame02.wallManager,
-                                         path='./data/player/twoPlayer/wall/wall.json')                           
-                        snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
-                        snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
-                        food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
-                        self.inGame02.update()
-                        self.runningGameOverMenu02 = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        self.gameOverMenu02.updatePositionLeftMouse()
+                        if self.gameOverMenu02.cursor < 2:
+                            if self.gameOverMenu02.cursor == 0:
+                                self.runningInGame02 = True
+                                self.inGame02.showingScreenStart = True
+                            elif self.gameOverMenu02.cursor == 1:
+                                self.runningMainMenu = True
+                            self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
+                            self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
+                            self.inGame02.foodManager.removeAllFoods()
+                            self.inGame02.wallManager = wall.loadWallManagerFromListMaps(
+                                indexMap=SETTING1['MAP']['INDEX_MAP']
+                            )
+                            wall.saveWallManager(self.inGame02.wallManager,
+                                            path='./data/player/twoPlayer/wall/wall.json')                           
+                            snake.saveSnake(self.inGame02.snake01, path='./data/player/twoPlayer/snake/snake01.json')
+                            snake.saveSnake(self.inGame02.snake02, path='./data/player/twoPlayer/snake/snake02.json')
+                            food.saveFoodManager(self.inGame02.foodManager, path='./data/player/twoPlayer/food/food.json')
+                            self.inGame02.update()
+                            self.runningGameOverMenu02 = False
                         
                                   
     ###########   Update screen with current status   #######################################################       

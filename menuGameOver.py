@@ -34,7 +34,9 @@ class GameOverMenu:
         self.snake = snake
         self.wallManager = wallManager
         self.dropType = '0'
-        self.positionMouse = (0,0)
+        self.positionMouse = (-100, -100)
+        self.positionLeftMouse = (-100, -100)
+        
         ########### Buttons in Play Game Menu  ##############################################################
         self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
                                        DESCRIPTION_FONT_2, width//2, height*1//24)
@@ -50,33 +52,78 @@ class GameOverMenu:
         self.titlePlayAgain = Button("PLAY AGAIN", MEDIUM_FONT, width//2, height*8//12)
         self.titleBackMainMenu = Button("MAIN MENU", MEDIUM_FONT, width//2, height*10//12)
         
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePositionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
         
-    def updatePositionMouse(self, positionMouse):
-        self.positionMouse = positionMouse
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titlePlayAgain.textRect):
+            self.titlePlayAgain.isChosen = True
+            self.titlePlayAgain.update('PLAY AGAIN', MEDIUM_FONT_HORVED)
+        else:
+            self.titlePlayAgain.isChosen = False
+            self.titlePlayAgain.update('PLAY AGAIN', MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBackMainMenu.textRect):
+            self.titleBackMainMenu.isChosen = True
+            self.titleBackMainMenu.update("MAIN MENU", MEDIUM_FONT_HORVED)
+        else:
+            self.titleBackMainMenu.isChosen = False
+            self.titleBackMainMenu.update("MAIN MENU", MEDIUM_FONT)
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titlePlayAgain.textRect):
+            self.cursor = 0
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBackMainMenu.textRect):
+            self.cursor = 1
+        else:
+            self.cursor = 2
+        self.positionLeftMouse = (-100, -100)
+
         
     def updateDropType(self, dropType):
         self.dropType = dropType
     
     ###########   Update cursor and buttons status in Game Over Menu   ######################################
     def update(self, type='UpdateTextAnimation'):
+        
         ###########   Update animation of text   ############################################################
         if type == 'UpdateTextAnimation':
             ###########   Update cursor and buttons   #######################################################
-            if self.cursor == 0:
-                self.titlePlayAgain.isChosen = True
-                self.titleBackMainMenu.isChosen = False
-                self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT_HORVED)
-                self.titleBackMainMenu.update("MAIN MENU", MEDIUM_FONT)
-            elif self.cursor == 1:
-                self.titlePlayAgain.isChosen = False
-                self.titleBackMainMenu.isChosen = True
-                self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
-                self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
-            if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
-                self.titleGameOver.update("<< YOU WON >>", BIG_FONT, color = 'ALL')
-            else:
-                self.titleGameOver.update("GAME OVER", BIG_FONT, color = 'ALL')
-            self.titleScore.update(f"Your score: {self.snake.score}", MEDIUM_FONT_2)
+            self.updateMousePoitedAt()
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
@@ -140,7 +187,8 @@ class GameOverMenu02:
         self.snake02 = snake02
         self.wallManager = wallManager
         self.dropType = '0'
-        self.positionMouse = (0,0)
+        self.positionMouse = (-100,-100)
+        self.positionLeftMouse = (-100, -100)
         self.winner = winner
         snake01Died = self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks(),
                                         wallCoordinates=self.wallManager.coordinateWalls())
@@ -195,8 +243,68 @@ class GameOverMenu02:
         self.titleScore01.isChosen = True
         self.titleScore02.isChosen = True
         
-    def updatePositionMouse(self, positionMouse):
-        self.positionMouse = positionMouse
+    
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePositionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
+        
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titlePlayAgain.textRect):
+            self.titlePlayAgain.isChosen = True
+            self.titlePlayAgain.update('PLAY AGAIN', MEDIUM_FONT_HORVED)
+        else:
+            self.titlePlayAgain.isChosen = False
+            self.titlePlayAgain.update('PLAY AGAIN', MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBackMainMenu.textRect):
+            self.titleBackMainMenu.isChosen = True
+            self.titleBackMainMenu.update("MAIN MENU", MEDIUM_FONT_HORVED)
+        else:
+            self.titleBackMainMenu.isChosen = False
+            self.titleBackMainMenu.update("MAIN MENU", MEDIUM_FONT)
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titlePlayAgain.textRect):
+            self.cursor = 0
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBackMainMenu.textRect):
+            self.cursor = 1
+        else:
+            self.cursor = 2
+        self.positionLeftMouse = (-100, -100)
+    
         
     def updateDropType(self, dropType):
         self.dropType = dropType
@@ -206,16 +314,7 @@ class GameOverMenu02:
         ###########   Update animation of text   ############################################################
         if type == 'UpdateTextAnimation':
             ###########   Update cursor and buttons   #######################################################
-            if self.cursor == 0:
-                self.titlePlayAgain.isChosen = True
-                self.titleBackMainMenu.isChosen = False
-                self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT_HORVED)
-                self.titleBackMainMenu.update("MAIN MENU", MEDIUM_FONT)
-            elif self.cursor == 1:
-                self.titlePlayAgain.isChosen = False
-                self.titleBackMainMenu.isChosen = True
-                self.titlePlayAgain.update("PLAY AGAIN", MEDIUM_FONT)
-                self.titleBackMainMenu.update('MAIN MENU', MEDIUM_FONT_HORVED)
+            self.updateMousePoitedAt()
             self.titleGameOver.update("END MATCH", BIG_FONT, color='ALL')
             if self.winner == 1:
                 self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')

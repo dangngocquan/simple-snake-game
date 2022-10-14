@@ -40,7 +40,7 @@ class MainMenu:
     
     
     ##################    Update current position of mouse    ###############################################
-    def updatePostionMouse(self, position):
+    def updatePositionMouse(self, position):
         self.positionMouse = position
     
     
