@@ -35,121 +35,124 @@ class MainMenu:
         self.titleHistory = Button("HISTORY", MEDIUM_FONT, width//2, height*32//48)
         self.titleAboutGame = Button("ABOUT GAME", MEDIUM_FONT, width//2, height*37//48)
         self.titleQuitGame = Button("QUIT GAME", MEDIUM_FONT, width//2, height*42//48)
+    
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePostionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
         
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titlePlayGame.textRect):
+            self.titlePlayGame.isChosen = True
+            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT_HORVED)
+        else:
+            self.titlePlayGame.isChosen = False
+            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleAccount.textRect):
+            self.titleAccount.isChosen = True
+            self.titleAccount.update("ACCOUNT", MEDIUM_FONT_HORVED)
+        else:
+            self.titleAccount.isChosen = False
+            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleOptions.textRect):
+            self.titleOptions.isChosen = True
+            self.titleOptions.update('OPTIONS', MEDIUM_FONT_HORVED)
+        else:
+            self.titleOptions.isChosen = False
+            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleStatistics.textRect):
+            self.titleStatistics.isChosen = True
+            self.titleStatistics.update("STATISTICS", MEDIUM_FONT_HORVED, 'G')
+        else:
+            self.titleStatistics.isChosen = False
+            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleHistory.textRect):
+            self.titleHistory.isChosen = True
+            self.titleHistory.update("HISTORY", MEDIUM_FONT_HORVED, 'G')
+        else:
+            self.titleHistory.isChosen = False
+            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleAboutGame.textRect):
+            self.titleAboutGame.isChosen = True
+            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT_HORVED)
+        else:
+            self.titleAboutGame.isChosen = False
+            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleQuitGame.textRect):
+            self.titleQuitGame.isChosen = True
+            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT_HORVED)
+        else:
+            self.titleQuitGame.isChosen = False
+            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titlePlayGame.textRect):
+            self.cursor = 0
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleAccount.textRect):
+            self.cursor = 1
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleOptions.textRect):
+            self.cursor = 2
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleStatistics.textRect):
+            self.cursor = 3
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleHistory.textRect):
+            self.cursor = 4
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleAboutGame.textRect):
+            self.cursor = 5
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleQuitGame.textRect):
+            self.cursor = 6
+        else:
+            self.cursor = 7
+        self.positionLeftMouse = (-100, -100)
+    
+      
     ###########  Update cursor and button status in Main Menu ###############################################
     def update(self):
+        self.updateMousePoitedAt()
         ###########  Update cursor and button of main menu  #################################################
-        if self.cursor == 0:
-            self.titlePlayGame.isChosen = True
-            self.titleAccount.isChosen = False
-            self.titleOptions.isChosen = False
-            self.titleStatistics.isChosen = False
-            self.titleHistory.isChosen = False
-            self.titleAboutGame.isChosen = False
-            self.titleQuitGame.isChosen = False
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT_HORVED)
-            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 1:
-            self.titlePlayGame.isChosen = False
-            self.titleAccount.isChosen = True
-            self.titleOptions.isChosen = False
-            self.titleStatistics.isChosen = False
-            self.titleHistory.isChosen = False
-            self.titleAboutGame.isChosen = False
-            self.titleQuitGame.isChosen = False
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
-            self.titleAccount.update("ACCOUNT", MEDIUM_FONT_HORVED)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 2:
-            self.titlePlayGame.isChosen = False
-            self.titleAccount.isChosen = False
-            self.titleOptions.isChosen = True
-            self.titleStatistics.isChosen = False
-            self.titleHistory.isChosen = False
-            self.titleAboutGame.isChosen = False
-            self.titleQuitGame.isChosen = False
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
-            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT_HORVED)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 3:
-            self.titlePlayGame.isChosen = False
-            self.titleAccount.isChosen = False
-            self.titleOptions.isChosen = False
-            self.titleStatistics.isChosen = True
-            self.titleHistory.isChosen = False
-            self.titleAboutGame.isChosen = False
-            self.titleQuitGame.isChosen = False
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
-            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT_HORVED, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 4:
-            self.titlePlayGame.isChosen = False
-            self.titleAccount.isChosen = False
-            self.titleOptions.isChosen = False
-            self.titleStatistics.isChosen = False
-            self.titleHistory.isChosen = True
-            self.titleAboutGame.isChosen = False
-            self.titleQuitGame.isChosen = False
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
-            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT_HORVED, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 5:
-            self.titlePlayGame.isChosen = False
-            self.titleAccount.isChosen = False
-            self.titleOptions.isChosen = False
-            self.titleStatistics.isChosen = False
-            self.titleHistory.isChosen = False
-            self.titleAboutGame.isChosen = True
-            self.titleQuitGame.isChosen = False
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
-            self.titleAccount.update("ACCOUNT", MEDIUM_FONT)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT_HORVED)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT)
-        elif self.cursor == 6:
-            self.titlePlayGame.isChosen = False
-            self.titleAccount.isChosen = False
-            self.titleOptions.isChosen = False
-            self.titleStatistics.isChosen = False
-            self.titleHistory.isChosen = False
-            self.titleAboutGame.isChosen = False
-            self.titleQuitGame.isChosen = True
-            self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
-            self.titlePlayGame.update('PLAY GAME', MEDIUM_FONT)
-            self.titleOptions.update('OPTIONS', MEDIUM_FONT)
-            self.titleStatistics.update("STATISTICS", MEDIUM_FONT, 'G')
-            self.titleHistory.update("HISTORY", MEDIUM_FONT, 'G')
-            self.titleAboutGame.update("ABOUT GAME", MEDIUM_FONT)
-            self.titleQuitGame.update('QUIT GAME', MEDIUM_FONT_HORVED)
+        self.titleSimpleSnake.update('SIMPLE SNAKE', BIG_FONT, 'ALL')
         ###########  Remove old button display  #############################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw new button   ######################################################################

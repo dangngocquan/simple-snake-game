@@ -60,10 +60,12 @@ class StatisticsMenu:
                                                DESCRIPTION_FONT, width//10, height*12//24, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*22//24)
     
-    
+    ##################    Update current position of mouse    ###############################################
     def updatePostionMouse(self, position):
         self.positionMouse = position
-        
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
     def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
                     parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
         if surfaceCheckRect == None:
@@ -87,7 +89,8 @@ class StatisticsMenu:
         y2 = y1 + surfaceCheckRect.height
         
         return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
-        
+    
+    #############   Update text, button is horved by mouse   ################################################
     def updateMousePoitedAt(self):
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleBack.textRect):
@@ -95,12 +98,13 @@ class StatisticsMenu:
         else:
             self.cursor = 2
     
-    
+    ###############     Update when player left-click    ####################################################
     def updatePositionLeftMouse(self):
         self.positionLeftMouse = self.positionMouse
         if self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.titleBack.textRect):
             self.cursor = -1
+        self.positionLeftMouse = (-100, -100)
     
     
     

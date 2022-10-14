@@ -156,40 +156,49 @@ class Game:
                 sys.exit()
             ###########   Get events when current screen is Main Menu   #####################################
             if self.runningMainMenu:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.mainMenu.cursor += 1
-                        self.mainMenu.cursor %= 7
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.mainMenu.cursor -= 1
-                        self.mainMenu.cursor %= 7
-                    elif event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        self.runningMainMenu = False
+                self.mainMenu.updatePostionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.mainMenu.updatePositionLeftMouse()
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        # self.runningMainMenu = False
+                        ########   The cursor is "PLAY GAME"    #############################################
                         if self.mainMenu.cursor == 0:
+                            self.runningMainMenu = False
                             self.runningPlayGameMenu = True
                             self.playGameMenu.cursor = 0
+                        ########   The cursor is "ACCOUNT"    ###############################################
                         elif self.mainMenu.cursor == 1:
+                            self.runningMainMenu = False
                             self.runningAccountsSetting = True
                             self.accountsSetting.cursor = 0
+                        ########   The cursor is "OPTIONS"    ###############################################
                         elif self.mainMenu.cursor == 2:
+                            self.runningMainMenu = False
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
+                        ########   The cursor is "STATISTICS"    ############################################
                         elif self.mainMenu.cursor == 3:
+                            self.runningMainMenu = False
+                            self.runningStatisticsMenu = True
+                            self.statisticsMenu.cursor = 0
+                            ############   Update new data for statistics of game   #########################
                             STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
                             self.startTimeOpen = datetime.now()
                             menuStatistics.saveData()
-                            self.runningStatisticsMenu = True
-                            self.statisticsMenu.cursor = 0
+                        ########   The cursor is "HISTORY"    ###############################################
                         elif self.mainMenu.cursor == 4:
+                            self.runningMainMenu = False
                             self.runningHistoryMenu = True
                             self.historyMenu.cursor = 0
+                        ########   The cursor is "ABOUT GAME"    ############################################
                         elif self.mainMenu.cursor == 5:
+                            self.runningMainMenu = False
                             self.runningAboutGameMenu = True
                             self.aboutGameMenu.cursor = 0
+                        ########   The cursor is "QUIT GAME"    #############################################
                         elif self.mainMenu.cursor == 6:
+                            self.runningMainMenu = False
                             self.running = False
                             STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
                             menuStatistics.saveData()
