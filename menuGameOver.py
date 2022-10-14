@@ -1,5 +1,6 @@
 from turtle import pos
 import pygame
+from account import ACCOUNT_MANAGER
 from snake import Snake
 from setting import *
 import setting
@@ -184,8 +185,9 @@ class GameOverMenu02:
         elif self.winner == 3:
             self.titleStatusPlayer01 = Button("WINNER", MEDIUM_FONT_2, width//4, height*4//12)
             self.titleStatusPlayer02 = Button("WINNER", MEDIUM_FONT_2, width//4*3, height*4//12)
-        self.titlePlayer01 = Button("PLAYER 01", MEDIUM_FONT_2, width//4, height*21//48)
-        self.titlePlayer02 = Button("PLAYER 02", MEDIUM_FONT_2, width//4*3, height*21//48)
+        self.titlePlayer01 = Button(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
+                                    MEDIUM_FONT_2, width//4, height*21//48)
+        self.titlePlayer02 = Button("OTHER PLAYER", MEDIUM_FONT_2, width//4*3, height*21//48)
         self.titleScore01 = Button(f"Score: {self.snake01.score}", DESCRIPTION_FONT, width//4, height*13//24)
         self.titleTargetScore = Button(f"Target Score: {SETTING1['GAMEMODE']['TARGET_SCORE']}", 
                                        DESCRIPTION_FONT, width//4*2, height*13//24)
@@ -224,18 +226,20 @@ class GameOverMenu02:
             self.titleGameOver.update("END MATCH", BIG_FONT, color='ALL')
             if self.winner == 1:
                 self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')
-                self.titlePlayer01.update("PLAYER 01", MEDIUM_FONT_2, 'R')
+                self.titlePlayer01.update(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
+                                          MEDIUM_FONT_2, 'R')
                 self.titleScore01.update(f"Score: {self.snake01.score}", DESCRIPTION_FONT, 'R')
             elif self.winner == 2:
                 self.titleStatusPlayer02.update("WINNER", MEDIUM_FONT_2, 'R')
-                self.titlePlayer02.update("PLAYER 02", MEDIUM_FONT_2, 'R')
+                self.titlePlayer02.update("OTHER PLAYER", MEDIUM_FONT_2, 'R')
                 self.titleScore02.update(f"Score: {self.snake02.score}", DESCRIPTION_FONT, 'R')
             elif self.winner == 3:
                 self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')
-                self.titlePlayer01.update("PLAYER 01", MEDIUM_FONT_2, 'R')
+                self.titlePlayer01.update(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
+                                          MEDIUM_FONT_2, 'R')
                 self.titleScore01.update(f"Score: {self.snake01.score}", DESCRIPTION_FONT, 'R')
                 self.titleStatusPlayer02.update("WINNER", MEDIUM_FONT_2, 'R')
-                self.titlePlayer02.update("PLAYER 02", MEDIUM_FONT_2, 'R')
+                self.titlePlayer02.update("OTHER PLAYER", MEDIUM_FONT_2, 'R')
                 self.titleScore02.update(f"Score: {self.snake02.score}", DESCRIPTION_FONT, 'R')
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
