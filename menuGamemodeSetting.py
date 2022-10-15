@@ -259,6 +259,6 @@ class GamemodeSettingMenu:
         self.titleViewControlOptions.draw(self.surface)
         self.titleBack.draw(self.surface)
         
-    ###########  Draw Options Menu in another surface  ######################################################
+    ###########  Draw Gamemode Setting Menu in another surface  ######################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

@@ -27,7 +27,7 @@ class SoundSettingMenu:
         self.cursor = 0
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
-        ########### Buttons in Options Menu  ##############################################################
+        ########### Buttons in Sound Setting Menu  ##########################################################
         self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//12)
         self.descriptionText.isChosen = True
         self.titleMusicSetting = Button("MUSIC SETTING", MEDIUM_FONT_2, width//2, height*3//12)
@@ -162,7 +162,7 @@ class SoundSettingMenu:
             self.cursor = 7
         self.positionLeftMouse = (-100, -100)
       
-    ###########   Update cursor and buttons status in Options Menu   ########################################
+    ###########   Update cursor and buttons status in Sound Setting Menu   ##################################
     def update(self):
         self.updateMousePoitedAt()
         ###########   Update cursor and buttons   ###########################################################
@@ -220,6 +220,6 @@ class SoundSettingMenu:
         self.titleSoundVolumeOptions.draw(self.surface)
         self.titleBack.draw(self.surface)
         
-    ###########  Draw Sound setting Menu in another surface  ################################################
+    ###########  Draw Sound Setting Menu in another surface  ################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

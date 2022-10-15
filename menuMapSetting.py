@@ -27,7 +27,7 @@ class MapSettingMenu:
         self.cursor = 0
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
-        ########### Buttons in Options Menu  ##############################################################
+        ########### Buttons in Map Setting Menu  ############################################################
         self.titleExistingMap = Button("EXISTING MAPS", MEDIUM_FONT, width//2, height*3//12)
         self.titleCreateNewMap = Button("CREATE NEW MAP", MEDIUM_FONT, width//2, height*5//12)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*7//12)
@@ -104,7 +104,7 @@ class MapSettingMenu:
         self.positionLeftMouse = (-100, -100)
     
       
-    ###########   Update cursor and buttons status in Options Menu   ########################################
+    ###########   Update cursor and buttons status in Map Setting Menu   ####################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         self.updateMousePoitedAt()
@@ -115,6 +115,6 @@ class MapSettingMenu:
         self.titleCreateNewMap.draw(self.surface)
         self.titleBack.draw(self.surface)
     
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Map Setting Menu in another surface  ##################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

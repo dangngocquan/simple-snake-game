@@ -117,8 +117,10 @@ class Game:
         for event in pygame.event.get():
             ###########   Quit game   #######################################################################
             if event.type == pygame.QUIT:
+                ##############   Update statistics of game   ################################################
                 STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
                 menuStatistics.saveData()
+                ####################   Update statistics of current player account   ########################
                 ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
                     (datetime.now() - self.startTimePlayThisAccount).total_seconds())
                 account.saveData(ACCOUNT_MANAGER.listAccount)
@@ -154,67 +156,76 @@ class Game:
                 self.running = False
                 pygame.quit()
                 sys.exit()
-            ###########   Get events when current screen is Main Menu   #####################################
+            ###########   Get events when current screen is MAIN MENU   #####################################
             if self.runningMainMenu:
                 self.mainMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.mainMenu.updatePositionLeftMouse()
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        # self.runningMainMenu = False
                         ########   The cursor is "PLAY GAME"    #############################################
                         if self.mainMenu.cursor == 0:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.runningPlayGameMenu = True
                             self.playGameMenu.cursor = 0
                         ########   The cursor is "ACCOUNT"    ###############################################
                         elif self.mainMenu.cursor == 1:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.runningAccountsSetting = True
                             self.accountsSetting.cursor = 0
                         ########   The cursor is "OPTIONS"    ###############################################
                         elif self.mainMenu.cursor == 2:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.runningOptionsMenu = True
                             self.optionsMenu.cursor = 0
                         ########   The cursor is "STATISTICS"    ############################################
                         elif self.mainMenu.cursor == 3:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.runningStatisticsMenu = True
                             self.statisticsMenu.cursor = 0
                             ############   Update new data for statistics of game   #########################
-                            STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
+                            STATISTICS['TOTAL_TIME_PLAYED'] += int(
+                                (datetime.now() -self.startTimeOpen).total_seconds())
                             self.startTimeOpen = datetime.now()
                             menuStatistics.saveData()
                         ########   The cursor is "HISTORY"    ###############################################
                         elif self.mainMenu.cursor == 4:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.runningHistoryMenu = True
                             self.historyMenu.cursor = 0
                         ########   The cursor is "ABOUT GAME"    ############################################
                         elif self.mainMenu.cursor == 5:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.runningAboutGameMenu = True
                             self.aboutGameMenu.cursor = 13
                         ########   The cursor is "QUIT GAME"    #############################################
                         elif self.mainMenu.cursor == 6:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMainMenu = False
                             self.running = False
-                            STATISTICS['TOTAL_TIME_PLAYED'] += int((datetime.now() -self.startTimeOpen).total_seconds())
+                            ############    Update statistics of game before quit game   ####################
+                            STATISTICS['TOTAL_TIME_PLAYED'] += int(
+                                (datetime.now() -self.startTimeOpen).total_seconds())
                             menuStatistics.saveData()
                             pygame.time.wait(500)
                             pygame.quit()
                             sys.exit()            
-            ###########   Get events when current screen is Play Game Menu  #################################
+            ###########   Get events when current screen is PLAY GAME MENU  #################################
             elif self.runningPlayGameMenu:
                 self.playGameMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.playGameMenu.updatePositionLeftMouse()
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        ###########   The cursor is pointing at "New Game"   ################################
+                        ###########   The cursor is  "NEW GAME"   ###########################################
                         if self.playGameMenu.cursor == 0:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningPlayGameMenu = False
+                            ########   If gamemode is 1 player   ############################################
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 self.runningInGame = True
                                 self.inGame.snake = Snake()
@@ -222,6 +233,7 @@ class Game:
                                 self.inGame.wallManager = wall.loadWallManagerFromListMaps(
                                     indexMap=SETTING1['MAP']['INDEX_MAP'])
                                 self.inGame.showingScreenStart = True
+                            #############   If gamemode is 2 player   #######################################
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.runningInGame02 = True
                                 self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
@@ -230,51 +242,65 @@ class Game:
                                 self.inGame02.wallManager = wall.loadWallManagerFromListMaps(
                                     indexMap=SETTING1['MAP']['INDEX_MAP'])
                                 self.inGame02.showingScreenStart = True
-                        ###########   The cursor is pointing at "Continue Game"   ###########################
+                        ###########   The cursor is "CONTINUE GAME"   #######################################
                         elif self.playGameMenu.cursor == 1:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningPlayGameMenu = False
+                            ############   If gamemode is 1 player   ########################################
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 self.runningInGame = True
                                 self.inGame.snake = snake.loadPreviousSnake()
                                 self.inGame.foodManager = food.loadPreviousFoodManager()
                                 self.inGame.wallManager = wall.loadPreviousWallManager()
                                 self.inGame.showingScreenStart = True
+                            ###########    If gamemode is 2 player   ########################################
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.runningInGame02 = True
-                                self.inGame02.snake01 = snake.loadPreviousSnake(path='./data/player/twoPlayer/snake/snake01.json')
-                                self.inGame02.snake02 = snake.loadPreviousSnake(path='./data/player/twoPlayer/snake/snake02.json')
-                                self.inGame02.foodManager = food.loadPreviousFoodManager(path='./data/player/twoPlayer/food/food.json')
-                                self.inGame02.wallManager = wall.loadPreviousWallManager(path='./data/player/twoPlayer/wall/wall.json')
+                                self.inGame02.snake01 = snake.loadPreviousSnake(
+                                    path='./data/player/twoPlayer/snake/snake01.json')
+                                self.inGame02.snake02 = snake.loadPreviousSnake(
+                                    path='./data/player/twoPlayer/snake/snake02.json')
+                                self.inGame02.foodManager = food.loadPreviousFoodManager(
+                                    path='./data/player/twoPlayer/food/food.json')
+                                self.inGame02.wallManager = wall.loadPreviousWallManager(
+                                    path='./data/player/twoPlayer/wall/wall.json')
                                 self.inGame02.showingScreenStart = True
-                        ###########   The cursor is poiting at "Back"   #####################################
+                        ###########   The cursor is poiting at "BACK"   #####################################
                         elif self.playGameMenu.cursor == 2:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningPlayGameMenu = False
                             self.runningMainMenu = True
                             
-            ###########   Get events when current screen is Accounts Setting Menu   #####################################
+            ###########   Get events when current screen is ACCOUNT SETTING MENU   ##########################
             elif self.runningAccountsSetting:
                 self.accountsSetting.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.accountsSetting.updatePositionLeftMouse()
+                        #################    Cursor is "EXISTING ACCOUNTS"   ################################
                         if self.accountsSetting.cursor == 0:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningAccountsSetting = False
                             self.runningExistingAccountMenu = True
                             self.existingAccountMenu.cursor = 0
+                            ###############   Update statistics of current player account   #################
                             ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
                                 (datetime.now() - self.startTimePlayThisAccount).total_seconds())
                             account.saveData(ACCOUNT_MANAGER.listAccount)
                             self.startTimePlayThisAccount = datetime.now()
+                        #################   Cursor is "CREATE NEW ACCOUNT"   ################################
                         elif self.accountsSetting.cursor == 1:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningAccountsSetting = False
                             self.runningCreateNewAccountMenu = True
                             self.createNewAccountMenu.cursor = 0
                             self.createNewAccountMenu.getInputStringMenu.removeAllChars()
+                        ################   Cursor is "BACK"   ###############################################
                         elif self.accountsSetting.cursor == 2:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningAccountsSetting = False
                             self.runningMainMenu = True
-            ###########   Get events when current screen is Existing Account Menu   #####################################
+            ###########   Get events when current screen is EXISTING ACCOUNT MENU   #########################
             elif self.runningExistingAccountMenu:
                 self.existingAccountMenu.updatePostionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -284,12 +310,15 @@ class Game:
                         self.existingAccountMenu.increaseSubtractNumber()
                     elif event.button == pygame.BUTTON_WHEELUP:
                         self.existingAccountMenu.decreaseSubtractNumber()
-                ##################   When player left-click on title Back   ##############################################
+                ##################   When player left-click on title "BACK"   ###############################
                 if self.existingAccountMenu.cursor == 2:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     self.runningExistingAccountMenu = False
                     self.runningAccountsSetting = True
-                ##################   When player left-click on title 'Play this account'   ###############################
+                ##################   When player left-click on title 'Play this account'   ##################
                 elif self.existingAccountMenu.cursor == 3:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
+                    ########  Update statistic of current player account before change account   ############
                     ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
                         (datetime.now() - self.startTimePlayThisAccount).total_seconds())
                     account.saveData(ACCOUNT_MANAGER.listAccount)
@@ -299,8 +328,10 @@ class Game:
                     setting.saveSetting()
                     self.runningExistingAccountMenu = False
                     self.runningAccountsSetting = True
-                ##################   When player left-click on title 'Delete this account'   ##############################
+                ##################   When player left-click on title 'Delete this account'   ################
                 elif self.existingAccountMenu.cursor == 4:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
+                    ###########   Update statistics of current player account   #############################
                     ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed += int(
                         (datetime.now() - self.startTimePlayThisAccount).total_seconds())
                     account.saveData(ACCOUNT_MANAGER.listAccount)
@@ -308,11 +339,12 @@ class Game:
                     if self.existingAccountMenu.tempIndexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
                         setting.replaceData(key1='ACCOUNT', key2='INDEX_ACCOUNT', newData=0)
                         setting.saveSetting()
+                    ##########   Remove account   ###########################################################
                     ACCOUNT_MANAGER.removeAccount(indexAccount=self.existingAccountMenu.tempIndexAccount)
                     self.existingAccountMenu.tempIndexAccount -= 1
                     account.saveData(ACCOUNT_MANAGER.listAccount)
                     self.existingAccountMenu.cursor = 1
-            ###########   Get events when current screen is Create New Account Menu   #######################
+            ###########   Get events when current screen is CREATE NEW ACCOUNT MENU   #######################
             elif self.runningCreateNewAccountMenu:
                 self.createNewAccountMenu.updatePostionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.KEYDOWN:
@@ -323,10 +355,14 @@ class Game:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.createNewAccountMenu.updatePositionLeftMouse()
+                #########   Cursor is "CANCER"   ############################################################
                 if self.createNewAccountMenu.cursor == -1:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     self.runningCreateNewAccountMenu = False
                     self.runningAccountsSetting = True
+                ##########   Cursor is "ENTER" and create completed  ########################################
                 elif self.createNewAccountMenu.cursor == 1:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     pygame.time.wait(500)
                     self.runningCreateNewAccountMenu = False
                     self.runningAccountsSetting = True
@@ -335,42 +371,47 @@ class Game:
                 self.optionsMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.optionsMenu.updatePositionLeftMouse()
-                        ###########   The cursor is pointing at "Gamemode setting"   ########################
+                        ###########   The cursor is pointing at "GAMEMODE SETTING"   ########################
                         if self.optionsMenu.cursor == 0:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningOptionsMenu = False
                             self.runningGamemodeSettingMenu = True
                             self.gamemodeSettingMenu.cursor = 9
-                        ###########   The cursor is pointing at "Game setting"   ############################
+                        ###########   The cursor is pointing at "GAME SETTING"   ############################
                         if self.optionsMenu.cursor == 1:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningOptionsMenu = False
                             self.runningGameSettingMenu = True
                             self.gameSettingMenu.cursor = 13
-                        ###########   The cursor is pointing at "Sound setting"   ###########################
+                        ###########   The cursor is pointing at "SOUND SETTING"   ###########################
                         elif self.optionsMenu.cursor == 2:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningOptionsMenu = False
                             self.runningSoundSettingMenu = True
                             self.soundSettingMenu.cursor = 7
-                        ###########   The cursor is pointing at "Map setting"   ###########################
+                        ###########   The cursor is pointing at "MAP SETTING"   #############################
                         elif self.optionsMenu.cursor == 3:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningOptionsMenu = False
                             self.runningMapSettingMenu = True
                             self.mapSettingMenu.cursor = 3
-                        ###########   The cursor is poiting at "Back"   #####################################
+                        ###########   The cursor is poiting at "BACK"   #####################################
                         elif self.optionsMenu.cursor == 4:
                             self.runningOptionsMenu = False
                             self.runningMainMenu = True
-            ###########   Get events when current screen is Statistics Menu   #####################################
+            ###########   Get events when current screen is STATISTICS MENU   ###############################
             elif self.runningStatisticsMenu:
                 self.statisticsMenu.updatePostionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.statisticsMenu.updatePositionLeftMouse()
+                ###############   Cursor is "BACK"   ########################################################
                 if self.statisticsMenu.cursor == -1:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     self.runningStatisticsMenu = False
                     self.runningMainMenu = True
-            ###########   Get events when current screen is History Menu   #####################################
+            ###########   Get events when current screen is HISTORY MENU   ##################################
             elif self.runningHistoryMenu:
                 self.historyMenu.updatePostionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
@@ -382,71 +423,87 @@ class Game:
                         self.historyMenu.decreaseSubtractNumber()
                     elif event.button == pygame.BUTTON_RIGHT:
                         self.historyMenu.addNewHistory()
+                ###############   Cursor is "BACK"   ########################################################
                 if self.historyMenu.cursor == -1:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     self.runningHistoryMenu = False
                     self.runningMainMenu = True
-            ###########   Get events when current screen is About Game Menu  ###################################    
+            ###########   Get events when current screen is ABOUT GAME MENU  ################################
             elif self.runningAboutGameMenu:
                 self.aboutGameMenu.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.aboutGameMenu.updatePositionLeftMouse()
                         if self.aboutGameMenu.isHiddenPasswordBox:
-                            ###########   The cursor is pointing at "Music00: BoyWithUkey - Loafers"   ########################
+                            ###########   The cursor is pointing at "Music00: BoyWithUkey - Loafers"   ######
                             if self.aboutGameMenu.cursor == 0:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://www.youtube.com/watch?v=iGCE7nXfQK8&list=PLZQKIedkyIQ07V8CiKUc8KkBL_aekG77o&index=2")
-                            ###########   The cursor is pointing at "Music01: Sweden - C418"   ############################
+                            ###########   The cursor is pointing at "Music01: Sweden - C418"   ##############
                             elif self.aboutGameMenu.cursor == 1:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
-                            ###########   The cursor is pointing at "Change Button"   ###########################
+                            ###########   The cursor is pointing at "Change Button"   #######################
                             elif self.aboutGameMenu.cursor == 2:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://drive.google.com/file/d/1RV6iASyK85xAnvJ1OZl99khjsnmhi_0g/view?usp=sharing")
-                            ###########   The cursor is pointing at "Press Button"   ###########################
+                            ###########   The cursor is pointing at "Press Button"   ########################
                             elif self.aboutGameMenu.cursor == 3:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://drive.google.com/file/d/1gu6LhBLcEVvN_x9rTD95nLLwzuWoVbdC/view?usp=sharing")
-                            ###########   The cursor is pointing at "Snake eat food"   ###########################
+                            ###########   The cursor is pointing at "Snake eat food"   ######################
                             elif self.aboutGameMenu.cursor == 4:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://drive.google.com/file/d/1oeuZJTJYihGg22lgQX0hQaTSlDpNcrxw/view?usp=sharing")
                             ###########   The cursor is pointing at "Game Over"   ###########################
                             elif self.aboutGameMenu.cursor == 5:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://pixabay.com/sound-effects/search/gameover/?manual_search=1&order=None")
-                            ###########   The cursor is pointing at "Win Game"   ###########################
+                            ###########   The cursor is pointing at "Win Game"   ############################
                             elif self.aboutGameMenu.cursor == 6:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://pixabay.com/sound-effects/search/win/?manual_search=1&order=None")
-                            ###########   The cursor is pointing at "Snake"   ###########################
+                            ###########   The cursor is pointing at "Snake"   ###############################
                             elif self.aboutGameMenu.cursor == 7:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://drive.google.com/drive/folders/1z1hBUdLROt_smwh3E25rmqYrmDptpaCn?usp=sharing")
-                            ###########   The cursor is pointing at "Food"   ###########################
+                            ###########   The cursor is pointing at "Food"   ################################
                             elif self.aboutGameMenu.cursor == 8:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://drive.google.com/drive/folders/1IBQvUQiYWVVAU1Y_L3Q-yHZWRdFaY-pw?usp=sharing")
-                            ###########   The cursor is pointing at "Wall"   ###########################
+                            ###########   The cursor is pointing at "Wall"   ################################
                             elif self.aboutGameMenu.cursor == 9:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://drive.google.com/drive/folders/164DmyjPfnDHMxZZhz7OBMTfZXXnF5m4L?usp=sharing")
-                            ###########   The cursor is pointing at "Tutorial create button in pygame (youtube)"   ###########################
+                            ##   The cursor is pointing at "Tutorial create button in pygame (youtube)"   ###
                             elif self.aboutGameMenu.cursor == 10:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 webbrowser.open(
                                     url="https://www.youtube.com/watch?v=G8MYGDf_9ho")
-                            ###########   The cursor is pointing at "Source code (if you want)"   ###########################
+                            ###########   The cursor is pointing at "Source code (if you want)"   ###########
                             elif self.aboutGameMenu.cursor == 11:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.aboutGameMenu.isHiddenPasswordBox = False
                                 self.aboutGameMenu.passwordBox.cursor = 2
-                            ###########   The cursor is poiting at "Back"   #####################################
+                            ###########   The cursor is poiting at "Back"   #################################
                             elif self.aboutGameMenu.cursor == 12:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.runningMainMenu = True
                                 self.runningAboutGameMenu = False
                         elif not self.aboutGameMenu.isHiddenPasswordBox:
-                            ###########   The cursor is pointing at "Enter"   ########################
+                            ###########   The cursor is pointing at "ENTER"   ###############################
                             if self.aboutGameMenu.passwordBox.cursor == 0:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 if self.aboutGameMenu.passwordBox.checkPassword():
                                     self.aboutGameMenu.update()
                                     self.aboutGameMenu.draw(self.screen)
@@ -456,8 +513,9 @@ class Game:
                                     self.aboutGameMenu.passwordBox.resetDefaultDescription()
                                     self.aboutGameMenu.passwordBox.removeAllDigits()
                                     self.aboutGameMenu.isHiddenPasswordBox = True
-                            ###########   The cursor is pointing at "Cancer"   ############################
+                            ###########   The cursor is pointing at "CANCER"   ##############################
                             elif self.aboutGameMenu.passwordBox.cursor == 1:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.aboutGameMenu.passwordBox.resetDefaultDescription()
                                 self.aboutGameMenu.passwordBox.removeAllDigits()
                                 self.aboutGameMenu.isHiddenPasswordBox = True
@@ -465,6 +523,7 @@ class Game:
                             self.aboutGameMenu.passwordBox.cursor = 2
                 elif event.type == pygame.KEYDOWN:
                     if not self.aboutGameMenu.isHiddenPasswordBox:
+                        ###########   Get password from keyboard   ##########################################
                         if event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
                                            pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
                             self.aboutGameMenu.passwordBox.addDigit(pygame.key.name(event.key))
@@ -473,61 +532,71 @@ class Game:
                             self.aboutGameMenu.passwordBox.removeDigit()
                             self.aboutGameMenu.passwordBox.resetDefaultDescription()
                             
-            ###########   Get events when current screen is Gamemode Setting Menu   #########################
+            ###########   Get events when current screen is GAMEMODE SETTING MENU   #########################
             elif self.runningGamemodeSettingMenu:
                 self.gamemodeSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
                 ##############   The cursor is pointing at "BACK"    ########################################
                 if self.gamemodeSettingMenu.cursor == 8:
-                                self.runningGamemodeSettingMenu = False
-                                self.runningOptionsMenu = True
-                                
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
+                    self.runningGamemodeSettingMenu = False
+                    self.runningOptionsMenu = True  
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         self.gamemodeSettingMenu.cursor = 9
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.gamemodeSettingMenu.updatePositionLeftMouse()
                     elif event.button == pygame.BUTTON_WHEELDOWN:
+                        ########   Cursor is Option of NUMBER PLAYER   ######################################
                         if self.gamemodeSettingMenu.cursor == 1:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=2)
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
+                        ############    Setting AUTO SPEED UP SNAKE   #######################################
                         elif self.gamemodeSettingMenu.cursor == 3:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
                                 setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
                             elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
                                 setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
+                        ############  Setting TARGET SCORE   ################################################
                         elif self.gamemodeSettingMenu.cursor == 5:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['TARGET_SCORE'] > 100:
                                 setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
-                                                    newData=SETTING1['GAMEMODE']['TARGET_SCORE']-100)   
+                                                    newData=SETTING1['GAMEMODE']['TARGET_SCORE']-100)
+                        #############   Setting control view of player   ####################################
                         elif self.gamemodeSettingMenu.cursor == 7:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
-                                setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='Third-person view')
+                                setting.replaceData(
+                                    key1='GAMEMODE', key2='VIEW_CONTROL', newData='Third-person view')
                             elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
-                                setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='First-person view')
+                                setting.replaceData(
+                                    key1='GAMEMODE', key2='VIEW_CONTROL', newData='First-person view')
                     elif event.button == pygame.BUTTON_WHEELUP:
+                        #############   Setting number of player   ##########################################
                         if self.gamemodeSettingMenu.cursor == 1:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                 setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=2)
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
+                        ############   Setting gamemode AUTO SPEED UP SNAKE   ###############################
                         elif self.gamemodeSettingMenu.cursor == 3:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
                                 setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
                             elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
                                 setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
+                        ############   Setting TARGET SCORE   ###############################################
                         elif self.gamemodeSettingMenu.cursor == 5:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
                                                     newData=SETTING1['GAMEMODE']['TARGET_SCORE']+100)
+                        ############   Setting view control of player   #####################################
                         elif self.gamemodeSettingMenu.cursor == 7:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
@@ -537,10 +606,12 @@ class Game:
                 ###########   Save current setting to json file   ###########################################
                 setting.saveSetting()
                     
-            ###########   Get events when current screen is Game Setting Menu   #############################
+            ###########   Get events when current screen is GAME SETTING MENU   #############################
             elif self.runningGameSettingMenu:
                 self.gameSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
+                ###############   Cursor is "BACK"   ########################################################
                 if self.gameSettingMenu.cursor == 12:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     self.runningGameSettingMenu = False
                     self.runningOptionsMenu = True
                 if event.type == pygame.KEYDOWN:
@@ -550,12 +621,14 @@ class Game:
                     if event.button == pygame.BUTTON_LEFT:
                         self.gameSettingMenu.updatePositionLeftMouse()
                     elif event.button == pygame.BUTTON_WHEELDOWN:
+                        ###########   Setting GRID   ########################################################
                         if self.gameSettingMenu.cursor == 1:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GRID'] == 'ON':
                                 setting.replaceData(key1='GRID', newData='OFF')
                             elif SETTING1['GRID'] == 'OFF':
                                 setting.replaceData(key1='GRID', newData='ON')
+                        #########   Setting MOVE SPEED OF SNAKE   ###########################################
                         elif self.gameSettingMenu.cursor == 3:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
@@ -566,6 +639,8 @@ class Game:
                                 self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                                self.inGame02.snake02.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                        #############   Setting DROP SPEED OF SNAKE when gameover   #########################
                         elif self.gameSettingMenu.cursor == 5:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
@@ -577,6 +652,7 @@ class Game:
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
                                 self.inGame02.snake02.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                        #############   Setting ANIMATION SPEED OF SNAKE   ##################################
                         elif self.gameSettingMenu.cursor == 7:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
@@ -588,6 +664,7 @@ class Game:
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
                                 self.inGame02.snake02.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                        #############   Setting MAX FOOD   ##################################################
                         elif self.gameSettingMenu.cursor == 9:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
@@ -598,6 +675,7 @@ class Game:
                                     self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
                                 elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                     self.inGame02.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
+                        ##############   Setting ANIMATION SPEED OF FOOD   ##################################
                         elif self.gameSettingMenu.cursor == 11:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
@@ -609,12 +687,14 @@ class Game:
                                 elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                     self.inGame02.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] 
                     elif event.button == pygame.BUTTON_WHEELUP:
+                        ###############   Setting GRID   ####################################################
                         if self.gameSettingMenu.cursor == 1:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             if SETTING1['GRID'] == 'ON':
                                 setting.replaceData(key1='GRID', newData='OFF')
                             elif SETTING1['GRID'] == 'OFF':
                                 setting.replaceData(key1='GRID', newData='ON')
+                        ##############   Setting MOVE SPEED OF SNAKE   ######################################
                         elif self.gameSettingMenu.cursor == 3:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
@@ -626,6 +706,7 @@ class Game:
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
                                 self.inGame02.snake02.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                        ##############   Setting DROP SPEED OF SNAKE   ######################################
                         elif self.gameSettingMenu.cursor == 5:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
@@ -637,6 +718,7 @@ class Game:
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
                                 self.inGame02.snake02.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                        ##############   Setting ANIMATION SPEED OF SNAKE   #################################
                         elif self.gameSettingMenu.cursor == 7:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
@@ -648,6 +730,7 @@ class Game:
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
                                 self.inGame02.snake02.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                        ##############   Setting MAX FOOD   #################################################
                         elif self.gameSettingMenu.cursor == 9:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
@@ -658,6 +741,7 @@ class Game:
                                 self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
                             elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                 self.inGame02.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
+                        ###########   Setting ANIMATION SPEED OF FOOD   #####################################
                         elif self.gameSettingMenu.cursor == 11:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
@@ -670,10 +754,12 @@ class Game:
                                 self.inGame02.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']   
                 ###########   Save current setting to json file   ###########################################
                 setting.saveSetting()
-            ###########   Get events when current screen is Sound Setting Menu   ############################
+            ###########   Get events when current screen is SOUND SETTING MENU   ############################
             elif self.runningSoundSettingMenu:
                 self.soundSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
+                ############   Cursor is "BACK"   ###########################################################
                 if self.soundSettingMenu.cursor == 6:
+                    SETTING2['SOUND']['PRESS_BUTTON'].play()
                     self.runningSoundSettingMenu = False
                     self.runningOptionsMenu = True
                 if event.type == pygame.KEYDOWN:
@@ -683,6 +769,7 @@ class Game:
                     if event.button == pygame.BUTTON_LEFT:
                         self.soundSettingMenu.updatePositionLeftMouse()
                     elif event.button == pygame.BUTTON_WHEELDOWN:
+                        ##########   Setting MUSIC   ########################################################
                         if self.soundSettingMenu.cursor == 1:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             pygame.mixer.music.unload()
@@ -691,11 +778,13 @@ class Game:
                             pygame.mixer.music.load(
                                 SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
                             pygame.mixer.music.play(-1)
+                        ##########   Setting MUSIC VOLUME   #################################################
                         elif self.soundSettingMenu.cursor == 3:
                             if SETTING1['SOUND']['MUSIC_VOLUME'] > 0:
                                 setting.replaceData('SOUND', 'MUSIC_VOLUME', 
                                                     (SETTING1['SOUND']['MUSIC_VOLUME'] - 1) % 101)
                                 pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
+                        ##########   Setting SOUND VOLUME   #################################################
                         elif self.soundSettingMenu.cursor == 5:
                             if SETTING1['SOUND']['SOUND_VOLUME'] > 0:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
@@ -703,6 +792,7 @@ class Game:
                                                     (SETTING1['SOUND']['SOUND_VOLUME'] - 1) % 101)
                                 setting.soundVolumeUpdate()
                     elif event.button == pygame.BUTTON_WHEELUP:
+                        ############    Setting MUSIC   #####################################################
                         if self.soundSettingMenu.cursor == 1:
                             SETTING2['SOUND']['CHANGE_BUTTON'].play()
                             pygame.mixer.music.unload()
@@ -711,11 +801,13 @@ class Game:
                             pygame.mixer.music.load(
                                 SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
                             pygame.mixer.music.play(-1)
+                        ############   Setting MUSIC VOLUME   ###############################################
                         elif self.soundSettingMenu.cursor == 3:
                             if SETTING1['SOUND']['MUSIC_VOLUME'] < 100:
                                 setting.replaceData('SOUND', 'MUSIC_VOLUME', 
                                                     (SETTING1['SOUND']['MUSIC_VOLUME'] + 1) % 101)
                                 pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
+                        ############   Setting SOUND VOLUME   ###############################################
                         elif self.soundSettingMenu.cursor == 5:
                             if SETTING1['SOUND']['SOUND_VOLUME'] < 100:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
@@ -730,18 +822,21 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.mapSettingMenu.updatePositionLeftMouse()
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        #########   Cursor is "EXISTING MAP"   ##############################################
                         if self.mapSettingMenu.cursor == 0:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningExistingMapsMenu = True
                             self.runningMapSettingMenu = False
-                        ###########   The cursor is pointing at "Create new map"   ##########################
+                        ###########   The cursor is pointing at "CREATE NEW MAP"   ##########################
                         elif self.mapSettingMenu.cursor == 1:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMapSettingMenu = False
                             self.runningCreateNewMap = True
                             self.createNewMap.cursor = 2
                             self.createNewMap.showingInstruction = True
-                        ###########   The cursor is poiting at "Back"   #####################################
+                        ###########   The cursor is poiting at "BACK"   #####################################
                         elif self.mapSettingMenu.cursor == 2:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningMapSettingMenu = False
                             self.runningOptionsMenu = True
                         
@@ -767,24 +862,36 @@ class Game:
                             setting.replaceData(key1='MAP', key2='INDEX_MAP',
                                                 newData=SETTING1['MAP']['INDEX_MAP']-1)
                             wall.removeMapTFromListMaps(indexMap=(SETTING1['MAP']['INDEX_MAP']+1))
-                            
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_WHEELDOWN:
+                        if SETTING1['MAP']['INDEX_MAP'] > 0:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='MAP', key2='INDEX_MAP',
+                                                newData=SETTING1['MAP']['INDEX_MAP']-1)
+                    elif event.button == pygame.BUTTON_WHEELUP:
+                        if SETTING1['MAP']['INDEX_MAP'] < len(wall.LIST_MAP) - 1:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='MAP', key2='INDEX_MAP',
+                                                newData=SETTING1['MAP']['INDEX_MAP']+1)
                 setting.saveSetting()
-            ###########   Get events when current screen is Existing Maps Menu   ############################
+            ###########   Get events when current screen is EXISTING MAP Menu   #############################
             elif self.runningCreateNewMap:
                 self.createNewMap.updatePositionMouse(pygame.mouse.get_pos())
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
                         self.createNewMap.updatePositionLeftMouse()
                         if self.createNewMap.showingInstruction:
-                            ###########   The cursor is pointing at "START"   ###########################
+                            ###########   The cursor is pointing at "START"   ###############################
                             if self.createNewMap.cursor == 0:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.createNewMap.showingInstruction = False
                                 self.createNewMap.drawingNewMap = True
                                 self.createNewMap.wallManager = wall.loadPreviousWallManager(
                                     path='./data/creatingMap/creatingMap.json'
                                 )
-                            ###########   The cursor is poiting at "BACK"   #####################################
+                            ###########   The cursor is poiting at "BACK"   ##################################
                             elif self.createNewMap.cursor == 1:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.createNewMap.showingInstruction = False
                                 self.runningCreateNewMap = False
                                 self.runningMapSettingMenu = True
@@ -801,6 +908,7 @@ class Game:
                         elif event.key == pygame.K_c:
                             self.createNewMap.removeAllWallBlocks()
                         elif event.key == pygame.K_RETURN:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.createNewMap.saveMap()
                             self.createNewMap.drawingNewMap = False
                             self.createNewMap.showingInstruction = True
@@ -1137,13 +1245,14 @@ class Game:
                         self.gameOverMenu.updateDropType(pygame.key.name(event.key))
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.gameOverMenu.updatePositionLeftMouse()
                         if self.gameOverMenu.cursor < 2:
                             if self.gameOverMenu.cursor == 0:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.runningInGame = True
                                 self.inGame.showingScreenStart = True
                             elif self.gameOverMenu.cursor == 1:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.runningMainMenu = True
                             self.inGame.snake = Snake()
                             self.inGame.foodManager.removeAllFoods()
@@ -1166,13 +1275,14 @@ class Game:
                         self.gameOverMenu02.updateDropType(pygame.key.name(event.key))
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if event.button == pygame.BUTTON_LEFT:
-                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
                         self.gameOverMenu02.updatePositionLeftMouse()
                         if self.gameOverMenu02.cursor < 2:
                             if self.gameOverMenu02.cursor == 0:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.runningInGame02 = True
                                 self.inGame02.showingScreenStart = True
                             elif self.gameOverMenu02.cursor == 1:
+                                SETTING2['SOUND']['PRESS_BUTTON'].play()
                                 self.runningMainMenu = True
                             self.inGame02.snake01 = Snake(typeLocation=-1, typeColor='blue')
                             self.inGame02.snake02 = Snake(typeLocation=1, typeColor='green')
@@ -1415,7 +1525,7 @@ class Game:
         elif self.runningExistingAccountMenu:
             if self.countTicks % (FPS * self.divisibility // self.existingAccountMenu.FPS) == 0:
                 self.existingAccountMenu.update()
-        ###########   Update screen when showing Existing Account Menu   ####################################
+        ###########   Update screen when showing Create New Account Menu   ####################################
         elif self.runningCreateNewAccountMenu:
             if self.countTicks % (FPS * self.divisibility // self.createNewAccountMenu.FPS) == 0:
                 self.createNewAccountMenu.update() 
@@ -1447,7 +1557,7 @@ class Game:
         elif self.runningCreateNewMap:
             if self.countTicks % (FPS * self.divisibility // self.createNewMap.FPS) == 0:
                 self.createNewMap.update()
-        ###########   Update screen About Game Menu   #######################################################
+        ###########   Update screen Statistics Menu   #######################################################
         elif self.runningStatisticsMenu:
             if self.countTicks % (FPS * self.divisibility // self.statisticsMenu.FPS) == 0:
                 self.statisticsMenu.update()

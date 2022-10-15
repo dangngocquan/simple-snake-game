@@ -3,6 +3,7 @@ import json
 
 ##############################   CLASS ACCOUNT   ############################################################
 class Account:
+    ###############   Constructor   #########################################################################
     def __init__(self, name="", createdTime="", winMatch=0, loseMatch=0,
                  totalTimePlayed=0):
         self.name = name
@@ -16,19 +17,21 @@ class Account:
 class AccountManager:
     def __init__(self, listAccount=[]):
         self.listAccount = listAccount
-        
+    
+    #############   Add new account   #######################################################################
     def addNewAccount(self, account):
         if account.name in [acc.name for acc in self.listAccount]:
             return False
         else:
             self.listAccount.append(account)
             return True
-        
+    
+    ###################    Remove account   #################################################################
     def removeAccount(self, indexAccount):
         self.listAccount.pop(indexAccount)
         
         
-###########   Load data of Account Manager from json file   ############################################################
+###########   Load data of Account Manager from json file   #################################################
 def loadData(path='./data/accounts/accounts.json'):
     accounts = []
     data = None

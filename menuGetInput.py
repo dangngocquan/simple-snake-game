@@ -110,9 +110,9 @@ class GetPasswordMenu:
         self.titleDescription.update(self.textHint, DESCRIPTION_FONT_2)
             
         
-    ###########  Update cursor and button status in Main Menu ###############################################
+    ###########  Update cursor and button status in Get Password Menu #######################################
     def update(self):
-        ###########  Update cursor and button of main menu  #################################################
+        ###########  Update cursor and button of Get Password Menu  #########################################
         if self.cursor == 0:
             self.titleEnter.isChosen = True
             self.titleCancer.isChosen = False
@@ -145,14 +145,14 @@ class GetPasswordMenu:
         self.titleCancer.draw(self.surface)
         
     
-    ###########  Draw Main Menu in another surface  #########################################################
+    ###########  Draw Get Password Menu in another surface  #################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
         
         
 
 
-###########  CLASS GET INPUT STRING MENU  ###############################################################################
+###########  CLASS GET INPUT STRING MENU  ###################################################################
 class GetInputStringMenu:
     ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height, title = "", lengthMax = 18,
@@ -234,9 +234,9 @@ class GetInputStringMenu:
     
     
         
-    ###########  Update cursor and button status in Main Menu ###############################################
+    ###########  Update cursor and button status in Get Input String Menu ###################################
     def update(self):
-        ###########  Update cursor and button of main menu  #################################################
+        ###########  Update cursor and button of Get Input String menu  #####################################
         if self.cursor == 0:
             self.titleEnter.isChosen = True
             self.titleCancer.isChosen = False
@@ -274,6 +274,6 @@ class GetInputStringMenu:
         self.titleCancer.draw(self.surface)
         
     
-    ###########  Draw Main Menu in another surface  #########################################################
+    ###########  Draw Get Input String Menu in another surface  #############################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

@@ -93,26 +93,34 @@ class ExistingAccountMenu:
             self.listTitleNameAccount.append(titleName)
         
         ######################   In container22   ############################################################
-        self.titleName = Button(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", MEDIUM_FONT,
-                                         20, self.container22Rect.height//24*2, 'topLeft')
+        self.titleName = Button(
+            f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", MEDIUM_FONT,
+            20, self.container22Rect.height//24*2, 'topLeft')
         self.titleCreatedTime = Button(
-            f"Created time: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].createdTime}", DESCRIPTION_FONT_2,
-                                         20, self.container22Rect.height//24*6, 'topLeft')
-        self.titleWinMatch = Button(f"Number win match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch}", 
-                                    DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*8, 'topLeft')
-        self.titleLoseMatch = Button(f"Number loss match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch}", 
-                                     DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*10, 'topLeft')
+            f"Created time: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].createdTime}", 
+            DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*6, 'topLeft')
+        self.titleWinMatch = Button(
+            f"Number win match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch}", 
+            DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*8, 'topLeft')
+        self.titleLoseMatch = Button(
+            f"Number loss match: {ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch}", 
+            DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*10, 'topLeft')
         tempSeconds = ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].totalTimePlayed
-        self.titleTotalTimePlayed = Button(f"Total time played: {tempSeconds//3600:0>2}:{(tempSeconds%3600)//60:0>2}:{tempSeconds%60:0>2}", 
-                                     DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*12, 'topLeft')
+        self.titleTotalTimePlayed = Button(
+            f"Total time played: {tempSeconds//3600:0>2}:{(tempSeconds%3600)//60:0>2}:{tempSeconds%60:0>2}", 
+            DESCRIPTION_FONT_2, 20, self.container22Rect.height//24*12, 'topLeft')
         
-        self.titlePlayThisAccount = Button("PLAY THIS ACCOUNT", DESCRIPTION_FONT, 20, self.container22Rect.height//24*16, 'topLeft')
-        self.titleDeleteThisAccount = Button("DELETE THIS ACCOUNT", DESCRIPTION_FONT, 20, self.container22Rect.height//24*18, 'topLeft')
+        self.titlePlayThisAccount = Button(
+            "PLAY THIS ACCOUNT", DESCRIPTION_FONT, 20, self.container22Rect.height//24*16, 'topLeft')
+        self.titleDeleteThisAccount = Button(
+            "DELETE THIS ACCOUNT", DESCRIPTION_FONT, 20, self.container22Rect.height//24*18, 'topLeft')
         
     
+    ##############   Update position of mouse   #############################################################
     def updatePostionMouse(self, position):
         self.positionMouse = position
-        
+     
+    ###########   Update buttons, surface when player left-click   ##########################################    
     def updatePositonLeftMouse(self):
         self.positionLeftMouse = self.positionMouse
         if self.isPointedAt(positionMouse=self.positionLeftMouse,
@@ -151,6 +159,7 @@ class ExistingAccountMenu:
                     self.cursor = 4
         self.positionLeftMouse = (-100, -100)
     
+    ###########   Check if the mouse is pointed at a surface rect   #########################################
     def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
                     parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
         if surfaceCheckRect == None:
@@ -175,6 +184,7 @@ class ExistingAccountMenu:
         
         return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
     
+    ################   Update buttons, surfaces when the mouse pointed at   #################################
     def updateMousePoitedAt(self):
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.selection1Rect,
@@ -222,6 +232,7 @@ class ExistingAccountMenu:
             else:
                 self.titleDeleteThisAccount.isChosen = False
 
+    
     def increaseSubtractNumber(self):
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.container21Rect,

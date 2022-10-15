@@ -12,7 +12,7 @@
             "CREATED_TIME": "13/10/2022 18:35:37",
             "WIN_MATCH": 7,
             "LOSE_MATCH": 17,
-            "TOTAL_TIME_PLAYED": 914
+            "TOTAL_TIME_PLAYED": 932
         },
         {
             "NAME": "briss2",
@@ -24,6 +24,13 @@
         {
             "NAME": "briss3",
             "CREATED_TIME": "15/10/2022 17:25:51",
+            "WIN_MATCH": 0,
+            "LOSE_MATCH": 0,
+            "TOTAL_TIME_PLAYED": 0
+        },
+        {
+            "NAME": "12",
+            "CREATED_TIME": "15/10/2022 17:53:15",
             "WIN_MATCH": 0,
             "LOSE_MATCH": 0,
             "TOTAL_TIME_PLAYED": 0

@@ -14,7 +14,7 @@ DESCRIPTION_FONT = SETTING2['MENU']['DESCRIPTION_FONT']
 WHITE = SETTING2['COLOR']['WHITE']
 
 
-##########   Load data of Statistics from json file   ############################################################
+##########   Load data of History from json file   ##########################################################
 def loadData(path='./data/history/history.json'):
     data = None
     with open(path, 'r') as file:
@@ -24,14 +24,14 @@ def loadData(path='./data/history/history.json'):
 
 HISTORY = loadData()
 
-###########   Save data of Account Manager to json file   ############################################################
+###########   Save data of History to json file   ###########################################################
 def saveData(path='./data/history/history.json'):   
     with open(path, 'w') as file:
         json.dump(HISTORY, file, indent=4)
     file.close()
 
 
-###########  CLASS HISTORY MENU  ##########################################################################
+###########  CLASS HISTORY MENU  ############################################################################
 class HistoryMenu:
     ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
@@ -130,13 +130,11 @@ class HistoryMenu:
             self.listCellRow.append(cellRow)
             self.listCellRowRect.append(cellRowRect)
             
-        
-        
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
-        ########### Buttons in Statistics Menu  ##############################################################
+        ########### Buttons in History Menu  ################################################################
         self.title = Button("HISTORY", MEDIUM_FONT, width//2, height//24*2)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*22//24)
     
@@ -249,7 +247,7 @@ class HistoryMenu:
         })
         saveData()
     
-    ###########   Update cursor and buttons status in Play Game Menu   ######################################
+    ###########   Update cursor and buttons status in History Menu   ########################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         self.updateMousePoitedAt()
@@ -297,6 +295,6 @@ class HistoryMenu:
         self.surface.blit(self.container0, self.container0Rect)
 
     
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw History Menu in another surface  ######################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

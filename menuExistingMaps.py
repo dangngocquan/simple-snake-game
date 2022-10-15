@@ -60,12 +60,12 @@ class ExistingMapsMenu:
         self.titleNumberOfMap = Button(f"NUMBER MAPS: {len(wall.LIST_MAP)}", 
                                     DESCRIPTION_FONT_2, self.surfaceInfo1Rect.width//8, 
                                     self.surfaceInfo1Rect.height//12*4, 'topLeft')
-        self.titleCreatedTime = Button(f"Created Time:  {wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['CREATED_TIME']:0>2}", 
-                                    DESCRIPTION_FONT, self.surfaceInfo2Rect.width//24, 
-                                    self.surfaceInfo2Rect.height//10, 'topLeft')
-        self.titleNumberOfWalls = Button(f"Number of Walls:  {len(wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['WALLS'])}", 
-                                    DESCRIPTION_FONT, self.surfaceInfo2Rect.width//24, 
-                                    self.surfaceInfo2Rect.height//10*3, 'topLeft')
+        self.titleCreatedTime = Button(
+            f"Created Time:  {wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['CREATED_TIME']:0>2}", 
+            DESCRIPTION_FONT, self.surfaceInfo2Rect.width//24, self.surfaceInfo2Rect.height//10, 'topLeft')
+        self.titleNumberOfWalls = Button(
+            f"Number of Walls:  {len(wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['WALLS'])}", 
+            DESCRIPTION_FONT, self.surfaceInfo2Rect.width//24, self.surfaceInfo2Rect.height//10*3, 'topLeft')
         self.titleDescription = Button("", DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
                                     self.surfaceInfo2Rect.height//10*5, 'topLeft')
         self.titleDescription2 = Button("", DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
@@ -73,7 +73,7 @@ class ExistingMapsMenu:
         
         
         
-    ###########   Update cursor and buttons status in Options Menu   ########################################
+    ###########   Update cursor and buttons status in Existing Map Menu   ###################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
@@ -84,20 +84,21 @@ class ExistingMapsMenu:
         self.titleNumberOfMap = Button(f"NUMBER MAPS: {len(wall.LIST_MAP)}", 
                                     DESCRIPTION_FONT_2, self.surfaceInfo1Rect.width//8, 
                                     self.surfaceInfo1Rect.height//12*4, 'topLeft')
-        self.titleCreatedTime = Button(f"Created Time:  {wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['CREATED_TIME']:0>2}", 
-                                    DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
-                                    self.surfaceInfo2Rect.height//10, 'topLeft')
-        self.titleNumberOfWalls = Button(f"Number of Walls:  {len(wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['WALLS'])}", 
-                                    DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
-                                    self.surfaceInfo2Rect.height//10*3, 'topLeft')
+        self.titleCreatedTime = Button(
+            f"Created Time:  {wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['CREATED_TIME']:0>2}", 
+            DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
+            self.surfaceInfo2Rect.height//10, 'topLeft')
+        self.titleNumberOfWalls = Button(
+            f"Number of Walls:  {len(wall.LIST_MAP[SETTING1['MAP']['INDEX_MAP']]['WALLS'])}", 
+            DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, self.surfaceInfo2Rect.height//10*3, 'topLeft')
         if SETTING1['MAP']['INDEX_MAP'] > 0:
-            self.titleDescription = Button("Press 'K' to delete this map.", 
-                                           DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
-                                    self.surfaceInfo2Rect.height//10*5, 'topLeft')
+            self.titleDescription = Button(
+                "Press 'K' to delete this map.", DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
+                self.surfaceInfo2Rect.height//10*5, 'topLeft')
         else:
-            self.titleDescription = Button("This is default map, you can't delete this map.", 
-                                           DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
-                                    self.surfaceInfo2Rect.height//10*5, 'topLeft')
+            self.titleDescription = Button(
+                "This is default map, you can't delete this map.", DESCRIPTION_FONT_2, 
+                self.surfaceInfo2Rect.width//24, self.surfaceInfo2Rect.height//10*5, 'topLeft')
         self.titleDescription2 = Button("Press A/W/D/S to change your map. Press 'Enter' to save your choice.", 
                                         DESCRIPTION_FONT_2, self.surfaceInfo2Rect.width//24, 
                                     self.surfaceInfo2Rect.height//10*7, 'topLeft')
@@ -120,7 +121,7 @@ class ExistingMapsMenu:
         self.picture.blit(self.wallManager.surface, self.wallManager.surfaceRect)
         self.picture.blit(self.grid.surface, self.grid.surfaceRect)
         self.picture2 = pygame.transform.scale(self.picture, 
-                                                     (self.surfaceRect.width//4*3, self.surfaceRect.height//4*3))
+                                                (self.surfaceRect.width//4*3, self.surfaceRect.height//4*3))
         self.picture2Rect = self.picture2.get_rect()
         self.picture2Rect.center = (self.surfaceViewMapRect.width//2, self.surfaceViewMapRect.height//2)
         self.surfaceViewMap.fill((199, 237, 203))
@@ -131,6 +132,6 @@ class ExistingMapsMenu:
         self.surface.blit(self.surfaceViewMap, self.surfaceViewMapRect)
         
 
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Existing Map Menu in another surface  #################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

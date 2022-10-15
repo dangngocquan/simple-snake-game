@@ -115,6 +115,6 @@ class PlayGameMenu:
         self.titleNewGame.draw(self.surface)
         self.titleContinueGame.draw(self.surface)
         self.titleBack.draw(self.surface)
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Play Game Menu in another surface  ####################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

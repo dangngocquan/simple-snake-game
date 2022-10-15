@@ -21,7 +21,7 @@ DESCRIPTION_FONT = SETTING2['MENU']['DESCRIPTION_FONT']
 WHITE = SETTING2['COLOR']['WHITE']
 
 
-#############  CLASS CREATE NEW MAP MENU  ######################################################################
+#############  CLASS CREATE NEW MAP MENU  ###################################################################
 class CreateNewMap:
     ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
@@ -50,13 +50,20 @@ class CreateNewMap:
         self.showingInstruction = False
         self.drawingNewMap = False
         ########### Buttons in Create New Map  ##############################################################
-        self.instruction1 = Button("Press left-click to add a new wall block.", DESCRIPTION_FONT, width//2, height*3//24)
-        self.instruction2 = Button("Press right-click to remove a wall block.", DESCRIPTION_FONT, width//2, height*5//24)
-        self.instruction3 = Button("Press 1/2/3/4/5/6/7/8/9 to add new random wall block.", DESCRIPTION_FONT, width//2, height*7//24)
-        self.instruction4 = Button("Press 'D' to delete the last wall block you just added.", DESCRIPTION_FONT, width//2, height*9//24)
-        self.instruction5 = Button("Press 'C' to clear all wall blocks.", DESCRIPTION_FONT, width//2, height*11//24)
-        self.instruction6 = Button("Press 'ENTER' to save your map.", DESCRIPTION_FONT, width//2, height*13//24)
-        self.instruction7 = Button("Press 'ESC' to return Map Setting.", DESCRIPTION_FONT, width//2, height*15//24)
+        self.instruction1 = Button("Press left-click to add a new wall block.", 
+                                   DESCRIPTION_FONT, width//2, height*3//24)
+        self.instruction2 = Button("Press right-click to remove a wall block.", 
+                                   DESCRIPTION_FONT, width//2, height*5//24)
+        self.instruction3 = Button("Press 1/2/3/4/5/6/7/8/9 to add new random wall block.",
+                                   DESCRIPTION_FONT, width//2, height*7//24)
+        self.instruction4 = Button("Press 'D' to delete the last wall block you just added.", 
+                                   DESCRIPTION_FONT, width//2, height*9//24)
+        self.instruction5 = Button("Press 'C' to clear all wall blocks.", 
+                                   DESCRIPTION_FONT, width//2, height*11//24)
+        self.instruction6 = Button("Press 'ENTER' to save your map.", 
+                                   DESCRIPTION_FONT, width//2, height*13//24)
+        self.instruction7 = Button("Press 'ESC' to return Map Setting.", 
+                                   DESCRIPTION_FONT, width//2, height*15//24)
         self.titleStart = Button("START", MEDIUM_FONT, width//2, height*18//24)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*21//24)
     
@@ -194,14 +201,14 @@ class CreateNewMap:
         wall.addNewMapToListMaps(wallManager=self.wallManager,
                                  createdTime=str(datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")))
     
-    ###########   Update cursor and buttons status in Options Menu   ########################################
+    ###########   Update cursor and buttons status in Create New Map Menu   #################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         self.updateMousePoitedAt()
         if self.showingInstruction == True:
-            ###########   Remove old button display   ###########################################################
+            ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
-            ###########   Draw new buttons   ####################################################################
+            ###########   Draw new buttons   ################################################################
             self.instruction1.draw(self.surface)
             self.instruction2.draw(self.surface)
             self.instruction3.draw(self.surface)
@@ -213,9 +220,9 @@ class CreateNewMap:
             self.titleBack.draw(self.surface)
             self.titleBack.draw(self.surface)
         elif self.drawingNewMap == True:
-            ###########   Remove old images   ###########################################################
+            ###########   Remove old images   ###############################################################
             self.surface.fill((0, 0, 0, 0))
-            ###########   Draw new images   ####################################################################
+            ###########   Draw new images   #################################################################
             self.grid.draw(self.surface)
             self.snake01.draw(self.surface)
             self.snake02.draw(self.surface)
@@ -223,6 +230,6 @@ class CreateNewMap:
             self.wallManager.draw(self.surface)
             self.surface.blit(self.cellBeingPoitedAt, self.cellBeingPoitedAtRect)
     
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Create New Map Menu in another surface  ###############################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

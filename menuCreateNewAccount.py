@@ -36,9 +36,11 @@ class CreateNewAccountMenu:
         self.getInputStringMenu = GetInputStringMenu(WIDTH//2, HEIGHT//2, WIDTH//4*3, HEIGHT//2
                                                      , title="YOUR NAME")
     
+    #####################   Update posititon of mouse   #####################################################
     def updatePostionMouse(self, position):
         self.positionMouse = position
-        
+     
+    ####################   Check if the position of mouse is pointed at a Surface rect   ####################   
     def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
                     parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
         if surfaceCheckRect == None:
@@ -62,7 +64,9 @@ class CreateNewAccountMenu:
         y2 = y1 + surfaceCheckRect.height
         
         return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
-        
+    
+    
+    ####################    Update the button or surface which the mouse pointed at   #######################  
     def updateMousePoitedAt(self):
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.getInputStringMenu.titleCancer.textRect,
@@ -75,7 +79,7 @@ class CreateNewAccountMenu:
         else:
             self.getInputStringMenu.cursor = 2
     
-    
+    #################   Update position left-click   ########################################################
     def updatePositionLeftMouse(self):
         self.positionLeftMouse = self.positionMouse
         if self.isPointedAt(positionMouse=self.positionLeftMouse,

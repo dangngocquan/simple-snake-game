@@ -37,7 +37,7 @@ class GameOverMenu:
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
         
-        ########### Buttons in Play Game Menu  ##############################################################
+        ########### Buttons in Gameover Menu  ###############################################################
         self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
                                        DESCRIPTION_FONT_2, width//2, height*1//24)
         if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
@@ -166,7 +166,7 @@ class GameOverMenu:
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
         
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Gameover Menu in another surface  #####################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
         
@@ -207,7 +207,7 @@ class GameOverMenu02:
                     self.winner = 1
                 else:
                     self.winner = 2
-        ########### Buttons in Play Game Menu  ##############################################################
+        ########### Buttons in Gameover Menu  ###############################################################
         self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
                                        DESCRIPTION_FONT_2, width//2, height*1//24)
         self.titleGameOver = Button("END MATCH", BIG_FONT, width//2, height*2//12)
@@ -318,8 +318,9 @@ class GameOverMenu02:
             self.titleGameOver.update("END MATCH", BIG_FONT, color='ALL')
             if self.winner == 1:
                 self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')
-                self.titlePlayer01.update(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
-                                          MEDIUM_FONT_2, 'R')
+                self.titlePlayer01.update(
+                    f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
+                    MEDIUM_FONT_2, 'R')
                 self.titleScore01.update(f"Score: {self.snake01.score}", DESCRIPTION_FONT, 'R')
             elif self.winner == 2:
                 self.titleStatusPlayer02.update("WINNER", MEDIUM_FONT_2, 'R')
@@ -327,8 +328,9 @@ class GameOverMenu02:
                 self.titleScore02.update(f"Score: {self.snake02.score}", DESCRIPTION_FONT, 'R')
             elif self.winner == 3:
                 self.titleStatusPlayer01.update("WINNER", MEDIUM_FONT_2, 'R')
-                self.titlePlayer01.update(f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
-                                          MEDIUM_FONT_2, 'R')
+                self.titlePlayer01.update(
+                    f"{ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name}", 
+                    MEDIUM_FONT_2, 'R')
                 self.titleScore01.update(f"Score: {self.snake01.score}", DESCRIPTION_FONT, 'R')
                 self.titleStatusPlayer02.update("WINNER", MEDIUM_FONT_2, 'R')
                 self.titlePlayer02.update("OTHER PLAYER", MEDIUM_FONT_2, 'R')
@@ -403,6 +405,6 @@ class GameOverMenu02:
             self.titlePlayAgain.draw(self.surface)
             self.titleBackMainMenu.draw(self.surface)
         
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Gameover Menu in another surface  #####################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

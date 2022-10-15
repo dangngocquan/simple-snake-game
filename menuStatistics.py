@@ -15,7 +15,7 @@ DESCRIPTION_FONT = SETTING2['MENU']['DESCRIPTION_FONT']
 WHITE = SETTING2['COLOR']['WHITE']
 
 
-###########   Load data of Statistics from json file   ############################################################
+###########   Load data of Statistics from json file   ######################################################
 def loadData(path='./data/statistics/statistics.json'):
     data = None
     with open(path, 'r') as file:
@@ -25,14 +25,14 @@ def loadData(path='./data/statistics/statistics.json'):
 
 STATISTICS = loadData()
 
-###########   Save data of Account Manager to json file   ############################################################
+###########   Save data of Statistic to json file   #########################################################
 def saveData(path='./data/statistics/statistics.json'):   
     with open(path, 'w') as file:
         json.dump(STATISTICS, file, indent=4)
     file.close()
    
 
-###########  CLASS STATISTICS MENU  ##########################################################################
+###########  CLASS STATISTICS MENU  #########################################################################
 class StatisticsMenu:
     ###########  Constructor  ###############################################################################
     def __init__(self, x, y, width, height):
@@ -108,7 +108,7 @@ class StatisticsMenu:
     
     
     
-    ###########   Update cursor and buttons status in Play Game Menu   ######################################
+    ###########   Update cursor and buttons status in Statistics Menu   #####################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
         self.updateMousePoitedAt()
@@ -144,6 +144,6 @@ class StatisticsMenu:
         self.titleBack.draw(self.surface)
 
     
-    ###########  Draw PlayGame Menu in another surface  #####################################################
+    ###########  Draw Statistics Menu in another surface  ###################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)
