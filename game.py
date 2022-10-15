@@ -340,7 +340,7 @@ class Game:
                         if self.optionsMenu.cursor == 0:
                             self.runningOptionsMenu = False
                             self.runningGamemodeSettingMenu = True
-                            self.gamemodeSettingMenu.cursor = 0
+                            self.gamemodeSettingMenu.cursor = 9
                         ###########   The cursor is pointing at "Game setting"   ############################
                         if self.optionsMenu.cursor == 1:
                             self.runningOptionsMenu = False
@@ -481,83 +481,65 @@ class Game:
                                 self.aboutGameMenu.isHiddenPasswordBox = True
             ###########   Get events when current screen is Gamemode Setting Menu   #########################
             elif self.runningGamemodeSettingMenu:
-                if event.type == pygame.KEYDOWN:
-                    ###########   Move the cursor   #########################################################
-                    if self.gamemodeSettingMenu.cursor % 2 == 0:
-                        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 8:
-                                self.gamemodeSettingMenu.cursor += 1
-                            else:
-                                self.gamemodeSettingMenu.cursor += 2
-                            self.gamemodeSettingMenu.cursor %= 9
-                        elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 0:
-                                self.gamemodeSettingMenu.cursor -= 1
-                            else:
-                                self.gamemodeSettingMenu.cursor -= 2
-                            self.gamemodeSettingMenu.cursor %= 9
-                        elif event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            if self.gamemodeSettingMenu.cursor == 8:
+                self.gamemodeSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
+                ##############   The cursor is pointing at "BACK"    ########################################
+                if self.gamemodeSettingMenu.cursor == 8:
                                 self.runningGamemodeSettingMenu = False
                                 self.runningOptionsMenu = True
-                            else:
-                                self.gamemodeSettingMenu.cursor += 1
-                    elif self.gamemodeSettingMenu.cursor % 2 != 0:
+                                
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.gamemodeSettingMenu.cursor = 9
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.gamemodeSettingMenu.updatePositionLeftMouse()
+                    elif event.button == pygame.BUTTON_WHEELDOWN:
                         if self.gamemodeSettingMenu.cursor == 1:
-                            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=2)
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
-                            elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=2)
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=2)
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
                         elif self.gamemodeSettingMenu.cursor == 3:
-                            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
-                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
-                                elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
-                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
-                            elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
-                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
-                                elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
-                                    setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
+                                setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
+                            elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
+                                setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
                         elif self.gamemodeSettingMenu.cursor == 5:
-                            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['TARGET_SCORE'] > 100:
-                                    setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
-                                                        newData=SETTING1['GAMEMODE']['TARGET_SCORE']-100)
-                            elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['TARGET_SCORE'] > 100:
                                 setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
-                                                        newData=SETTING1['GAMEMODE']['TARGET_SCORE']+100)
+                                                    newData=SETTING1['GAMEMODE']['TARGET_SCORE']-100)   
                         elif self.gamemodeSettingMenu.cursor == 7:
-                            if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
-                                    setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='Third-person view')
-                                elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
-                                    setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='First-person view')
-                            elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
-                                    setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='Third-person view')
-                                elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
-                                    setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='First-person view')
-                        if event.key  == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            self.gamemodeSettingMenu.cursor -= 1
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='Third-person view')
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='First-person view')
+                    elif event.button == pygame.BUTTON_WHEELUP:
+                        if self.gamemodeSettingMenu.cursor == 1:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=2)
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                setting.replaceData(key1='GAMEMODE', key2='NUMBER_PLAYERS', newData=1)
+                        elif self.gamemodeSettingMenu.cursor == 3:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "OFF":
+                                setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="ON")
+                            elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == "ON":
+                                setting.replaceData(key1='GAMEMODE', key2='AUTO_SPEED_UP', newData="OFF")
+                        elif self.gamemodeSettingMenu.cursor == 5:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='GAMEMODE', key2='TARGET_SCORE', 
+                                                    newData=SETTING1['GAMEMODE']['TARGET_SCORE']+100)
+                        elif self.gamemodeSettingMenu.cursor == 7:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'First-person view':
+                                setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='Third-person view')
+                            elif SETTING1['GAMEMODE']['VIEW_CONTROL'] == 'Third-person view':
+                                setting.replaceData(key1='GAMEMODE', key2='VIEW_CONTROL', newData='First-person view')       
                 ###########   Save current setting to json file   ###########################################
                 setting.saveSetting()
                     

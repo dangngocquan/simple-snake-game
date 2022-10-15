@@ -18,7 +18,7 @@
         "SOUND_VOLUME": 40
     },
     "GAMEMODE": {
-        "TARGET_SCORE": 400,
+        "TARGET_SCORE": 100,
         "NUMBER_PLAYERS": 2,
         "AUTO_SPEED_UP": "OFF",
         "VIEW_CONTROL": "Third-person view"
