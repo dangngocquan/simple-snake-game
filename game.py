@@ -195,7 +195,7 @@ class Game:
                         elif self.mainMenu.cursor == 5:
                             self.runningMainMenu = False
                             self.runningAboutGameMenu = True
-                            self.aboutGameMenu.cursor = 0
+                            self.aboutGameMenu.cursor = 13
                         ########   The cursor is "QUIT GAME"    #############################################
                         elif self.mainMenu.cursor == 6:
                             self.runningMainMenu = False
@@ -386,83 +386,64 @@ class Game:
                     self.runningMainMenu = True
             ###########   Get events when current screen is About Game Menu  ###################################    
             elif self.runningAboutGameMenu:
-                if event.type == pygame.KEYDOWN:
-                    if self.aboutGameMenu.isHiddenPasswordBox:
-                        ###########   Move the cursor   #########################################################
-                        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            self.aboutGameMenu.cursor += 1
-                            self.aboutGameMenu.cursor %= 13
-                        elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            self.aboutGameMenu.cursor -= 1
-                            self.aboutGameMenu.cursor %= 13
-                        ###########   Select the content that the cursor is pointing at   #######################
-                        if event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
+                self.aboutGameMenu.updatePositionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.aboutGameMenu.updatePositionLeftMouse()
+                        if self.aboutGameMenu.isHiddenPasswordBox:
                             ###########   The cursor is pointing at "Music00: BoyWithUkey - Loafers"   ########################
                             if self.aboutGameMenu.cursor == 0:
                                 webbrowser.open(
                                     url="https://www.youtube.com/watch?v=iGCE7nXfQK8&list=PLZQKIedkyIQ07V8CiKUc8KkBL_aekG77o&index=2")
                             ###########   The cursor is pointing at "Music01: Sweden - C418"   ############################
                             elif self.aboutGameMenu.cursor == 1:
-                                webbrowser.open(utl="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
+                                webbrowser.open(
+                                    url="https://www.nhaccuatui.com/bai-hat/sweden-c418.ALubLN9LgFvf.html")
                             ###########   The cursor is pointing at "Change Button"   ###########################
                             elif self.aboutGameMenu.cursor == 2:
-                                webbrowser.open(url="https://drive.google.com/file/d/1RV6iASyK85xAnvJ1OZl99khjsnmhi_0g/view?usp=sharing")
+                                webbrowser.open(
+                                    url="https://drive.google.com/file/d/1RV6iASyK85xAnvJ1OZl99khjsnmhi_0g/view?usp=sharing")
                             ###########   The cursor is pointing at "Press Button"   ###########################
                             elif self.aboutGameMenu.cursor == 3:
-                                webbrowser.open(url="https://drive.google.com/file/d/1gu6LhBLcEVvN_x9rTD95nLLwzuWoVbdC/view?usp=sharing")
+                                webbrowser.open(
+                                    url="https://drive.google.com/file/d/1gu6LhBLcEVvN_x9rTD95nLLwzuWoVbdC/view?usp=sharing")
                             ###########   The cursor is pointing at "Snake eat food"   ###########################
                             elif self.aboutGameMenu.cursor == 4:
-                                webbrowser.open(url="https://drive.google.com/file/d/1oeuZJTJYihGg22lgQX0hQaTSlDpNcrxw/view?usp=sharing")
+                                webbrowser.open(
+                                    url="https://drive.google.com/file/d/1oeuZJTJYihGg22lgQX0hQaTSlDpNcrxw/view?usp=sharing")
                             ###########   The cursor is pointing at "Game Over"   ###########################
                             elif self.aboutGameMenu.cursor == 5:
-                                webbrowser.open(url="https://pixabay.com/sound-effects/search/gameover/?manual_search=1&order=None")
+                                webbrowser.open(
+                                    url="https://pixabay.com/sound-effects/search/gameover/?manual_search=1&order=None")
                             ###########   The cursor is pointing at "Win Game"   ###########################
                             elif self.aboutGameMenu.cursor == 6:
-                                webbrowser.open(url="https://pixabay.com/sound-effects/search/win/?manual_search=1&order=None")
+                                webbrowser.open(
+                                    url="https://pixabay.com/sound-effects/search/win/?manual_search=1&order=None")
                             ###########   The cursor is pointing at "Snake"   ###########################
                             elif self.aboutGameMenu.cursor == 7:
-                                webbrowser.open(url="https://drive.google.com/drive/folders/1z1hBUdLROt_smwh3E25rmqYrmDptpaCn?usp=sharing")
+                                webbrowser.open(
+                                    url="https://drive.google.com/drive/folders/1z1hBUdLROt_smwh3E25rmqYrmDptpaCn?usp=sharing")
                             ###########   The cursor is pointing at "Food"   ###########################
                             elif self.aboutGameMenu.cursor == 8:
-                                webbrowser.open(url="https://drive.google.com/drive/folders/1IBQvUQiYWVVAU1Y_L3Q-yHZWRdFaY-pw?usp=sharing")
+                                webbrowser.open(
+                                    url="https://drive.google.com/drive/folders/1IBQvUQiYWVVAU1Y_L3Q-yHZWRdFaY-pw?usp=sharing")
                             ###########   The cursor is pointing at "Wall"   ###########################
                             elif self.aboutGameMenu.cursor == 9:
-                                webbrowser.open(url="https://drive.google.com/drive/folders/164DmyjPfnDHMxZZhz7OBMTfZXXnF5m4L?usp=sharing")
+                                webbrowser.open(
+                                    url="https://drive.google.com/drive/folders/164DmyjPfnDHMxZZhz7OBMTfZXXnF5m4L?usp=sharing")
                             ###########   The cursor is pointing at "Tutorial create button in pygame (youtube)"   ###########################
                             elif self.aboutGameMenu.cursor == 10:
-                                webbrowser.open(url="https://www.youtube.com/watch?v=G8MYGDf_9ho")
+                                webbrowser.open(
+                                    url="https://www.youtube.com/watch?v=G8MYGDf_9ho")
                             ###########   The cursor is pointing at "Source code (if you want)"   ###########################
                             elif self.aboutGameMenu.cursor == 11:
                                 self.aboutGameMenu.isHiddenPasswordBox = False
-                                self.aboutGameMenu.passwordBox.cursor = 0
-                                # webbrowser.open(url="https://github.com/dangngocquan/SimpleSnakeGame")
+                                self.aboutGameMenu.passwordBox.cursor = 2
                             ###########   The cursor is poiting at "Back"   #####################################
                             elif self.aboutGameMenu.cursor == 12:
                                 self.runningMainMenu = True
                                 self.runningAboutGameMenu = False
-                    elif self.aboutGameMenu.isHiddenPasswordBox == False:
-                        ###########   Move the cursor   #########################################################
-                        if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            self.aboutGameMenu.passwordBox.cursor += 1
-                            self.aboutGameMenu.passwordBox.cursor %= 2
-                        elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            self.aboutGameMenu.passwordBox.cursor -= 1
-                            self.aboutGameMenu.passwordBox.cursor %= 2
-                        elif event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
-                                           pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
-                            self.aboutGameMenu.passwordBox.addDigit(pygame.key.name(event.key))
-                            self.aboutGameMenu.passwordBox.resetDefaultDescription()
-                        elif event.key == pygame.K_BACKSPACE:
-                            self.aboutGameMenu.passwordBox.removeDigit()
-                            self.aboutGameMenu.passwordBox.resetDefaultDescription()
-                        ###########   Select the content that the cursor is pointing at   #######################
-                        elif event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
+                        elif not self.aboutGameMenu.isHiddenPasswordBox:
                             ###########   The cursor is pointing at "Enter"   ########################
                             if self.aboutGameMenu.passwordBox.cursor == 0:
                                 if self.aboutGameMenu.passwordBox.checkPassword():
@@ -479,6 +460,18 @@ class Game:
                                 self.aboutGameMenu.passwordBox.resetDefaultDescription()
                                 self.aboutGameMenu.passwordBox.removeAllDigits()
                                 self.aboutGameMenu.isHiddenPasswordBox = True
+                                self.aboutGameMenu.cursor = 13
+                            self.aboutGameMenu.passwordBox.cursor = 2
+                elif event.type == pygame.KEYDOWN:
+                    if not self.aboutGameMenu.isHiddenPasswordBox:
+                        if event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4,
+                                           pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:
+                            self.aboutGameMenu.passwordBox.addDigit(pygame.key.name(event.key))
+                            self.aboutGameMenu.passwordBox.resetDefaultDescription()
+                        elif event.key == pygame.K_BACKSPACE:
+                            self.aboutGameMenu.passwordBox.removeDigit()
+                            self.aboutGameMenu.passwordBox.resetDefaultDescription()
+                            
             ###########   Get events when current screen is Gamemode Setting Menu   #########################
             elif self.runningGamemodeSettingMenu:
                 self.gamemodeSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
