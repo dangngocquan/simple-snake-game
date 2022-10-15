@@ -14,8 +14,8 @@
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
-        "MUSIC_VOLUME": 0,
-        "SOUND_VOLUME": 40
+        "MUSIC_VOLUME": 84,
+        "SOUND_VOLUME": 50
     },
     "GAMEMODE": {
         "TARGET_SCORE": 200,

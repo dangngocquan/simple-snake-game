@@ -350,12 +350,12 @@ class Game:
                         elif self.optionsMenu.cursor == 2:
                             self.runningOptionsMenu = False
                             self.runningSoundSettingMenu = True
-                            self.soundSettingMenu.cursor = 0
+                            self.soundSettingMenu.cursor = 7
                         ###########   The cursor is pointing at "Map setting"   ###########################
                         elif self.optionsMenu.cursor == 3:
                             self.runningOptionsMenu = False
                             self.runningMapSettingMenu = True
-                            self.mapSettingMenu.cursor = 0
+                            self.mapSettingMenu.cursor = 3
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.optionsMenu.cursor == 4:
                             self.runningOptionsMenu = False
@@ -678,71 +678,57 @@ class Game:
                 setting.saveSetting()
             ###########   Get events when current screen is Sound Setting Menu   ############################
             elif self.runningSoundSettingMenu:
+                self.soundSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
+                if self.soundSettingMenu.cursor == 6:
+                    self.runningSoundSettingMenu = False
+                    self.runningOptionsMenu = True
                 if event.type == pygame.KEYDOWN:
-                    if self.soundSettingMenu.cursor % 2 == 0:
-                        if event.key in [pygame.K_s, pygame.K_DOWN]:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.soundSettingMenu.cursor == 6:
-                                self.soundSettingMenu.cursor = 0
-                            else:
-                                self.soundSettingMenu.cursor += 2
-                            self.soundSettingMenu.cursor %= 7 
-                        elif event.key in [pygame.K_w, pygame.K_UP]:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.soundSettingMenu.cursor == 0:
-                                self.soundSettingMenu.cursor = 6
-                            else:
-                                self.soundSettingMenu.cursor -= 2
-                            self.soundSettingMenu.cursor %= 7
-                        elif event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            if self.soundSettingMenu.cursor == 6:
-                                self.runningSoundSettingMenu = False
-                                self.runningOptionsMenu = True
-                            else:
-                                self.soundSettingMenu.cursor += 1
-                    elif self.soundSettingMenu.cursor % 2 != 0:
+                    if event.key == pygame.K_RETURN:
+                        self.soundSettingMenu.cursor = 7
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.soundSettingMenu.updatePositionLeftMouse()
+                    elif event.button == pygame.BUTTON_WHEELDOWN:
                         if self.soundSettingMenu.cursor == 1:
-                            if event.key in [pygame.K_w, pygame.K_UP, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                pygame.mixer.music.unload()
-                                setting.replaceData('SOUND', 'MUSIC_INDEX', 
-                                                    (SETTING1['SOUND']['MUSIC_INDEX'] + 1) % len(SETTING2['SOUND']['MUSIC']))
-                                pygame.mixer.music.load(
-                                    SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
-                                pygame.mixer.music.play(-1)
-                            elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                pygame.mixer.music.unload()
-                                setting.replaceData('SOUND', 'MUSIC_INDEX', 
-                                                    (SETTING1['SOUND']['MUSIC_INDEX'] - 1) % len(SETTING2['SOUND']['MUSIC']))
-                                pygame.mixer.music.load(
-                                    SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
-                                pygame.mixer.music.play(-1)
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            pygame.mixer.music.unload()
+                            setting.replaceData('SOUND', 'MUSIC_INDEX', 
+                                                (SETTING1['SOUND']['MUSIC_INDEX'] - 1) % len(SETTING2['SOUND']['MUSIC']))
+                            pygame.mixer.music.load(
+                                SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
+                            pygame.mixer.music.play(-1)
                         elif self.soundSettingMenu.cursor == 3:
-                            if event.key in [pygame.K_w, pygame.K_UP, pygame.K_d, pygame.K_RIGHT]:
-                                setting.replaceData('SOUND', 'MUSIC_VOLUME', 
-                                                    (SETTING1['SOUND']['MUSIC_VOLUME'] + 1) % 101)
-                                pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
-                            elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
+                            if SETTING1['SOUND']['MUSIC_VOLUME'] > 0:
                                 setting.replaceData('SOUND', 'MUSIC_VOLUME', 
                                                     (SETTING1['SOUND']['MUSIC_VOLUME'] - 1) % 101)
                                 pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
                         elif self.soundSettingMenu.cursor == 5:
-                            if event.key in [pygame.K_w, pygame.K_UP, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData('SOUND', 'SOUND_VOLUME', 
-                                                    (SETTING1['SOUND']['SOUND_VOLUME'] + 1) % 101)
-                                setting.soundVolumeUpdate()
-                            elif event.key in [pygame.K_s, pygame.K_DOWN, pygame.K_a, pygame.K_LEFT]:
+                            if SETTING1['SOUND']['SOUND_VOLUME'] > 0:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData('SOUND', 'SOUND_VOLUME', 
                                                     (SETTING1['SOUND']['SOUND_VOLUME'] - 1) % 101)
                                 setting.soundVolumeUpdate()
-                        if event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            setting.soundVolumeUpdate()
-                            self.soundSettingMenu.cursor -= 1
+                    elif event.button == pygame.BUTTON_WHEELUP:
+                        if self.soundSettingMenu.cursor == 1:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            pygame.mixer.music.unload()
+                            setting.replaceData('SOUND', 'MUSIC_INDEX', 
+                                                (SETTING1['SOUND']['MUSIC_INDEX'] + 1) % len(SETTING2['SOUND']['MUSIC']))
+                            pygame.mixer.music.load(
+                                SETTING2['SOUND']['MUSIC'][SETTING1['SOUND']['MUSIC_INDEX']])
+                            pygame.mixer.music.play(-1)
+                        elif self.soundSettingMenu.cursor == 3:
+                            if SETTING1['SOUND']['MUSIC_VOLUME'] < 100:
+                                setting.replaceData('SOUND', 'MUSIC_VOLUME', 
+                                                    (SETTING1['SOUND']['MUSIC_VOLUME'] + 1) % 101)
+                                pygame.mixer.music.set_volume(SETTING1['SOUND']['MUSIC_VOLUME'] / 100)
+                        elif self.soundSettingMenu.cursor == 5:
+                            if SETTING1['SOUND']['SOUND_VOLUME'] < 100:
+                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                                setting.replaceData('SOUND', 'SOUND_VOLUME', 
+                                                    (SETTING1['SOUND']['SOUND_VOLUME'] + 1) % 101)
+                                setting.soundVolumeUpdate()
+                ######################   Save setting to json file     ######################################
                 setting.saveSetting()
             ###########   Get events when current screen is Map Setting Menu   ##############################             
             elif self.runningMapSettingMenu:

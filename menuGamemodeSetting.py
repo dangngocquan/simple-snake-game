@@ -194,53 +194,53 @@ class GamemodeSettingMenu:
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
             self.titlePlayerNumber.update("Number of players", DESCRIPTION_FONT, 'B')
-            self.descriptionText.update("Setup the number of players", DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Setup the number of players", DESCRIPTION_FONT, 'R')
         else:
             self.titlePlayerNumber.update("Number of players", DESCRIPTION_FONT, 'G')    
         if self.cursor == 1:
             self.titlePlayerNumberOptions.update(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", DESCRIPTION_FONT, 'B')
             self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+                                        DESCRIPTION_FONT_2, 'R')
         else:
             self.titlePlayerNumberOptions.update(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 2:
             self.titleAutoSpeedUpSnake.update("Auto speed up snake", DESCRIPTION_FONT, 'B')
-            self.descriptionText.update("Setup the snake auto speed up", DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Setup the snake auto speed up", DESCRIPTION_FONT, 'R')
         else:
             self.titleAutoSpeedUpSnake.update("Auto speed up snake", DESCRIPTION_FONT, 'G')
         if self.cursor == 3:
             self.titleAutoSpeedUpSnakeOptions.update(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", DESCRIPTION_FONT, 'B')
             self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+                                        DESCRIPTION_FONT_2, 'R')
         else:
             self.titleAutoSpeedUpSnakeOptions.update(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 4:
             self.titleTargetScore.update("Target score", DESCRIPTION_FONT, 'B')
-            self.descriptionText.update("Setup Target score, you will win if your score >= target score", DESCRIPTION_FONT_2, 'ALL')
+            self.descriptionText.update("Setup Target score, you will win if your score >= target score", DESCRIPTION_FONT_2, 'R')
         else:
             self.titleTargetScore.update("Target score", DESCRIPTION_FONT, 'G')
         if self.cursor == 5:
             self.titleTargetScoreOptions.update(f"{SETTING1['GAMEMODE']['TARGET_SCORE']}", DESCRIPTION_FONT, 'B')
             self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+                                        DESCRIPTION_FONT_2, 'R')
         else:
             self.titleTargetScoreOptions.update(f"{SETTING1['GAMEMODE']['TARGET_SCORE']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 6:
             self.titleViewControl.update("View control", DESCRIPTION_FONT, 'B')
-            self.descriptionText.update("Setup the view control", DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("Setup the view control", DESCRIPTION_FONT, 'R')
         else:
             self.titleViewControl.update("View control", DESCRIPTION_FONT, 'G')
         if self.cursor == 7:
             self.titleViewControlOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT, 'B')
             self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+                                        DESCRIPTION_FONT_2, 'R')
         else:
             self.titleViewControlOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 8:
             self.titleBack.update("BACK", MEDIUM_FONT_HORVED, 'B')
-            self.descriptionText.update("", DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("", DESCRIPTION_FONT, 'R')
         if self.cursor == 9:
-            self.descriptionText.update("", DESCRIPTION_FONT, 'ALL')
+            self.descriptionText.update("", DESCRIPTION_FONT, 'R')
             
         
         ###########   Remove old button display   ###########################################################

@@ -25,6 +25,8 @@ class SoundSettingMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
+        self.positionMouse = (-100, -100)
+        self.positionLeftMouse = (-100, -100)
         ########### Buttons in Options Menu  ##############################################################
         self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//12)
         self.descriptionText.isChosen = True
@@ -40,57 +42,169 @@ class SoundSettingMenu:
         self.titleSoundVolumeOptions = Button(f"{SETTING1['SOUND']['SOUND_VOLUME']}", SMALL_FONT,
                                               width//16*13, height*8//12, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*10//12)
+    
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePositionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
         
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.cursor != 0:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleMusic.textRect):
+                self.titleMusic.isChosen = True
+            else:
+                self.titleMusic.isChosen = False
+            self.titleMusic.update("Music", DESCRIPTION_FONT)
+        if self.cursor != 1:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleMusicOptions.textRect):
+                self.titleMusicOptions.isChosen = True
+            else:
+                self.titleMusicOptions.isChosen = False
+            self.titleMusicOptions.update(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", DESCRIPTION_FONT)
+        if self.cursor != 2:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleMusicVolume.textRect):
+                self.titleMusicVolume.isChosen = True
+            else:
+                self.titleMusicVolume.isChosen = False
+            self.titleMusicVolume.update("Music volume", DESCRIPTION_FONT) 
+        if self.cursor != 3:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleMusicVolumeOptions.textRect):
+                self.titleMusicVolumeOptions.isChosen = True
+            else:
+                self.titleMusicVolumeOptions.isChosen = False
+            self.titleMusicVolumeOptions.update(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", DESCRIPTION_FONT)
+        if self.cursor != 4:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSoundVolume.textRect):
+                self.titleSoundVolume.isChosen = True
+            else:
+                self.titleSoundVolume.isChosen = False
+            self.titleSoundVolume.update("Sound volume", DESCRIPTION_FONT) 
+        if self.cursor != 5:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSoundVolumeOptions.textRect):
+                self.titleSoundVolumeOptions.isChosen = True
+            else:
+                self.titleSoundVolumeOptions.isChosen = False
+            self.titleSoundVolumeOptions.update(f"{SETTING1['SOUND']['SOUND_VOLUME']}", DESCRIPTION_FONT) 
+        if self.cursor != 6:   
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleBack.textRect):
+                self.titleBack.isChosen = True
+                self.titleBack.update('BACK', MEDIUM_FONT_HORVED, 'G')
+            else:
+                self.titleBack.isChosen = False
+                self.titleBack.update('BACK', MEDIUM_FONT, 'G')
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleMusic.textRect):
+            self.cursor = 0
+            self.titleMusic.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleMusicOptions.textRect):
+            self.cursor = 1
+            self.titleMusicOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleMusicVolume.textRect):
+            self.cursor = 2
+            self.titleMusicVolume.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleMusicVolumeOptions.textRect):
+            self.cursor = 3
+            self.titleMusicVolumeOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSoundVolume.textRect):
+            self.cursor = 4
+            self.titleSoundVolume.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSoundVolumeOptions.textRect):
+            self.cursor = 5
+            self.titleSoundVolumeOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBack.textRect):
+            self.cursor = 6
+            self.titleBack.isChosen = True
+        else:
+            self.cursor = 7
+        self.positionLeftMouse = (-100, -100)
+      
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):
+        self.updateMousePoitedAt()
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
-            self.titleMusic.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to choose the music for game", DESCRIPTION_FONT, 'ALL')
+            self.titleMusic.update("Music", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup the music for game.", DESCRIPTION_FONT, 'R')
         else:
-            self.titleMusic.isChosen = False
+            self.titleMusic.update("Music", DESCRIPTION_FONT, 'G')    
         if self.cursor == 1:
-            self.titleMusicOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleMusicOptions.update(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleMusicOptions.isChosen = False
+            self.titleMusicOptions.update(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 2:
-            self.titleMusicVolume.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to set volume of music", DESCRIPTION_FONT, 'ALL')
+            self.titleMusicVolume.update("Music volume", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup the volume of music in game.", DESCRIPTION_FONT, 'R')
         else:
-            self.titleMusicVolume.isChosen = False
+            self.titleMusicVolume.update("Music volume", DESCRIPTION_FONT, 'G')
         if self.cursor == 3:
-            self.titleMusicVolumeOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleMusicVolumeOptions.update(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleMusicVolumeOptions.isChosen = False
+            self.titleMusicVolumeOptions.update(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 4:
-            self.titleSoundVolume.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to set volume of sound", DESCRIPTION_FONT, 'ALL')
+            self.titleSoundVolume.update("Sound volume", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup the volume of the sound in game.", DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleSoundVolume.isChosen = False
+            self.titleSoundVolume.update("Sound volume", DESCRIPTION_FONT, 'G')
         if self.cursor == 5:
-            self.titleSoundVolumeOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleSoundVolumeOptions.update(f"{SETTING1['SOUND']['SOUND_VOLUME']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleSoundVolumeOptions.isChosen = False
+            self.titleSoundVolumeOptions.update(f"{SETTING1['SOUND']['SOUND_VOLUME']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 6:
-            self.titleBack.isChosen = True
-            self.titleBack.update("BACK", MEDIUM_FONT_HORVED)
-            self.descriptionText.update("", DESCRIPTION_FONT, 'ALL')
-        else:
-            self.titleBack.isChosen = False
-            self.titleBack.update("BACK", MEDIUM_FONT)
+            self.titleBack.update("BACK", MEDIUM_FONT_HORVED, 'B')
+            self.descriptionText.update("", DESCRIPTION_FONT, 'R')
+        if self.cursor == 7:
+            self.descriptionText.update("", DESCRIPTION_FONT, 'R')
         
-        self.titleMusic.update("Music", SMALL_FONT, 'B')
-        self.titleMusicOptions.update(f"Music {SETTING1['SOUND']['MUSIC_INDEX']}", SMALL_FONT, 'B')
-        self.titleMusicVolume.update("Music volume", SMALL_FONT, 'B')
-        self.titleMusicVolumeOptions.update(f"{SETTING1['SOUND']['MUSIC_VOLUME']}", SMALL_FONT, 'B')
-        self.titleSoundVolume.update("Sound volume", SMALL_FONT, 'B')
-        self.titleSoundVolumeOptions.update(f"{SETTING1['SOUND']['SOUND_VOLUME']}", SMALL_FONT, 'B')
         
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
