@@ -213,7 +213,6 @@ class GetInputStringMenu:
                                        DESCRIPTION_FONT_2, self.descriptionBoxRect.width//2, 
                                        self.descriptionBoxRect.height//2)
 
-        ########### Buttons   ###############################################################################
         
         
     def addChar(self, char):

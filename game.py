@@ -270,6 +270,7 @@ class Game:
                             self.runningAccountsSetting = False
                             self.runningCreateNewAccountMenu = True
                             self.createNewAccountMenu.cursor = 0
+                            self.createNewAccountMenu.getInputStringMenu.removeAllChars()
                         elif self.accountsSetting.cursor == 2:
                             self.runningAccountsSetting = False
                             self.runningMainMenu = True

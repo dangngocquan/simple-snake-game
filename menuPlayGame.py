@@ -75,10 +75,10 @@ class PlayGameMenu:
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleContinueGame.textRect):
             self.titleContinueGame.isChosen = True
-            self.titleContinueGame.update("CONTNUE GAME", MEDIUM_FONT_HORVED)
+            self.titleContinueGame.update("CONTINUE GAME", MEDIUM_FONT_HORVED)
         else:
             self.titleContinueGame.isChosen = False
-            self.titleContinueGame.update("CONTNUE GAME", MEDIUM_FONT)
+            self.titleContinueGame.update("CONTINUE GAME", MEDIUM_FONT)
         if self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleBack.textRect):
             self.titleBack.isChosen = True
@@ -115,7 +115,6 @@ class PlayGameMenu:
         self.titleNewGame.draw(self.surface)
         self.titleContinueGame.draw(self.surface)
         self.titleBack.draw(self.surface)
-    
     ###########  Draw PlayGame Menu in another surface  #####################################################
     def draw(self, parentSurface):
         parentSurface.blit(self.surface, self.surfaceRect)

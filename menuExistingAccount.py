@@ -119,6 +119,7 @@ class ExistingAccountMenu:
                             surfaceCheckRect=self.selection1Rect,
                             parent1SurfaceRect=self.container1Rect):
             self.cursor = 0
+            self.tempIndexAccount = 0
         elif self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.selection2Rect,
                             parent1SurfaceRect=self.container1Rect):
@@ -127,6 +128,7 @@ class ExistingAccountMenu:
                             surfaceCheckRect=self.selection3Rect,
                             parent1SurfaceRect=self.container1Rect):
             self.cursor = 2
+            self.tempIndexAccount = 0
         if self.cursor == 1:
             for i in range(len(ACCOUNT_MANAGER.listAccount)):
                 if self.isPointedAt(positionMouse=self.positionMouse,

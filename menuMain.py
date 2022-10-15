@@ -158,6 +158,7 @@ class MainMenu:
         ###########  Remove old button display  #############################################################
         self.surface.fill((0, 0, 0, 0))
         ###########  Draw new button   ######################################################################
+        
         self.titleSimpleSnake.draw(self.surface)
         self.titlePlayGame.draw(self.surface)
         self.titleAccount.draw(self.surface)

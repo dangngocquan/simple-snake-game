@@ -24,9 +24,9 @@
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {
-        "INDEX_MAP": 1
+        "INDEX_MAP": 8
     },
     "ACCOUNT": {
-        "INDEX_ACCOUNT": 2
+        "INDEX_ACCOUNT": 1
     }
 }
