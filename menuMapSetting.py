@@ -25,35 +25,89 @@ class MapSettingMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 0
+        self.positionMouse = (-100, -100)
+        self.positionLeftMouse = (-100, -100)
         ########### Buttons in Options Menu  ##############################################################
         self.titleExistingMap = Button("EXISTING MAPS", MEDIUM_FONT, width//2, height*3//12)
         self.titleCreateNewMap = Button("CREATE NEW MAP", MEDIUM_FONT, width//2, height*5//12)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*7//12)
+    
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePositionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
         
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleExistingMap.textRect):
+            self.titleExistingMap.isChosen = True
+            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT_HORVED)
+        else:
+            self.titleExistingMap.isChosen = False
+            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleCreateNewMap.textRect):
+            self.titleCreateNewMap.isChosen = True
+            self.titleCreateNewMap.update("CREATE NEW MAP", MEDIUM_FONT_HORVED)
+        else:
+            self.titleCreateNewMap.isChosen = False
+            self.titleCreateNewMap.update("CREATE NEW MAP", MEDIUM_FONT)
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBack.textRect):
+            self.titleBack.isChosen = True
+            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+        else:
+            self.titleBack.isChosen = False
+            self.titleBack.update('BACK', MEDIUM_FONT)
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleExistingMap.textRect):
+            self.cursor = 0
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleCreateNewMap.textRect):
+            self.cursor = 1
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBack.textRect):
+            self.cursor = 2
+        else:
+            self.cursor = 3
+        self.positionLeftMouse = (-100, -100)
+    
+      
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):
         ###########   Update cursor and buttons   ###########################################################
-        if self.cursor == 0:
-            self.titleExistingMap.isChosen = True
-            self.titleCreateNewMap.isChosen = False
-            self.titleBack.isChosen = False
-            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT_HORVED)
-            self.titleCreateNewMap.update('CREATE NEW MAP', MEDIUM_FONT)
-            self.titleBack.update('BACK', MEDIUM_FONT)
-        elif self.cursor == 1:
-            self.titleExistingMap.isChosen = False
-            self.titleCreateNewMap.isChosen = True
-            self.titleBack.isChosen = False
-            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT)
-            self.titleCreateNewMap.update('CREATE NEW MAP', MEDIUM_FONT_HORVED)
-            self.titleBack.update('BACK', MEDIUM_FONT)
-        elif self.cursor == 2:
-            self.titleExistingMap.isChosen = False
-            self.titleCreateNewMap.isChosen = False
-            self.titleBack.isChosen = True
-            self.titleExistingMap.update('EXISTING MAPS', MEDIUM_FONT)
-            self.titleCreateNewMap.update('CREATE NEW MAP', MEDIUM_FONT)
-            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+        self.updateMousePoitedAt()
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################

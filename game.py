@@ -732,31 +732,24 @@ class Game:
                 setting.saveSetting()
             ###########   Get events when current screen is Map Setting Menu   ##############################             
             elif self.runningMapSettingMenu:
-                if event.type == pygame.KEYDOWN:
-                    ###########   Move the cursor   #########################################################
-                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.mapSettingMenu.cursor += 1
-                        self.mapSettingMenu.cursor %= 3
-                    elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                        SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                        self.mapSettingMenu.cursor -= 1
-                        self.mapSettingMenu.cursor %= 3
-                    ###########   Select the content that the cursor is pointing at   #######################
-                    if event.key == pygame.K_RETURN:
-                        SETTING2['SOUND']['PRESS_BUTTON'].play()
-                        ###########   The cursor is pointing at "Existing maps"   ###########################
+                self.mapSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.mapSettingMenu.updatePositionLeftMouse()
+                        # SETTING2['SOUND']['PRESS_BUTTON'].play()
                         if self.mapSettingMenu.cursor == 0:
                             self.runningExistingMapsMenu = True
+                            self.runningMapSettingMenu = False
                         ###########   The cursor is pointing at "Create new map"   ##########################
                         elif self.mapSettingMenu.cursor == 1:
+                            self.runningMapSettingMenu = False
                             self.runningCreateNewMap = True
                             self.createNewMap.cursor = 0
                             self.createNewMap.showingInstruction = True
                         ###########   The cursor is poiting at "Back"   #####################################
                         elif self.mapSettingMenu.cursor == 2:
+                            self.runningMapSettingMenu = False
                             self.runningOptionsMenu = True
-                        self.runningMapSettingMenu = False
                         
             ###########   Get events when current screen is Existing Maps Menu   ############################
             elif self.runningExistingMapsMenu:
