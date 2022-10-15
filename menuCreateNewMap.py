@@ -30,14 +30,14 @@ class CreateNewMap:
         self.surfaceRect = self.surface.get_rect()
         self.surfaceRect.center = (x, y)
         
-        self.mouseMotionPosition = (-100,-100)
-        self.mouseLeftClickPosition = (-100, -100)
-        self.mouseRightClickPosition = (-100, -100)
+        self.positionMouse = (-100,-100)
+        self.positionLeftMouse = (-100, -100)
+        self.positionRightMouse = (-100, -100)
         
         self.cellBeingPoitedAt = pygame.Surface((CELL_SIZE, CELL_SIZE), pygame.SRCALPHA)
         self.cellBeingPoitedAt.fill(GRAY)
         self.cellBeingPoitedAtRect = self.cellBeingPoitedAt.get_rect()
-        self.cellBeingPoitedAtRect.topleft = self.mouseMotionPosition
+        self.cellBeingPoitedAtRect.topleft = self.positionMouse
         
         self.grid = Grid(0, 0)
         self.snake01 = Snake(typeLocation=-1, typeColor='blue')
@@ -60,9 +60,82 @@ class CreateNewMap:
         self.titleStart = Button("START", MEDIUM_FONT, width//2, height*18//24)
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*21//24)
     
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePositionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
+        
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.showingInstruction:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleStart.textRect):
+                self.titleStart.isChosen = True
+                self.titleStart.update('START', MEDIUM_FONT_HORVED)
+            else:
+                self.titleStart.isChosen = False
+                self.titleStart.update('START', MEDIUM_FONT)
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleBack.textRect):
+                self.titleBack.isChosen = True
+                self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
+            else:
+                self.titleBack.isChosen = False
+                self.titleBack.update('BACK', MEDIUM_FONT)
+        elif self.drawingNewMap:
+            self.updateCellBeingPoitedAt()
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.showingInstruction:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleStart.textRect):
+                self.cursor = 0
+            elif self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleBack.textRect):
+                self.cursor = 1
+            else:
+                self.cursor = 2
+        elif self.drawingNewMap:
+            self.addNewWallBlock()
+        self.positionLeftMouse = (-100, -100)
+        
+    def updatePositionRightMouse(self):
+        self.positionRightMouse = self.positionMouse
+        if self.drawingNewMap:
+            self.removeWallBlock()
+        self.positionRightMouse = (-100, -100)
+    
     def updateCellBeingPoitedAt(self):
-        x = self.mouseMotionPosition[0]//CELL_SIZE*CELL_SIZE
-        y = self.mouseMotionPosition[1]//CELL_SIZE*CELL_SIZE
+        x = self.positionMouse[0]//CELL_SIZE*CELL_SIZE
+        y = self.positionMouse[1]//CELL_SIZE*CELL_SIZE
         if [x, y] in (self.wallManager.coordinateWalls() 
                       + self.snake01.coordinateSnakeBlocks()
                       + self.snake02.coordinateSnakeBlocks()
@@ -72,8 +145,8 @@ class CreateNewMap:
             self.cellBeingPoitedAtRect.topleft = (x, y)
     
     def addNewWallBlock(self):
-        x = self.mouseLeftClickPosition[0]//CELL_SIZE*CELL_SIZE
-        y = self.mouseLeftClickPosition[1]//CELL_SIZE*CELL_SIZE
+        x = self.positionLeftMouse[0]//CELL_SIZE*CELL_SIZE
+        y = self.positionLeftMouse[1]//CELL_SIZE*CELL_SIZE
         if [x, y] not in (self.wallManager.coordinateWalls()
                           + self.snake01.coordinateSnakeBlocks()
                           + self.snake02.coordinateSnakeBlocks()
@@ -84,8 +157,8 @@ class CreateNewMap:
         
     
     def removeWallBlock(self):
-        x = self.mouseRightClickPosition[0]//CELL_SIZE*CELL_SIZE
-        y = self.mouseRightClickPosition[1]//CELL_SIZE*CELL_SIZE
+        x = self.positionRightMouse[0]//CELL_SIZE*CELL_SIZE
+        y = self.positionRightMouse[1]//CELL_SIZE*CELL_SIZE
         for wall in self.wallManager.listWall:
             if [x, y] == wall.coordinate():
                 self.wallManager.listWall.remove(wall)
@@ -123,18 +196,9 @@ class CreateNewMap:
     
     ###########   Update cursor and buttons status in Options Menu   ########################################
     def update(self):
+        ###########   Update cursor and buttons   ###########################################################
+        self.updateMousePoitedAt()
         if self.showingInstruction == True:
-            ###########   Update cursor and buttons   ###########################################################
-            if self.cursor == 0:
-                self.titleStart.isChosen = True
-                self.titleBack.isChosen = False
-                self.titleStart.update("START", MEDIUM_FONT_HORVED, 'G')
-                self.titleBack.update("BACK", MEDIUM_FONT, 'G')
-            elif self.cursor == 1:
-                self.titleStart.isChosen = False
-                self.titleBack.isChosen = True
-                self.titleStart.update("START", MEDIUM_FONT, 'G')
-                self.titleBack.update("BACK", MEDIUM_FONT_HORVED, 'G')
             ###########   Remove old button display   ###########################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ####################################################################
@@ -149,12 +213,6 @@ class CreateNewMap:
             self.titleBack.draw(self.surface)
             self.titleBack.draw(self.surface)
         elif self.drawingNewMap == True:
-            ###########   Update   ###########################################################
-            self.updateCellBeingPoitedAt()
-            self.addNewWallBlock()
-            self.removeWallBlock()
-            self.mouseLeftClickPosition = (-100, -100)
-            self.mouseRightClickPosition = (-100, -100)
             ###########   Remove old images   ###########################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new images   ####################################################################
