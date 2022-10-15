@@ -345,7 +345,7 @@ class Game:
                         if self.optionsMenu.cursor == 1:
                             self.runningOptionsMenu = False
                             self.runningGameSettingMenu = True
-                            self.gameSettingMenu.cursor = 0
+                            self.gameSettingMenu.cursor = 13
                         ###########   The cursor is pointing at "Sound setting"   ###########################
                         elif self.optionsMenu.cursor == 2:
                             self.runningOptionsMenu = False
@@ -545,155 +545,66 @@ class Game:
                     
             ###########   Get events when current screen is Game Setting Menu   #############################
             elif self.runningGameSettingMenu:
+                self.gameSettingMenu.updatePositionMouse(pygame.mouse.get_pos())
+                if self.gameSettingMenu.cursor == 12:
+                    self.runningGameSettingMenu = False
+                    self.runningOptionsMenu = True
                 if event.type == pygame.KEYDOWN:
-                    ###########   Move the cursor   #########################################################
-                    ###########   If the cursor is pointing at "Show grid", "Move speed", "Drop speed",   ###
-                    ###########   "Animation speed", "Max food"  ############################################
-                    if self.gameSettingMenu.cursor % 2 == 0:
-                        ###########   Move the cursor   #####################################################
-                        if event.key == pygame.K_DOWN or event.key == pygame.K_s:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.gameSettingMenu.cursor == 12:
-                                self.gameSettingMenu.cursor += 1
-                            else:
-                                self.gameSettingMenu.cursor += 2
-                            self.gameSettingMenu.cursor %= 13
-                        elif event.key == pygame.K_UP or event.key == pygame.K_w:
-                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                            if self.gameSettingMenu.cursor == 0:
-                                self.gameSettingMenu.cursor -= 1
-                            else:
-                                self.gameSettingMenu.cursor -= 2
-                            self.gameSettingMenu.cursor %= 13
-                        ###########   Select the content that cursor poiting at   ###########################
-                        elif event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            if self.gameSettingMenu.cursor == 12:
-                                self.runningGameSettingMenu = False
-                                self.runningOptionsMenu = True
-                            else:
-                                self.gameSettingMenu.cursor += 1
-                    ###########   If the cursor is not pointing at main content ("Show grid", "Move speed", #
-                    ###########   "Drop speed", "Animation speed", "Max food")   ############################
-                    elif self.gameSettingMenu.cursor % 2 != 0:
-                        ###########   The cursor is poiting at sub options of "Show grid"   #################
+                    if event.key == pygame.K_RETURN:
+                        self.gameSettingMenu.cursor = 13
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == pygame.BUTTON_LEFT:
+                        self.gameSettingMenu.updatePositionLeftMouse()
+                    elif event.button == pygame.BUTTON_WHEELDOWN:
                         if self.gameSettingMenu.cursor == 1:
-                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_DOWN, pygame.K_s, 
-                                             pygame.K_a, pygame.K_d, pygame.K_RIGHT, pygame.K_LEFT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                if SETTING1['GRID'] == 'ON':
-                                    setting.replaceData(key1='GRID', newData='OFF')
-                                elif SETTING1['GRID'] == 'OFF':
-                                    setting.replaceData(key1='GRID', newData='ON')
-                        ###   The cursor is pointing at sub options of "Move speed" (of "Snake Setting")   ##
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GRID'] == 'ON':
+                                setting.replaceData(key1='GRID', newData='OFF')
+                            elif SETTING1['GRID'] == 'OFF':
+                                setting.replaceData(key1='GRID', newData='ON')
                         elif self.gameSettingMenu.cursor == 3:
-                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
-                                                newData=(SETTING1['SNAKE']['MOVE_SPEED'] + 1)%61)
-                                if SETTING1['SNAKE']['MOVE_SPEED'] == 0:
-                                    setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', newData=1)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
-                                    self.inGame02.snake02.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
-                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
-                                                newData=(SETTING1['SNAKE']['MOVE_SPEED'] - 1)%61)
-                                if SETTING1['SNAKE']['MOVE_SPEED'] == 0:
-                                    setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', newData=60)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
-                                    self.inGame02.snake02.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
-                        ###   The cursor is pointing at sub options of "Drop speed" (of "Snake setting")   ###
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
+                                            newData=(SETTING1['SNAKE']['MOVE_SPEED'] - 1)%61)
+                            if SETTING1['SNAKE']['MOVE_SPEED'] == 0:
+                                setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', newData=60)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
                         elif self.gameSettingMenu.cursor == 5:
-                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
-                                                newData=(SETTING1['SNAKE']['DROP_SPEED'] + 1)%61)
-                                if SETTING1['SNAKE']['DROP_SPEED'] == 0:
-                                    setting.replaceData(key1='SNAKE', key2='DROP_SPEED', newData=1)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
-                                    self.inGame02.snake02.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
-                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
-                                                newData=(SETTING1['SNAKE']['DROP_SPEED'] - 1)%61)
-                                if SETTING1['SNAKE']['DROP_SPEED'] == 0:
-                                    setting.replaceData(key1='SNAKE', key2='DROP_SPEED', newData=60)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
-                                    self.inGame02.snake02.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
-                        ### The cursor is pointing at sub options of "Animation speed" (of "Snake setting") #
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
+                                            newData=(SETTING1['SNAKE']['DROP_SPEED'] - 1)%61)
+                            if SETTING1['SNAKE']['DROP_SPEED'] == 0:
+                                setting.replaceData(key1='SNAKE', key2='DROP_SPEED', newData=60)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                                self.inGame02.snake02.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
                         elif self.gameSettingMenu.cursor == 7:
-                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
-                                                newData=(SETTING1['SNAKE']['ANIMATION_SPEED'] + 1)%61)
-                                if self.inGame.snake.animationSpeed == 0:
-                                    setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', newData=1)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
-                                    self.inGame02.snake02.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
-                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
-                                                newData=(SETTING1['SNAKE']['ANIMATION_SPEED'] - 1)%61)
-                                if self.inGame.snake.animationSpeed == 0:
-                                    setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', newData=60)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
-                                    self.inGame02.snake02.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
-                        ###   The cursor is pointing at sub options of "Max food" (of "Food setting")   #####
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
+                                            newData=(SETTING1['SNAKE']['ANIMATION_SPEED'] - 1)%61)
+                            if self.inGame.snake.animationSpeed == 0:
+                                setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', newData=60)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                                self.inGame02.snake02.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
                         elif self.gameSettingMenu.cursor == 9:
-                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
-                                                newData=(SETTING1['FOOD']['MAX_FOOD'] + 1) % 105)
-                                
-                                if SETTING1['FOOD']['MAX_FOOD'] == 0:
-                                    setting.replaceData(key1='FOOD', key2='MAX_FOOD', newData=1)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
-                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
                                                 newData=(SETTING1['FOOD']['MAX_FOOD'] - 1) % 105)
-                                
                                 if SETTING1['FOOD']['MAX_FOOD'] == 0:
                                     setting.replaceData(key1='FOOD', key2='MAX_FOOD', newData=104)
                                 if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
                                     self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
                                 elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                     self.inGame02.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
-                        ### The cursor is pointing at sub options of "Animation food" (of "Food setting") ###
                         elif self.gameSettingMenu.cursor == 11:
-                            if event.key in [pygame.K_UP, pygame.K_w, pygame.K_d, pygame.K_RIGHT]:
-                                SETTING2['SOUND']['CHANGE_BUTTON'].play()
-                                setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
-                                                newData=(SETTING1['FOOD']['ANIMATION_SPEED'] + 1)%61)
-                                if self.inGame.foodManager.animationSpeed == 0:
-                                    setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', newData=1)
-                                if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
-                                    self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
-                                elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
-                                    self.inGame02.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']   
-                            elif event.key in [pygame.K_DOWN, pygame.K_s, pygame.K_a, pygame.K_LEFT]:
                                 SETTING2['SOUND']['CHANGE_BUTTON'].play()
                                 setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
                                                 newData=(SETTING1['FOOD']['ANIMATION_SPEED'] - 1)%61)
@@ -703,10 +614,66 @@ class Game:
                                     self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
                                 elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
                                     self.inGame02.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED'] 
-                        ###   Return to the main options if player press ENTER   ############################
-                        if event.key == pygame.K_RETURN:
-                            SETTING2['SOUND']['PRESS_BUTTON'].play()
-                            self.gameSettingMenu.cursor -= 1
+                    elif event.button == pygame.BUTTON_WHEELUP:
+                        if self.gameSettingMenu.cursor == 1:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            if SETTING1['GRID'] == 'ON':
+                                setting.replaceData(key1='GRID', newData='OFF')
+                            elif SETTING1['GRID'] == 'OFF':
+                                setting.replaceData(key1='GRID', newData='ON')
+                        elif self.gameSettingMenu.cursor == 3:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', 
+                                            newData=(SETTING1['SNAKE']['MOVE_SPEED'] + 1)%61)
+                            if SETTING1['SNAKE']['MOVE_SPEED'] == 0:
+                                setting.replaceData(key1='SNAKE', key2='MOVE_SPEED', newData=1)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.snake.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.snake01.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                                self.inGame02.snake02.moveSpeed = SETTING1['SNAKE']['MOVE_SPEED']
+                        elif self.gameSettingMenu.cursor == 5:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='SNAKE', key2='DROP_SPEED', 
+                                            newData=(SETTING1['SNAKE']['DROP_SPEED'] + 1)%61)
+                            if SETTING1['SNAKE']['DROP_SPEED'] == 0:
+                                setting.replaceData(key1='SNAKE', key2='DROP_SPEED', newData=1)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.snake.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.snake01.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                                self.inGame02.snake02.dropSpeed = SETTING1['SNAKE']['DROP_SPEED']
+                        elif self.gameSettingMenu.cursor == 7:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', 
+                                            newData=(SETTING1['SNAKE']['ANIMATION_SPEED'] + 1)%61)
+                            if self.inGame.snake.animationSpeed == 0:
+                                setting.replaceData(key1='SNAKE', key2='ANIMATION_SPEED', newData=1)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.snake.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.snake01.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                                self.inGame02.snake02.animationSpeed = SETTING1['SNAKE']['ANIMATION_SPEED']
+                        elif self.gameSettingMenu.cursor == 9:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='FOOD', key2='MAX_FOOD', 
+                                            newData=(SETTING1['FOOD']['MAX_FOOD'] + 1) % 105)
+                            if SETTING1['FOOD']['MAX_FOOD'] == 0:
+                                setting.replaceData(key1='FOOD', key2='MAX_FOOD', newData=1)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.foodManager.maxFood = SETTING1['FOOD']['MAX_FOOD']
+                        elif self.gameSettingMenu.cursor == 11:
+                            SETTING2['SOUND']['CHANGE_BUTTON'].play()
+                            setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', 
+                                            newData=(SETTING1['FOOD']['ANIMATION_SPEED'] + 1)%61)
+                            if self.inGame.foodManager.animationSpeed == 0:
+                                setting.replaceData(key1='FOOD', key2='ANIMATION_SPEED', newData=1)
+                            if SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 1:
+                                self.inGame.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']
+                            elif SETTING1['GAMEMODE']['NUMBER_PLAYERS'] == 2:
+                                self.inGame02.foodManager.animationSpeed = SETTING1['FOOD']['ANIMATION_SPEED']   
                 ###########   Save current setting to json file   ###########################################
                 setting.saveSetting()
             ###########   Get events when current screen is Sound Setting Menu   ############################

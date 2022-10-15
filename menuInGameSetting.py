@@ -27,6 +27,8 @@ class GameSettingMenu:
         self.surfaceRect.center = (x, y)
         self.FPS = ANIMATION_SPEED
         self.cursor = 12
+        self.positionMouse = (-100, -100)
+        self.positionLeftMouse = (-100, -100)
         ########### Buttons in Game Setting Menu  ###########################################################
         self.descriptionText = Button("", DESCRIPTION_FONT, width//2, height*1//17)
         self.descriptionText.isChosen = True
@@ -55,104 +57,272 @@ class GameSettingMenu:
         self.titleFoodAnimationSpeedOptions = Button(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", SMALL_FONT, 
                                                      width//16*13, height*13//17, 'topLeft')
         self.titleBack = Button("BACK", MEDIUM_FONT, width//2, height*15//17)
+    
+    
+    
+    ##################    Update current position of mouse    ###############################################
+    def updatePositionMouse(self, position):
+        self.positionMouse = position
+    
+    
+    #############   Check if the mouse is poited at a surfaceRect   #########################################
+    def isPointedAt(self, positionMouse=(0, 0), parent3SurfaceRect=None, 
+                    parent2SurfaceRect=None, parent1SurfaceRect=None, surfaceCheckRect=None):
+        if surfaceCheckRect == None:
+            return False
+        x0 = positionMouse[0]
+        y0 = positionMouse[1]
+        x1 = 0
+        y1 = 0
+        if parent3SurfaceRect != None:
+            x1 += parent3SurfaceRect.topleft[0]
+            y1 += parent3SurfaceRect.topleft[1]
+        if parent2SurfaceRect != None:
+            x1 += parent2SurfaceRect.topleft[0]
+            y1 += parent2SurfaceRect.topleft[1]
+        if parent1SurfaceRect != None:
+            x1 += parent1SurfaceRect.topleft[0]
+            y1 += parent1SurfaceRect.topleft[1]
+        x1 += surfaceCheckRect.topleft[0]
+        y1 += surfaceCheckRect.topleft[1]
+        x2 = x1 + surfaceCheckRect.width
+        y2 = y1 + surfaceCheckRect.height
         
+        return (x1 < x0 and x0 < x2 and y1 < y0 and y0 < y2)
+    
+    #############   Update text, button is horved by mouse   ################################################
+    def updateMousePoitedAt(self):
+        if self.cursor != 0:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleGrid.textRect):
+                self.titleGrid.isChosen = True
+            else:
+                self.titleGrid.isChosen = False
+            self.titleGrid.update("Number of players", DESCRIPTION_FONT)
+        if self.cursor != 1:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleGridOptions.textRect):
+                self.titleGridOptions.isChosen = True
+            else:
+                self.titleGridOptions.isChosen = False
+            self.titleGridOptions.update(f"{SETTING1['GAMEMODE']['NUMBER_PLAYERS']}", DESCRIPTION_FONT)
+        if self.cursor != 2:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSnakeMoveSpeed.textRect):
+                self.titleSnakeMoveSpeed.isChosen = True
+            else:
+                self.titleSnakeMoveSpeed.isChosen = False
+            self.titleSnakeMoveSpeed.update("Auto speed up snake", DESCRIPTION_FONT) 
+        if self.cursor != 3:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSnakeMoveSpeedOptions.textRect):
+                self.titleSnakeMoveSpeedOptions.isChosen = True
+            else:
+                self.titleSnakeMoveSpeedOptions.isChosen = False
+            self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['GAMEMODE']['AUTO_SPEED_UP']}", DESCRIPTION_FONT)
+        if self.cursor != 4:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSnakeDropSpeed.textRect):
+                self.titleSnakeDropSpeed.isChosen = True
+            else:
+                self.titleSnakeDropSpeed.isChosen = False
+            self.titleSnakeDropSpeed.update("Target score", DESCRIPTION_FONT) 
+        if self.cursor != 5:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSnakeDropSpeedOptions.textRect):
+                self.titleSnakeDropSpeedOptions.isChosen = True
+            else:
+                self.titleSnakeDropSpeedOptions.isChosen = False
+            self.titleSnakeDropSpeedOptions.update(f"{SETTING1['GAMEMODE']['TARGET_SCORE']}", DESCRIPTION_FONT) 
+        if self.cursor != 6:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSnakeAnimationSpeed.textRect):
+                self.titleSnakeAnimationSpeed.isChosen = True
+            else:
+                self.titleSnakeAnimationSpeed.isChosen = False
+            self.titleSnakeAnimationSpeed.update("View control", DESCRIPTION_FONT)
+        if self.cursor != 7:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleSnakeAnimationSpeedOptions.textRect):
+                self.titleSnakeAnimationSpeedOptions.isChosen = True
+            else:
+                self.titleSnakeAnimationSpeedOptions.isChosen = False
+            self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT)
+        if self.cursor != 8:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleFoodMax.textRect):
+                self.titleFoodMax.isChosen = True
+            else:
+                self.titleFoodMax.isChosen = False
+            self.titleFoodMax.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT) 
+        if self.cursor != 9:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleFoodMaxOptions.textRect):
+                self.titleFoodMaxOptions.isChosen = True
+            else:
+                self.titleFoodMaxOptions.isChosen = False
+            self.titleFoodMaxOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT) 
+        if self.cursor != 10:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleFoodAnimationSpeed.textRect):
+                self.titleFoodAnimationSpeed.isChosen = True
+            else:
+                self.titleFoodAnimationSpeed.isChosen = False
+            self.titleFoodAnimationSpeed.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT) 
+        if self.cursor != 11:
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleFoodAnimationSpeedOptions.textRect):
+                self.titleFoodAnimationSpeedOptions.isChosen = True
+            else:
+                self.titleFoodAnimationSpeedOptions.isChosen = False
+            self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['GAMEMODE']['VIEW_CONTROL']}", DESCRIPTION_FONT) 
+        if self.cursor != 12:   
+            if self.isPointedAt(positionMouse=self.positionMouse,
+                                surfaceCheckRect=self.titleBack.textRect):
+                self.titleBack.isChosen = True
+                self.titleBack.update('BACK', MEDIUM_FONT_HORVED, 'G')
+            else:
+                self.titleBack.isChosen = False
+                self.titleBack.update('BACK', MEDIUM_FONT, 'G')
+    
+    ###############     Update when player left-click    ####################################################
+    def updatePositionLeftMouse(self):
+        self.positionLeftMouse = self.positionMouse
+        if self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleGrid.textRect):
+            self.cursor = 0
+            self.titleGrid.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleGridOptions.textRect):
+            self.cursor = 1
+            self.titleGridOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSnakeMoveSpeed.textRect):
+            self.cursor = 2
+            self.titleSnakeMoveSpeed.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSnakeMoveSpeedOptions.textRect):
+            self.cursor = 3
+            self.titleSnakeMoveSpeedOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSnakeDropSpeed.textRect):
+            self.cursor = 4
+            self.titleSnakeDropSpeed.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSnakeDropSpeedOptions.textRect):
+            self.cursor = 5
+            self.titleSnakeDropSpeedOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSnakeAnimationSpeed.textRect):
+            self.cursor = 6
+            self.titleSnakeAnimationSpeed.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleSnakeAnimationSpeedOptions.textRect):
+            self.cursor = 7
+            self.titleSnakeAnimationSpeedOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleFoodMax.textRect):
+            self.cursor = 8
+            self.titleFoodMax.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleFoodMaxOptions.textRect):
+            self.cursor = 9
+            self.titleFoodMaxOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleFoodAnimationSpeed.textRect):
+            self.cursor = 10
+            self.titleFoodAnimationSpeed.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleFoodAnimationSpeedOptions.textRect):
+            self.cursor = 11
+            self.titleFoodAnimationSpeedOptions.isChosen = True
+        elif self.isPointedAt(positionMouse=self.positionMouse,
+                            surfaceCheckRect=self.titleBack.textRect):
+            self.cursor = 12
+            self.titleBack.isChosen = True
+        else:
+            self.cursor = 13
+        self.positionLeftMouse = (-100, -100)
+    
+      
     ###########   Update cursor and buttons status in Game Setting Menu   ###################################
     def update(self):
+        self.updateMousePoitedAt()
         ###########   Update cursor and buttons   ###########################################################
         if self.cursor == 0:
-            self.titleGrid.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to setup the grid", DESCRIPTION_FONT, 'ALL')
+            self.titleGrid.update("Show grid", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup show grid 'on' or 'off'", DESCRIPTION_FONT, 'R')
         else:
-            self.titleGrid.isChosen = False
+            self.titleGrid.update("Show grid", DESCRIPTION_FONT, 'G')    
         if self.cursor == 1:
-            self.titleGridOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleGridOptions.update(f"{SETTING1['GRID']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleGridOptions.isChosen = False
+            self.titleGridOptions.update(f"{SETTING1['GRID']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 2:
-            self.titleSnakeMoveSpeed.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to setup the move speed of snake", DESCRIPTION_FONT, 'ALL')
+            self.titleSnakeMoveSpeed.update("Move speed", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup move speed of your snake", DESCRIPTION_FONT, 'R')
         else:
-            self.titleSnakeMoveSpeed.isChosen = False
+            self.titleSnakeMoveSpeed.update("Move snake", DESCRIPTION_FONT, 'G')
         if self.cursor == 3:
-            self.titleSnakeMoveSpeedOptions.isChosen = True
-            if SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == 'OFF':
-                self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
-            elif SETTING1['GAMEMODE']['AUTO_SPEED_UP'] == 'ON':
-                self.descriptionText.update("Gamemode 'AUTO SPEED UP SNAKE' is 'ON', so this options is disabled.", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['SNAKE']['MOVE_SPEED']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleSnakeMoveSpeedOptions.isChosen = False
+            self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['SNAKE']['MOVE_SPEED']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 4:
-            self.titleSnakeDropSpeed.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to setup the drop speed of snake", DESCRIPTION_FONT, 'ALL')
+            self.titleSnakeDropSpeed.update("Drop speed", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup drop speed of your snake when game over.", DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleSnakeDropSpeed.isChosen = False
+            self.titleSnakeDropSpeed.update("Drop speed", DESCRIPTION_FONT, 'G')
         if self.cursor == 5:
-            self.titleSnakeDropSpeedOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleSnakeDropSpeedOptions.update(f"{SETTING1['SNAKE']['DROP_SPEED']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleSnakeDropSpeedOptions.isChosen = False
+            self.titleSnakeDropSpeedOptions.update(f"{SETTING1['SNAKE']['DROP_SPEED']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 6:
-            self.titleSnakeAnimationSpeed.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to setup the animation speed of snake", DESCRIPTION_FONT, 'ALL')
+            self.titleSnakeAnimationSpeed.update("Animation speed", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup Animation speed of your snake.", DESCRIPTION_FONT, 'R')
         else:
-            self.titleSnakeAnimationSpeed.isChosen = False
+            self.titleSnakeAnimationSpeed.update("Animation speed", DESCRIPTION_FONT, 'G')
         if self.cursor == 7:
-            self.titleSnakeAnimationSpeedOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleSnakeAnimationSpeedOptions.isChosen = False
+            self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 8:
-            self.titleFoodMax.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to setup the max number of food", DESCRIPTION_FONT, 'ALL')
+            self.titleFoodMax.update("Max food", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup the max food in game.", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleFoodMax.isChosen = False
+            self.titleFoodMax.update("Max food", DESCRIPTION_FONT, 'G')
         if self.cursor == 9:
-            self.titleFoodMaxOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleFoodMaxOptions.update(f"{SETTING1['FOOD']['MAX_FOOD']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleFoodMaxOptions.isChosen = False
+            self.titleFoodMaxOptions.update(f"{SETTING1['FOOD']['MAX_FOOD']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 10:
-            self.titleFoodAnimationSpeed.isChosen = True
-            self.descriptionText.update("Press 'ENTER' to setup the animation speed of food", DESCRIPTION_FONT, 'ALL')
+            self.titleFoodAnimationSpeed.update("Animation speed", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Setup the animation of food.", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleFoodAnimationSpeed.isChosen = False
+            self.titleFoodAnimationSpeed.update("Animation speed", DESCRIPTION_FONT, 'G')
         if self.cursor == 11:
-            self.titleFoodAnimationSpeedOptions.isChosen = True
-            self.descriptionText.update("Press W/S to change your choice, Press 'ENTER' to save your setting", 
-                                        DESCRIPTION_FONT_2, 'ALL')
+            self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", DESCRIPTION_FONT, 'B')
+            self.descriptionText.update("Wheel-up or wheel-down to change your choice", 
+                                        DESCRIPTION_FONT_2, 'R')
         else:
-            self.titleFoodAnimationSpeedOptions.isChosen = False
+            self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", DESCRIPTION_FONT, 'G')
         if self.cursor == 12:
-            self.titleBack.isChosen = True
-            self.titleBack.update('BACK', MEDIUM_FONT_HORVED)
-            self.descriptionText.update('', DESCRIPTION_FONT, 'ALL')
-        else:
-            self.titleBack.isChosen = False
-            self.titleBack.update('BACK', MEDIUM_FONT)
+            self.titleBack.update("BACK", MEDIUM_FONT_HORVED, 'B')
+            self.descriptionText.update("", DESCRIPTION_FONT, 'R')
+        if self.cursor == 13:
+            self.descriptionText.update("", DESCRIPTION_FONT, 'R')
             
-        self.titleGrid.update('Show grid', SMALL_FONT, 'B')
-        self.titleGridOptions.update(f"{SETTING1['GRID']}", SMALL_FONT, 'B')
-        self.titleSnakeMoveSpeed.update("Move speed", SMALL_FONT, 'B')
-        self.titleSnakeMoveSpeedOptions.update(f"{SETTING1['SNAKE']['MOVE_SPEED']}", 
-                                               SMALL_FONT, 'B')
-        self.titleSnakeDropSpeed.update("Drop speed", SMALL_FONT, 'B')
-        self.titleSnakeDropSpeedOptions.update(f"{SETTING1['SNAKE']['DROP_SPEED']}", 
-                                               SMALL_FONT, 'B')
-        self.titleSnakeAnimationSpeed.update('Animation speed', SMALL_FONT, 'B')
-        self.titleSnakeAnimationSpeedOptions.update(f"{SETTING1['SNAKE']['ANIMATION_SPEED']}", 
-                                                    SMALL_FONT, 'B')
-        self.titleFoodMax.update('Max food', SMALL_FONT, 'B')
-        self.titleFoodMaxOptions.update(f"{SETTING1['FOOD']['MAX_FOOD']}", SMALL_FONT, 'B')
-        self.titleFoodAnimationSpeed.update('Animation speed', SMALL_FONT, 'B')
-        self.titleFoodAnimationSpeedOptions.update(f"{SETTING1['FOOD']['ANIMATION_SPEED']}", 
-                                                   SMALL_FONT, 'B')
         ###########   Remove old button display   ###########################################################
         self.surface.fill((0, 0, 0, 0))
         ###########   Draw new buttons   ####################################################################
