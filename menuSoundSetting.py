@@ -134,26 +134,32 @@ class SoundSettingMenu:
                             surfaceCheckRect=self.titleMusic.textRect):
             self.cursor = 0
             self.titleMusic.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleMusicOptions.textRect):
             self.cursor = 1
             self.titleMusicOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleMusicVolume.textRect):
             self.cursor = 2
             self.titleMusicVolume.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleMusicVolumeOptions.textRect):
             self.cursor = 3
             self.titleMusicVolumeOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleSoundVolume.textRect):
             self.cursor = 4
             self.titleSoundVolume.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleSoundVolumeOptions.textRect):
             self.cursor = 5
             self.titleSoundVolumeOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleBack.textRect):
             self.cursor = 6

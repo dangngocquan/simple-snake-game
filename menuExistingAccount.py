@@ -127,11 +127,13 @@ class ExistingAccountMenu:
                             surfaceCheckRect=self.selection1Rect,
                             parent1SurfaceRect=self.container1Rect):
             self.cursor = 0
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
             self.tempIndexAccount = 0
         elif self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.selection2Rect,
                             parent1SurfaceRect=self.container1Rect):
             self.cursor = 1
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.selection3Rect,
                             parent1SurfaceRect=self.container1Rect):
@@ -146,6 +148,7 @@ class ExistingAccountMenu:
                     if (self.listCellRect[i].topleft[1] >= 0 
                         and self.listCellRect[i].topleft[1] <= 40*(10-1)):
                         self.tempIndexAccount = i
+                        SETTING2['SOUND']['PRESS_BUTTON'].play()
             if self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.titlePlayThisAccount.textRect,
                             parent1SurfaceRect=self.container22Rect,

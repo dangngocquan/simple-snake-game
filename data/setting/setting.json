@@ -14,13 +14,13 @@
     },
     "SOUND": {
         "MUSIC_INDEX": 0,
-        "MUSIC_VOLUME": 84,
-        "SOUND_VOLUME": 50
+        "MUSIC_VOLUME": 0,
+        "SOUND_VOLUME": 80
     },
     "GAMEMODE": {
-        "TARGET_SCORE": 200,
-        "NUMBER_PLAYERS": 1,
-        "AUTO_SPEED_UP": "OFF",
+        "TARGET_SCORE": 500,
+        "NUMBER_PLAYERS": 2,
+        "AUTO_SPEED_UP": "ON",
         "VIEW_CONTROL": "Third-person view"
     },
     "MAP": {

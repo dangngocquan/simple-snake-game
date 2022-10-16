@@ -398,6 +398,7 @@ class Game:
                             self.mapSettingMenu.cursor = 3
                         ###########   The cursor is poiting at "BACK"   #####################################
                         elif self.optionsMenu.cursor == 4:
+                            SETTING2['SOUND']['PRESS_BUTTON'].play()
                             self.runningOptionsMenu = False
                             self.runningMainMenu = True
             ###########   Get events when current screen is STATISTICS MENU   ###############################

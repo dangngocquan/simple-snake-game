@@ -151,34 +151,42 @@ class GamemodeSettingMenu:
                             surfaceCheckRect=self.titlePlayerNumber.textRect):
             self.cursor = 0
             self.titlePlayerNumber.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titlePlayerNumberOptions.textRect):
             self.cursor = 1
             self.titlePlayerNumberOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleAutoSpeedUpSnake.textRect):
             self.cursor = 2
             self.titleAutoSpeedUpSnake.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleAutoSpeedUpSnakeOptions.textRect):
             self.cursor = 3
             self.titleAutoSpeedUpSnakeOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleTargetScore.textRect):
             self.cursor = 4
             self.titleTargetScore.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleTargetScoreOptions.textRect):
             self.cursor = 5
             self.titleTargetScoreOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleViewControl.textRect):
             self.cursor = 6
             self.titleViewControl.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleViewControlOptions.textRect):
             self.cursor = 7
             self.titleViewControlOptions.isChosen = True
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
         elif self.isPointedAt(positionMouse=self.positionMouse,
                             surfaceCheckRect=self.titleBack.textRect):
             self.cursor = 8

@@ -89,6 +89,7 @@ class CreateNewAccountMenu:
         elif self.isPointedAt(positionMouse=self.positionLeftMouse,
                             surfaceCheckRect=self.getInputStringMenu.titleEnter.textRect,
                             parent1SurfaceRect=self.getInputStringMenu.surfaceRect):
+            SETTING2['SOUND']['PRESS_BUTTON'].play()
             if len(self.getInputStringMenu.inputString) == 0:
                 self.getInputStringMenu.titleDescription.update(
                     self.getInputStringMenu.textWhenIncorrect, DESCRIPTION_FONT_2, 'G')
