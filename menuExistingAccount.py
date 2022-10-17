@@ -29,7 +29,7 @@ class ExistingAccountMenu:
         self.cursor = 0
         self.positionMouse = (-100, -100)
         self.positionLeftMouse = (-100, -100)
-        self.tempIndexAccount = 2
+        self.tempIndexAccount = 0
         
         ##############################   In main surface   ##################################################
         self.container1 = pygame.Surface((width//4 + 30, height), pygame.SRCALPHA)

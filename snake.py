@@ -14,58 +14,60 @@ SNAKE = SETTING2['SNAKE']
 
 ###########   Load data of snake from json file   ###########################################################
 def loadPreviousSnake(path='./data/player/onePlayer/snake/snake.json'):
-    dict = None
+    snakesDict = None
     with open(path, 'r') as file:
-        dict = json.load(file)
+        snakesDict = json.load(file)
     file.close()
+    
+    snakeDict = snakesDict['SNAKE'][SETTING1['ACCOUNT']['INDEX_ACCOUNT']]
     head = []
-    for snakeBlock in dict['HEAD']:
-        if dict['typeColor'] == 'blue':
+    for snakeBlock in snakeDict['HEAD']:
+        if snakeDict['typeColor'] == 'blue':
             head.append(SnakeBlock(SNAKE['HEAD'][snakeBlock['direction']][snakeBlock['indexFrame']], 
                                 x=snakeBlock['x'], y=snakeBlock['y'], 
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
-                                typeColor=dict['typeColor']))
-        elif dict['typeColor'] == 'green':
+                                typeColor=snakeDict['typeColor']))
+        elif snakeDict['typeColor'] == 'green':
             head.append(SnakeBlock(SNAKE_02['HEAD'][snakeBlock['direction']][snakeBlock['indexFrame']], 
                                 x=snakeBlock['x'], y=snakeBlock['y'], 
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
-                                typeColor=dict['typeColor']))
+                                typeColor=snakeDict['typeColor']))
     body = []
     
-    for snakeBlock in dict['BODY']:
-        if dict['typeColor'] == 'blue':
+    for snakeBlock in snakeDict['BODY']:
+        if snakeDict['typeColor'] == 'blue':
             body.append(SnakeBlock(SNAKE['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 
                                 x=snakeBlock['x'], y=snakeBlock['y'], 
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
-                                typeColor=dict['typeColor']))
-        elif dict['typeColor'] == 'green':
+                                typeColor=snakeDict['typeColor']))
+        elif snakeDict['typeColor'] == 'green':
             body.append(SnakeBlock(SNAKE_02['BODY'][snakeBlock['direction']][snakeBlock['indexFrame']], 
                                 x=snakeBlock['x'], y=snakeBlock['y'], 
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
-                                typeColor=dict['typeColor']))
+                                typeColor=snakeDict['typeColor']))
     tail = []
-    for snakeBlock in dict['TAIL']:
-        if dict['typeColor'] == 'blue':
+    for snakeBlock in snakeDict['TAIL']:
+        if snakeDict['typeColor'] == 'blue':
             tail.append(SnakeBlock(SNAKE['TAIL'][snakeBlock['direction']][snakeBlock['indexFrame']], 
                                 x=snakeBlock['x'], y=snakeBlock['y'], 
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
-                                typeColor=dict['typeColor']))
-        elif dict['typeColor'] == 'green':
+                                typeColor=snakeDict['typeColor']))
+        elif snakeDict['typeColor'] == 'green':
             tail.append(SnakeBlock(SNAKE_02['TAIL'][snakeBlock['direction']][snakeBlock['indexFrame']], 
                                 x=snakeBlock['x'], y=snakeBlock['y'], 
                                 direction=snakeBlock['direction'], indexFrame=snakeBlock['indexFrame'],
-                                typeColor=dict['typeColor']))
-    score = dict["score"]
-    currentDirection = dict["previousDirection"]
-    previousDirection = dict["previousDirection"]
-    typeColor = dict["typeColor"]
+                                typeColor=snakeDict['typeColor']))
+    score = snakeDict["score"]
+    currentDirection = snakeDict["previousDirection"]
+    previousDirection = snakeDict["previousDirection"]
+    typeColor = snakeDict["typeColor"]
     
     return Snake(head=head, typeColor=typeColor, body=body, tail=tail, score=score, 
                  currentDirection=currentDirection, previousDirection=previousDirection)
 
 ###########   Save data of current snake to json file   #####################################################
 def saveSnake(snake, path='./data/player/onePlayer/snake/snake.json'):
-    data = {
+    snakeDict = {
         "HEAD" : [],
         "BODY" : [],
         "TAIL" : [],
@@ -81,7 +83,7 @@ def saveSnake(snake, path='./data/player/onePlayer/snake/snake.json'):
             "x" : snakeBlock.x,
             "y" : snakeBlock.y
         }
-        data['HEAD'].append(dictSnakeBlock)
+        snakeDict['HEAD'].append(dictSnakeBlock)
     for snakeBlock in snake.body:
         dictSnakeBlock = {
             "direction" : snakeBlock.direction,
@@ -89,7 +91,7 @@ def saveSnake(snake, path='./data/player/onePlayer/snake/snake.json'):
             "x" : snakeBlock.x,
             "y" : snakeBlock.y
         }
-        data['BODY'].append(dictSnakeBlock)
+        snakeDict['BODY'].append(dictSnakeBlock)
     for snakeBlock in snake.tail:
         dictSnakeBlock = {
             "direction" : snakeBlock.direction,
@@ -97,11 +99,113 @@ def saveSnake(snake, path='./data/player/onePlayer/snake/snake.json'):
             "x" : snakeBlock.x,
             "y" : snakeBlock.y
         }
-        data['TAIL'].append(dictSnakeBlock)
-    with open(path, 'w') as file:
-        json.dump(data, file, indent=4)
+        snakeDict['TAIL'].append(dictSnakeBlock)
+        
+    
+    snakesDict = None
+    with open(path, 'r') as file:
+        snakesDict = json.load(file)
     file.close()
     
+    for indexAccount in range(len(snakesDict['SNAKE'])):
+        if indexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
+            snakesDict['SNAKE'][indexAccount] = snakeDict
+    
+    with open(path, 'w') as file:
+        json.dump(snakesDict, file, indent=4)
+    file.close()
+    
+
+def removeSnake(index=-1, path='./data/player/onePlayer/snake/snake.json', 
+                path2='./data/player/twoPlayer/snake/snake01.json',
+                path3='./data/player/twoPlayer/snake/snake02.json'):
+    if index >= 0:
+        snakesDict = None
+        with open(path, 'r') as file:
+            snakesDict = json.load(file)
+        file.close()
+        snakesDict['SNAKE'].pop(index)
+        with open(path, 'w') as file:
+            json.dump(snakesDict, file, indent=4)
+        file.close()
+        
+        snakesDict = None
+        with open(path2, 'r') as file:
+            snakesDict = json.load(file)
+        file.close()
+        snakesDict['SNAKE'].pop(index)
+        with open(path2, 'w') as file:
+            json.dump(snakesDict, file, indent=4)
+        file.close()
+        
+        snakesDict = None
+        with open(path3, 'r') as file:
+            snakesDict = json.load(file)
+        file.close()
+        snakesDict['SNAKE'].pop(index)
+        with open(path3, 'w') as file:
+            json.dump(snakesDict, file, indent=4)
+        file.close()
+
+def addNewSnake(path1='./data/player/onePlayer/snake/snake.json', 
+                path2='./data/player/twoPlayer/snake/snake01.json',
+                path3='./data/player/twoPlayer/snake/snake02.json'):
+    for typeLocation in range(-1,2):
+        path = ""
+        typeColor = ""
+        if typeLocation == -1:
+            path = path2
+            typeColor = 'blue'
+        elif typeLocation == 0:
+            path = path1
+            typeColor = 'blue'
+        elif typeLocation == 1:
+            path = path3
+            typeColor = 'green'
+            
+        snake = Snake(typeLocation=typeLocation, typeColor=typeColor)
+        snakeDict = {
+            "HEAD" : [],
+            "BODY" : [],
+            "TAIL" : [],
+            "score" : snake.score,
+            "currentDirection" : snake.currentDirection,
+            "previousDirection" : snake.previousDirection,
+            "typeColor" : snake.typeColor
+        }
+        for snakeBlock in snake.head:
+            dictSnakeBlock = {
+                "direction" : snakeBlock.direction,
+                "indexFrame" : snakeBlock.indexFrame,
+                "x" : snakeBlock.x,
+                "y" : snakeBlock.y
+            }
+            snakeDict['HEAD'].append(dictSnakeBlock)
+        for snakeBlock in snake.body:
+            dictSnakeBlock = {
+                "direction" : snakeBlock.direction,
+                "indexFrame" : snakeBlock.indexFrame,
+                "x" : snakeBlock.x,
+                "y" : snakeBlock.y
+            }
+            snakeDict['BODY'].append(dictSnakeBlock)
+        for snakeBlock in snake.tail:
+            dictSnakeBlock = {
+                "direction" : snakeBlock.direction,
+                "indexFrame" : snakeBlock.indexFrame,
+                "x" : snakeBlock.x,
+                "y" : snakeBlock.y
+            }
+            snakeDict['TAIL'].append(dictSnakeBlock)
+            
+        snakesDict = None
+        with open(path, 'r') as file:
+            snakesDict = json.load(file)
+        file.close()
+        snakesDict['SNAKE'].append(snakeDict)
+        with open(path, 'w') as file:
+            json.dump(snakesDict, file, indent=4)
+        file.close()
 
 
 ###########  CLASS SNAKE BLOCK  #############################################################################

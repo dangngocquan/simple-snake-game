@@ -341,6 +341,9 @@ class Game:
                         setting.saveSetting()
                     ##########   Remove account   ###########################################################
                     ACCOUNT_MANAGER.removeAccount(indexAccount=self.existingAccountMenu.tempIndexAccount)
+                    snake.removeSnake(index=self.existingAccountMenu.tempIndexAccount)
+                    food.removeFoodManager(index=self.existingAccountMenu.tempIndexAccount)
+                    wall.removeWallManager(index=self.existingAccountMenu.tempIndexAccount)
                     self.existingAccountMenu.tempIndexAccount -= 1
                     account.saveData(ACCOUNT_MANAGER.listAccount)
                     self.existingAccountMenu.cursor = 1

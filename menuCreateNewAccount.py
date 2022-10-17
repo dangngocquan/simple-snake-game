@@ -8,6 +8,7 @@ from grid import *
 from button import Button
 from menuGetInput import GetInputStringMenu
 import account
+import snake, food, wall
 
 ###########   VARIABLE   ####################################################################################
 ANIMATION_SPEED = SETTING1['MENU']['ANIMATION_SPEED']
@@ -98,6 +99,9 @@ class CreateNewAccountMenu:
                                                          createdTime=datetime.now().strftime("%d/%m/%Y %H:%M:%S"))):
                     self.getInputStringMenu.titleDescription.update(
                     self.getInputStringMenu.textWhenCorrect, DESCRIPTION_FONT_2, 'G')
+                    snake.addNewSnake()
+                    food.addNewFoodManager()
+                    wall.addNewWallManager()
                     self.cursor = 1
                     account.saveData(ACCOUNT_MANAGER.listAccount)
                 else:

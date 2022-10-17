@@ -1,30 +1,94 @@
 {
-    "HEAD": [
+    "SNAKE": [
         {
-            "direction": "UU",
-            "indexFrame": 0,
-            "x": 250,
-            "y": 300
-        }
-    ],
-    "BODY": [
+            "HEAD": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 0,
+                    "x": 250,
+                    "y": 300
+                }
+            ],
+            "BODY": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 1,
+                    "x": 250,
+                    "y": 325
+                }
+            ],
+            "TAIL": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 2,
+                    "x": 250,
+                    "y": 350
+                }
+            ],
+            "score": 0,
+            "currentDirection": "UU",
+            "previousDirection": "UU",
+            "typeColor": "blue"
+        },
         {
-            "direction": "UU",
-            "indexFrame": 1,
-            "x": 250,
-            "y": 325
-        }
-    ],
-    "TAIL": [
+            "HEAD": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 0,
+                    "x": 500,
+                    "y": 300
+                }
+            ],
+            "BODY": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 1,
+                    "x": 500,
+                    "y": 325
+                }
+            ],
+            "TAIL": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 2,
+                    "x": 500,
+                    "y": 350
+                }
+            ],
+            "score": 0,
+            "currentDirection": "UU",
+            "previousDirection": "UU",
+            "typeColor": "blue"
+        },
         {
-            "direction": "UU",
-            "indexFrame": 2,
-            "x": 250,
-            "y": 350
+            "HEAD": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 0,
+                    "x": 250,
+                    "y": 300
+                }
+            ],
+            "BODY": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 1,
+                    "x": 250,
+                    "y": 325
+                }
+            ],
+            "TAIL": [
+                {
+                    "direction": "UU",
+                    "indexFrame": 2,
+                    "x": 250,
+                    "y": 350
+                }
+            ],
+            "score": 0,
+            "currentDirection": "UU",
+            "previousDirection": "UU",
+            "typeColor": "blue"
         }
-    ],
-    "score": 0,
-    "currentDirection": "UU",
-    "previousDirection": "UU",
-    "typeColor": "blue"
+    ]
 }

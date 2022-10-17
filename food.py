@@ -14,28 +14,29 @@ FOOD = SETTING2['FOOD']
 
 ###########   Load data of foods from json file   ###########################################################
 def loadPreviousFoodManager(path='./data/player/onePlayer/food/food.json'):
-    dict = None
+    foodManagerDict = None
 
     with open(path, 'r') as file:
-        dict = json.load(file)
+        foodManagerDict = json.load(file)
     file.close()
     
+    foodDict = foodManagerDict['FOOD_MANAGER'][SETTING1['ACCOUNT']['INDEX_ACCOUNT']]
+    
     listFood = []
-    for food in dict['FOODS']:
+    for food in foodDict['FOODS']:
         listFood.append(Food(x=food['x'], y=food['y'], indexFrame=food['indexFrame']))
         
     return FoodManager(listFood=listFood)
 
 ###########   Save data of current foods to json file   #####################################################
 def saveFoodManager(foodManager, path='./data/player/onePlayer/food/food.json'):
-    data = {
+    foodDict = {
         'FOODS' : [
            
         ]
     }
-    
     for food in foodManager.listFood:
-        data['FOODS'].append(
+        foodDict['FOODS'].append(
             {
                 'x' : food.x,
                 'y' : food.y,
@@ -43,11 +44,61 @@ def saveFoodManager(foodManager, path='./data/player/onePlayer/food/food.json'):
             }
         )
     
+    foodManagerDict = None
+    with open(path, 'r') as file:
+        foodManagerDict = json.load(file)
+    file.close()
+    
+    for indexAccount in range(len(foodManagerDict['FOOD_MANAGER'])):
+        if indexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
+            foodManagerDict['FOOD_MANAGER'][indexAccount] = foodDict
+    
     with open(path, 'w') as file:
-        json.dump(data, file, indent=4)
+        json.dump(foodManagerDict, file, indent=4)
     file.close()
 
 
+def removeFoodManager(index=-1, path='./data/player/onePlayer/food/food.json',
+                      path2='./data/player/twoPlayer/food/food.json'):
+    if index >= 0:
+        foodManagerDict = None
+        with open(path, 'r') as file:
+            foodManagerDict = json.load(file)
+        file.close()
+        foodManagerDict['FOOD_MANAGER'].pop(index)
+        with open(path, 'w') as file:
+            json.dump(foodManagerDict, file, indent=4)
+        file.close()
+        
+        foodManagerDict = None
+        with open(path2, 'r') as file:
+            foodManagerDict = json.load(file)
+        file.close()
+        foodManagerDict['FOOD_MANAGER'].pop(index)
+        with open(path2, 'w') as file:
+            json.dump(foodManagerDict, file, indent=4)
+        file.close()
+
+def addNewFoodManager(path1='./data/player/onePlayer/food/food.json',
+                      path2='./data/player/twoPlayer/food/food.json'):
+    for i in range(2):
+        path = ""
+        if i == 0:
+            path = path1
+        elif i == 1:
+            path = path2
+        foodManagerDict = None
+        with open(path, 'r') as file:
+            foodManagerDict = json.load(file)
+        file.close()
+        foodManagerDict['FOOD_MANAGER'].append({
+            "FOODS" : [
+                
+            ]
+        })
+        with open(path, 'w') as file:
+            json.dump(foodManagerDict, file, indent=4)
+        file.close()
 
 ###########  CLASS FOOD  ####################################################################################
 class Food:

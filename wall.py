@@ -33,14 +33,15 @@ def loadListMaps(path='./data/setting/map.json'):
 
 ###########   Load data of walls from json file   ###########################################################
 def loadPreviousWallManager(path='./data/player/onePlayer/wall/wall.json'):
-    dict = None
+    wallManagerDict = None
 
     with open(path, 'r') as file:
-        dict = json.load(file)
+        wallManagerDict = json.load(file)
     file.close()
     
+    wallDict = wallManagerDict['WALL_MANAGER'][SETTING1['ACCOUNT']['INDEX_ACCOUNT']]
     listWall = []
-    for wall in dict['WALLS']:
+    for wall in wallDict['WALLS']:
         listWall.append(Wall(x=wall['x'], y=wall['y']))
         
     return WallManager(listWall=listWall)
@@ -55,23 +56,93 @@ def loadWallManagerFromListMaps(path='./data/setting/map.json', indexMap=0):
 
 ###########   Save data of current walls to json file   #####################################################
 def saveWallManager(wallManager, path='./data/player/onePlayer/wall/wall.json'):
-    data = {
+    wallDict = {
         'WALLS' : [
            
         ]
     }
     
     for wall in wallManager.listWall:
-        data['WALLS'].append(
+        wallDict['WALLS'].append(
             {
                 'x' : wall.x,
                 'y' : wall.y,
             }
         )
     
-    with open(path, 'w') as file:
-        json.dump(data, file, indent=4)
+    wallManagerDict = None
+    with open(path, 'r') as file:
+        wallManagerDict = json.load(file)
     file.close()
+    
+    for indexAccount in range(len(wallManagerDict['WALL_MANAGER'])):
+        if indexAccount == SETTING1['ACCOUNT']['INDEX_ACCOUNT']:
+            wallManagerDict['WALL_MANAGER'][indexAccount] = wallDict
+    
+    with open(path, 'w') as file:
+        json.dump(wallManagerDict, file, indent=4)
+    file.close()
+
+
+############   Remove wall manager from file continue game   ################################################
+def removeWallManager(index=-1, path='./data/player/onePlayer/wall/wall.json',
+                      path2='./data/player/twoPlayer/wall/wall.json'):
+    if index >= 0:
+        wallManagerDict = None
+        with open(path, 'r') as file:
+            wallManagerDict = json.load(file)
+        file.close()
+        wallManagerDict['WALL_MANAGER'].pop(index)
+        with open(path, 'w') as file:
+            json.dump(wallManagerDict, file, indent=4)
+        file.close()
+        
+        wallManagerDict = None
+        with open(path2, 'r') as file:
+            wallManagerDict = json.load(file)
+        file.close()
+        wallManagerDict['WALL_MANAGER'].pop(index)
+        with open(path2, 'w') as file:
+            json.dump(wallManagerDict, file, indent=4)
+        file.close()
+
+
+def addNewWallManager(path1='./data/player/onePlayer/wall/wall.json',
+                      path2='./data/player/twoPlayer/wall/wall.json'):
+    for i in range(2):
+        path = ""
+        if i == 0:
+            path = path1
+        elif i == 1:
+            path = path2
+        
+        wallManager = loadWallManagerFromListMaps(indexMap=SETTING1['MAP']['INDEX_MAP'])
+        
+        wallDict = {
+            'WALLS' : [
+            
+            ]
+        }
+        
+        for wall in wallManager.listWall:
+            wallDict['WALLS'].append(
+                {
+                    'x' : wall.x,
+                    'y' : wall.y,
+                }
+            )
+        
+        wallManagerDict = None
+        with open(path, 'r') as file:
+            wallManagerDict = json.load(file)
+        file.close()
+        
+        wallManagerDict['WALL_MANAGER'].append(wallDict)
+        
+        with open(path, 'w') as file:
+            json.dump(wallManagerDict, file, indent=4)
+        file.close()
+         
 
 
 ###########  CLASS WALL  ####################################################################################
