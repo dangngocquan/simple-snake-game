@@ -4,7 +4,7 @@
             "HEAD": [
                 {
                     "direction": "UU",
-                    "indexFrame": 0,
+                    "indexFrame": 6,
                     "x": 750,
                     "y": 300
                 }
@@ -12,75 +12,15 @@
             "BODY": [
                 {
                     "direction": "UU",
-                    "indexFrame": 1,
-                    "x": 750,
-                    "y": 325
-                }
-            ],
-            "TAIL": [
-                {
-                    "direction": "UU",
-                    "indexFrame": 2,
-                    "x": 750,
-                    "y": 350
-                }
-            ],
-            "score": 0,
-            "currentDirection": "UU",
-            "previousDirection": "UU",
-            "typeColor": "green"
-        },
-        {
-            "HEAD": [
-                {
-                    "direction": "UU",
                     "indexFrame": 0,
                     "x": 750,
-                    "y": 300
-                }
-            ],
-            "BODY": [
-                {
-                    "direction": "UU",
-                    "indexFrame": 1,
-                    "x": 750,
                     "y": 325
                 }
             ],
             "TAIL": [
                 {
                     "direction": "UU",
-                    "indexFrame": 2,
-                    "x": 750,
-                    "y": 350
-                }
-            ],
-            "score": 0,
-            "currentDirection": "UU",
-            "previousDirection": "UU",
-            "typeColor": "green"
-        },
-        {
-            "HEAD": [
-                {
-                    "direction": "UU",
-                    "indexFrame": 0,
-                    "x": 750,
-                    "y": 300
-                }
-            ],
-            "BODY": [
-                {
-                    "direction": "UU",
                     "indexFrame": 1,
-                    "x": 750,
-                    "y": 325
-                }
-            ],
-            "TAIL": [
-                {
-                    "direction": "UU",
-                    "indexFrame": 2,
                     "x": 750,
                     "y": 350
                 }

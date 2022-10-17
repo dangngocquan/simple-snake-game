@@ -1,25 +1,11 @@
 {
     "ACCOUNTS": [
         {
-            "NAME": "NOBODY",
+            "NAME": "nobody",
             "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 4,
-            "LOSE_MATCH": 5,
-            "TOTAL_TIME_PLAYED": 483
-        },
-        {
-            "NAME": "1",
-            "CREATED_TIME": "17/10/2022 12:02:45",
             "WIN_MATCH": 0,
             "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 34
-        },
-        {
-            "NAME": "2",
-            "CREATED_TIME": "17/10/2022 12:04:35",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 24
+            "TOTAL_TIME_PLAYED": 7200
         }
     ]
 }

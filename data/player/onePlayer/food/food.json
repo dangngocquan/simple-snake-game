@@ -3,132 +3,39 @@
         {
             "FOODS": [
                 {
-                    "x": 775,
-                    "y": 575,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 375,
+                    "x": 400,
                     "y": 525,
-                    "indexFrame": 0
+                    "indexFrame": 2
                 },
                 {
-                    "x": 250,
+                    "x": 0,
+                    "y": 175,
+                    "indexFrame": 2
+                },
+                {
+                    "x": 525,
+                    "y": 350,
+                    "indexFrame": 2
+                },
+                {
+                    "x": 900,
                     "y": 100,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 700,
-                    "y": 400,
-                    "indexFrame": 0
+                    "indexFrame": 2
                 },
                 {
                     "x": 475,
                     "y": 500,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 75,
-                    "y": 500,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 975,
-                    "y": 350,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 600,
-                    "y": 400,
-                    "indexFrame": 0
-                }
-            ]
-        },
-        {
-            "FOODS": [
-                {
-                    "x": 375,
-                    "y": 575,
-                    "indexFrame": 1
-                },
-                {
-                    "x": 100,
-                    "y": 400,
-                    "indexFrame": 1
-                },
-                {
-                    "x": 825,
-                    "y": 550,
-                    "indexFrame": 1
-                },
-                {
-                    "x": 925,
-                    "y": 175,
-                    "indexFrame": 1
+                    "indexFrame": 2
                 },
                 {
                     "x": 950,
-                    "y": 175,
-                    "indexFrame": 1
-                },
-                {
-                    "x": 625,
-                    "y": 400,
-                    "indexFrame": 1
-                },
-                {
-                    "x": 100,
-                    "y": 575,
-                    "indexFrame": 1
+                    "y": 25,
+                    "indexFrame": 2
                 },
                 {
                     "x": 400,
-                    "y": 300,
-                    "indexFrame": 1
-                }
-            ]
-        },
-        {
-            "FOODS": [
-                {
-                    "x": 850,
-                    "y": 325,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 650,
-                    "y": 400,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 400,
-                    "y": 500,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 425,
-                    "y": 425,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 775,
-                    "y": 325,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 75,
-                    "y": 250,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 425,
-                    "y": 350,
-                    "indexFrame": 0
-                },
-                {
-                    "x": 825,
-                    "y": 350,
-                    "indexFrame": 0
+                    "y": 550,
+                    "indexFrame": 2
                 }
             ]
         }

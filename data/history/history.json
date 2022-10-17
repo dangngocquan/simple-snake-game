@@ -1,6 +1,20 @@
 {
     "HISTORY": [
         {
+            "NAME": "NOBODY",
+            "TIME": "17/10/2022 17:33:44",
+            "SCORE": 0,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SOLO MATCH"
+        },
+        {
+            "NAME": "NOBODY",
+            "TIME": "17/10/2022 17:33:02",
+            "SCORE": 0,
+            "RESULT": "LOSE",
+            "TYPE_GAME": "SINGLE MATCH"
+        },
+        {
             "NAME": "briss",
             "TIME": "17/10/2022 10:59:50",
             "SCORE": 0,

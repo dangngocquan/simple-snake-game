@@ -1,13 +1,43 @@
 {
     "FOOD_MANAGER": [
         {
-            "FOODS": []
-        },
-        {
-            "FOODS": []
-        },
-        {
-            "FOODS": []
+            "FOODS": [
+                {
+                    "x": 325,
+                    "y": 375,
+                    "indexFrame": 1
+                },
+                {
+                    "x": 900,
+                    "y": 225,
+                    "indexFrame": 1
+                },
+                {
+                    "x": 350,
+                    "y": 425,
+                    "indexFrame": 1
+                },
+                {
+                    "x": 500,
+                    "y": 325,
+                    "indexFrame": 1
+                },
+                {
+                    "x": 350,
+                    "y": 250,
+                    "indexFrame": 1
+                },
+                {
+                    "x": 575,
+                    "y": 100,
+                    "indexFrame": 1
+                },
+                {
+                    "x": 625,
+                    "y": 350,
+                    "indexFrame": 1
+                }
+            ]
         }
     ]
 }
