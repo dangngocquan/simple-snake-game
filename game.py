@@ -1387,83 +1387,80 @@ class Game:
                                                      wallCoordinates=self.inGame02.wallManager.coordinateWalls())
             snake02Died = self.inGame02.snake02.died(otherCoordinateSnakeBlocks=self.inGame02.snake01.coordinateSnakeBlocks(),
                                                      wallCoordinates=self.inGame02.wallManager.coordinateWalls())
-            targetScoreReached01 = self.inGame02.snake01.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
-            targetScoreReached02 = self.inGame02.snake02.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
+            score1 = self.inGame02.snake01.score
+            score2 = self.inGame02.snake02.score
+            targetScoreReached01 = score1 >= SETTING1['GAMEMODE']['TARGET_SCORE']
+            targetScoreReached02 = score2 >= SETTING1['GAMEMODE']['TARGET_SCORE']
+            winner = -1
             if (snake01Died or snake02Died or targetScoreReached01 or targetScoreReached02):
-                ###############    Update statistics of game   ######################################
+                ###############    Update statistics of game   ##############################################
                 STATISTICS['NUMBER_OF_MATCHES_PLAYED'] += 1
-                if self.inGame02.snake01.score > STATISTICS['HIGHEST_SCORE']:
-                                        STATISTICS['HIGHEST_SCORE'] = self.inGame02.snake01.score
+                if score1 > STATISTICS['HIGHEST_SCORE']:
+                                        STATISTICS['HIGHEST_SCORE'] = score1
                                         STATISTICS['PLAYER_HAS_HIGHEST_SCORE'] = (
                                             ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name)
                 menuStatistics.saveData()
+                
+                ###########   Who win?   ####################################################################
                 if snake01Died or snake02Died:
                     SETTING2['SOUND']['GAME_OVER'].play()
-                    if snake02Died:
-                        ###########    Update statistics of game   ##########################################
-                        STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
-                        menuStatistics.saveData()
-                        ############    Update statistics of current account player   #######################
-                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
-                        account.saveData(ACCOUNT_MANAGER.listAccount)
-                        #########   Update history of game   ################################################
-                        self.historyMenu.addNewHistory(
-                            name=ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name,
-                            time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                            score=self.inGame02.snake01.score,
-                            result="WIN",
-                            typeGame="SOLO MATCH"
-                        )
+                    if snake01Died and snake02Died:
+                        if score1 > score2:
+                            winner = 1
+                        elif score1 == score2:
+                            winner = 0
+                        elif score1 < score2:
+                            winner = 2
+                    elif snake02Died:
+                        winner = 1
                     elif snake01Died:
-                        ###########     Update statistics of game   #########################################
-                        STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
-                        menuStatistics.saveData()
-                        ###########    Update statistics of account player   ################################
-                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
-                        account.saveData(ACCOUNT_MANAGER.listAccount)
-                        #########   Update history of game   ################################################
-                        self.historyMenu.addNewHistory(
-                            name=ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name,
-                            time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                            score=self.inGame02.snake01.score,
-                            result="LOSE",
-                            typeGame="SOLO MATCH"
-                        )
-                    
+                        winner = 2
                 elif targetScoreReached01 or targetScoreReached02:
                     SETTING2['SOUND']['WIN_GAME'].play()
-                    if targetScoreReached01:
-                        STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
-                        menuStatistics.saveData()
-                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
-                        account.saveData(ACCOUNT_MANAGER.listAccount)
-                        #########   Update history of game   ########################################
-                        self.historyMenu.addNewHistory(
-                            name=ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name,
-                            time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                            score=self.inGame02.snake01.score,
-                            result="WIN",
-                            typeGame="SOLO MATCH"
-                        )
+                    if targetScoreReached01 and targetScoreReached02:
+                        winner = 3
+                    elif targetScoreReached01:
+                        winner = 1
                     elif targetScoreReached02:
-                        STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
-                        menuStatistics.saveData()
-                        ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
-                        account.saveData(ACCOUNT_MANAGER.listAccount)
-                        #########   Update history of game   ########################################
-                        self.historyMenu.addNewHistory(
-                            name=ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name,
-                            time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                            score=self.inGame02.snake01.score,
-                            result="LOSE",
-                            typeGame="SOLO MATCH"
-                        )
+                        winner = 2
+                
+                if winner == 1 or winner == 3:
+                    ###########    Update statistics of game   ##########################################
+                    STATISTICS['NUMBER_OF_MATCHES_WON'] += 1
+                    menuStatistics.saveData()
+                    ############    Update statistics of current account player   #######################
+                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].winMatch += 1
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                    #########   Update history of game   ################################################
+                    self.historyMenu.addNewHistory(
+                        name=ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name,
+                        time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                        score=self.inGame02.snake01.score,
+                        result="WIN",
+                        typeGame="SOLO MATCH"
+                    )
+                elif winner == 0 or winner == 2:
+                    ###########     Update statistics of game   #########################################
+                    STATISTICS['NUMBER_OF_MATCHES_LOST'] += 1
+                    menuStatistics.saveData()
+                    ###########    Update statistics of account player   ################################
+                    ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].loseMatch += 1
+                    account.saveData(ACCOUNT_MANAGER.listAccount)
+                    #########   Update history of game   ################################################
+                    self.historyMenu.addNewHistory(
+                        name=ACCOUNT_MANAGER.listAccount[SETTING1['ACCOUNT']['INDEX_ACCOUNT']].name,
+                        time=datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+                        score=self.inGame02.snake01.score,
+                        result="LOSE",
+                        typeGame="SOLO MATCH"
+                    )
+                    
                 self.inGame02.running = False
                 self.runningInGame02 = False
                 self.runningGameOverMenu02 = True
                 self.gameOverMenu02 = GameOverMenu02(WIDTH//2, HEIGHT//2, WIDTH, HEIGHT, 
                                                      snake01=self.inGame02.snake01, snake02=self.inGame02.snake02,
-                                                     wallManager=self.inGame02.wallManager)
+                                                     wallManager=self.inGame02.wallManager, winner=winner)
                 
             ###########   Update screen when showing screen start in Ingame02   #############################
             if self.inGame02.showingScreenStart:

@@ -190,23 +190,6 @@ class GameOverMenu02:
         self.positionMouse = (-100,-100)
         self.positionLeftMouse = (-100, -100)
         self.winner = winner
-        snake01Died = self.snake01.died(otherCoordinateSnakeBlocks=self.snake02.coordinateSnakeBlocks(),
-                                        wallCoordinates=self.wallManager.coordinateWalls())
-        snake02Died = self.snake02.died(otherCoordinateSnakeBlocks=self.snake01.coordinateSnakeBlocks(),
-                                        wallCoordinates=self.wallManager.coordinateWalls())
-        targetScoreReach01 = self.snake01.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
-        targetScoreReach02 = self.snake02.score >= SETTING1['GAMEMODE']['TARGET_SCORE']
-        if self.winner == -1:
-            if snake01Died or snake02Died:
-                if snake02Died:
-                    self.winner = 1
-                else:
-                    self.winner = 2
-            elif targetScoreReach01 or targetScoreReach02:
-                if targetScoreReach01:
-                    self.winner = 1
-                else:
-                    self.winner = 2
         ########### Buttons in Gameover Menu  ###############################################################
         self.titleDescription = Button("Press 0/1/2/3/4/5/6 to change the way snake drop", 
                                        DESCRIPTION_FONT_2, width//2, height*1//24)
