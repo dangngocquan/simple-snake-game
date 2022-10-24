@@ -86,7 +86,8 @@ def saveWallManager(wallManager, path='./data/player/onePlayer/wall/wall.json'):
 
 ############   Remove wall manager from file continue game   ################################################
 def removeWallManager(index=-1, path='./data/player/onePlayer/wall/wall.json',
-                      path2='./data/player/twoPlayer/wall/wall.json'):
+                      path2='./data/player/twoPlayer/wall/wall.json',
+                      path3='./data/creatingMap/creatingMap.json'):
     if index >= 0:
         wallManagerDict = None
         with open(path, 'r') as file:
@@ -105,16 +106,28 @@ def removeWallManager(index=-1, path='./data/player/onePlayer/wall/wall.json',
         with open(path2, 'w') as file:
             json.dump(wallManagerDict, file, indent=4)
         file.close()
+        
+        wallManagerDict = None
+        with open(path3, 'r') as file:
+            wallManagerDict = json.load(file)
+        file.close()
+        wallManagerDict['WALL_MANAGER'].pop(index)
+        with open(path3, 'w') as file:
+            json.dump(wallManagerDict, file, indent=4)
+        file.close()
 
 
 def addNewWallManager(path1='./data/player/onePlayer/wall/wall.json',
-                      path2='./data/player/twoPlayer/wall/wall.json'):
-    for i in range(2):
+                      path2='./data/player/twoPlayer/wall/wall.json',
+                      path3='./data/creatingMap/creatingMap.json'):
+    for i in range(3):
         path = ""
         if i == 0:
             path = path1
         elif i == 1:
             path = path2
+        elif i == 2:
+            path = path3
         
         wallManager = loadWallManagerFromListMaps(indexMap=SETTING1['MAP']['INDEX_MAP'])
         
@@ -137,6 +150,12 @@ def addNewWallManager(path1='./data/player/onePlayer/wall/wall.json',
             wallManagerDict = json.load(file)
         file.close()
         
+        if i == 2:
+            wallDict = {
+                'WALLS' : [
+                
+                ]
+            }
         wallManagerDict['WALL_MANAGER'].append(wallDict)
         
         with open(path, 'w') as file:

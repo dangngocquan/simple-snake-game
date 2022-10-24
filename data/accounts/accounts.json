@@ -3,9 +3,9 @@
         {
             "NAME": "nobody",
             "CREATED_TIME": "12/10/2022 16:01:38",
-            "WIN_MATCH": 0,
-            "LOSE_MATCH": 0,
-            "TOTAL_TIME_PLAYED": 7200
+            "WIN_MATCH": 1,
+            "LOSE_MATCH": 2,
+            "TOTAL_TIME_PLAYED": 7480
         }
     ]
 }

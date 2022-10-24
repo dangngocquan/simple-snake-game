@@ -4,7 +4,7 @@
             "HEAD": [
                 {
                     "direction": "UU",
-                    "indexFrame": 6,
+                    "indexFrame": 0,
                     "x": 750,
                     "y": 300
                 }
@@ -12,7 +12,7 @@
             "BODY": [
                 {
                     "direction": "UU",
-                    "indexFrame": 0,
+                    "indexFrame": 1,
                     "x": 750,
                     "y": 325
                 }
@@ -20,7 +20,7 @@
             "TAIL": [
                 {
                     "direction": "UU",
-                    "indexFrame": 1,
+                    "indexFrame": 2,
                     "x": 750,
                     "y": 350
                 }

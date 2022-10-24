@@ -1,4 +1,3 @@
-from turtle import pos
 import pygame
 from account import ACCOUNT_MANAGER
 from snake import Snake
@@ -124,6 +123,10 @@ class GameOverMenu:
         if type == 'UpdateTextAnimation':
             ###########   Update cursor and buttons   #######################################################
             self.updateMousePoitedAt()
+            if self.snake.score >= SETTING1['GAMEMODE']['TARGET_SCORE']:
+                self.titleGameOver.update("<< YOU WON >>", BIG_FONT, 'ALL')
+            else:
+                self.titleGameOver.update("GAME OVER", BIG_FONT, 'ALL')
             ###########   Remove old button display   #######################################################
             self.surface.fill((0, 0, 0, 0))
             ###########   Draw new buttons   ################################################################
